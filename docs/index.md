@@ -239,13 +239,32 @@ $$
 
 === "C"
 
-    TODO
+    ```c
+    #include <math.h>
+    #include <stddef.h>
+    #include <stdio.h>
+
+    #include "copp/copp.h"
+
+    enum { DIM = 2 };
+
+    static int check(enum CoppStatus status, const char *call)
+    {
+        if (status == COPP_STATUS_OK) {
+            return 0;
+        }
+        fprintf(stderr, "%s failed: %s\n", call, copp_status_message(status));
+        fprintf(stderr, "%s\n", copp_last_error_message());
+        return 1;
+    }
+    ```
 
 === "Python"
 
     ```python
     import copp_py as copp
-
+    import numpy as np
+    
     DIM = 2
     ```
 
@@ -253,7 +272,7 @@ $$
 
 严格地说，几何路径$\boldsymbol{q}=\boldsymbol{q}(s)$是用户端给`copp`的输入，而`copp`库提供了路径相关模块作为辅助。
 
-#### Option A.  解析式自动微分
+#### Option A. 解析式自动微分
 
 最简单的方式是通过解析式构造路径，例如：
 
@@ -269,7 +288,9 @@ $$
 
 === "C"
 
-    TODO
+    ```c
+    // C ABI暂时没有提供自动微分接口，请选择Options B or C
+    ```
 
 === "Python"
 
@@ -280,12 +301,15 @@ $$
     jax.config.update("jax_enable_x64", True)
     
     def q_fn(s):
-        freq = jnp.array([2.0 * jnp.pi, 3.0 * jnp.pi, 5.0 * jnp.pi], dtype=jnp.float64)
-        phase = jnp.array([0.0, 0.3, 0.7], dtype=jnp.float64)
+        freq = jnp.array([2.0 * jnp.pi, 2.0 * jnp.pi], dtype=jnp.float64)
+        phase = jnp.array([0.0, 0.0], dtype=jnp.float64)
         return jnp.sin(freq * s + phase)
 
     path = copp.Path.from_jax(q_fn, 0.0, 1.0)
     ```
+
+    Python的自动微分支持`jax`, `autograd`, `casadi`, `sympy`四种工具，可由作者自行选择。
+
 
 #### Option B. 路径点生成样条
 
@@ -310,13 +334,37 @@ $$
 
 === "C"
 
-    TODO
+    ```c
+    enum { NUM_WAYPOINTS = 5 };
+
+    // Column-major matrix with shape DIM x NUM_WAYPOINTS.
+    // Each column is one waypoint.
+    double waypoints[DIM * NUM_WAYPOINTS] = {
+        0.0, 0.0,
+        0.25, 0.1,
+        0.5, -0.1,
+        0.75, 0.2,
+        1.0, 0.0,
+    };
+
+    struct CoppPathOptions path_options;
+    struct CoppPath *path = NULL;
+    if (check(copp_path_default_options(0.0, 1.0, &path_options), "copp_path_default_options")) {
+        return 1;
+    }
+    if (check(
+            copp_path_from_waypoints(
+                COPP_MATRIX_VIEW_F64_COLUMN_MAJOR(waypoints, DIM, NUM_WAYPOINTS),
+                path_options,
+                &path),
+            "copp_path_from_waypoints")) {
+        return 1;
+    }
+    ```
 
 === "Python"
 
     ```python
-    import numpy as np
-    
     waypoints = np.array(
         [
             [0.0, 0.0],
@@ -339,7 +387,7 @@ $$
 
     ```rust
     use copp::diag::PathError;
-    use copp::path::{Path, PathEvaluator2nd};
+    use copp::path::{Path, PathEvaluator2nd, PathEvaluator3rd};
 
     struct NormalizedEvaluator2nd;
 
@@ -355,19 +403,23 @@ $$
             dq: &mut [f64],
             ddq: &mut [f64],
         ) -> Result<(), PathError> {
+            const PI2 : f64 = 2.0 * PI;
             for (col, &sj) in s.iter().enumerate() {
-                let row0 = 2 * col;
-                q[row0] = 0.5 * sj * sj;
-                q[row0 + 1] = sj;
-                dq[row0] = sj;
-                dq[row0 + 1] = 1.0;
-                ddq[row0] = 1.0;
-                ddq[row0 + 1] = 0.0;
+                let row0 = 2 * col; // dim = 2
+                let sin = (PI2 * sj).sin();
+                let cos = (PI2 * sj).cos();
+                q[row0] = sin;
+                q[row0 + 1] = cos;
+                dq[row0] = PI2 * cos;
+                dq[row0 + 1] = -PI2 * sin;
+                ddq[row0] = -PI2 * PI2 * sin;
+                ddq[row0 + 1] = -PI2 * PI2 * cos;
             }
             Ok(())
         }
     }
 
+    // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `PathEvaluator3rd` can be removed.
     impl PathEvaluator3rd for NormalizedEvaluator3rd {
         fn evaluate_up_to_3rd(
             &self,
@@ -377,29 +429,171 @@ $$
             ddq: &mut [f64],
             dddq: &mut [f64],
         ) -> Result<(), PathError> {
-            self.evaluate_up_to_2nd(s, q, dq, ddq)?;
-            dddq.fill(0.0);
+            const PI2 : f64 = 2.0 * PI;
+            for (col, &sj) in s.iter().enumerate() {
+                let row0 = 2 * col; // dim = 2
+                let sin = (PI2 * sj).sin();
+                let cos = (PI2 * sj).cos();
+                q[row0] = sin;
+                q[row0 + 1] = cos;
+                dq[row0] = PI2 * cos;
+                dq[row0 + 1] = -PI2 * sin;
+                ddq[row0] = -PI2 * PI2 * sin;
+                ddq[row0 + 1] = -PI2 * PI2 * cos;
+                dddq[row0] = -PI2 * PI2 * PI2 * cos;
+                dddq[row0 + 1] = PI2 * PI2 * PI2 * sin;
+            }
             Ok(())
         }
     }
 
+    // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `PathEvaluator3rd`.
     let path = Path::from_evaluator_3rd(NormalizedEvaluator3rd, 0.0, 1.0)?;
-    // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `PathEvaluator3rd` can be removed and the path can be constructed by `from_evaluator_2nd`.
     ```
 
 === "C"
 
-    TODO
+    ```c
+    static enum CoppStatus evaluate_path_2nd(
+        void *user_data,
+        size_t dim,
+        size_t n,
+        const double *s,
+        double *q,
+        double *dq,
+        double *ddq)
+    {
+        (void)user_data;
+        if (dim != DIM) {
+            return COPP_STATUS_INVALID_ARGUMENT;
+        }
+        if (n > 0 && (s == NULL || q == NULL || dq == NULL || ddq == NULL)) {
+            return COPP_STATUS_NULL_POINTER;
+        }
+
+        const double pi2 = 6.28318530717958647692;
+        for (size_t col = 0; col < n; ++col) {
+            const double sin_v = sin(pi2 * s[col]);
+            const double cos_v = cos(pi2 * s[col]);
+            const size_t row0 = col * dim;
+
+            q[row0] = sin_v;
+            q[row0 + 1] = cos_v;
+            dq[row0] = pi2 * cos_v;
+            dq[row0 + 1] = -pi2 * sin_v;
+            ddq[row0] = -(pi2 * pi2) * sin_v;
+            ddq[row0 + 1] = -(pi2 * pi2) * cos_v;
+        }
+        return COPP_STATUS_OK;
+    }
+
+    static enum CoppStatus evaluate_path_3rd(
+        void *user_data,
+        size_t dim,
+        size_t n,
+        const double *s,
+        double *q,
+        double *dq,
+        double *ddq,
+        double *dddq)
+    {
+        (void)user_data;
+        if (dim != DIM) {
+            return COPP_STATUS_INVALID_ARGUMENT;
+        }
+        if (n > 0 && (s == NULL || q == NULL || dq == NULL || ddq == NULL || dddq == NULL)) {
+            return COPP_STATUS_NULL_POINTER;
+        }
+
+        const double pi2 = 6.28318530717958647692;
+        const double pi2_sq = pi2 * pi2;
+        const double pi2_cu = pi2_sq * pi2;
+        for (size_t col = 0; col < n; ++col) {
+            const double sin_v = sin(pi2 * s[col]);
+            const double cos_v = cos(pi2 * s[col]);
+            const size_t row0 = col * dim;
+
+            q[row0] = sin_v;
+            q[row0 + 1] = cos_v;
+            dq[row0] = pi2 * cos_v;
+            dq[row0 + 1] = -pi2 * sin_v;
+            ddq[row0] = -pi2_sq * sin_v;
+            ddq[row0 + 1] = -pi2_sq * cos_v;
+            dddq[row0] = -pi2_cu * cos_v;
+            dddq[row0 + 1] = pi2_cu * sin_v;
+        }
+        return COPP_STATUS_OK;
+    }
+
+    // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then
+    // `copp_path_from_evaluator_2nd` can be used without `evaluate_path_3rd`.
+    struct CoppPath *path = NULL;
+    if (check(
+            copp_path_from_evaluator_3rd(
+                DIM,
+                0.0,
+                1.0,
+                evaluate_path_2nd,
+                evaluate_path_3rd,
+                NULL,
+                &path),
+            "copp_path_from_evaluator_3rd")) {
+        return 1;
+    }
+    ```
 
 === "Python"
 
-    TODO
+    ```python
+    class Evaluator:
+        dim = 2
+
+        def evaluate_q(self, s):
+            q = np.empty((s.size, self.dim), dtype=np.float64)
+            pi2 = 2.0 * np.pi
+            q[:, 0] = np.sin(pi2 * s)
+            q[:, 1] = np.cos(pi2 * s)
+            return q
+
+        def evaluate_up_to_2nd(self, s):
+            q = self.evaluate_q(s)
+            pi2 = 2.0 * np.pi
+            sin = np.sin(pi2 * s)
+            cos = np.cos(pi2 * s)
+
+            dq = np.empty_like(q)
+            dq[:, 0] = pi2 * cos
+            dq[:, 1] = -pi2 * sin
+
+            ddq = np.empty_like(q)
+            ddq[:, 0] = -(pi2**2) * sin
+            ddq[:, 1] = -(pi2**2) * cos
+
+            return q, dq, ddq
+
+        # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `evaluate_up_to_3rd` can be removed.
+        def evaluate_up_to_3rd(self, s):
+            q, dq, ddq = self.evaluate_up_to_2nd(s)
+            pi2 = 2.0 * np.pi
+            sin = np.sin(pi2 * s)
+            cos = np.cos(pi2 * s)
+
+            dddq = np.empty_like(q)
+            dddq[:, 0] = -(pi2**3) * cos
+            dddq[:, 1] = (pi2**3) * sin
+
+            return q, dq, ddq, dddq
+    
+
+    # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_3rd` without dependence on `evaluate_up_to_3rd`.
+    path = copp.Path.from_evaluator_3rd(Evaluator(), 0.0, 1.0)
+    ```
 
 ### Step 2. 离散化路径信息
 
-=== "Rust"
+路径参数化问题需要在给定的$s$离散网格上进行，例如：
 
-    路径参数化问题需要在给定的$s$离散网格上进行，例如：
+=== "Rust"
 
     ```rust
     // `n` is the number of path samples (s_i) to build robot constraints on.
@@ -407,7 +601,27 @@ $$
     let s: Vec<f64> = (0..n).map(|j| j as f64 / (n - 1) as f64).collect();
     ```
 
-    创建机器人模型：
+=== "C"
+
+    ```c
+    // `n` is the number of path samples (s_i) to build robot constraints on.
+    enum { n = 1001 };
+    double s[n];
+    for (size_t j = 0; j < n; ++j) {
+        s[j] = (double)j / (double)(n - 1);
+    }
+    ```
+
+=== "Python"
+
+    ```python
+    n = 1001
+    s = np.linspace(0.0, 1.0, n, dtype=np.float64)
+    ```
+
+创建机器人模型：
+
+=== "Rust"
 
     ```rust
     use copp::robot::Robot;
@@ -415,29 +629,59 @@ $$
     let mut robot = Robot::with_capacity(DIM, n);
     ```
 
-    输入$s$网格与路径信息：
+=== "C"
+
+    ```c
+    struct CoppRobot *robot = NULL;
+    if (check(copp_robot_create(DIM, n, &robot), "copp_robot_create")) {
+        return 1;
+    }
+    ```
+
+=== "Python"
+
+    ```python
+    robot = copp.Robot(DIM, capacity=n)
+    ```
+
+输入$s$网格与路径信息：
+
+=== "Rust"
 
     ```rust
+    // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `with_q_from_path_3rd` should be replaced by `with_q_from_path_2nd` without dependence on `evaluate_up_to_3rd`.
     robot
         .with_s(s.as_slice())?
         .with_q_from_path_3rd(&path, 0, n)?;
     ```
 
-    在更灵活的情况下，路径可以在线加入、删除等，机器人可以包含逆运动学信息，这些高级接口详见[文档章节](#docs-architecture)。
-
 === "C"
 
-    TODO
+    ```c
+    // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then
+    // `copp_robot_sample_path_3rd` should be replaced by `copp_robot_sample_path_2nd`.
+    if (check(copp_robot_append_s(robot, (struct CoppSliceF64){s, n}), "copp_robot_append_s")) {
+        return 1;
+    }
+    if (check(copp_robot_sample_path_3rd(robot, path, 0, n), "copp_robot_sample_path_3rd")) {
+        return 1;
+    }
+    ```
 
 === "Python"
 
-    TODO
+    ```python
+    robot.append_s(s)
+    robot.set_q_from_path_3rd(path, 0, n)
+    ```
+
+在更灵活的情况下，路径可以在线加入、删除等，机器人可以包含逆运动学信息，这些高级接口详见[文档章节](#docs-architecture)。
 
 ### Step 3. 约束构造
 
-=== "Rust"
+通常情况下，我们推荐用户使用具备物理含义的高级接口，例如：
 
-    通常情况下，我们推荐用户使用具备物理含义的高级接口，例如：
+=== "Rust"
 
     ```rust
     // The axial velocity is -1 <= vel <= 1 for each axis in this example
@@ -452,7 +696,48 @@ $$
         .with_axial_acceleration((acc_max.as_slice(), n), (acc_min.as_slice(), n), 0)?;
     ```
 
-    如果是求解三阶轨迹，则需要额外引入三阶约束，例如：
+=== "C"
+
+    ```c
+    // The axial velocity/acceleration is -1 <= value <= 1 for each axis.
+    double upper[DIM] = {1.0, 1.0};
+    double lower[DIM] = {-1.0, -1.0};
+
+    if (check(
+            copp_add_axial_velocity_limits(
+                robot,
+                0,
+                n,
+                (struct CoppSliceF64){upper, DIM},
+                (struct CoppSliceF64){lower, DIM}),
+            "copp_add_axial_velocity_limits")) {
+        return 1;
+    }
+    if (check(
+            copp_add_axial_acceleration_limits(
+                robot,
+                0,
+                n,
+                (struct CoppSliceF64){upper, DIM},
+                (struct CoppSliceF64){lower, DIM}),
+            "copp_add_axial_acceleration_limits")) {
+        return 1;
+    }
+    ```
+
+=== "Python"
+
+    ```python
+    upper = np.ones(DIM, dtype=np.float64)
+    lower = -upper
+
+    robot.add_velocity_limits(upper, lower, start_idx_s=0, length=n)
+    robot.add_acceleration_limits(upper, lower, start_idx_s=0, length=n)
+    ```
+
+如果是求解三阶轨迹，则需要额外引入三阶约束，例如：
+
+=== "Rust"
 
     ```rust
     // The axial jerk is -1 <= jerk <= 1 for each axis in this example.
@@ -461,21 +746,35 @@ $$
     robot.with_axial_jerk((jerk_max.as_slice(), n), (jerk_min.as_slice(), n), 0)?;
     ```
 
-    更高级的调用接口详见[文档章节](#docs-architecture)。
-
 === "C"
 
-    TODO
+    ```c
+    // The axial jerk is -1 <= jerk <= 1 for each axis in this example.
+    if (check(
+            copp_add_axial_jerk_limits(
+                robot,
+                0,
+                n,
+                (struct CoppSliceF64){upper, DIM},
+                (struct CoppSliceF64){lower, DIM}),
+            "copp_add_axial_jerk_limits")) {
+        return 1;
+    }
+    ```
 
 === "Python"
 
-    TODO
+    ```python
+    robot.add_jerk_limits(upper, lower, start_idx_s=0, length=n)
+    ```
+
+更底层、灵活的约束构造接口详见[文档章节](#docs-architecture)。
 
 ### Step 4. 调用求解器
 
-=== "Rust"
+我们以求解TOPP2问题、调用`topp2_ra`为例。首先定义问题，例如：
 
-    我们以求解TOPP2问题、调用`topp2_ra`为例。首先定义问题，例如：
+=== "Rust"
 
     ```rust
     use copp::solver::topp2_ra::Topp2ProblemBuilder;
@@ -485,7 +784,31 @@ $$
     let problem = Topp2ProblemBuilder::new(&robot, idx_s_interval, a_boundary).build()?;
     ```
 
-    然后构造求解设置并调用求解器，例如：
+=== "C"
+
+    ```c
+    struct Topp2Problem problem = {
+        robot,
+        0,
+        n - 1,
+        0.0,
+        0.0,
+    };
+    ```
+
+=== "Python"
+
+    ```python
+    problem = copp.solver.topp2_ra.Problem(
+        robot.constraints,
+        idx_s_interval=(0, n - 1),
+        a_boundary=(0.0, 0.0),
+    )
+    ```
+
+然后构造求解设置并调用求解器，例如：
+
+=== "Rust"
 
     ```rust
     use copp::solver::topp2_ra::{ReachSet2OptionsBuilder, topp2_ra};
@@ -494,21 +817,36 @@ $$
     let a_ra = topp2_ra(&problem, &options)?;
     ```
 
-    据此，我们得到了$a=a(s)$。
-
 === "C"
 
-    TODO
+    ```c
+    struct Topp2RaOptions options;
+    struct CoppVecF64 a_ra = {0};
+
+    if (check(topp2_ra_default_options(&options), "topp2_ra_default_options")) {
+        return 1;
+    }
+    if (check(topp2_ra(problem, options, &a_ra), "topp2_ra")) {
+        return 1;
+    }
+    ```
 
 === "Python"
 
-    TODO
+    ```python
+    a_ra = copp.solver.topp2_ra.solve(
+        problem,
+        copp.solver.topp2_ra.Options(),
+    )
+    ```
+
+据此，我们得到了$a=a(s)$。
 
 ### Step 5. 二阶轨迹后处理（仅二阶需要）
 
-=== "Rust"
+我们接下来希望得到真实的轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解$t=t(s)$，例如：
 
-    我们接下来希望得到真实的轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解$t=t(s)$，例如：
+=== "Rust"
 
     ```rust
     use copp::solver::topp2_ra::s_to_t_topp2;
@@ -518,7 +856,33 @@ $$
     let (t_final, t_s) = s_to_t_topp2(&s, &a_ra, 0.0)?;
     ```
 
-    接下来求逆解$s=s(t)$并插补，例如：
+=== "C"
+
+    ```c
+    double t_final = 0.0;
+    struct CoppVecF64 t_s = {0};
+
+    if (check(
+            copp_s_to_t_2nd(
+                (struct CoppSliceF64){s, n},
+                (struct CoppSliceF64){a_ra.data, a_ra.len},
+                0.0,
+                &t_final,
+                &t_s),
+            "copp_s_to_t_2nd")) {
+        return 1;
+    }
+    ```
+
+=== "Python"
+
+    ```python
+    t_final, t_s = copp.interpolation.s_to_t_topp2(s, a_ra, 0.0)
+    ```
+
+接下来求逆解$s=s(t)$并插补，例如：
+
+=== "Rust"
 
     ```rust
     use copp::solver::topp2_ra::t_to_s_topp2;
@@ -534,28 +898,86 @@ $$
     )?;
     ```
 
-    上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$$，一种简单的做法是：
-
-    ```rust
-    let out = path.evaluate_q(s_t)?;
-    let q_t = out.q;
-    ```
-
-    由此完成了二阶轨迹的完整求解。如果是求解三阶轨迹，那么二阶轨迹后处理步骤可以跳过，并继续如下流程。
-
 === "C"
 
-    TODO
+    ```c
+    // s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    const double dt = 1e-3;
+    struct CoppVecF64 s_t = {0};
+
+    if (check(
+            copp_t_to_s_uniform_2nd(
+                (struct CoppSliceF64){s, n},
+                (struct CoppSliceF64){a_ra.data, a_ra.len},
+                (struct CoppSliceF64){t_s.data, t_s.len},
+                0.0,
+                dt,
+                true,
+                &s_t),
+            "copp_t_to_s_uniform_2nd")) {
+        return 1;
+    }
+    ```
 
 === "Python"
 
-    TODO
+    ```python
+    s_t = copp.interpolation.t_to_s_topp2_uniform(
+        s,
+        a_ra,
+        t_s,
+        dt=1.0e-3,
+        t0=0.0,
+        include_final=True,
+    )
+    ```
 
-### Step 6. 构造并求解三阶问题（仅三阶需要）
+上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
 
 === "Rust"
 
-    构造三阶问题如下，其中非凸的三阶约束用前面求解的二阶轨迹`a_ra`进行线性化：
+    ```rust
+    let out = path.evaluate_q(&s_t)?;
+    let q_t = out.q;
+    ```
+
+=== "C"
+
+    ```c
+    struct CoppMatrixF64 q_t = {0};
+    struct CoppMatrixF64 dq_t = {0};
+    struct CoppMatrixF64 ddq_t = {0};
+
+    if (check(
+            copp_path_evaluate_up_to_2nd(
+                path,
+                (struct CoppSliceF64){s_t.data, s_t.len},
+                &q_t,
+                &dq_t,
+                &ddq_t),
+            "copp_path_evaluate_up_to_2nd")) {
+        return 1;
+    }
+
+    // q_t is a column-major DIM x s_t.len matrix: q_t.data[row + col * q_t.rows].
+    copp_matrix_f64_free(ddq_t);
+    copp_matrix_f64_free(dq_t);
+    copp_matrix_f64_free(q_t);
+    ```
+
+=== "Python"
+
+    ```python
+    q_t = path.evaluate_q(s_t).q
+    ```
+
+由此完成了二阶轨迹的完整求解。如果是求解三阶轨迹，那么二阶轨迹后处理步骤可以跳过，并继续如下流程。
+
+### Step 6. 构造并求解三阶问题（仅三阶需要）
+
+构造三阶问题如下，其中非凸的三阶约束用前面求解的二阶轨迹`a_ra`进行线性化：
+
+=== "Rust"
 
     ```rust
     use copp::solver::topp3_socp::Topp3ProblemBuilder;
@@ -563,11 +985,52 @@ $$
     // Note that in TOPP3Problem, the non-convex jerk constraints should be linearized into a convex one.
     // More details can be found in the documentation of `Topp3ProblemBuilder::build_with_linearization`.
     let topp3_problem =
-        Topp3ProblemBuilder::new(&mut robot, idx_s_interval.0, &a_ra0, (0.0, 0.0), (0.0, 0.0))
+        Topp3ProblemBuilder::new(&mut robot, idx_s_interval.0, &a_ra, (0.0, 0.0), (0.0, 0.0))
         .build_with_linearization()?;
     ```
 
-    我们以`topp3_socp`为例，调用求解器如下：
+=== "C"
+
+    ```c
+    if (check(
+            copp_robot_amax_substitute(
+                robot,
+                (struct CoppSliceF64){a_ra.data, a_ra.len},
+                0),
+            "copp_robot_amax_substitute")) {
+        return 1;
+    }
+
+    struct Topp3Problem topp3_problem = {
+        robot,
+        0,
+        (struct CoppSliceF64){a_ra.data, a_ra.len},
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1,
+        1,
+        1e-10,
+    };
+    ```
+
+=== "Python"
+
+    ```python
+    robot.constraints.amax_substitute(a_ra, 0)
+    problem = copp.solver.topp3_socp.Problem(
+        robot.constraints,
+        a_ra,
+        idx_s_start=0,
+        a_boundary=(0.0, 0.0),
+        b_boundary=(0.0, 0.0),
+    )
+    ```
+
+我们以`topp3_socp`为例，调用求解器如下：
+
+=== "Rust"
 
     ```rust
     use copp::solver::topp3_socp::{ClarabelOptionsBuilder, topp3_socp};
@@ -578,7 +1041,32 @@ $$
     let profile = topp3_socp(&topp3_problem, &options_socp)?;
     ```
 
-    理论上这已经生成了一条可行、近优的三阶轨迹$a_1(s),b_1(s)$了，可以直接进行下一步。如果希望通过更多的计算资源进一步地求解更优的轨迹，可以以$a_1(s)$为线性化点再次求解新的线性化三阶问题：
+=== "C"
+
+    ```c
+    struct CoppClarabelOptions options_socp;
+    struct CoppProfile3rd profile = {0};
+
+    if (check(copp_clarabel_default_options(&options_socp), "copp_clarabel_default_options")) {
+        return 1;
+    }
+    options_socp.allow_almost_solved = true;
+
+    if (check(topp3_socp(topp3_problem, options_socp, &profile), "topp3_socp")) {
+        return 1;
+    }
+    ```
+
+=== "Python"
+
+    ```python
+    options = copp.solver.topp3_socp.Options(allow_almost_solved=True)
+    profile = copp.solver.topp3_socp.solve(problem, options)
+    ```
+
+理论上这已经生成了一条可行、近优的三阶轨迹$a_1(s),b_1(s)$了，可以直接进行下一步。如果希望通过更多的计算资源进一步地求解更优的轨迹，可以以$a_1(s)$为线性化点再次求解新的线性化三阶问题：
+
+=== "Rust"
 
     ```rust
     let topp3_problem =
@@ -587,31 +1075,95 @@ $$
     let profile = topp3_socp(&topp3_problem, &options_socp)?;
     ```
 
-    在计算资源允许的情况下，可以重复进行上述过程，也就是用$a_k(s)$线性化三阶非凸问题并求解得到$a_{k+1}(s),b_{k+1}(s)$，在非退化情况下最终能够收敛到KKT解。从在线进行的实用角度，我们推荐完成1到2次线性化即足够。
-
 === "C"
 
-    TODO
+    ```c
+    struct Topp3Problem topp3_problem_next = {
+        robot,
+        0,
+        (struct CoppSliceF64){profile.a.data, profile.a.len},
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1,
+        1,
+        1e-10,
+    };
+    struct CoppProfile3rd profile_next = {0};
+
+    if (check(
+            topp3_socp(topp3_problem_next, options_socp, &profile_next),
+            "topp3_socp second iteration")) {
+        return 1;
+    }
+
+    copp_profile_3rd_free(profile);
+    profile = profile_next;
+    profile_next = (struct CoppProfile3rd){0};
+    ```
 
 === "Python"
 
-    TODO
+    ```python
+    problem = copp.solver.topp3_socp.Problem(
+        robot.constraints,
+        profile.a,
+        idx_s_start=0,
+        a_boundary=(0.0, 0.0),
+        b_boundary=(0.0, 0.0),
+    )
+    profile = copp.solver.topp3_socp.solve(problem, options)
+    ```
+
+在计算资源允许的情况下，可以重复进行上述过程，也就是用$a_k(s)$线性化三阶非凸问题并求解得到$a_{k+1}(s),b_{k+1}(s)$，在非退化情况下最终能够收敛到KKT解。从在线进行的实用角度，我们推荐完成1到2次线性化即足够。
 
 ### Step 7. 三阶轨迹后处理（仅三阶需要）
 
-=== "Rust"
+我们接下来希望得到真实的轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解$t=t(s)$，例如：
 
-    我们接下来希望得到真实的轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解$t=t(s)$，例如：
+=== "Rust"
 
     ```rust
     use copp::solver::topp3_socp::s_to_t_topp3;
 
     // t_final is the traversal time of the path.
-    // t_s[i] is the time at which the path parameter s_i is reached.
+    // t_s[i] is the time at which the path parameter s[i] is reached.
     let (t_final, t_s) = s_to_t_topp3(&s, profile.as_parts(), 0.0)?;
     ```
 
-    接下来求逆解$s=s(t)$并插补，例如：
+=== "C"
+
+    ```c
+    double t_final = 0.0;
+    struct CoppVecF64 t_s = {0};
+
+    if (check(
+            copp_s_to_t_3rd(
+                (struct CoppSliceF64){s, n},
+                (struct CoppSliceF64){profile.a.data, profile.a.len},
+                (struct CoppSliceF64){profile.b.data, profile.b.len},
+                profile.num_stationary_start,
+                profile.num_stationary_end,
+                0.0,
+                &t_final,
+                &t_s),
+            "copp_s_to_t_3rd")) {
+        return 1;
+    }
+    ```
+
+=== "Python"
+
+    ```python
+    # t_final is the traversal time of the path.
+    # t_s[i] is the time at which the path parameter s[i] is reached.
+    t_final, t_s = copp.interpolation.s_to_t_topp3(s, profile, 0.0)
+    ```
+
+接下来求逆解$s=s(t)$并插补，例如：
+
+=== "Rust"
 
     ```rust
     use copp::solver::topp3_socp::t_to_s_topp3;
@@ -627,36 +1179,90 @@ $$
     )?;
     ```
 
-    上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$$，一种简单的做法是：
-
-    ```rust
-    let out = path.evaluate_q(s_t)?;
-    let q_t = out.q;
-    ```
-
-    由此完成了三阶轨迹的完整求解。
-
 === "C"
 
-    TODO
+    ```c
+    // s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    const double dt = 1e-3;
+    struct CoppVecF64 s_t = {0};
+
+    if (check(
+            copp_t_to_s_uniform_3rd(
+                (struct CoppSliceF64){s, n},
+                (struct CoppSliceF64){profile.a.data, profile.a.len},
+                (struct CoppSliceF64){profile.b.data, profile.b.len},
+                profile.num_stationary_start,
+                profile.num_stationary_end,
+                (struct CoppSliceF64){t_s.data, t_s.len},
+                0.0,
+                dt,
+                true,
+                &s_t),
+            "copp_t_to_s_uniform_3rd")) {
+        return 1;
+    }
+    ```
 
 === "Python"
 
-    TODO
+    ```python
+    # s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    s_t = copp.interpolation.t_to_s_topp3_uniform(
+        s,
+        profile,
+        t_s,
+        dt = 1.0e-3,
+        t0=0.0,
+    )
+    ```
 
-### Step-by-Step小结
+上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
 
 === "Rust"
 
-    总的来说，一个最小闭环包括：构造路径$\boldsymbol{q}(s)$，在离散网格上构造`Robot`和约束，选择对应的problem builder和solver，得到$a(s)$或$(a(s),b(s))$，再通过`s_to_t_*`和`t_to_s_*`转回时间域，最终在$s(t)$上重新采样原始路径。仓库中也提供了TOPP2、COPP2、TOPP3、COPP3等可运行例程。
+    ```rust
+    let out = path.evaluate_q(&s_t)?;
+    let q_t = out.q;
+    ```
 
 === "C"
 
-    TODO
+    ```c
+    struct CoppMatrixF64 q_t = {0};
+    struct CoppMatrixF64 dq_t = {0};
+    struct CoppMatrixF64 ddq_t = {0};
+    struct CoppMatrixF64 dddq_t = {0};
+
+    if (check(
+            copp_path_evaluate_up_to_3rd(
+                path,
+                (struct CoppSliceF64){s_t.data, s_t.len},
+                &q_t,
+                &dq_t,
+                &ddq_t,
+                &dddq_t),
+            "copp_path_evaluate_up_to_3rd")) {
+        return 1;
+    }
+
+    // q_t is a column-major DIM x s_t.len matrix: q_t.data[row + col * q_t.rows].
+    copp_matrix_f64_free(dddq_t);
+    copp_matrix_f64_free(ddq_t);
+    copp_matrix_f64_free(dq_t);
+    copp_matrix_f64_free(q_t);
+    ```
 
 === "Python"
 
-    TODO
+    ```python
+    q_t = path.evaluate_q(s_t).q
+    ```
+
+由此完成了三阶轨迹的完整求解。
+
+### Step-by-Step小结
+
+总的来说，一个最小闭环包括：构造路径$\boldsymbol{q}(s)$，在离散网格上构造`Robot`和约束，选择对应的problem builder和solver，得到$a(s)$或$(a(s),b(s))$，再通过`s_to_t_*`和`t_to_s_*`转回时间域，最终在$s(t)$上重新采样原始路径。仓库中也提供了TOPP2、COPP2、TOPP3、COPP3等可运行例程。
 
 ## Benchmark性能测试
 
@@ -670,30 +1276,30 @@ $$
 
 #### 时间最优 (Time-Optimal)
 
-| 方法                   |          计算时间 (ms) |         终端时间 (s) |
-| ---------------------- | ---------------------: | -------------------: |
-| TOPP2-RA               |    0.615425 ± 0.244409 | 40.903420 ± 1.378671 |
-| COPP2-SOCP             |  149.969964 ± 9.364334 | 40.900039 ± 1.378613 |
-| COPP2-RDDP             |    5.436142 ± 0.465495 | 40.900135 ± 1.378613 |
-| TOPP3-LP               | 327.074029 ± 28.893341 | 41.422945 ± 1.381874 |
-| TOPP3-SOCP             | 289.654071 ± 12.862133 | 41.418608 ± 1.381202 |
-| COPP3-SOCP             | 285.004302 ± 13.471264 | 41.418608 ± 1.381202 |
-| TOPP3-RA (Iteration 1) |   10.571045 ± 0.857653 | 41.499200 ± 1.385735 |
-| TOPP3-RA (Iteration 2) |   20.300932 ± 1.237908 | 41.399867 ± 1.386791 |
+| 方法                   | 可用版本 |          计算时间 (ms) |         终端时间 (s) |
+| ---------------------- | -------- | ---------------------: | -------------------: |
+| TOPP2-RA               | 开源     |    0.615425 ± 0.244409 | 40.903420 ± 1.378671 |
+| COPP2-SOCP             | 开源     |  149.969964 ± 9.364334 | 40.900039 ± 1.378613 |
+| COPP2-RDDP             | PRO      |    5.436142 ± 0.465495 | 40.900135 ± 1.378613 |
+| TOPP3-LP               | 开源     | 327.074029 ± 28.893341 | 41.422945 ± 1.381874 |
+| TOPP3-SOCP             | 开源     | 289.654071 ± 12.862133 | 41.418608 ± 1.381202 |
+| COPP3-SOCP             | 开源     | 285.004302 ± 13.471264 | 41.418608 ± 1.381202 |
+| TOPP3-RA (Iteration 1) | PRO      |   10.571045 ± 0.857653 | 41.499200 ± 1.385735 |
+| TOPP3-RA (Iteration 2) | PRO      |   20.300932 ± 1.237908 | 41.399867 ± 1.386791 |
 
 #### 凸目标 (Convex-Objective)
 
 在该测试中，TOPP方法仍以终端时间为优化目标。
 
-| 方法       |          计算时间 (ms) |             目标函数值 |
-| ---------- | ---------------------: | ---------------------: |
-| TOPP2-RA   |    0.534700 ± 0.069296 | 217.444861 ± 12.462360 |
-| COPP2-SOCP | 270.059250 ± 52.073677 |   96.517354 ± 3.641154 |
-| COPP2-RDDP |   12.667700 ± 0.429214 |   96.525785 ± 3.639733 |
-| TOPP3-LP   |  348.000000 ± 9.326314 | 211.611085 ± 12.367224 |
-| TOPP3-SOCP | 301.227000 ± 12.938498 | 211.974066 ± 12.323865 |
-| COPP3-SOCP | 301.227000 ± 12.938498 |   96.634962 ± 3.613264 |
-| COPP3-RDDP |   65.823050 ± 0.087893 |   98.708998 ± 3.354004 |
+| 方法       | 可用版本 |          计算时间 (ms) |             目标函数值 |
+| ---------- | -------- | ---------------------: | ---------------------: |
+| TOPP2-RA   | 开源     |    0.534700 ± 0.069296 | 217.444861 ± 12.462360 |
+| COPP2-SOCP | 开源     | 270.059250 ± 52.073677 |   96.517354 ± 3.641154 |
+| COPP2-RDDP | PRO      |   12.667700 ± 0.429214 |   96.525785 ± 3.639733 |
+| TOPP3-LP   | 开源     |  348.000000 ± 9.326314 | 211.611085 ± 12.367224 |
+| TOPP3-SOCP | 开源     | 301.227000 ± 12.938498 | 211.974066 ± 12.323865 |
+| COPP3-SOCP | 开源     | 301.227000 ± 12.938498 |   96.634962 ± 3.613264 |
+| COPP3-RDDP | PRO      |   65.823050 ± 0.087893 |   98.708998 ± 3.354004 |
 
 ## 文档与架构 { #docs-architecture }
 
@@ -701,11 +1307,11 @@ $$
 
 === "Rust"
 
-    我们推荐使用[docs.rs 最新文档](https://docs.rs/copp/latest/copp/)。也支持本地文档：
+    我们推荐使用[docs.rs 最新文档](https://docs.rs/copp/latest/copp/)，也支持本地文档：
 
-    - [v0.2.1 (Latest)](/rust/v0.2.1/copp/)
-    - [v0.2.0](/rust/v0.2.0/copp/)
-    - [v0.1.0](/rust/v0.1.0/copp/)
+    - [v0.2.1 (Latest)](rust/v0.2.1/copp/)
+    - [v0.2.0](rust/v0.2.0/copp/)
+    - [v0.1.0](rust/v0.1.0/copp/)
 
     如果需要查看main branch上尚未发布的更新，我们推荐在`copp`仓库根目录本地生成文档：
 
@@ -717,11 +1323,16 @@ $$
 
 === "C"
 
-    TODO
+    C文档如下：
+
+    - [v0.2.1 (Latest)](c/v0.2.1/index.html)
+    - [v0.2.0](c/v0.2.0/index.html)
 
 === "Python"
 
-    TODO
+    Python文档如下：
+
+    - [v0.2.1 (Latest)](python/v0.2.1/index.html)
 
 ### 项目架构
 
@@ -737,15 +1348,36 @@ $$
 
 === "C"
 
-    TODO
+    | 头文件                 | 负责内容                                              |
+    | ---------------------- | ----------------------------------------------------- |
+    | `copp/copp.h`          | Umbrella header，包含完整 C ABI。                     |
+    | `copp/core.h`          | 状态码、last error、矩阵/向量视图、Clarabel选项。     |
+    | `copp/path.h`          | 路径句柄、样条路径、callback路径、路径求值。          |
+    | `copp/robot.h`         | 机器人句柄、路径采样、物理约束、逆动力学callback。    |
+    | `copp/formulation.h`   | TOPP/COPP problem descriptor、目标函数、profile类型。 |
+    | `copp/interpolation.h` | 二阶/三阶轨迹后处理与插补。                           |
+    | `copp/topp2.h`         | TOPP2-RA和ReachSet2接口。                             |
+    | `copp/copp2.h`         | COPP2-SOCP接口。                                      |
+    | `copp/topp3.h`         | TOPP3-LP和TOPP3-SOCP接口。                            |
+    | `copp/copp3.h`         | COPP3-SOCP接口。                                      |
 
 === "Python"
 
-    TODO
+    | 模块                    | 负责内容                                                                                             |
+    | ----------------------- | ---------------------------------------------------------------------------------------------------- |
+    | `copp_py`               | 顶层包，导出常用类型、函数和子模块入口。                                                             |
+    | `copp_py.path`          | `Path`、`SplineConfig`、路径求值、waypoint样条、自动微分与用户evaluator路径。                        |
+    | `copp_py.robot`         | `Robot`、路径采样、速度/加速度/jerk/力矩约束、高级物理约束入口和逆动力学callback。                   |
+    | `copp_py.constraints`   | `Constraints`原始约束缓冲区、一/二/三阶底层约束、`amax_substitute`和滑动窗口操作。                   |
+    | `copp_py.solver`        | 求解器命名空间，包含`topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_lp`、`topp3_socp`、`copp3_socp`。 |
+    | `copp_py.interpolation` | `Profile3rd`、二阶/三阶`s_to_t_*`、`t_to_s_*`和`a_to_b_topp2`轨迹后处理。                            |
+    | `copp_py.objective`     | COPP2/COPP3目标函数描述，包括时间、线性、热能耗散、力矩全变分等目标。                                |
+    | `copp_py.clarabel`      | Clarabel SOCP选项、设置、solver状态和expert诊断结果。                                                |
+    | `copp_py.core`          | 版本、错误类型、枚举、矩阵布局和通用类型约定。                                                       |
 
 ## 引用
 
-如果你的工作使用了开源TOPP3/COPP3功能，建议引用：（即便是最基本的离散区间内profile模板也用到了该文章的贡献）
+如果你的工作使用了开源TOPP3/COPP3功能，建议引用[如下论文](https://doi.org/10.1016/j.ijmachtools.2025.104355)：（即便是最基本的离散区间内profile模板也用到了该文章的贡献）
 
 ```tex
 @article{wang2026online,
@@ -758,7 +1390,7 @@ $$
 }
 ```
 
-如果你的工作使用了PRO版本中的TOPP3-RA, COPP2-RDDP, COPP3-RDDP方法，建议引用：（其中TOPP3-RA基于该论文进行改进）
+如果你的工作使用了PRO版本中的TOPP3-RA, COPP2-RDDP, COPP3-RDDP方法，建议引用[如下论文](https://arxiv.org/abs/2605.19089)：（其中TOPP3-RA基于该论文进行改进）
 
 ```tex
 @article{wang2026reachability,
@@ -769,7 +1401,7 @@ $$
 }
 ```
 
-其他情况下可引用COPP项目本身，或对应论文：
+其他情况下可引用[`COPP`库](https://github.com/TOPP-THU/copp)，或对应论文：
 
 ```tex
 @misc{thu2026copp,

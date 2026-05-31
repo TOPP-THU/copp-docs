@@ -51,6 +51,8 @@ extra_javascript:
   - javascripts/mathjax.js
   - javascripts/mathjax/es5/tex-mml-chtml.js
   - javascripts/copp-tabs.js
+  - javascripts/code-copy.js
+  - javascripts/toc-cleanup.js
 
 extra_css:
   - stylesheets/extra.css

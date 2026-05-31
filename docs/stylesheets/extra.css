@@ -68,6 +68,79 @@
     font-weight: 650;
 }
 
+.md-typeset .highlight {
+    --copp-code-copy-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16h13c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>');
+    --copp-code-check-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>');
+    position: relative;
+}
+
+.md-typeset .highlight .md-clipboard {
+    display: none;
+}
+
+.md-typeset .highlight .copp-code-copy {
+    position: absolute;
+    top: 0.36rem;
+    right: 0.35rem;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--md-default-bg-color) 72%, transparent);
+    color: var(--md-default-fg-color--light);
+    cursor: pointer;
+    opacity: 0.48;
+    padding: 0;
+    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, opacity 120ms ease;
+}
+
+.md-typeset .highlight:hover .copp-code-copy {
+    opacity: 0.76;
+}
+
+.md-typeset .highlight .copp-code-copy::before {
+    width: 0.78rem;
+    height: 0.78rem;
+    background: currentcolor;
+    content: "";
+    -webkit-mask-image: var(--copp-code-copy-icon);
+    mask-image: var(--copp-code-copy-icon);
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+.md-typeset .highlight .copp-code-copy:hover,
+.md-typeset .highlight .copp-code-copy:focus {
+    border-color: #1f6feb;
+    background: color-mix(in srgb, #1f6feb 11%, var(--md-default-bg-color));
+    color: #1f6feb;
+    opacity: 1;
+}
+
+.md-typeset .highlight .copp-code-copy.is-copied {
+    border-color: #1a7f37;
+    color: #1a7f37;
+    opacity: 1;
+}
+
+.md-typeset .highlight .copp-code-copy.is-copied::before {
+    -webkit-mask-image: var(--copp-code-check-icon);
+    mask-image: var(--copp-code-check-icon);
+}
+
+.md-typeset .highlight .copp-code-copy.is-failed {
+    border-color: #cf222e;
+    color: #cf222e;
+    opacity: 1;
+}
+
 .md-typeset .tabbed-set > .tabbed-labels > label {
     border-radius: 6px 6px 0 0;
     font-weight: 600;
