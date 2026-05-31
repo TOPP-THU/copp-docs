@@ -77,7 +77,11 @@ try {
         }
     }
 
-    foreach ($dir in @("index-zh-rust", "javascripts", "stylesheets", "search")) {
+    foreach ($dir in @("index-zh-rust")) {
+        Remove-GeneratedPath -Path (Join-Path $RepoRoot $dir)
+    }
+
+    foreach ($dir in @("javascripts", "stylesheets", "search")) {
         $src = Join-Path $SiteDir $dir
         $dst = Join-Path $RepoRoot $dir
         if (-not (Test-Path -LiteralPath $src)) {

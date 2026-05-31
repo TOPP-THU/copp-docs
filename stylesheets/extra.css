@@ -54,6 +54,20 @@
     margin: 0.35rem 0;
 }
 
+.md-typeset h1 {
+    color: var(--md-default-fg-color);
+    font-weight: 750;
+}
+
+.md-typeset h2 {
+    color: var(--md-default-fg-color);
+    font-weight: 700;
+}
+
+.md-typeset h3 {
+    font-weight: 650;
+}
+
 .md-typeset .tabbed-set > .tabbed-labels > label {
     border-radius: 6px 6px 0 0;
     font-weight: 600;
@@ -65,8 +79,13 @@
 .md-typeset .tabbed-set > input:nth-child(3):checked ~ .tabbed-labels > label:nth-child(3),
 .md-typeset .tabbed-set > input:nth-child(4):checked ~ .tabbed-labels > label:nth-child(4),
 .md-typeset .tabbed-set > input:nth-child(5):checked ~ .tabbed-labels > label:nth-child(5),
-.md-typeset .tabbed-set > input:nth-child(6):checked ~ .tabbed-labels > label:nth-child(6) {
+.md-typeset .tabbed-set > input:nth-child(6):checked ~ .tabbed-labels > label:nth-child(6),
+.md-typeset .tabbed-set > .tabbed-labels > label.is-active {
     background: #1f6feb !important;
     color: #fff !important;
     font-weight: 700;
+}
+
+.md-typeset .tabbed-set > .tabbed-labels > label.is-active:hover {
+    color: #fff !important;
 }

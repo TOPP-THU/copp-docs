@@ -229,9 +229,9 @@ $$
 
 ## Step-by-Step工作流
 
-=== "Rust"
+我们以二维路径的时间最优参数化为例给出一个简单的例程，高级接口详见[文档章节](#docs-architecture)。
 
-    我们以二维路径的时间最优参数化为例给出一个简单的例程，高级接口详见[文档章节](#docs-architecture)。
+=== "Rust"
 
     ```rust
     const DIM: usize = 2;
@@ -243,28 +243,55 @@ $$
 
 === "Python"
 
-    TODO
+    ```python
+    import copp_py as copp
+
+    DIM = 2
+    ```
 
 ### Step 1. 构造几何路径
 
+严格地说，几何路径$\boldsymbol{q}=\boldsymbol{q}(s)$是用户端给`copp`的输入，而`copp`库提供了路径相关模块作为辅助。
+
+#### Option A.  解析式自动微分
+
+最简单的方式是通过解析式构造路径，例如：
+
 === "Rust"
-
-    严格地说，几何路径$\boldsymbol{q}=\boldsymbol{q}(s)$是用户端给`copp`的输入，而`copp`库提供了路径相关模块作为辅助。
-
-    #### Option A.  解析式自动微分
-
-    最简单的方式是通过解析式构造路径，例如：
 
     ```rust
     use copp::path::autodiff::Jet3;
     use copp::path::{cos, sin, Path};
+    use std::f64::consts::PI;
 
-    let path = Path::from_parametric(|s: Jet3| vec![sin(s), cos(s)], 0.0, 1.0)?;
+    let path = Path::from_parametric(|s: Jet3| vec![sin(2.0 * PI * s), cos(2.0 * PI * s)], 0.0, 1.0)?;
     ```
 
-    #### Option B. 路径点生成样条
+=== "C"
 
-    如果提供路径点，可以通过如下方式构建样条路径，例如：
+    TODO
+
+=== "Python"
+
+    ```python
+    import jax
+    import jax.numpy as jnp
+
+    jax.config.update("jax_enable_x64", True)
+    
+    def q_fn(s):
+        freq = jnp.array([2.0 * jnp.pi, 3.0 * jnp.pi, 5.0 * jnp.pi], dtype=jnp.float64)
+        phase = jnp.array([0.0, 0.3, 0.7], dtype=jnp.float64)
+        return jnp.sin(freq * s + phase)
+
+    path = copp.Path.from_jax(q_fn, 0.0, 1.0)
+    ```
+
+#### Option B. 路径点生成样条
+
+如果提供路径点，可以通过如下方式构建样条路径，例如：
+
+=== "Rust"
 
     ```rust
     use copp::path::{Path, SplineConfig};
@@ -281,9 +308,34 @@ $$
     let path = Path::from_waypoints(&waypoints, SplineConfig::default())?;
     ```
 
-    #### Option C. 用户手动微分
+=== "C"
 
-    最一般的情况下，用户可以自行求导，在TOPP2/COPP2应在给定$s$下提供$\boldsymbol{q}(s),\boldsymbol{q}'(s),\boldsymbol{q}''(s)$，例如：
+    TODO
+
+=== "Python"
+
+    ```python
+    import numpy as np
+    
+    waypoints = np.array(
+        [
+            [0.0, 0.0],
+            [0.25, 0.1],
+            [0.5, -0.1],
+            [0.75, 0.2],
+            [1.0, 0.0],
+        ],
+        dtype=np.float64,
+    )
+    path = copp.Path.from_waypoints(waypoints)
+    ```
+
+
+#### Option C. 用户手动微分
+
+最一般的情况下，用户可以自行求导，在TOPP2/COPP2应在给定$s$下提供$\boldsymbol{q}(s),\boldsymbol{q}'(s),\boldsymbol{q}''(s)$，例如：
+
+=== "Rust"
 
     ```rust
     use copp::diag::PathError;

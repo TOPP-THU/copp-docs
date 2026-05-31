@@ -48,6 +48,13 @@
         }
     }
 
+    function setActiveLabelStyle(label, active) {
+        label.classList.toggle("is-active", active);
+        label.style.background = active ? "#1f6feb" : "";
+        label.style.color = active ? "#fff" : "";
+        label.style.fontWeight = active ? "700" : "";
+    }
+
     function activateTabs(label, remember) {
         var active = normalizeLabel(label);
         if (!isLanguageLabel(active)) {
@@ -67,11 +74,25 @@
             if (input) {
                 input.checked = true;
             }
+
+            labels.forEach(function (item) {
+                setActiveLabelStyle(item, item === target);
+            });
         });
 
         if (remember) {
             rememberLabel(active);
         }
+    }
+
+    function refreshActiveLabels() {
+        document.querySelectorAll(".tabbed-set").forEach(function (set) {
+            var labels = Array.prototype.slice.call(set.querySelectorAll(".tabbed-labels > label"));
+            labels.forEach(function (label) {
+                var input = document.getElementById(label.htmlFor);
+                setActiveLabelStyle(label, Boolean(input && input.checked));
+            });
+        });
     }
 
     function bindTabs() {
@@ -88,7 +109,12 @@
     }
 
     function initTabs() {
-        activateTabs(storedLabel(), false);
+        var active = storedLabel();
+        if (active) {
+            activateTabs(active, false);
+        } else {
+            refreshActiveLabels();
+        }
     }
 
     bindTabs();
