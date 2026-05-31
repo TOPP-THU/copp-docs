@@ -1,4 +1,4 @@
-# COPP文档
+# COPP 文档
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/TOPP-THU/copp/blob/main/LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
 
@@ -6,67 +6,67 @@
 
 ## 核心问题
 
-COPP专注于解决给定几何路径(path)生成时间参数化的轨迹 (trajectory)，并满足用户指定的约束、优化给定的目标。特别地，COPP规划的轨迹一般是二阶光滑（加速度有界）或三阶光滑（加加速度有界）。
+COPP 专注于解决给定几何路径 (path) 生成时间参数化的轨迹 (trajectory)，并满足用户指定的约束、优化给定的目标。特别地，COPP 规划的轨迹一般是二阶光滑（加速度有界）或三阶光滑（加加速度有界）。
 
 ### 路径参数化 (Path Parameterization)
 
-给定一个$n$维机器人系统和一条足够光滑的几何路径：
+给定一个 $n$ 维机器人系统和一条足够光滑的几何路径：
 
 $$
 \boldsymbol{q}=\boldsymbol{q}(s)\in\mathbb{R}^n,\qquad s\in[0,s_\text{f}],
 $$
 
-其中$s$是一般的路径参数，且$s_\text{f}$已知。对于$m$阶问题，$m\in\{2,3\}$，要求路径$\boldsymbol{q}=\boldsymbol{q}(s)$在$s$域上$\mathcal{C}^m$连续。$m$阶路径参数化的目标是构建一个严格递增的时间参数化
+其中 $s$ 是一般的路径参数，且 $s_\text{f}$ 已知。对于 $m$ 阶问题，$m\in\{2,3\}$，要求路径 $\boldsymbol{q}=\boldsymbol{q}(s)$ 在 $s$ 域上 $\mathcal{C}^m$ 连续。$m$ 阶路径参数化的目标是构建一个严格递增的时间参数化
 
 $$
 s=s(t),\qquad t\in[0,t_\text{f}],
 $$
 
-且$\frac{\mathrm{d}^ms}{\mathrm{d}t^m}(t)$在有限个时间点之外存在且有界，其中终端时间$t_\text{f}$待求解。从而构建出严格遵循给定几何路径的机器人轨迹
+且 $\frac{\mathrm{d}^ms}{\mathrm{d}t^m}(t)$ 在有限个时间点之外存在且有界，其中终端时间 $t_\text{f}$ 待求解。从而构建出严格遵循给定几何路径的机器人轨迹
 
 $$
 \boldsymbol{q}=\boldsymbol{q}(s(t))\in\mathbb{R}^n,\qquad t\in[0,t_\text{f}].
 $$
 
-上述轨迹经过插补 (Interpolation) 可以作为参考轨迹 (Reference) 发送给底层伺服系统，设其控制周期为$T_\text{s}$（例如$T_\text{s}=\text{1ms}$），那么发送给底层伺服系统的信息一般包括插补轨迹
+上述轨迹经过插补 (Interpolation) 可以作为参考轨迹 (Reference) 发送给底层伺服系统，设其控制周期为 $T_\text{s}$（例如 $T_\text{s}=\text{1ms}$），那么发送给底层伺服系统的信息一般包括插补轨迹
 
 $$
 \{\boldsymbol{q}(s(iT_\text{s}))\}_{i\in\mathbb{N}}
 $$
 
-及相应前馈所需信息，例如PID控制所需的参考速度项$\{\dot{\boldsymbol{q}}(s(iT_\text{s}))\}_{i\in\mathbb{N}}$及前馈所需的参考加速度项$\{\ddot{\boldsymbol{q}}(s(iT_\text{s}))\}_{i\in\mathbb{N}}$和力矩项$\{\boldsymbol{\tau}(s(iT_\text{s}))\}_{i\in\mathbb{N}}$等。
+及相应前馈所需信息，例如 PID 控制所需的参考速度项 $\{\dot{\boldsymbol{q}}(s(iT_\text{s}))\}_{i\in\mathbb{N}}$ 及前馈所需的参考加速度项 $\{\ddot{\boldsymbol{q}}(s(iT_\text{s}))\}_{i\in\mathbb{N}}$ 和力矩项 $\{\boldsymbol{\tau}(s(iT_\text{s}))\}_{i\in\mathbb{N}}$ 等。
 
-记$\dot{\bullet}$为对时间$t$的导数，$\bullet'$为对参数$s$的导数。定义
+记 $\dot{\bullet}$ 为对时间 $t$ 的导数，$\bullet'$ 为对参数 $s$ 的导数。定义
 
 $$
 a(s)=\dot{s}^2,\qquad b(s)=\ddot{s}=\frac12a'(s),\qquad c(s)=\frac{\dddot{s}}{\dot{s}}=b'(s).
 $$
 
-在二阶问题中，状态量为$a(s)$，控制量为$b(s)$；在三阶问题中，状态量为$(a(s),b(s))$，控制量为$c(s)$。
+在二阶问题中，状态量为 $a(s)$，控制量为 $b(s)$；在三阶问题中，状态量为 $(a(s),b(s))$，控制量为 $c(s)$。
 
 ### 最优路径参数化 (Optimal Path Parameterization)
 
 相比一般的路径参数化，最优路径参数化进一步引入了约束条件 (constraint) 和优化目标 (objective)。
 
-约束条件用于提高轨迹光滑性、确保参考轨迹在驱动性能范围内，在实际效果中有利于减少振动、提高轨迹跟踪精度等。一阶约束可以表达合成速度约束$\|\boldsymbol{J(s)}\dot{\boldsymbol{q}}(s)\|\leq V(s)$、各轴速度约束$\dot{\boldsymbol{q}}_\text{min}(s)\leq\dot{\boldsymbol{q}}(s)\leq\dot{\boldsymbol{q}}_\text{max}(s)$等，一般形式为
+约束条件用于提高轨迹光滑性、确保参考轨迹在驱动性能范围内，在实际效果中有利于减少振动、提高轨迹跟踪精度等。一阶约束可以表达合成速度约束 $\|\boldsymbol{J(s)}\dot{\boldsymbol{q}}(s)\|\leq V(s)$、各轴速度约束 $\dot{\boldsymbol{q}}_\text{min}(s)\leq\dot{\boldsymbol{q}}(s)\leq\dot{\boldsymbol{q}}_\text{max}(s)$ 等，一般形式为
 
 $$
 a(s)\leq a^+(s).
 $$
 
-二阶约束可以表达各轴加速度约束$\ddot{\boldsymbol{q}}_\text{min}(s)\leq\ddot{\boldsymbol{q}}(s)\leq\ddot{\boldsymbol{q}}_\text{max}(s)$、各轴力矩约束$\boldsymbol{\tau}_\text{min}(s)\leq\boldsymbol{\tau}(s)\leq\boldsymbol{\tau}_\text{max}(s)$等，一般形式为
+二阶约束可以表达各轴加速度约束 $\ddot{\boldsymbol{q}}_\text{min}(s)\leq\ddot{\boldsymbol{q}}(s)\leq\ddot{\boldsymbol{q}}_\text{max}(s)$、各轴力矩约束 $\boldsymbol{\tau}_\text{min}(s)\leq\boldsymbol{\tau}(s)\leq\boldsymbol{\tau}_\text{max}(s)$ 等，一般形式为
 
 $$
 \boldsymbol{n}(s)a(s)+\boldsymbol{m}(s)b(s)\leq\boldsymbol{g}(s).
 $$
 
-三阶约束可以表达各轴加加速度约束$\dddot{\boldsymbol{q}}_\text{min}(s)\leq\dddot{\boldsymbol{q}}(s)\leq\dddot{\boldsymbol{q}}_\text{max}(s)$、各轴力矩导数约束$\dot{\boldsymbol{\tau}}_\text{min}(s)\leq\dot{\boldsymbol{\tau}}(s)\leq\dot{\boldsymbol{\tau}}_\text{max}(s)$等，一般形式为
+三阶约束可以表达各轴加加速度约束 $\dddot{\boldsymbol{q}}_\text{min}(s)\leq\dddot{\boldsymbol{q}}(s)\leq\dddot{\boldsymbol{q}}_\text{max}(s)$、各轴力矩导数约束 $\dot{\boldsymbol{\tau}}_\text{min}(s)\leq\dot{\boldsymbol{\tau}}(s)\leq\dot{\boldsymbol{\tau}}_\text{max}(s)$ 等，一般形式为
 
 $$
 \sqrt{a(s)}\left(\boldsymbol{r}(s)a(s)+\boldsymbol{v}(s)b(s)+\boldsymbol{w}(s)c(s)+\boldsymbol{h}(s)\right)\leq\boldsymbol{f}(s).
 $$
 
-上述除了$a(s), b(s), c(s)$为决策变量外，其他量均为根据路径、模型、物理约束计算得到的已知量。注意到上述约束支持分段约束、关于参数变化的约束、非对称约束。
+上述除了 $a(s), b(s), c(s)$ 为决策变量外，其他量均为根据路径、模型、物理约束计算得到的已知量。注意到上述约束支持分段约束、关于参数变化的约束、非对称约束。
 
 常见的优化目标包括终端时间
 
@@ -95,9 +95,9 @@ J_\text{lin}=\begin{cases}
 \end{cases}
 $$
 
-最常用的目标是终端时间$t_\text{f}$，即时间最优路径参数化 (Time-Optimal Path Parameterization, TOPP)；在更一般的目标下，我们可以考虑上述目标或其他用户自定义凸目标的线性组合，即凸目标路径参数化 (Convex-Objective Path Parameterization)。[实验表明](https://arxiv.org/abs/2605.19089)，相比纯TOPP，终端时间-热能耗散的混合目标$J=t_\text{f}+\lambda J_\text{th}$的COPP所得轨迹能够在极小的终端时间代价下显著提升轨迹光滑性。
+最常用的目标是终端时间 $t_\text{f}$，即时间最优路径参数化 (Time-Optimal Path Parameterization, TOPP)；在更一般的目标下，我们可以考虑上述目标或其他用户自定义凸目标的线性组合，即凸目标路径参数化 (Convex-Objective Path Parameterization)。[实验表明](https://arxiv.org/abs/2605.19089)，相比纯 TOPP，终端时间-热能耗散的混合目标 $J=t_\text{f}+\lambda J_\text{th}$ 的 COPP 所得轨迹能够在极小的终端时间代价下显著提升轨迹光滑性。
 
-总结而言，`copp`库能够求解的问题分类如下：
+总结而言，`copp` 库能够求解的问题分类如下：
 
 | 问题类别   | 二阶（速度、加速度、力矩约束） | 三阶约束（额外加加速度、力矩导数约束等） |
 | ---------- | ------------------------------ | ---------------------------------------- |
@@ -108,14 +108,14 @@ $$
 
 === "Rust"
 
-    `copp`库已经发布到[crates.io](https://crates.io/crates/copp)，只需在根目录`Cargo.toml`加入
+    `copp` 库已经发布到 [crates.io](https://crates.io/crates/copp)，只需在根目录 `Cargo.toml` 加入
 
     ```toml
     [dependencies]
     copp = "0.2.1"
     ```
 
-    `copp` v0.2.1 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启Release模式，以显著提高计算效率。
+    `copp` v0.2.1 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。
 
 === "C"
 
@@ -198,38 +198,37 @@ $$
     ```sh
     python -c "import copp_py as copp; print(copp.version())"
     ```
-    
 
 ## 算法选择
 
-`copp`中算法的选择主要取决于三个因素：问题是二阶还是三阶、目标是时间最优还是一般凸目标、以及是否需要PRO版本提供的更高性能。
+`copp` 中算法的选择主要取决于三个因素：问题是二阶还是三阶、目标是时间最优还是一般凸目标、以及是否需要 PRO 版本提供的更高性能。
 
 | 问题类别 | 算法       | 可用版本 | 说明                                                                                                                                                                                                           |
 | -------- | ---------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TOPP2    | TOPP2-RA   | 开源     | 基于可达性分析的高速算法。在常见benchmark中相对全局优化基准的误差通常低于$10^{-4}$，适合作为二阶时间最优问题的默认入口。                                                                                       |
-| COPP2    | COPP2-SOCP | 开源     | 将问题建模为SOCP并由`clarabel`求解。在凸建模假设下具备全局最优性，但计算开销通常明显高于RA类方法。                                                                                                             |
-| COPP2    | COPP2-RDDP | PRO      | 原创的高速算法，保持全局最优解质量，并显著快于COPP2-SOCP。                                                                                                                                                     |
-| TOPP3    | TOPP3-SOCP | 开源     | 基于`clarabel`的锥优化形式，通常能得到高质量的KKT解；在特定数据集上计算成本可能较高。                                                                                                                          |
-| TOPP3    | TOPP3-LP   | 开源     | TOPP3-SOCP的线性目标近似形式，通常更快；但在jerk约束较紧时可能次优，因此主要推荐在jerk边界较宽松时使用。                                                                                                       |
-| TOPP3    | TOPP3-RA   | PRO      | 基于可达性分析的高速三阶算法；在jerk约束较紧时可能次优，主要推荐在jerk边界较宽松时使用。                                                                                                                       |
-| COPP3    | COPP3-SOCP | 开源     | 基于`clarabel`的锥优化形式，通常具有较强的实际最优性，但计算成本较高。                                                                                                                                         |
-| COPP3    | COPP3-RDDP | PRO      | 高速原创算法，能够得到接近TOPP3-SOCP质量的KKT解，同时显著快于TOPP3-SOCP、TOPP3-LP和COPP3-SOCP。COPP3-RDDP也可以作为高质量TOPP3求解器使用；在长路径问题上，它可能比COPP3-SOCP具有更好的实际最优性和数值稳定性。 |
+| TOPP2    | TOPP2-RA   | 开源     | 基于可达性分析的高速算法。在常见 benchmark 中相对全局优化基准的误差通常低于 $10^{-4}$，适合作为二阶时间最优问题的默认入口。                                                                                       |
+| COPP2    | COPP2-SOCP | 开源     | 将问题建模为 SOCP 并由 `clarabel` 求解。在凸建模假设下具备全局最优性，但计算开销通常明显高于 RA 类方法。                                                                                                             |
+| COPP2    | COPP2-RDDP | PRO      | 原创的高速算法，保持全局最优解质量，并显著快于 COPP2-SOCP。                                                                                                                                                     |
+| TOPP3    | TOPP3-SOCP | 开源     | 基于 `clarabel` 的锥优化形式，通常能得到高质量的 KKT 解；在特定数据集上计算成本可能较高。                                                                                                                          |
+| TOPP3    | TOPP3-LP   | 开源     | TOPP3-SOCP 的线性目标近似形式，通常更快；但在 jerk 约束较紧时可能次优，因此主要推荐在 jerk 边界较宽松时使用。                                                                                                       |
+| TOPP3    | TOPP3-RA   | PRO      | 基于可达性分析的高速三阶算法；在 jerk 约束较紧时可能次优，主要推荐在 jerk 边界较宽松时使用。                                                                                                                       |
+| COPP3    | COPP3-SOCP | 开源     | 基于 `clarabel` 的锥优化形式，通常具有较强的实际最优性，但计算成本较高。                                                                                                                                         |
+| COPP3    | COPP3-RDDP | PRO      | 高速原创算法，能够得到接近 TOPP3-SOCP 质量的 KKT 解，同时显著快于 TOPP3-SOCP、TOPP3-LP 和 COPP3-SOCP。COPP3-RDDP 也可以作为高质量 TOPP3 求解器使用；在长路径问题上，它可能比 COPP3-SOCP 具有更好的实际最优性和数值稳定性。 |
 
 更具体地说，可以按如下方式选择：
 
 | 场景                                           | 推荐算法                | 可用版本 | 主要原因                                                        | 注意事项                         | 备选方案                           |
 | ---------------------------------------------- | ----------------------- | -------- | --------------------------------------------------------------- | -------------------------------- | ---------------------------------- |
-| 二阶时间最优，且要求极低计算时间               | TOPP2-RA                | 开源     | 速度和性能折中极好，在典型benchmark中接近全局最优。             | 目标固定为最短时间。             |                                    |
-| 二阶凸目标，且更重视全局解质量                 | COPP2-SOCP              | 开源     | 凸锥优化形式，在模型假设下具有全局最优性。                      | 计算时间高于RA/RDDP类方法。      | 若需要大幅提速，可使用COPP2-RDDP。 |
-| 二阶凸目标，且要求最高计算效率                 | COPP2-RDDP              | PRO      | 保持全局最优解质量，同时显著提高计算速度。                      | 需要PRO授权。                    | COPP2-SOCP。                       |
-| 三阶问题，且希望使用开源版本中最强的最优性质量 | TOPP3-SOCP / COPP3-SOCP | 开源     | 具有较强的KKT解质量和较广泛适用性。                             | 在特定数据集上计算成本可能较高。 | 若需要大幅提速，可使用COPP3-RDDP。 |
-| 三阶时间最优，且希望使用更快的开源近似         | TOPP3-LP                | 开源     | 当用户自己的路径数据集显示它具有更好的速度/性能表现时可以使用。 | jerk约束较紧时可能次优。         | TOPP3-SOCP或COPP3-RDDP。           |
-| 三阶时间最优，jerk边界较宽松且要求极低计算时间 | TOPP3-RA                | PRO      | 计算开销很低。                                                  | jerk约束较紧时可能次优。         | COPP3-RDDP或TOPP3-SOCP。           |
-| 三阶高质量、高稳定性，特别是困难长路径规划     | COPP3-RDDP              | PRO      | 实际最优性强、计算速度高，并且通常在长时域问题上更稳定。        | 需要PRO授权。                    | COPP3-SOCP。                       |
+| 二阶时间最优，且要求极低计算时间               | TOPP2-RA                | 开源     | 速度和性能折中极好，在典型 benchmark 中接近全局最优。             | 目标固定为最短时间。             |                                    |
+| 二阶凸目标，且更重视全局解质量                 | COPP2-SOCP              | 开源     | 凸锥优化形式，在模型假设下具有全局最优性。                      | 计算时间高于 RA/RDDP 类方法。      | 若需要大幅提速，可使用 COPP2-RDDP。 |
+| 二阶凸目标，且要求最高计算效率                 | COPP2-RDDP              | PRO      | 保持全局最优解质量，同时显著提高计算速度。                      | 需要 PRO 授权。                    | COPP2-SOCP。                       |
+| 三阶问题，且希望使用开源版本中最强的最优性质量 | TOPP3-SOCP / COPP3-SOCP | 开源     | 具有较强的 KKT 解质量和较广泛适用性。                             | 在特定数据集上计算成本可能较高。 | 若需要大幅提速，可使用 COPP3-RDDP。 |
+| 三阶时间最优，且希望使用更快的开源近似         | TOPP3-LP                | 开源     | 当用户自己的路径数据集显示它具有更好的速度/性能表现时可以使用。 | jerk 约束较紧时可能次优。         | TOPP3-SOCP 或 COPP3-RDDP。           |
+| 三阶时间最优，jerk 边界较宽松且要求极低计算时间 | TOPP3-RA                | PRO      | 计算开销很低。                                                  | jerk 约束较紧时可能次优。         | COPP3-RDDP 或 TOPP3-SOCP。           |
+| 三阶高质量、高稳定性，特别是困难长路径规划     | COPP3-RDDP              | PRO      | 实际最优性强、计算速度高，并且通常在长时域问题上更稳定。        | 需要 PRO 授权。                    | COPP3-SOCP。                       |
 
-## Step-by-Step工作流
+## Step-by-Step 工作流
 
-我们以二维路径的时间最优参数化为例给出一个简单的例程，高级接口详见[文档章节](#docs-architecture)。
+我们以二维路径的时间最优参数化为例给出一个简单的例程，完整例程可以在每种语言的 `examples` 目录下看到，高级接口详见[文档章节](#docs-architecture)。
 
 === "Rust"
 
@@ -270,7 +269,7 @@ $$
 
 ### Step 1. 构造几何路径
 
-严格地说，几何路径$\boldsymbol{q}=\boldsymbol{q}(s)$是用户端给`copp`的输入，而`copp`库提供了路径相关模块作为辅助。
+严格地说，几何路径 $\boldsymbol{q}=\boldsymbol{q}(s)$ 是用户端给 `copp` 的输入，而 `copp` 库提供了路径相关模块作为辅助。
 
 #### Option A. 解析式自动微分
 
@@ -289,7 +288,7 @@ $$
 === "C"
 
     ```c
-    // C ABI暂时没有提供自动微分接口，请选择Options B or C
+    // C ABI 暂时没有提供自动微分接口，请选择 Options B or C
     ```
 
 === "Python"
@@ -308,7 +307,7 @@ $$
     path = copp.Path.from_jax(q_fn, 0.0, 1.0)
     ```
 
-    Python的自动微分支持`jax`, `autograd`, `casadi`, `sympy`四种工具，可由作者自行选择。
+    Python 的自动微分支持 `jax`, `autograd`, `casadi`, `sympy` 四种工具，可由作者自行选择并安装对应依赖包。
 
 
 #### Option B. 路径点生成样条
@@ -349,6 +348,7 @@ $$
 
     struct CoppPathOptions path_options;
     struct CoppPath *path = NULL;
+    // On success, release `path` later with `copp_path_free(path)`.
     if (check(copp_path_default_options(0.0, 1.0, &path_options), "copp_path_default_options")) {
         return 1;
     }
@@ -381,7 +381,7 @@ $$
 
 #### Option C. 用户手动微分
 
-最一般的情况下，用户可以自行求导，在TOPP2/COPP2应在给定$s$下提供$\boldsymbol{q}(s),\boldsymbol{q}'(s),\boldsymbol{q}''(s)$，例如：
+最一般的情况下，用户可以自行求导，在 TOPP2/COPP2 应在给定 $s$ 下提供 $\boldsymbol{q}(s),\boldsymbol{q}'(s),\boldsymbol{q}''(s)$，例如：
 
 === "Rust"
 
@@ -389,9 +389,9 @@ $$
     use copp::diag::PathError;
     use copp::path::{Path, PathEvaluator2nd, PathEvaluator3rd};
 
-    struct NormalizedEvaluator2nd;
+    struct NormalizedEvaluator;
 
-    impl PathEvaluator2nd for NormalizedEvaluator2nd {
+    impl PathEvaluator2nd for NormalizedEvaluator {
         fn dim(&self) -> usize {
             2
         }
@@ -420,7 +420,7 @@ $$
     }
 
     // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `PathEvaluator3rd` can be removed.
-    impl PathEvaluator3rd for NormalizedEvaluator3rd {
+    impl PathEvaluator3rd for NormalizedEvaluator {
         fn evaluate_up_to_3rd(
             &self,
             s: &[f64],
@@ -528,6 +528,7 @@ $$
     // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then
     // `copp_path_from_evaluator_2nd` can be used without `evaluate_path_3rd`.
     struct CoppPath *path = NULL;
+    // On success, release `path` later with `copp_path_free(path)`.
     if (check(
             copp_path_from_evaluator_3rd(
                 DIM,
@@ -591,7 +592,7 @@ $$
 
 ### Step 2. 离散化路径信息
 
-路径参数化问题需要在给定的$s$离散网格上进行，例如：
+路径参数化问题需要在给定的 $s$ 离散网格上进行，例如：
 
 === "Rust"
 
@@ -633,6 +634,7 @@ $$
 
     ```c
     struct CoppRobot *robot = NULL;
+    // On success, release `robot` later with `copp_robot_free(robot)`.
     if (check(copp_robot_create(DIM, n, &robot), "copp_robot_create")) {
         return 1;
     }
@@ -644,7 +646,7 @@ $$
     robot = copp.Robot(DIM, capacity=n)
     ```
 
-输入$s$网格与路径信息：
+输入 $s$ 网格与路径信息：
 
 === "Rust"
 
@@ -772,7 +774,7 @@ $$
 
 ### Step 4. 调用求解器
 
-我们以求解TOPP2问题、调用`topp2_ra`为例。首先定义问题，例如：
+我们以求解 TOPP2 问题、调用 `topp2_ra` 为例。首先定义问题，例如：
 
 === "Rust"
 
@@ -822,6 +824,7 @@ $$
     ```c
     struct Topp2RaOptions options;
     struct CoppVecF64 a_ra = {0};
+    // On success, release `a_ra` later with `copp_vec_f64_free(a_ra)`.
 
     if (check(topp2_ra_default_options(&options), "topp2_ra_default_options")) {
         return 1;
@@ -840,11 +843,11 @@ $$
     )
     ```
 
-据此，我们得到了$a=a(s)$。
+据此，我们得到了 $a=a(s)$。
 
 ### Step 5. 二阶轨迹后处理（仅二阶需要）
 
-我们接下来希望得到真实的轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解$t=t(s)$，例如：
+我们接下来希望得到真实的轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解 $t=t(s)$，例如：
 
 === "Rust"
 
@@ -861,6 +864,7 @@ $$
     ```c
     double t_final = 0.0;
     struct CoppVecF64 t_s = {0};
+    // On success, release `t_s` later with `copp_vec_f64_free(t_s)`.
 
     if (check(
             copp_s_to_t_2nd(
@@ -880,7 +884,7 @@ $$
     t_final, t_s = copp.interpolation.s_to_t_topp2(s, a_ra, 0.0)
     ```
 
-接下来求逆解$s=s(t)$并插补，例如：
+接下来求逆解 $s=s(t)$ 并插补，例如：
 
 === "Rust"
 
@@ -904,6 +908,7 @@ $$
     // s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
     const double dt = 1e-3;
     struct CoppVecF64 s_t = {0};
+    // On success, release `s_t` later with `copp_vec_f64_free(s_t)`.
 
     if (check(
             copp_t_to_s_uniform_2nd(
@@ -932,7 +937,7 @@ $$
     )
     ```
 
-上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
+上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
 
 === "Rust"
 
@@ -947,6 +952,7 @@ $$
     struct CoppMatrixF64 q_t = {0};
     struct CoppMatrixF64 dq_t = {0};
     struct CoppMatrixF64 ddq_t = {0};
+    // On success, release returned matrices with `copp_matrix_f64_free`.
 
     if (check(
             copp_path_evaluate_up_to_2nd(
@@ -975,7 +981,7 @@ $$
 
 ### Step 6. 构造并求解三阶问题（仅三阶需要）
 
-构造三阶问题如下，其中非凸的三阶约束用前面求解的二阶轨迹`a_ra`进行线性化：
+构造三阶问题如下，其中非凸的三阶约束用前面求解的二阶轨迹 `a_ra` 进行线性化：
 
 === "Rust"
 
@@ -1028,7 +1034,7 @@ $$
     )
     ```
 
-我们以`topp3_socp`为例，调用求解器如下：
+我们以 `topp3_socp` 为例，调用求解器如下：
 
 === "Rust"
 
@@ -1046,6 +1052,7 @@ $$
     ```c
     struct CoppClarabelOptions options_socp;
     struct CoppProfile3rd profile = {0};
+    // On success, release `profile` later with `copp_profile_3rd_free(profile)`.
 
     if (check(copp_clarabel_default_options(&options_socp), "copp_clarabel_default_options")) {
         return 1;
@@ -1064,7 +1071,7 @@ $$
     profile = copp.solver.topp3_socp.solve(problem, options)
     ```
 
-理论上这已经生成了一条可行、近优的三阶轨迹$a_1(s),b_1(s)$了，可以直接进行下一步。如果希望通过更多的计算资源进一步地求解更优的轨迹，可以以$a_1(s)$为线性化点再次求解新的线性化三阶问题：
+理论上这已经生成了一条可行、近优的三阶轨迹 $a_1(s),b_1(s)$ 了，可以直接进行下一步。如果希望通过更多的计算资源进一步地求解更优的轨迹，可以以 $a_1(s)$ 为线性化点再次求解新的线性化三阶问题：
 
 === "Rust"
 
@@ -1091,6 +1098,8 @@ $$
         1e-10,
     };
     struct CoppProfile3rd profile_next = {0};
+    // On success, release `profile_next` with `copp_profile_3rd_free(profile_next)`,
+    // or move it into `profile` as below and release `profile` once at cleanup.
 
     if (check(
             topp3_socp(topp3_problem_next, options_socp, &profile_next),
@@ -1116,11 +1125,11 @@ $$
     profile = copp.solver.topp3_socp.solve(problem, options)
     ```
 
-在计算资源允许的情况下，可以重复进行上述过程，也就是用$a_k(s)$线性化三阶非凸问题并求解得到$a_{k+1}(s),b_{k+1}(s)$，在非退化情况下最终能够收敛到KKT解。从在线进行的实用角度，我们推荐完成1到2次线性化即足够。
+在计算资源允许的情况下，可以重复进行上述过程，也就是用 $a_k(s)$ 线性化三阶非凸问题并求解得到 $a_{k+1}(s),b_{k+1}(s)$，在非退化情况下最终能够收敛到 KKT 解。从在线进行的实用角度，我们推荐完成 1 到 2 次线性化即足够。
 
 ### Step 7. 三阶轨迹后处理（仅三阶需要）
 
-我们接下来希望得到真实的轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解$t=t(s)$，例如：
+我们接下来希望得到真实的轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解 $t=t(s)$，例如：
 
 === "Rust"
 
@@ -1137,6 +1146,7 @@ $$
     ```c
     double t_final = 0.0;
     struct CoppVecF64 t_s = {0};
+    // On success, release `t_s` later with `copp_vec_f64_free(t_s)`.
 
     if (check(
             copp_s_to_t_3rd(
@@ -1161,7 +1171,7 @@ $$
     t_final, t_s = copp.interpolation.s_to_t_topp3(s, profile, 0.0)
     ```
 
-接下来求逆解$s=s(t)$并插补，例如：
+接下来求逆解 $s=s(t)$ 并插补，例如：
 
 === "Rust"
 
@@ -1185,6 +1195,7 @@ $$
     // s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
     const double dt = 1e-3;
     struct CoppVecF64 s_t = {0};
+    // On success, release `s_t` later with `copp_vec_f64_free(s_t)`.
 
     if (check(
             copp_t_to_s_uniform_3rd(
@@ -1216,7 +1227,7 @@ $$
     )
     ```
 
-上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
+上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
 
 === "Rust"
 
@@ -1232,6 +1243,7 @@ $$
     struct CoppMatrixF64 dq_t = {0};
     struct CoppMatrixF64 ddq_t = {0};
     struct CoppMatrixF64 dddq_t = {0};
+    // On success, release returned matrices with `copp_matrix_f64_free`.
 
     if (check(
             copp_path_evaluate_up_to_3rd(
@@ -1260,19 +1272,55 @@ $$
 
 由此完成了三阶轨迹的完整求解。
 
-### Step-by-Step小结
+### 资源释放
 
-总的来说，一个最小闭环包括：构造路径$\boldsymbol{q}(s)$，在离散网格上构造`Robot`和约束，选择对应的problem builder和solver，得到$a(s)$或$(a(s),b(s))$，再通过`s_to_t_*`和`t_to_s_*`转回时间域，最终在$s(t)$上重新采样原始路径。仓库中也提供了TOPP2、COPP2、TOPP3、COPP3等可运行例程。
+=== "Rust"
 
-## Benchmark性能测试
+    Rust 版本不需要手动释放资源，相关对象会在离开作用域时自动释放。
 
-以下测试来自仓库中的`tests/test_random_spline.rs`。测试条件为：
+=== "C"
+
+    C ABI 中，`CoppSliceF64` 和 `CoppMatrixViewF64` 只是借用用户内存，不需要释放；所有由 COPP 返回的 `CoppVecF64`、`CoppMatrixF64`、`CoppProfile3rd` 以及 `CoppPath`、`CoppRobot` 句柄都需要用匹配的函数释放。实际工程里推荐先把这些拥有型对象初始化为 `{0}` 或 `NULL`，再使用集中 `cleanup` 风格，确保中途出错也能释放已经创建的对象，例如：
+
+    ```c
+    cleanup:
+        // Path evaluation outputs.
+        copp_matrix_f64_free(dddq_t);
+        copp_matrix_f64_free(ddq_t);
+        copp_matrix_f64_free(dq_t);
+        copp_matrix_f64_free(q_t);
+
+        // Interpolation outputs and solver profiles.
+        copp_vec_f64_free(s_t);
+        copp_vec_f64_free(t_s);
+        copp_profile_3rd_free(profile);
+        copp_vec_f64_free(a_ra);
+
+        // Long-lived handles should usually be released last.
+        copp_robot_free(robot);
+        copp_path_free(path);
+        return rc;
+    ```
+
+    如果只求解二阶轨迹，则没有 `profile`、`dddq_t` 等三阶对象；如果保留多次三阶迭代结果，例如 `profile_qp1` 和 `profile_qp2`，则每个未被移动走所有权的 `CoppProfile3rd` 都需要各自调用一次 `copp_profile_3rd_free`。仓库中的 C 例程也采用了这种集中释放方式。
+
+=== "Python"
+
+    Python 版本不需要手动释放资源，相关对象由 Python 运行时自动管理。
+
+### Step-by-Step 小结
+
+总的来说，一个最小闭环包括：构造路径 $\boldsymbol{q}(s)$，在离散网格上构造 `Robot` 和约束，选择对应的 problem builder 和 solver，得到 $a(s)$ 或 $(a(s),b(s))$，再通过 `s_to_t_*` 和 `t_to_s_*` 转回时间域，最终在 $s(t)$ 上重新采样原始路径。仓库中也提供了 TOPP2、COPP2、TOPP3、COPP3 等可运行例程。
+
+## Benchmark 性能测试
+
+以下测试来自仓库中的 `tests/test_random_spline.rs`。测试条件为：
 
 - `release, --include-ignored`
 - CPU: Intel(R) Core(TM) Ultra 9 285K.
-- 数据集：100条随机7-DOF样条路径，每条路径离散为1000个区间。
+- 数据集：100 条随机 7-DOF 样条路径，每条路径离散为 1000 个区间。
 
-所有指标均以`mean ± std`的形式列出。
+所有指标均以 `mean ± std` 的形式列出。
 
 #### 时间最优 (Time-Optimal)
 
@@ -1289,7 +1337,7 @@ $$
 
 #### 凸目标 (Convex-Objective)
 
-在该测试中，TOPP方法仍以终端时间为优化目标。
+在该测试中，TOPP 方法仍以终端时间为优化目标。
 
 | 方法       | 可用版本 |          计算时间 (ms) |             目标函数值 |
 | ---------- | -------- | ---------------------: | ---------------------: |
@@ -1307,13 +1355,13 @@ $$
 
 === "Rust"
 
-    我们推荐使用[docs.rs 最新文档](https://docs.rs/copp/latest/copp/)，也支持本地文档：
+    我们推荐使用 [docs.rs 最新文档](https://docs.rs/copp/latest/copp/)，也支持本地文档：
 
     - [v0.2.1 (Latest)](rust/v0.2.1/copp/)
     - [v0.2.0](rust/v0.2.0/copp/)
     - [v0.1.0](rust/v0.1.0/copp/)
 
-    如果需要查看main branch上尚未发布的更新，我们推荐在`copp`仓库根目录本地生成文档：
+    如果需要查看 main branch 上尚未发布的更新，我们推荐在 `copp` 仓库根目录本地生成文档：
 
     ```shell
     cargo doc --no-deps --open
@@ -1323,14 +1371,14 @@ $$
 
 === "C"
 
-    C文档如下：
+    C 文档如下：
 
     - [v0.2.1 (Latest)](c/v0.2.1/index.html)
     - [v0.2.0](c/v0.2.0/index.html)
 
 === "Python"
 
-    Python文档如下：
+    Python 文档如下：
 
     - [v0.2.1 (Latest)](python/v0.2.1/index.html)
 
@@ -1351,33 +1399,33 @@ $$
     | 头文件                 | 负责内容                                              |
     | ---------------------- | ----------------------------------------------------- |
     | `copp/copp.h`          | Umbrella header，包含完整 C ABI。                     |
-    | `copp/core.h`          | 状态码、last error、矩阵/向量视图、Clarabel选项。     |
-    | `copp/path.h`          | 路径句柄、样条路径、callback路径、路径求值。          |
-    | `copp/robot.h`         | 机器人句柄、路径采样、物理约束、逆动力学callback。    |
-    | `copp/formulation.h`   | TOPP/COPP problem descriptor、目标函数、profile类型。 |
+    | `copp/core.h`          | 状态码、last error、矩阵/向量视图、Clarabel 选项。     |
+    | `copp/path.h`          | 路径句柄、样条路径、callback 路径、路径求值。          |
+    | `copp/robot.h`         | 机器人句柄、路径采样、物理约束、逆动力学 callback。    |
+    | `copp/formulation.h`   | TOPP/COPP problem descriptor、目标函数、profile 类型。 |
     | `copp/interpolation.h` | 二阶/三阶轨迹后处理与插补。                           |
-    | `copp/topp2.h`         | TOPP2-RA和ReachSet2接口。                             |
-    | `copp/copp2.h`         | COPP2-SOCP接口。                                      |
-    | `copp/topp3.h`         | TOPP3-LP和TOPP3-SOCP接口。                            |
-    | `copp/copp3.h`         | COPP3-SOCP接口。                                      |
+    | `copp/topp2.h`         | TOPP2-RA 和 ReachSet2 接口。                             |
+    | `copp/copp2.h`         | COPP2-SOCP 接口。                                      |
+    | `copp/topp3.h`         | TOPP3-LP 和 TOPP3-SOCP 接口。                            |
+    | `copp/copp3.h`         | COPP3-SOCP 接口。                                      |
 
 === "Python"
 
     | 模块                    | 负责内容                                                                                             |
     | ----------------------- | ---------------------------------------------------------------------------------------------------- |
     | `copp_py`               | 顶层包，导出常用类型、函数和子模块入口。                                                             |
-    | `copp_py.path`          | `Path`、`SplineConfig`、路径求值、waypoint样条、自动微分与用户evaluator路径。                        |
-    | `copp_py.robot`         | `Robot`、路径采样、速度/加速度/jerk/力矩约束、高级物理约束入口和逆动力学callback。                   |
-    | `copp_py.constraints`   | `Constraints`原始约束缓冲区、一/二/三阶底层约束、`amax_substitute`和滑动窗口操作。                   |
-    | `copp_py.solver`        | 求解器命名空间，包含`topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_lp`、`topp3_socp`、`copp3_socp`。 |
-    | `copp_py.interpolation` | `Profile3rd`、二阶/三阶`s_to_t_*`、`t_to_s_*`和`a_to_b_topp2`轨迹后处理。                            |
-    | `copp_py.objective`     | COPP2/COPP3目标函数描述，包括时间、线性、热能耗散、力矩全变分等目标。                                |
-    | `copp_py.clarabel`      | Clarabel SOCP选项、设置、solver状态和expert诊断结果。                                                |
+    | `copp_py.path`          | `Path`、`SplineConfig`、路径求值、waypoint 样条、自动微分与用户 evaluator 路径。                        |
+    | `copp_py.robot`         | `Robot`、路径采样、速度/加速度/jerk/力矩约束、高级物理约束入口和逆动力学 callback。                   |
+    | `copp_py.constraints`   | `Constraints` 原始约束缓冲区、一/二/三阶底层约束、`amax_substitute` 和滑动窗口操作。                   |
+    | `copp_py.solver`        | 求解器命名空间，包含 `topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_lp`、`topp3_socp`、`copp3_socp`。 |
+    | `copp_py.interpolation` | `Profile3rd`、二阶/三阶 `s_to_t_*`、`t_to_s_*` 和 `a_to_b_topp2` 轨迹后处理。                            |
+    | `copp_py.objective`     | COPP2/COPP3 目标函数描述，包括时间、线性、热能耗散、力矩全变分等目标。                                |
+    | `copp_py.clarabel`      | Clarabel SOCP 选项、设置、solver 状态和 expert 诊断结果。                                                |
     | `copp_py.core`          | 版本、错误类型、枚举、矩阵布局和通用类型约定。                                                       |
 
 ## 引用
 
-如果你的工作使用了开源TOPP3/COPP3功能，建议引用[如下论文](https://doi.org/10.1016/j.ijmachtools.2025.104355)：（即便是最基本的离散区间内profile模板也用到了该文章的贡献）
+如果你的工作使用了开源 TOPP3/COPP3 功能，建议引用[如下论文](https://doi.org/10.1016/j.ijmachtools.2025.104355)：（即便是最基本的离散区间内 profile 模板也用到了该文章的贡献）
 
 ```tex
 @article{wang2026online,
@@ -1390,7 +1438,7 @@ $$
 }
 ```
 
-如果你的工作使用了PRO版本中的TOPP3-RA, COPP2-RDDP, COPP3-RDDP方法，建议引用[如下论文](https://arxiv.org/abs/2605.19089)：（其中TOPP3-RA基于该论文进行改进）
+如果你的工作使用了 PRO 版本中的 TOPP3-RA, COPP2-RDDP, COPP3-RDDP 方法，建议引用[如下论文](https://arxiv.org/abs/2605.19089)：（其中 TOPP3-RA 基于该论文进行改进）
 
 ```tex
 @article{wang2026reachability,
@@ -1401,7 +1449,7 @@ $$
 }
 ```
 
-其他情况下可引用[`COPP`库](https://github.com/TOPP-THU/copp)，或对应论文：
+其他情况下可引用 [`COPP` 库](https://github.com/TOPP-THU/copp)，或对应论文：
 
 ```tex
 @misc{thu2026copp,
@@ -1415,4 +1463,4 @@ $$
 
 ## 联系
 
-如果需要COPP PRO授权、商业合作、技术咨询或一般问题，可以联系[hello@copp.pro](mailto:hello@copp.pro)。
+如果需要 COPP PRO 授权、商业合作、技术咨询或一般问题，可以联系 [hello@copp.pro](mailto:hello@copp.pro)。

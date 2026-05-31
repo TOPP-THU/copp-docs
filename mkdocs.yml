@@ -5,6 +5,8 @@ repo_name: TOPP-THU/copp
 docs_dir: docs
 site_dir: site
 use_directory_urls: true
+hooks:
+  - tools/mkdocs_ignore_static_api_links.py
 
 theme:
   name: material
