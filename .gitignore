@@ -1,0 +1,16 @@
+site/
+.vscode/
+
+# Python / MkDocs local environment
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.cache/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db

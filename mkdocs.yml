@@ -2,6 +2,9 @@ site_name: COPP Documentation
 site_url: https://docs.copp.pro/
 repo_url: https://github.com/TOPP-THU/copp
 repo_name: TOPP-THU/copp
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
 
 theme:
   name: material
@@ -19,10 +22,12 @@ theme:
 
 nav:
   - 首页: index.md
+  - Rust 详解: index-zh-rust.md
   - API:
       - Rust latest: https://docs.rs/copp/latest/copp/
-      - Rust v0.2.1: rust/v0.2.1/copp/index.html
-      - C v0.2.0: c/v0.2.0/index.html
+      - Rust v0.2.1: /rust/v0.2.1/copp/
+      - C v0.2.0: /c/v0.2.0/
+      - Python PyPI: https://pypi.org/project/copp-py/
 
 markdown_extensions:
   - tables

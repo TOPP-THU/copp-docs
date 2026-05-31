@@ -1,8 +1,8 @@
 # COPP文档
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/TOPP-THU/copp/blob/main/LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
 
-[![Rust](https://img.shields.io/badge/Rust-native-b7410e)](https://docs.rs/copp/latest/copp/) [![C](https://img.shields.io/badge/C-ABI-00599c)](bindings/c/README.md) [![Python](https://img.shields.io/badge/Python-bindings-3776ab)](bindings/python/README.md)
+[![Rust](https://img.shields.io/badge/Rust-native-b7410e)](https://docs.rs/copp/latest/copp/) [![C](https://img.shields.io/badge/C-ABI-00599c)](https://github.com/TOPP-THU/copp/tree/main/bindings/c) [![Python](https://img.shields.io/badge/Python-bindings-3776ab)](https://github.com/TOPP-THU/copp/tree/main/bindings/python)
 
 ## 核心问题
 
@@ -120,7 +120,7 @@ copp = "0.2.1"
 
 ## Step-by-Step工作流
 
-我们以二维路径的时间最优参数化为例给出一个简单的例程，高级接口详见[文档章节](#文档)。
+我们以二维路径的时间最优参数化为例给出一个简单的例程，高级接口详见[文档章节](#docs-architecture)。
 
 ```rust
 const DIM: usize = 2;
@@ -240,7 +240,7 @@ robot
     .with_q_from_path_3rd(&path, 0, n)?;
 ```
 
-在更灵活的情况下，路径可以在线加入、删除等，机器人可以包含逆运动学信息，这些高级接口详见[文档章节](#文档)。
+在更灵活的情况下，路径可以在线加入、删除等，机器人可以包含逆运动学信息，这些高级接口详见[文档章节](#docs-architecture)。
 
 ### Step 3. 约束构造
 
@@ -268,7 +268,7 @@ let jerk_min = vec![-1.0; DIM];
 robot.with_axial_jerk((jerk_max.as_slice(), n), (jerk_min.as_slice(), n), 0)?;
 ```
 
-更高级的调用接口详见[文档章节](#文档)。
+更高级的调用接口详见[文档章节](#docs-architecture)。
 
 ### Step 4. 调用求解器
 
@@ -321,7 +321,7 @@ let s_t = t_to_s_topp2(
 )?;
 ```
 
-上述插补也支持非均匀时间采样方式，详见[文档章节](#文档)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$$，一种简单的做法是：
+上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$$，一种简单的做法是：
 
 ```rust
 let out = path.evaluate_q(s_t)?;
@@ -394,7 +394,7 @@ let s_t = t_to_s_topp3(
 )?;
 ```
 
-上述插补也支持非均匀时间采样方式，详见[文档章节](#文档)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$$，一种简单的做法是：
+上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹$\boldsymbol{q}=\boldsymbol{q}(t)$$，一种简单的做法是：
 
 ```rust
 let out = path.evaluate_q(s_t)?;
@@ -444,15 +444,15 @@ let q_t = out.q;
 | COPP3-SOCP | 301.227000 ± 12.938498 | 96.634962 ± 3.613264 |
 | COPP3-RDDP | 65.823050 ± 0.087893 | 98.708998 ± 3.354004 |
 
-## 文档与架构
+## 文档与架构 { #docs-architecture }
 
 ### 文档
 
 我们推荐使用[docs.rs 最新文档](https://docs.rs/copp/latest/copp/)。也支持本地文档：
 
-- [v0.2.1 (Latest)](rust/v0.2.1/copp/index.html)
-- [v0.2.0](rust/v0.2.0/copp/index.html)
-- [v0.1.0](rust/v0.1.0/copp/index.html)
+- [v0.2.1 (Latest)](/rust/v0.2.1/copp/)
+- [v0.2.0](/rust/v0.2.0/copp/)
+- [v0.1.0](/rust/v0.1.0/copp/)
 
 如果需要查看main branch上尚未发布的更新，我们推荐在`copp`仓库根目录本地生成文档：
 

@@ -1,0 +1,55 @@
+.copp-hero {
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 8px;
+    padding: 1.15rem 1.25rem;
+    margin: 1rem 0 1.25rem;
+    background: var(--md-default-bg-color);
+}
+
+.copp-hero p {
+    margin: 0.45rem 0;
+}
+
+.copp-link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}
+
+.copp-link-row a {
+    display: inline-block;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--md-primary-fg-color);
+    background: var(--md-code-bg-color);
+}
+
+.copp-link-row a:hover {
+    border-color: var(--md-primary-fg-color);
+}
+
+.copp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+
+.copp-card {
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 8px;
+    padding: 0.85rem 0.95rem;
+    background: var(--md-default-bg-color);
+}
+
+.copp-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.45rem;
+}
+
+.copp-card p {
+    margin: 0.35rem 0;
+}
