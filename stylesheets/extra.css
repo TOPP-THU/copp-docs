@@ -53,3 +53,20 @@
 .copp-card p {
     margin: 0.35rem 0;
 }
+
+.md-typeset .tabbed-set > .tabbed-labels > label {
+    border-radius: 6px 6px 0 0;
+    font-weight: 600;
+    padding-inline: 0.8rem;
+}
+
+.md-typeset .tabbed-set > input:nth-child(1):checked ~ .tabbed-labels > label:nth-child(1),
+.md-typeset .tabbed-set > input:nth-child(2):checked ~ .tabbed-labels > label:nth-child(2),
+.md-typeset .tabbed-set > input:nth-child(3):checked ~ .tabbed-labels > label:nth-child(3),
+.md-typeset .tabbed-set > input:nth-child(4):checked ~ .tabbed-labels > label:nth-child(4),
+.md-typeset .tabbed-set > input:nth-child(5):checked ~ .tabbed-labels > label:nth-child(5),
+.md-typeset .tabbed-set > input:nth-child(6):checked ~ .tabbed-labels > label:nth-child(6) {
+    background: #1f6feb !important;
+    color: #fff !important;
+    font-weight: 700;
+}
