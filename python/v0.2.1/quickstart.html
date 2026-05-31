@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quickstart &#8212; copp-py Python v0.2.1</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=cc40f7fa"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processEscapes": true}, "options": {"skipHtmlTags": ["script", "noscript", "style", "textarea", "pre", "code"]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Concepts" href="concepts/index.html" />
+    <link rel="prev" title="copp-py Python Documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">¶</a></h1>
+<p>The shortest reliable Python workflow is:</p>
+<ol class="arabic simple">
+<li><p>Build a geometric path <code class="docutils literal notranslate"><span class="pre">q(s)</span></code>.</p></li>
+<li><p>Sample the path on a station grid <code class="docutils literal notranslate"><span class="pre">s</span></code> and store path derivatives in a
+<code class="docutils literal notranslate"><span class="pre">Robot</span></code> or <code class="docutils literal notranslate"><span class="pre">Constraints</span></code> buffer.</p></li>
+<li><p>Add physical limits.</p></li>
+<li><p>Build a TOPP or COPP problem descriptor.</p></li>
+<li><p>Run a solver and convert the path-domain profile into time-domain samples.</p></li>
+</ol>
+<p>The second-order state used by TOPP2/COPP2 is</p>
+<div class="math notranslate nohighlight">
+\[a(s) = \dot{s}^2,\qquad b(s) = \ddot{s}.\]</div>
+<p>TOPP2/COPP2 solvers return the node profile <code class="docutils literal notranslate"><span class="pre">a</span></code>. The helper
+<code class="docutils literal notranslate"><span class="pre">s_to_t_topp2</span></code> integrates it into arrival times, and <code class="docutils literal notranslate"><span class="pre">t_to_s_topp2_uniform</span></code>
+or <code class="docutils literal notranslate"><span class="pre">t_to_s_topp2_samples</span></code> inverts the mapping for controller or plotting
+samples.</p>
+<section id="minimal-topp2-ra-example">
+<h2>Minimal TOPP2-RA Example<a class="headerlink" href="#minimal-topp2-ra-example" title="Link to this heading">¶</a></h2>
+<p>The following example constructs an analytic path, applies symmetric velocity
+and acceleration limits, solves TOPP2-RA, and samples <code class="docutils literal notranslate"><span class="pre">s(t)</span></code> on a uniform
+time grid.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="sd">&quot;&quot;&quot;Use TOPP2-RA to convert a JAX-defined path into a second-order time-optimal trajectory.</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="sd">The example constrains each axis by velocity and acceleration limits in</span>
+<span class="linenos"> 4</span><span class="sd">``[-1, 1]``, then converts the returned ``a(s)`` profile into ``t(s)`` and</span>
+<span class="linenos"> 5</span><span class="sd">uniform ``s(t)`` samples.</span>
+<span class="linenos"> 6</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="kn">import</span><span class="w"> </span><span class="nn">copp_py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">copp</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="linenos">14</span>    <span class="k">try</span><span class="p">:</span>
+<span class="linenos">15</span>        <span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="linenos">16</span>        <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="linenos">17</span>    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<span class="linenos">18</span>        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span>
+<span class="linenos">19</span>            <span class="s1">&#39;Install JAX to run this example: python -m pip install &quot;copp-py[jax]&quot;&#39;</span>
+<span class="linenos">20</span>        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>    <span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>    <span class="n">dim</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="linenos">25</span>    <span class="n">n</span> <span class="o">=</span> <span class="mi">1001</span>
+<span class="linenos">26</span>    <span class="n">dt</span> <span class="o">=</span> <span class="mf">1.0e-3</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>    <span class="c1"># 1) Define q(s). Path.from_jax differentiates it up to third order.</span>
+<span class="linenos">29</span>    <span class="k">def</span><span class="w"> </span><span class="nf">q_fn</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="linenos">30</span>        <span class="n">freq</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="linenos">31</span>        <span class="n">phase</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="linenos">32</span>        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">freq</span> <span class="o">*</span> <span class="n">s</span> <span class="o">+</span> <span class="n">phase</span><span class="p">)</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span>    <span class="n">path</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">from_jax</span><span class="p">(</span><span class="n">q_fn</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="linenos">35</span>    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>    <span class="c1"># 2) Build robot constraints (3-axis), then apply symmetric limits</span>
+<span class="linenos">38</span>    <span class="c1"># velocity/acceleration = [-1, 1].</span>
+<span class="linenos">39</span>    <span class="n">robot</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">Robot</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="linenos">40</span>    <span class="n">robot</span><span class="o">.</span><span class="n">append_s</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="linenos">41</span>    <span class="n">robot</span><span class="o">.</span><span class="n">set_q_from_path_2nd</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span>    <span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="linenos">44</span>    <span class="n">lower</span> <span class="o">=</span> <span class="o">-</span><span class="n">upper</span>
+<span class="linenos">45</span>    <span class="n">robot</span><span class="o">.</span><span class="n">add_velocity_limits</span><span class="p">(</span><span class="n">upper</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">start_idx_s</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="linenos">46</span>    <span class="n">robot</span><span class="o">.</span><span class="n">add_acceleration_limits</span><span class="p">(</span><span class="n">upper</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">start_idx_s</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="linenos">47</span>
+<span class="linenos">48</span>    <span class="c1"># 3) Solve TOPP2-RA with boundary values a(0) = 0 and a(1) = 0.</span>
+<span class="linenos">49</span>    <span class="n">problem</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp2_ra</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span>
+<span class="linenos">50</span>        <span class="n">robot</span><span class="o">.</span><span class="n">constraints</span><span class="p">,</span>
+<span class="linenos">51</span>        <span class="n">idx_s_interval</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+<span class="linenos">52</span>        <span class="n">a_boundary</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+<span class="linenos">53</span>    <span class="p">)</span>
+<span class="linenos">54</span>    <span class="n">options</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp2_ra</span><span class="o">.</span><span class="n">Options</span><span class="p">()</span>
+<span class="linenos">55</span>    <span class="n">a_ra</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp2_ra</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+<span class="linenos">56</span>
+<span class="linenos">57</span>    <span class="c1"># 4) Post-process TOPP2-RA results: a(s) -&gt; t(s) -&gt; s(t).</span>
+<span class="linenos">58</span>    <span class="n">t_final</span><span class="p">,</span> <span class="n">t_s</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">interpolation</span><span class="o">.</span><span class="n">s_to_t_topp2</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a_ra</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="linenos">59</span>    <span class="n">s_t</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">interpolation</span><span class="o">.</span><span class="n">t_to_s_topp2_uniform</span><span class="p">(</span>
+<span class="linenos">60</span>        <span class="n">s</span><span class="p">,</span>
+<span class="linenos">61</span>        <span class="n">a_ra</span><span class="p">,</span>
+<span class="linenos">62</span>        <span class="n">t_s</span><span class="p">,</span>
+<span class="linenos">63</span>        <span class="n">dt</span><span class="p">,</span>
+<span class="linenos">64</span>        <span class="n">t0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+<span class="linenos">65</span>        <span class="n">include_final</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="linenos">66</span>    <span class="p">)</span>
+<span class="linenos">67</span>
+<span class="linenos">68</span>    <span class="c1"># 5) Print the tutorial summary.</span>
+<span class="linenos">69</span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TOPP2-RA done.&quot;</span><span class="p">)</span>
+<span class="linenos">70</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dim = </span><span class="si">{</span><span class="n">dim</span><span class="si">}</span><span class="s2">, N = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">71</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t_final = </span><span class="si">{</span><span class="n">t_final</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+<span class="linenos">72</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;a_profile.len() = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">a_ra</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">73</span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;s(t) samples = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">s_t</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">74</span>
+<span class="linenos">75</span>
+<span class="linenos">76</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">77</span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="import-style">
+<h2>Import Style<a class="headerlink" href="#import-style" title="Link to this heading">¶</a></h2>
+<p>The package follows the Rust crate layout. Solver entry points live under
+<code class="docutils literal notranslate"><span class="pre">copp.solver</span></code> with one module per algorithm:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">copp_py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">copp</span>
+
+<span class="n">problem</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp2_ra</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp2_ra</span><span class="o">.</span><span class="n">Options</span><span class="p">()</span>
+<span class="n">a_profile</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp2_ra</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Modeling helpers live in focused namespaces such as <code class="docutils literal notranslate"><span class="pre">copp.path</span></code>,
+<code class="docutils literal notranslate"><span class="pre">copp.robot</span></code>, <code class="docutils literal notranslate"><span class="pre">copp.constraints</span></code>, <code class="docutils literal notranslate"><span class="pre">copp.objective</span></code>,
+<code class="docutils literal notranslate"><span class="pre">copp.interpolation</span></code>, and <code class="docutils literal notranslate"><span class="pre">copp.clarabel</span></code>. A few common modeling types are
+also re-exported at package root for interactive use, but solver-specific
+classes and functions are intentionally kept in <code class="docutils literal notranslate"><span class="pre">copp.solver</span></code>.</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">¶</a></h2>
+<p>Read <a class="reference internal" href="concepts/opp.html"><span class="doc">Optimal Path Parameterization</span></a> for the variables and constraint model, then choose a
+solver with <a class="reference internal" href="concepts/solver_selection.html"><span class="doc">Solver Selection</span></a>. The tutorial pages embed the
+same runnable files stored in <code class="docutils literal notranslate"><span class="pre">bindings/python/examples</span></code>.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#minimal-topp2-ra-example">Minimal TOPP2-RA Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#import-style">Import Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">copp-py Python Documentation</a></li>
+      <li>Next: <a href="concepts/index.html" title="next chapter">Concepts</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/quickstart.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

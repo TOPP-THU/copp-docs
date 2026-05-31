@@ -1,0 +1,51 @@
+site_name: COPP Documentation
+site_url: https://docs.copp.pro/
+repo_url: https://github.com/TOPP-THU/copp
+repo_name: TOPP-THU/copp
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.tabs.link
+
+nav:
+  - 首页: index.md
+  - API:
+      - Rust latest: https://docs.rs/copp/latest/copp/
+      - Rust v0.2.1: rust/v0.2.1/copp/index.html
+      - C v0.2.0: c/v0.2.0/index.html
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html
+  - admonition
+  - footnotes
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra_css:
+  - stylesheets/extra.css

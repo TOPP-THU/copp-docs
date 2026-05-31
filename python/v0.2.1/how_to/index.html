@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>How-To Guides &#8212; copp-py Python v0.2.1</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=cc40f7fa"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Build Paths and Constraints" href="paths_and_constraints.html" />
+    <link rel="prev" title="COPP3-SOCP" href="../tutorials/copp3_socp.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="how-to-guides">
+<h1>How-To Guides<a class="headerlink" href="#how-to-guides" title="Link to this heading">¶</a></h1>
+<p>These pages focus on practical API choices that come up when moving from the
+tutorial examples to an application.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="paths_and_constraints.html">Build Paths and Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="paths_and_constraints.html#path-options">Path Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paths_and_constraints.html#path-evaluation">Path Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paths_and_constraints.html#robot-vs-constraints">Robot vs Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paths_and_constraints.html#problem-descriptors-reference-live-buffers">Problem Descriptors Reference Live Buffers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paths_and_constraints.html#limit-shapes">Limit Shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="paths_and_constraints.html#inverse-dynamics">Inverse Dynamics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">Convert Profiles to Time Samples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#second-order">Second Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#third-order">Third Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#common-checks">Common Checks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html#exception-model">Exception Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html#verbosity">Verbosity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html#clarabel-strict-vs-expert-calls">Clarabel Strict vs Expert Calls</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html#reachability-debugging">Reachability Debugging</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How-To Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="paths_and_constraints.html">Build Paths and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html">Convert Profiles to Time Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../tutorials/copp3_socp.html" title="previous chapter">COPP3-SOCP</a></li>
+      <li>Next: <a href="paths_and_constraints.html" title="next chapter">Build Paths and Constraints</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/how_to/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

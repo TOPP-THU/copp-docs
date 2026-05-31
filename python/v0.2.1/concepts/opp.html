@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Optimal Path Parameterization &#8212; copp-py Python v0.2.1</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=cc40f7fa"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processEscapes": true}, "options": {"skipHtmlTags": ["script", "noscript", "style", "textarea", "pre", "code"]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Solver Selection" href="solver_selection.html" />
+    <link rel="prev" title="Concepts" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="optimal-path-parameterization">
+<h1>Optimal Path Parameterization<a class="headerlink" href="#optimal-path-parameterization" title="Link to this heading">¶</a></h1>
+<p>COPP solves optimal path-parameterization problems. The geometric path is fixed:</p>
+<div class="math notranslate nohighlight">
+\[q = q(s),\qquad s \in [s_0, s_f].\]</div>
+<p>The solver chooses a monotone time law <code class="docutils literal notranslate"><span class="pre">s(t)</span></code> so that the executed trajectory
+<code class="docutils literal notranslate"><span class="pre">q(s(t))</span></code> satisfies the configured limits. This separation is useful in
+robotics because geometric planning and timing can be handled independently:
+the COPP stage never moves the path away from <code class="docutils literal notranslate"><span class="pre">q(s)</span></code>.</p>
+<section id="second-order-variables">
+<h2>Second-Order Variables<a class="headerlink" href="#second-order-variables" title="Link to this heading">¶</a></h2>
+<p>For velocity, acceleration, and many torque constraints, the useful path-domain
+variables are</p>
+<div class="math notranslate nohighlight">
+\[a(s) = \dot{s}^2,\qquad b(s) = \ddot{s}.\]</div>
+<p>The chain rule gives</p>
+<div class="math notranslate nohighlight">
+\[\dot{q} = q_s \dot{s},\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\ddot{q} = q_{ss}\dot{s}^2 + q_s\ddot{s}
+         = q_{ss}a + q_s b.\]</div>
+<p>After sampling the path, second-order limits are stored as rows of the form</p>
+<div class="math notranslate nohighlight">
+\[u_i(s_k)a_k + v_i(s_k)b_k \le h_i(s_k),\]</div>
+<p>plus first-order upper bounds on <code class="docutils literal notranslate"><span class="pre">a</span></code>. TOPP2/COPP2 solvers optimize over this
+state and return a node-based <code class="docutils literal notranslate"><span class="pre">a</span></code> profile.</p>
+</section>
+<section id="third-order-variables">
+<h2>Third-Order Variables<a class="headerlink" href="#third-order-variables" title="Link to this heading">¶</a></h2>
+<p>Third-order solvers add a control-like term</p>
+<div class="math notranslate nohighlight">
+\[c(s) = \frac{\dddot{s}}{\dot{s}},\]</div>
+<p>which is convenient when working in the path domain. Jerk-level rows use the
+sampled form</p>
+<div class="math notranslate nohighlight">
+\[\sqrt{a_k}\,(r_i a_k + s_i b_k + t_i c_k + d_i) \le f_i.\]</div>
+<p>Because these rows depend on <code class="docutils literal notranslate"><span class="pre">sqrt(a)</span></code>, the Python TOPP3/COPP3 problem
+descriptors require an <code class="docutils literal notranslate"><span class="pre">a_linearization</span></code> profile. A common practical pattern
+is:</p>
+<ol class="arabic simple">
+<li><p>Solve TOPP2-RA to obtain a feasible second-order seed <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p></li>
+<li><p>Optionally tighten <code class="docutils literal notranslate"><span class="pre">robot.constraints</span></code> with <code class="docutils literal notranslate"><span class="pre">amax_substitute</span></code>.</p></li>
+<li><p>Build a TOPP3 or COPP3 problem with that seed.</p></li>
+<li><p>Rebuild the third-order problem with the previous third-order solution when
+running a second refinement iteration.</p></li>
+</ol>
+</section>
+<section id="problem-descriptors-and-live-data">
+<h2>Problem Descriptors and Live Data<a class="headerlink" href="#problem-descriptors-and-live-data" title="Link to this heading">¶</a></h2>
+<p>Python <code class="docutils literal notranslate"><span class="pre">Problem</span></code> objects are lightweight descriptors over live model data.
+<code class="docutils literal notranslate"><span class="pre">Topp2Problem</span></code> stores a reference to a <code class="docutils literal notranslate"><span class="pre">Constraints</span></code> proxy, while
+<code class="docutils literal notranslate"><span class="pre">Copp2Problem</span></code> stores a reference to the <code class="docutils literal notranslate"><span class="pre">Robot</span></code> plus Python-owned
+objective descriptors. They do not copy the robot or constraint buffer. If you
+mutate the referenced <code class="docutils literal notranslate"><span class="pre">robot</span></code> or <code class="docutils literal notranslate"><span class="pre">constraints</span></code> after constructing the
+problem, later <code class="docutils literal notranslate"><span class="pre">validate()</span></code> and solver calls use the current contents.</p>
+<p>The descriptor configuration itself is immutable. To change an interval,
+boundary value, objective list, or third-order linearization profile, construct
+a new problem object.</p>
+<p>For third-order problems, construction follows the Rust
+<code class="docutils literal notranslate"><span class="pre">build_with_linearization()</span></code> model. <code class="docutils literal notranslate"><span class="pre">Topp3Problem</span></code> and <code class="docutils literal notranslate"><span class="pre">Copp3Problem</span></code>
+copy the supplied <code class="docutils literal notranslate"><span class="pre">a_linearization</span></code> into the descriptor, then build a Rust
+problem and refresh the affine jerk-linearization rows cached in the referenced
+constraint buffer. Raw nonlinear jerk rows remain unchanged. Calling
+<code class="docutils literal notranslate"><span class="pre">validate()</span></code> or a third-order solver later repeats that refresh against the
+current robot or constraint data and the descriptor’s copied
+<code class="docutils literal notranslate"><span class="pre">a_linearization</span></code>.</p>
+<p>When refining a third-order solve with a new profile, build a new descriptor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">problem</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp3_socp</span><span class="o">.</span><span class="n">Problem</span><span class="p">(</span>
+    <span class="n">robot</span><span class="o">.</span><span class="n">constraints</span><span class="p">,</span>
+    <span class="n">profile</span><span class="o">.</span><span class="n">a</span><span class="p">,</span>
+    <span class="n">idx_s_start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">a_boundary</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+    <span class="n">b_boundary</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="topp-vs-copp">
+<h2>TOPP vs COPP<a class="headerlink" href="#topp-vs-copp" title="Link to this heading">¶</a></h2>
+<p>TOPP means time-optimal path parameterization. The objective is traversal time:</p>
+<div class="math notranslate nohighlight">
+\[J = t_f.\]</div>
+<p>COPP means convex-objective path parameterization. The solver optimizes a
+weighted convex objective over the path-domain profile. In Python, objective
+terms are created under <code class="docutils literal notranslate"><span class="pre">copp.objective</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">objectives</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">copp</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">copp</span><span class="o">.</span><span class="n">objective</span><span class="o">.</span><span class="n">ThermalEnergy</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">normalize</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The same path and constraints can therefore be used for time-optimal planning
+or for application-specific convex cost tradeoffs.</p>
+</section>
+<section id="python-data-contract">
+<h2>Python Data Contract<a class="headerlink" href="#python-data-contract" title="Link to this heading">¶</a></h2>
+<p>Numerical inputs accept NumPy-compatible <code class="docutils literal notranslate"><span class="pre">ArrayLike</span></code> values and are copied
+into contiguous <code class="docutils literal notranslate"><span class="pre">float64</span></code> buffers at the native extension boundary. Most sampled
+matrices default to <code class="docutils literal notranslate"><span class="pre">sample_major</span></code> layout:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>shape = (n_samples, dim)
+</pre></div>
+</div>
+<p>The alternative <code class="docutils literal notranslate"><span class="pre">dim_major</span></code> layout stores dimensions first:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>shape = (dim, n_samples)
+</pre></div>
+</div>
+<p>Both layouts are accepted where the API exposes a <code class="docutils literal notranslate"><span class="pre">layout</span></code> argument. New
+Python code should use the default <code class="docutils literal notranslate"><span class="pre">sample_major</span></code> layout unless it is sharing
+arrays directly with an external dim-major pipeline.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Concepts</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Optimal Path Parameterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="solver_selection.html">Solver Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Concepts</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Concepts</a></li>
+      <li>Next: <a href="solver_selection.html" title="next chapter">Solver Selection</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/concepts/opp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Objectives &#8212; copp-py Python v0.2.1</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=cc40f7fa"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Clarabel" href="clarabel.html" />
+    <link rel="prev" title="Robot And Constraints" href="robot.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="objectives">
+<h1>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h1>
+<p>COPP objective constructors are lightweight Python-owned descriptors. Solver
+wrappers borrow them only for one native solver call, so the descriptors can be reused
+across repeated problem builds.</p>
+<p id="module-copp_py.objective">Objective constructors for COPP solvers.</p>
+<p>Use as <code class="docutils literal notranslate"><span class="pre">copp.objective.Time(...)</span></code> after <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">copp_py</span> <span class="pre">as</span> <span class="pre">copp</span></code>.</p>
+<p>TOPP solvers minimize traversal time directly. COPP solvers accept one
+objective or a list of objective descriptors and optimize their weighted sum.
+The built-in descriptors are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Time(weight)</span></code> for traversal-time cost.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ThermalEnergy(weight,</span> <span class="pre">normalize)</span></code> for torque-energy style cost.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TotalVariationTorque(weight,</span> <span class="pre">normalize)</span></code> for torque variation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Linear(weight,</span> <span class="pre">alpha,</span> <span class="pre">beta)</span></code> for direct coefficients on profile variables.</p></li>
+</ul>
+<p>For second-order COPP, <code class="docutils literal notranslate"><span class="pre">alpha</span></code> is node-based and <code class="docutils literal notranslate"><span class="pre">beta</span></code> is interval-based.
+For third-order COPP, both arrays are node-based. Solver-side validation checks
+the active length contract.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.objective.Linear">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.objective.</span></span><span class="sig-name descname"><span class="pre">Linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.objective.Linear" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Linear objective over profile variables.</p>
+<p>In COPP2, <cite>alpha</cite> is node-based with length <cite>s_len</cite>, while <cite>beta</cite> is
+interval-based with length <cite>s_len - 1</cite>. In COPP3, both arrays are node-based
+with length <cite>s_len</cite>; Rust objective validation enforces the active solver’s
+length contract.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.objective.Linear.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><a class="headerlink" href="#copp_py.objective.Linear.alpha" title="Link to this definition">¶</a></dt>
+<dd><p>Return the <cite>a</cite> coefficient array.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.objective.Linear.beta">
+<span class="sig-name descname"><span class="pre">beta</span></span><a class="headerlink" href="#copp_py.objective.Linear.beta" title="Link to this definition">¶</a></dt>
+<dd><p>Return the <cite>b</cite> coefficient array.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.objective.Linear.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><a class="headerlink" href="#copp_py.objective.Linear.weight" title="Link to this definition">¶</a></dt>
+<dd><p>Return the objective weight.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.objective.ThermalEnergy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.objective.</span></span><span class="sig-name descname"><span class="pre">ThermalEnergy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.objective.ThermalEnergy" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Thermal-energy objective.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.objective.ThermalEnergy.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><a class="headerlink" href="#copp_py.objective.ThermalEnergy.normalize" title="Link to this definition">¶</a></dt>
+<dd><p>Return the per-axis torque normalization.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.objective.ThermalEnergy.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><a class="headerlink" href="#copp_py.objective.ThermalEnergy.weight" title="Link to this definition">¶</a></dt>
+<dd><p>Return the objective weight.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.objective.Time">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.objective.</span></span><span class="sig-name descname"><span class="pre">Time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.objective.Time" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Time objective.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.objective.Time.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><a class="headerlink" href="#copp_py.objective.Time.weight" title="Link to this definition">¶</a></dt>
+<dd><p>Return the objective weight.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.objective.TotalVariationTorque">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.objective.</span></span><span class="sig-name descname"><span class="pre">TotalVariationTorque</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.objective.TotalVariationTorque" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Total-variation torque objective.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.objective.TotalVariationTorque.normalize">
+<span class="sig-name descname"><span class="pre">normalize</span></span><a class="headerlink" href="#copp_py.objective.TotalVariationTorque.normalize" title="Link to this definition">¶</a></dt>
+<dd><p>Return the per-axis torque normalization.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.objective.TotalVariationTorque.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><a class="headerlink" href="#copp_py.objective.TotalVariationTorque.weight" title="Link to this definition">¶</a></dt>
+<dd><p>Return the objective weight.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robot.html">Robot And Constraints</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html">Clarabel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp2.html">TOPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp2.html">COPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp3.html">TOPP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp3.html">COPP3</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="robot.html" title="previous chapter">Robot And Constraints</a></li>
+      <li>Next: <a href="clarabel.html" title="next chapter">Clarabel</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/objective.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
