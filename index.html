@@ -12,8 +12,6 @@
       
       
       
-        <link rel="next" href="index-zh-rust/">
-      
       
         
       
@@ -287,52 +285,19 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        先读哪里
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#core-problem" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         核心问题
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        安装
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step-by-step 工作流
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step-by-step 工作流">
+    <nav class="md-nav" aria-label="核心问题">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1" class="md-nav__link">
+  <a href="#path-parameterization" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1. 构造几何路径
+        路径参数化 (Path Parameterization)
       
     </span>
   </a>
@@ -340,54 +305,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-station-grid-robot" class="md-nav__link">
+  <a href="#optimal-path-parameterization" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2. 建 station grid 和 robot
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3. 添加约束
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4. 选择问题和目标
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-5-solver" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5. 调用 solver
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 6. 转回时间域并释放资源
+        最优路径参数化 (Optimal Path Parameterization)
       
     </span>
   </a>
@@ -403,7 +324,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        算法选择
+        安装
       
     </span>
   </a>
@@ -414,7 +335,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        目标函数
+        算法选择
       
     </span>
   </a>
@@ -422,32 +343,243 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api" class="md-nav__link">
+  <a href="#step-by-step" class="md-nav__link">
     <span class="md-ellipsis">
       
-        API 入口
+        Step-by-Step工作流
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pro" class="md-nav__link">
+    <nav class="md-nav" aria-label="Step-by-Step工作流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        开源与 PRO
+        Step 1. 构造几何路径
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1. 构造几何路径">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A. 解析式自动微分
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B. 路径点生成样条
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option C. 用户手动微分
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2. 离散化路径信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3. 约束构造
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4. 调用求解器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5. 二阶轨迹后处理（仅二阶需要）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6. 构造并求解三阶问题（仅三阶需要）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7. 三阶轨迹后处理（仅三阶需要）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-by-step_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step小结
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmark性能测试
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Benchmark性能测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-optimal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时间最优 (Time-Optimal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convex-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        凸目标 (Convex-Objective)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docs-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文档与架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="文档与架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
+        文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         引用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        联系
       
     </span>
   </a>
@@ -469,7 +601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="index-zh-rust/" class="md-nav__link">
+      <a href="index-zh-rust.md" class="md-nav__link">
         
   
   
@@ -690,52 +822,19 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        先读哪里
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#core-problem" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         核心问题
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        安装
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step-by-step 工作流
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step-by-step 工作流">
+    <nav class="md-nav" aria-label="核心问题">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#step-1" class="md-nav__link">
+  <a href="#path-parameterization" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1. 构造几何路径
+        路径参数化 (Path Parameterization)
       
     </span>
   </a>
@@ -743,54 +842,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#step-2-station-grid-robot" class="md-nav__link">
+  <a href="#optimal-path-parameterization" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2. 建 station grid 和 robot
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3. 添加约束
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4. 选择问题和目标
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-5-solver" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5. 调用 solver
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 6. 转回时间域并释放资源
+        最优路径参数化 (Optimal Path Parameterization)
       
     </span>
   </a>
@@ -806,7 +861,7 @@
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        算法选择
+        安装
       
     </span>
   </a>
@@ -817,7 +872,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        目标函数
+        算法选择
       
     </span>
   </a>
@@ -825,32 +880,243 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api" class="md-nav__link">
+  <a href="#step-by-step" class="md-nav__link">
     <span class="md-ellipsis">
       
-        API 入口
+        Step-by-Step工作流
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pro" class="md-nav__link">
+    <nav class="md-nav" aria-label="Step-by-Step工作流">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        开源与 PRO
+        Step 1. 构造几何路径
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1. 构造几何路径">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A. 解析式自动微分
       
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B. 路径点生成样条
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option C. 用户手动微分
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2. 离散化路径信息
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3. 约束构造
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4. 调用求解器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5. 二阶轨迹后处理（仅二阶需要）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6. 构造并求解三阶问题（仅三阶需要）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7. 三阶轨迹后处理（仅三阶需要）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-by-step_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step小结
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#benchmark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmark性能测试
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Benchmark性能测试">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-optimal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        时间最优 (Time-Optimal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convex-objective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        凸目标 (Convex-Objective)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#docs-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文档与架构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="文档与架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
+        文档
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        项目架构
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
         引用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        联系
       
     </span>
   </a>
@@ -877,404 +1143,618 @@
   
 
 
-<h1 id="copp">COPP</h1>
-<div class="copp-hero">
-    <p><strong>Convex-Objective Path Parameterization for robotic trajectory planning.</strong></p>
-    <p>COPP 用于沿给定几何路径生成满足约束的时间参数化轨迹。它把“路径怎么走”与“沿路径何时走到哪里”解耦，在路径参数域中处理速度、加速度、力矩、jerk 和任务相关目标。</p>
-    <div class="copp-link-row">
-        <a href="https://copp.pro/">Homepage</a>
-        <a href="https://docs.rs/copp/latest/copp/">Rust docs.rs</a>
-        <a href="/rust/v0.2.1/copp/">Rust v0.2.1</a>
-        <a href="/c/v0.2.0/">C v0.2.0</a>
-        <a href="https://pypi.org/project/copp-py/">Python PyPI</a>
-    </div>
-</div>
-
-<h2 id="_1">先读哪里</h2>
-<div class="copp-grid">
-    <div class="copp-card">
-        <h3>理解问题</h3>
-        <p>从 <a href="#core-problem">核心问题</a> 开始，先看 OPP 怎样从时间域转到路径参数域。</p>
-    </div>
-    <div class="copp-card">
-        <h3>马上试用</h3>
-        <p>看 <a href="#installation">安装</a> 和 <a href="#workflow">Step-by-step 工作流</a>；安装和 API 入口支持 Rust/C/Python 同步切换。</p>
-    </div>
-    <div class="copp-card">
-        <h3>选择算法</h3>
-        <p>如果只需要二阶时间最优，优先 TOPP2-RA；如果有凸目标或 jerk 约束，再进入 COPP2、TOPP3 或 COPP3。</p>
-    </div>
-</div>
-
-<h2 id="core-problem">核心问题</h2>
-<p>给定一个 <span class="arithmatex">\(n\)</span> 维机器人系统和一条足够光滑的几何路径：</p>
+<h1 id="copp">COPP文档</h1>
+<p><a href="https://github.com/TOPP-THU/copp/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" /></a> <a href="https://copp.pro/"><img alt="Website" src="https://img.shields.io/badge/website-copp.pro-2ff0d8" /></a> <a href="https://docs.copp.pro/"><img alt="Docs" src="https://img.shields.io/badge/docs-docs.copp.pro-1f6feb" /></a> <a href="https://crates.io/crates/copp"><img alt="Crates.io" src="https://img.shields.io/crates/v/copp.svg" /></a> <a href="https://pypi.org/project/copp-py/"><img alt="PyPI" src="https://img.shields.io/pypi/v/copp-py.svg" /></a></p>
+<p><a href="https://docs.rs/copp/latest/copp/"><img alt="Rust" src="https://img.shields.io/badge/Rust-native-b7410e" /></a> <a href="https://github.com/TOPP-THU/copp/tree/main/bindings/c"><img alt="C" src="https://img.shields.io/badge/C-ABI-00599c" /></a> <a href="https://github.com/TOPP-THU/copp/tree/main/bindings/python"><img alt="Python" src="https://img.shields.io/badge/Python-bindings-3776ab" /></a></p>
+<h2 id="_1">核心问题</h2>
+<p>COPP专注于解决给定几何路径(path)生成时间参数化的轨迹 (trajectory)，并满足用户指定的约束、优化给定的目标。特别地，COPP规划的轨迹一般是二阶光滑（加速度有界）或三阶光滑（加加速度有界）。</p>
+<h3 id="path-parameterization">路径参数化 (Path Parameterization)</h3>
+<p>给定一个<span class="arithmatex">\(n\)</span>维机器人系统和一条足够光滑的几何路径：</p>
 <div class="arithmatex">\[
-\boldsymbol{q}=\boldsymbol{q}(s),\qquad s\in[0,s_f].
+\boldsymbol{q}=\boldsymbol{q}(s)\in\mathbb{R}^n,\qquad s\in[0,s_\text{f}],
 \]</div>
-<p>这里 <span class="arithmatex">\(s\)</span> 是路径参数，不一定是弧长；<span class="arithmatex">\(s_f\)</span> 已知。OPP 要做的是寻找一个严格递增的时间参数化：</p>
+<p>其中<span class="arithmatex">\(s\)</span>是一般的路径参数，且<span class="arithmatex">\(s_\text{f}\)</span>已知。对于<span class="arithmatex">\(m\)</span>阶问题，<span class="arithmatex">\(m\in\{2,3\}\)</span>，要求路径<span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(s)\)</span>在<span class="arithmatex">\(s\)</span>域上<span class="arithmatex">\(\mathcal{C}^m\)</span>连续。<span class="arithmatex">\(m\)</span>阶路径参数化的目标是构建一个严格递增的时间参数化</p>
 <div class="arithmatex">\[
-s=s(t),\qquad t\in[0,t_f],
+s=s(t),\qquad t\in[0,t_\text{f}],
 \]</div>
-<p>使机器人沿原几何路径运动时满足状态约束和状态-控制混合约束，并最小化用户指定的目标函数。终端时间 <span class="arithmatex">\(t_f\)</span> 是未知量，因此直接在时间域求解会把自由终端时间、单调性和非线性约束缠在一起。</p>
-<p>标准做法是把问题转到路径参数域。令对 <span class="arithmatex">\(s\)</span> 的导数记为 <span class="arithmatex">\(\bullet'=\mathrm{d}\bullet/\mathrm{d}s\)</span>，并定义：</p>
+<p>且<span class="arithmatex">\(\frac{\mathrm{d}^ms}{\mathrm{d}t^m}(t)\)</span>在有限个时间点之外存在且有界，其中终端时间<span class="arithmatex">\(t_\text{f}\)</span>待求解。从而构建出严格遵循给定几何路径的机器人轨迹</p>
 <div class="arithmatex">\[
-x_1(s)=\frac12\dot{s}^2,\qquad x_{i+1}(s)=x_i'(s).
+\boldsymbol{q}=\boldsymbol{q}(s(t))\in\mathbb{R}^n,\qquad t\in[0,t_\text{f}].
 \]</div>
-<p>于是 <span class="arithmatex">\(m\)</span> 阶 OPP 在路径参数域中的状态和控制可以写成：</p>
+<p>上述轨迹经过插补 (Interpolation) 可以作为参考轨迹 (Reference) 发送给底层伺服系统，设其控制周期为<span class="arithmatex">\(T_\text{s}\)</span>（例如<span class="arithmatex">\(T_\text{s}=\text{1ms}\)</span>），那么发送给底层伺服系统的信息一般包括插补轨迹</p>
 <div class="arithmatex">\[
-\boldsymbol{x}(s)=(x_1,\ldots,x_{m-1}),\qquad u(s)=x_m.
+\{\boldsymbol{q}(s(iT_\text{s}))\}_{i\in\mathbb{N}}
 \]</div>
-<p>最常用的是二阶和三阶问题：</p>
+<p>及相应前馈所需信息，例如PID控制所需的参考速度项<span class="arithmatex">\(\{\dot{\boldsymbol{q}}(s(iT_\text{s}))\}_{i\in\mathbb{N}}\)</span>及前馈所需的参考加速度项<span class="arithmatex">\(\{\ddot{\boldsymbol{q}}(s(iT_\text{s}))\}_{i\in\mathbb{N}}\)</span>和力矩项<span class="arithmatex">\(\{\boldsymbol{\tau}(s(iT_\text{s}))\}_{i\in\mathbb{N}}\)</span>等。</p>
+<p>记<span class="arithmatex">\(\dot{\bullet}\)</span>为对时间<span class="arithmatex">\(t\)</span>的导数，<span class="arithmatex">\(\bullet'\)</span>为对参数<span class="arithmatex">\(s\)</span>的导数。定义</p>
 <div class="arithmatex">\[
-\text{OPP2:}\quad \boldsymbol{x}=x_1=\frac12\dot{s}^2,\quad u=x_2=\ddot{s},
+a(s)=\dot{s}^2,\qquad b(s)=\ddot{s}=\frac12a'(s),\qquad c(s)=\frac{\dddot{s}}{\dot{s}}=b'(s).
 \]</div>
+<p>在二阶问题中，状态量为<span class="arithmatex">\(a(s)\)</span>，控制量为<span class="arithmatex">\(b(s)\)</span>；在三阶问题中，状态量为<span class="arithmatex">\((a(s),b(s))\)</span>，控制量为<span class="arithmatex">\(c(s)\)</span>。</p>
+<h3 id="optimal-path-parameterization">最优路径参数化 (Optimal Path Parameterization)</h3>
+<p>相比一般的路径参数化，最优路径参数化进一步引入了约束条件 (constraint) 和优化目标 (objective)。</p>
+<p>约束条件用于提高轨迹光滑性、确保参考轨迹在驱动性能范围内，在实际效果中有利于减少振动、提高轨迹跟踪精度等。一阶约束可以表达合成速度约束<span class="arithmatex">\(\|\boldsymbol{J(s)}\dot{\boldsymbol{q}}(s)\|\leq V(s)\)</span>、各轴速度约束<span class="arithmatex">\(\dot{\boldsymbol{q}}_\text{min}(s)\leq\dot{\boldsymbol{q}}(s)\leq\dot{\boldsymbol{q}}_\text{max}(s)\)</span>等，一般形式为</p>
 <div class="arithmatex">\[
-\text{OPP3:}\quad \boldsymbol{x}=(x_1,x_2)=\left(\frac12\dot{s}^2,\ddot{s}\right),\quad u=x_3=\frac{\dddot{s}}{\dot{s}}.
+a(s)\leq a^+(s).
 \]</div>
-<p>COPP 的 Rust/C API 里通常把</p>
+<p>二阶约束可以表达各轴加速度约束<span class="arithmatex">\(\ddot{\boldsymbol{q}}_\text{min}(s)\leq\ddot{\boldsymbol{q}}(s)\leq\ddot{\boldsymbol{q}}_\text{max}(s)\)</span>、各轴力矩约束<span class="arithmatex">\(\boldsymbol{\tau}_\text{min}(s)\leq\boldsymbol{\tau}(s)\leq\boldsymbol{\tau}_\text{max}(s)\)</span>等，一般形式为</p>
 <div class="arithmatex">\[
-a(s)=\dot{s}^2=2x_1(s),\qquad b(s)=\ddot{s}=x_2(s)
+\boldsymbol{n}(s)a(s)+\boldsymbol{m}(s)b(s)\leq\boldsymbol{g}(s).
 \]</div>
-<p>作为主要 profile 变量。二阶 solver 返回 <span class="arithmatex">\(a(s)\)</span>；三阶 solver 返回 <span class="arithmatex">\((a(s), b(s))\)</span> 以及 stationary boundary 信息。</p>
-<p>将 <span class="arithmatex">\([0,s_f]\)</span> 离散为 station grid：</p>
+<p>三阶约束可以表达各轴加加速度约束<span class="arithmatex">\(\dddot{\boldsymbol{q}}_\text{min}(s)\leq\dddot{\boldsymbol{q}}(s)\leq\dddot{\boldsymbol{q}}_\text{max}(s)\)</span>、各轴力矩导数约束<span class="arithmatex">\(\dot{\boldsymbol{\tau}}_\text{min}(s)\leq\dot{\boldsymbol{\tau}}(s)\leq\dot{\boldsymbol{\tau}}_\text{max}(s)\)</span>等，一般形式为</p>
 <div class="arithmatex">\[
-0=s_0&lt;s_1&lt;\cdots&lt;s_N=s_f,\qquad \Delta_k=s_{k+1}-s_k.
+\sqrt{a(s)}\left(\boldsymbol{r}(s)a(s)+\boldsymbol{v}(s)b(s)+\boldsymbol{w}(s)c(s)+\boldsymbol{h}(s)\right)\leq\boldsymbol{f}(s).
 \]</div>
-<p>OPP 就变成在每个 station 上求 <span class="arithmatex">\(\boldsymbol{x}_k\)</span> 和每个区间上求 <span class="arithmatex">\(u_k\)</span> 的离散优化问题：</p>
+<p>上述除了<span class="arithmatex">\(a(s), b(s), c(s)\)</span>为决策变量外，其他量均为根据路径、模型、物理约束计算得到的已知量。注意到上述约束支持分段约束、关于参数变化的约束、非对称约束。</p>
+<p>常见的优化目标包括终端时间</p>
 <div class="arithmatex">\[
-\min_{\boldsymbol{x}_k,u_k}\quad
-J=\sum_{k=0}^{N-1}L_k(\boldsymbol{x}_k,u_k)+\Phi(\boldsymbol{x}_N),
+t_\text{f}=\int_0^{t_\text{f}}\mathrm{d}t,
 \]</div>
+<p>热能耗散</p>
 <div class="arithmatex">\[
-\boldsymbol{x}_{k+1}=A_k\boldsymbol{x}_k+B_k u_k,\qquad
-f_k(\boldsymbol{x}_k)\le 0,\qquad h_k(\boldsymbol{x}_k,u_k)\le 0.
+J_\text{th}=\int_0^{t_\text{f}}\left\|\frac{\boldsymbol{\tau}(t)}{\boldsymbol{\tau}_\text{normal}(t)}\right\|_2^2\mathrm{d}t,
 \]</div>
-<p>这个形式解释了 COPP 文档里的几个设计选择：</p>
-<ul>
-<li><code>Path</code> 负责提供 <span class="arithmatex">\(\boldsymbol{q}(s)\)</span> 及其导数。</li>
-<li><code>Robot</code> 负责把速度、加速度、力矩和 jerk 等物理约束转成 <span class="arithmatex">\(a,b,u\)</span> 上的约束。</li>
-<li>problem builder 负责固定 station 区间、边界条件和目标函数。</li>
-<li>solver 负责在离散的路径参数域中求 profile。</li>
-<li>interpolation 负责把 <span class="arithmatex">\(a(s)\)</span> 或 <span class="arithmatex">\((a(s),b(s))\)</span> 转回 <span class="arithmatex">\(t(s)\)</span> 和 <span class="arithmatex">\(s(t)\)</span>。</li>
-</ul>
+<p>力矩全变分</p>
+<div class="arithmatex">\[
+J_\text{tv}=\int_0^{t_\text{f}}\left\|\frac{\mathrm{d}\boldsymbol{\tau}(t)}{\boldsymbol{\tau}_\text{normal}(t)}\right\|_1,
+\]</div>
+<p>和线性目标</p>
+<div class="arithmatex">\[
+J_\text{lin}=\begin{cases}
+\int_0^{s_\text{f}}(\alpha(s)a(s)+\beta(s)b(s))\mathrm{d}s,&amp;\text{二阶问题},\\
+\int_0^{s_\text{f}}(\alpha(s)a(s)+\beta(s)b(s)+\gamma(s)c(s))\mathrm{d}s,&amp;\text{三阶问题}.\\
+\end{cases}
+\]</div>
+<p>最常用的目标是终端时间<span class="arithmatex">\(t_\text{f}\)</span>，即时间最优路径参数化 (Time-Optimal Path Parameterization, TOPP)；在更一般的目标下，我们可以考虑上述目标或其他用户自定义凸目标的线性组合，即凸目标路径参数化 (Convex-Objective Path Parameterization)。<a href="https://arxiv.org/abs/2605.19089">实验表明</a>，相比纯TOPP，终端时间-热能耗散的混合目标<span class="arithmatex">\(J=t_\text{f}+\lambda J_\text{th}\)</span>的COPP所得轨迹能够在极小的终端时间代价下显著提升轨迹光滑性。</p>
+<p>总结而言，<code>copp</code>库能够求解的问题分类如下：</p>
 <table>
 <thead>
 <tr>
 <th>问题类别</th>
-<th>状态/控制</th>
-<th>目标</th>
-<th>典型约束</th>
+<th>二阶（速度、加速度、力矩约束）</th>
+<th>三阶约束（额外加加速度、力矩导数约束等）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>时间目标</td>
+<td>TOPP2</td>
+<td>TOPP3</td>
+</tr>
+<tr>
+<td>一般凸目标</td>
+<td>COPP2</td>
+<td>COPP3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">安装</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="rust" name="__tabbed_1" type="radio" /><input id="c" name="__tabbed_1" type="radio" /><input id="python" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="rust">Rust</label><label for="c">C</label><label for="python">Python</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><code>copp</code>库已经发布到<a href="https://crates.io/crates/copp">crates.io</a>，只需在根目录<code>Cargo.toml</code>加入</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[dependencies]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">copp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.2.1&quot;</span>
+</code></pre></div>
+<p><code>copp</code> v0.2.1 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启Release模式，以显著提高计算效率。</p>
+</div>
+<div class="tabbed-block">
+<p>C ABI 适合 C/C++ 工程、下游语言绑定和已有机器人软件栈。发布版本的预编译 C ABI SDK 可以从 <a href="https://github.com/TOPP-THU/copp/releases">GitHub Releases</a> 获取；如果需要从源码构建，可以从本地库开始：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/TOPP-THU/topp.git
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>topp
+</code></pre></div>
+<p>需要准备 Cargo、CMake 和 C 编译器工具链。C ABI 位于 Cargo 的 <code>c</code> feature 下，先在仓库根目录构建 native library：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release<span class="w"> </span>--lib<span class="w"> </span>--features<span class="w"> </span>c
+</code></pre></div>
+<p>然后配置并构建 CMake 工程：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>bindings/c<span class="w"> </span>-B<span class="w"> </span>bindings/c/build
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>bindings/c/build<span class="w"> </span>--config<span class="w"> </span>Release
+</code></pre></div>
+<p>如果要安装成下游 CMake 工程可查找的 package：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>cmake<span class="w"> </span>--install<span class="w"> </span>bindings/c/build<span class="w"> </span>--config<span class="w"> </span>Release<span class="w"> </span>--prefix<span class="w"> </span>&lt;install-prefix&gt;
+</code></pre></div>
+<p>下游工程中使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">copp</span><span class="w"> </span><span class="s">CONFIG</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">app</span><span class="w"> </span><span class="s">main.c</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">app</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">copp::copp</span><span class="p">)</span>
+</code></pre></div>
+<p>配置下游工程时把安装前缀传给 CMake：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>app<span class="w"> </span>-B<span class="w"> </span>app/build<span class="w"> </span>-DCMAKE_PREFIX_PATH<span class="o">=</span>&lt;install-prefix&gt;
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>cmake<span class="w"> </span>--build<span class="w"> </span>app/build<span class="w"> </span>--config<span class="w"> </span>Release
+</code></pre></div>
+<p>如果希望静态链接，在配置 COPP 的 CMake 项目时加入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>cmake<span class="w"> </span>-S<span class="w"> </span>bindings/c<span class="w"> </span>-B<span class="w"> </span>bindings/c/build<span class="w"> </span>-DCOPP_LINK_STATIC<span class="o">=</span>ON
+</code></pre></div>
+<p>若需要重新生成 C 头文件，先安装 <code>cbindgen</code>，再运行 <code>bindings/c/scripts/generate_headers.ps1</code>；普通用户可以直接使用仓库中已生成的 <code>bindings/c/include/copp/</code> 头文件。</p>
+</div>
+<div class="tabbed-block">
+<p>Python 包发布在 <a href="https://pypi.org/project/copp-py/">PyPI: copp-py</a>，安装命令是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>copp-py
+</code></pre></div>
+<p>导入包名是 <code>copp_py</code>，通常写成：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">copp_py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">copp</span>
+</code></pre></div>
+<p>如果需要从本地源码构建，需要 Python 3.9 或更新版本、Rust/Cargo、平台 C/C++ 编译器，以及 <code>maturin</code>。可以从本地库开始：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/TOPP-THU/topp.git
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">cd</span><span class="w"> </span>topp
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pip
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>maturin<span class="w"> </span>numpy<span class="w"> </span>jax
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>maturin<span class="w"> </span>develop<span class="w"> </span>--release<span class="w"> </span>--features<span class="w"> </span>python
+</code></pre></div>
+<p><code>maturin develop</code> 会把 Rust extension module 直接安装到当前 Python 环境中。构建完成后验证：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import copp_py as copp; print(copp.version())&quot;</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="_3">算法选择</h2>
+<p><code>copp</code>中算法的选择主要取决于三个因素：问题是二阶还是三阶、目标是时间最优还是一般凸目标、以及是否需要PRO版本提供的更高性能。</p>
+<table>
+<thead>
+<tr>
+<th>问题类别</th>
+<th>算法</th>
+<th>可用版本</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>TOPP2</td>
-<td><span class="arithmatex">\(a\)</span>；区间加速度由 <span class="arithmatex">\(a\)</span> 差分得到</td>
-<td>最短时间</td>
-<td>速度、加速度、力矩等二阶约束</td>
+<td>TOPP2-RA</td>
+<td>开源</td>
+<td>基于可达性分析的高速算法。在常见benchmark中相对全局优化基准的误差通常低于<span class="arithmatex">\(10^{-4}\)</span>，适合作为二阶时间最优问题的默认入口。</td>
 </tr>
 <tr>
 <td>COPP2</td>
-<td><span class="arithmatex">\(a\)</span>；区间 <span class="arithmatex">\(b\)</span></td>
-<td>时间、热能、力矩变化、线性项等凸目标</td>
-<td>二阶约束与 torque 相关目标</td>
+<td>COPP2-SOCP</td>
+<td>开源</td>
+<td>将问题建模为SOCP并由<code>clarabel</code>求解。在凸建模假设下具备全局最优性，但计算开销通常明显高于RA类方法。</td>
+</tr>
+<tr>
+<td>COPP2</td>
+<td>COPP2-RDDP</td>
+<td>PRO</td>
+<td>原创的高速算法，保持全局最优解质量，并显著快于COPP2-SOCP。</td>
 </tr>
 <tr>
 <td>TOPP3</td>
-<td><span class="arithmatex">\((a,b)\)</span>；控制对应 jerk 结构</td>
-<td>时间目标</td>
-<td>jerk、stationary boundary、三阶平滑性</td>
+<td>TOPP3-SOCP</td>
+<td>开源</td>
+<td>基于<code>clarabel</code>的锥优化形式，通常能得到高质量的KKT解；在特定数据集上计算成本可能较高。</td>
+</tr>
+<tr>
+<td>TOPP3</td>
+<td>TOPP3-LP</td>
+<td>开源</td>
+<td>TOPP3-SOCP的线性目标近似形式，通常更快；但在jerk约束较紧时可能次优，因此主要推荐在jerk边界较宽松时使用。</td>
+</tr>
+<tr>
+<td>TOPP3</td>
+<td>TOPP3-RA</td>
+<td>PRO</td>
+<td>基于可达性分析的高速三阶算法；在jerk约束较紧时可能次优，主要推荐在jerk边界较宽松时使用。</td>
 </tr>
 <tr>
 <td>COPP3</td>
-<td><span class="arithmatex">\((a,b)\)</span>；目标引入辅助变量</td>
-<td>一般凸目标</td>
-<td>三阶约束与多目标权衡</td>
+<td>COPP3-SOCP</td>
+<td>开源</td>
+<td>基于<code>clarabel</code>的锥优化形式，通常具有较强的实际最优性，但计算成本较高。</td>
+</tr>
+<tr>
+<td>COPP3</td>
+<td>COPP3-RDDP</td>
+<td>PRO</td>
+<td>高速原创算法，能够得到接近TOPP3-SOCP质量的KKT解，同时显著快于TOPP3-SOCP、TOPP3-LP和COPP3-SOCP。COPP3-RDDP也可以作为高质量TOPP3求解器使用；在长路径问题上，它可能比COPP3-SOCP具有更好的实际最优性和数值稳定性。</td>
 </tr>
 </tbody>
 </table>
-<p>时间最优 TOPP 往往会把速度、加速度、力矩或 jerk 推到约束边界，效率高，但可能带来振动、跟踪误差或控制信号抖动。引入 COPP/GOPP 式的一般目标后，可以在少量时间代价下换取更平滑、更节能或更适合下游控制器的 profile。</p>
-<h2 id="installation">安装</h2>
-<p>语言只是入口，安装目标是一样的：把 COPP 放进你的工程，并能打开对应 API 文档。</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="rust" name="__tabbed_1" type="radio" /><input id="c" name="__tabbed_1" type="radio" /><input id="python" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="rust">Rust</label><label for="c">C</label><label for="python">Python</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>Rust 是主实现语言，适合直接组合路径、机器人模型、约束、目标和 solver。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[dependencies]</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">copp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.2&quot;</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>cargo<span class="w"> </span>add<span class="w"> </span>copp
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cargo<span class="w"> </span>doc<span class="w"> </span>--no-deps<span class="w"> </span>--open
-</code></pre></div>
-<p><code>copp</code> v0.2.1 需要 Rust 1.88 或更新版本。</p>
-</div>
-<div class="tabbed-block">
-<p>C ABI 适合 C/C++ 工程、下游语言绑定和已有机器人软件栈。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cargo<span class="w"> </span>build<span class="w"> </span>--release
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">find_package</span><span class="p">(</span><span class="s">copp</span><span class="w"> </span><span class="s">CONFIG</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nb">add_executable</span><span class="p">(</span><span class="s">app</span><span class="w"> </span><span class="s">main.c</span><span class="p">)</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">app</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">copp::copp</span><span class="p">)</span>
-</code></pre></div>
-<p>动态库、静态库、安装前缀和 smoke test 的细节见 <a href="/c/v0.2.0/">C v0.2.0 文档</a>。</p>
-</div>
-<div class="tabbed-block">
-<p>Python binding 适合快速实验、数据处理脚本和与科学计算栈集成。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>copp-py
-</code></pre></div>
-<p>当前 Python 包入口见 <a href="https://pypi.org/project/copp-py/">PyPI: copp-py</a>，详细 API 示例建议以后随 Python binding 文档一起补齐。</p>
-</div>
-</div>
-</div>
-<h2 id="workflow">Step-by-step 工作流</h2>
-<p>下面按“建模思想”组织，每一步都可以切换 Rust/C。代码是最小形状，不是完整程序；完整签名、错误处理和生命周期约束请进入对应 API 文档。Python 入口先保留在安装和 API 区域，避免在绑定文档稳定前写入不确定示例。</p>
-<h3 id="step-1">Step 1. 构造几何路径</h3>
-<p>先得到 q(s) 及其导数。路径可以来自 waypoint spline，也可以来自你自己的 evaluator。</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="rust_1" name="__tabbed_2" type="radio" /><input id="c_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="rust_1">Rust</label><label for="c_1">C</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">path</span><span class="p">::{</span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">SplineConfig</span><span class="p">};</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">::</span><span class="n">from_waypoints</span><span class="p">(</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="o">&amp;</span><span class="n">waypoints</span><span class="p">,</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="n">SplineConfig</span><span class="p">::</span><span class="n">default</span><span class="p">(),</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppMatrixViewF64</span><span class="w"> </span><span class="n">waypoints</span><span class="w"> </span><span class="o">=</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">COPP_MATRIX_VIEW_F64_COLUMN_MAJOR</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">dim</span><span class="p">,</span><span class="w"> </span><span class="n">n_points</span><span class="p">);</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppPathOptions</span><span class="w"> </span><span class="n">options</span><span class="p">;</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">copp_path_default_options</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">);</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppPath</span><span class="w"> </span><span class="o">*</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">copp_path_from_waypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">path</span><span class="p">);</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h3 id="step-2-station-grid-robot">Step 2. 建 station grid 和 robot</h3>
-<p>station grid 是离散 OPP 的骨架。<code>s</code> 必须严格递增；robot 持有 station-indexed constraint buffer。</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="rust_2" name="__tabbed_3" type="radio" /><input id="c_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="rust_2">Rust</label><label for="c_2">C</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">robot</span><span class="p">::</span><span class="n">Robot</span><span class="p">;</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Robot</span><span class="p">::</span><span class="n">with_capacity</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">len</span><span class="p">());</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">robot</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="p">.</span><span class="n">with_s</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">as_slice</span><span class="p">())</span><span class="o">?</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="p">.</span><span class="n">with_q_from_path_3rd</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">len</span><span class="p">())</span><span class="o">?</span><span class="p">;</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppRobot</span><span class="w"> </span><span class="o">*</span><span class="n">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">copp_robot_create</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">robot</span><span class="p">);</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">copp_robot_append_s</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">CoppSliceF64</span><span class="p">){</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">});</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">copp_robot_sample_path_3rd</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h3 id="step-3">Step 3. 添加约束</h3>
-<p>常见物理约束包括轴向速度、加速度、力矩和 jerk。二阶问题通常只需要速度/加速度/力矩；三阶问题需要 jerk 数据。</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="rust_3" name="__tabbed_4" type="radio" /><input id="c_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="rust_3">Rust</label><label for="c_3">C</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">robot</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="p">.</span><span class="n">with_axial_velocity</span><span class="p">((</span><span class="n">vmax</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">vmin</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="p">.</span><span class="n">with_axial_acceleration</span><span class="p">((</span><span class="n">amax</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">amin</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="p">.</span><span class="n">with_axial_jerk</span><span class="p">((</span><span class="n">jmax</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">jmin</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">copp_add_axial_velocity_limits</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">vmax</span><span class="p">,</span><span class="w"> </span><span class="n">vmin</span><span class="p">);</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">copp_add_axial_acceleration_limits</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">amax</span><span class="p">,</span><span class="w"> </span><span class="n">amin</span><span class="p">);</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">copp_add_axial_jerk_limits</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">,</span><span class="w"> </span><span class="n">jmax</span><span class="p">,</span><span class="w"> </span><span class="n">jmin</span><span class="p">);</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h3 id="step-4">Step 4. 选择问题和目标</h3>
-<p>TOPP 是时间最优；COPP 用 objective list 表达时间、热能、力矩总变差或线性偏好。三阶问题通常先用一个可行的 <code>a</code> profile 作为线性化参考。</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="rust_4" name="__tabbed_5" type="radio" /><input id="c_4" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="rust_4">Rust</label><label for="c_4">C</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">objectives</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="n">CoppObjective</span><span class="p">::</span><span class="n">Time</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">CoppObjective</span><span class="p">::</span><span class="n">ThermalEnergy</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">normalize</span><span class="p">.</span><span class="n">as_slice</span><span class="p">()),</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">];</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">problem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Copp2ProblemBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">(</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="o">&amp;</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">objectives</span><span class="p">,</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="p">).</span><span class="n">build</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppObjective</span><span class="w"> </span><span class="n">objectives</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="p">{.</span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COPP_OBJECTIVE_KIND_TIME</span><span class="p">,</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">     </span><span class="p">.</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">},</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="p">{.</span><span class="n">kind</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">COPP_OBJECTIVE_KIND_THERMAL_ENERGY</span><span class="p">,</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">     </span><span class="p">.</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">     </span><span class="p">.</span><span class="n">normalize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">},</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">};</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Copp2Problem</span><span class="w"> </span><span class="n">problem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">objectives</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
-<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="p">};</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h3 id="step-5-solver">Step 5. 调用 solver</h3>
-<p>先按问题类别选 solver。TOPP2-RA 很适合做二阶时间最优和三阶线性化的起点；COPP2/COPP3 通过 Clarabel 后端求解凸目标问题。</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="rust_5" name="__tabbed_6" type="radio" /><input id="c_5" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="rust_5">Rust</label><label for="c_5">C</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ClarabelOptionsBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">()</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="p">.</span><span class="n">allow_almost_solved</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="p">.</span><span class="n">build</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="kd">let</span><span class="w"> </span><span class="n">a_profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copp2_socp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">problem</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppClarabelOptions</span><span class="w"> </span><span class="n">options</span><span class="p">;</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">copp_clarabel_default_options</span><span class="p">(</span><span class="o">&amp;</span><span class="n">options</span><span class="p">);</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppVecF64</span><span class="w"> </span><span class="n">a_profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="n">copp2_socp</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a_profile</span><span class="p">);</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h3 id="step-6">Step 6. 转回时间域并释放资源</h3>
-<p>求解结果仍然在路径参数域中。二阶结果是 a(s)；三阶结果是 (a(s), b(s))。最后要生成 t(s) 或 s(t)，再交给下游控制器。</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="rust_6" name="__tabbed_7" type="radio" /><input id="c_6" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="rust_6">Rust</label><label for="c_6">C</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">t_final</span><span class="p">,</span><span class="w"> </span><span class="n">t_s</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s_to_t_topp2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a_profile</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">s_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t_to_s_topp2</span><span class="p">(</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a_profile</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t_s</span><span class="p">,</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="n">InterpolationMode</span><span class="p">::</span><span class="n">UniformTimeGrid</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">),</span>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="p">)</span><span class="o">?</span><span class="p">;</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppSliceF64</span><span class="w"> </span><span class="n">a_view</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">a_profile</span><span class="p">.</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="n">a_profile</span><span class="p">.</span><span class="n">len</span><span class="p">};</span>
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kt">double</span><span class="w"> </span><span class="n">t_final</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppVecF64</span><span class="w"> </span><span class="n">t_s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="n">copp_s_to_t_2nd</span><span class="p">(</span><span class="n">s_view</span><span class="p">,</span><span class="w"> </span><span class="n">a_view</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t_final</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t_s</span><span class="p">);</span>
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">copp_vec_f64_free</span><span class="p">(</span><span class="n">t_s</span><span class="p">);</span>
-<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">copp_vec_f64_free</span><span class="p">(</span><span class="n">a_profile</span><span class="p">);</span>
-<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="n">copp_robot_free</span><span class="p">(</span><span class="n">robot</span><span class="p">);</span>
-<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="n">copp_path_free</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<h2 id="_2">算法选择</h2>
+<p>更具体地说，可以按如下方式选择：</p>
 <table>
 <thead>
 <tr>
 <th>场景</th>
-<th>推荐入口</th>
-<th>输出</th>
-<th>主要优点</th>
+<th>推荐算法</th>
+<th>可用版本</th>
+<th>主要原因</th>
 <th>注意事项</th>
+<th>备选方案</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>二阶时间最优，优先追求速度</td>
-<td><code>topp2_ra</code></td>
-<td><code>a(s)</code></td>
-<td>极快，适合作为默认起点和三阶线性化参考。</td>
-<td>目标固定为时间最优。</td>
+<td>二阶时间最优，且要求极低计算时间</td>
+<td>TOPP2-RA</td>
+<td>开源</td>
+<td>速度和性能折中极好，在典型benchmark中接近全局最优。</td>
+<td>目标固定为最短时间。</td>
+<td></td>
 </tr>
 <tr>
-<td>二阶凸目标，关注目标函数质量</td>
-<td><code>copp2_socp</code></td>
-<td><code>a(s)</code></td>
-<td>把时间、热能、力矩变化、线性项放入凸优化。</td>
-<td>比 RA 慢，依赖 Clarabel 数值求解。</td>
+<td>二阶凸目标，且更重视全局解质量</td>
+<td>COPP2-SOCP</td>
+<td>开源</td>
+<td>凸锥优化形式，在模型假设下具有全局最优性。</td>
+<td>计算时间高于RA/RDDP类方法。</td>
+<td>若需要大幅提速，可使用COPP2-RDDP。</td>
 </tr>
 <tr>
-<td>诊断二阶可行区间</td>
-<td><code>reach_set2_backward</code> / <code>copp_reach_set2_backward</code></td>
-<td>reachable intervals</td>
-<td>适合排查约束冲突和分析 feasible set。</td>
-<td>通常不是最终轨迹接口。</td>
+<td>二阶凸目标，且要求最高计算效率</td>
+<td>COPP2-RDDP</td>
+<td>PRO</td>
+<td>保持全局最优解质量，同时显著提高计算速度。</td>
+<td>需要PRO授权。</td>
+<td>COPP2-SOCP。</td>
 </tr>
 <tr>
-<td>三阶时间目标，带 jerk 约束</td>
-<td><code>topp3_lp</code>、<code>topp3_socp</code></td>
-<td><code>(a(s), b(s))</code></td>
-<td>支持 jerk 约束和 stationary boundary。</td>
-<td>需要参考 <code>a_linearization</code>。</td>
+<td>三阶问题，且希望使用开源版本中最强的最优性质量</td>
+<td>TOPP3-SOCP / COPP3-SOCP</td>
+<td>开源</td>
+<td>具有较强的KKT解质量和较广泛适用性。</td>
+<td>在特定数据集上计算成本可能较高。</td>
+<td>若需要大幅提速，可使用COPP3-RDDP。</td>
 </tr>
 <tr>
-<td>三阶凸目标</td>
-<td><code>copp3_socp</code></td>
-<td><code>(a(s), b(s))</code></td>
-<td>三阶约束下优化多目标。</td>
-<td>建模和求解成本更高。</td>
+<td>三阶时间最优，且希望使用更快的开源近似</td>
+<td>TOPP3-LP</td>
+<td>开源</td>
+<td>当用户自己的路径数据集显示它具有更好的速度/性能表现时可以使用。</td>
+<td>jerk约束较紧时可能次优。</td>
+<td>TOPP3-SOCP或COPP3-RDDP。</td>
+</tr>
+<tr>
+<td>三阶时间最优，jerk边界较宽松且要求极低计算时间</td>
+<td>TOPP3-RA</td>
+<td>PRO</td>
+<td>计算开销很低。</td>
+<td>jerk约束较紧时可能次优。</td>
+<td>COPP3-RDDP或TOPP3-SOCP。</td>
+</tr>
+<tr>
+<td>三阶高质量、高稳定性，特别是困难长路径规划</td>
+<td>COPP3-RDDP</td>
+<td>PRO</td>
+<td>实际最优性强、计算速度高，并且通常在长时域问题上更稳定。</td>
+<td>需要PRO授权。</td>
+<td>COPP3-SOCP。</td>
 </tr>
 </tbody>
 </table>
-<p>实践中，一个稳妥的路线是：先用 TOPP2-RA 得到可行参考 <span class="arithmatex">\(a\)</span>，再把它作为 <code>a_linearization</code> 进入 TOPP3 或 COPP3。必要时可以先用参考 profile 收紧一阶上界，例如 Rust 中的 <code>robot.constraints.amax_substitute(...)</code> 或 C 中的 <code>copp_robot_amax_substitute(...)</code>。</p>
-<h2 id="_3">目标函数</h2>
-<p>COPP 的目标函数由 <code>CoppObjective</code> 表示。常用项包括：</p>
-<table>
-<thead>
-<tr>
-<th>目标项</th>
-<th>含义</th>
-<th>常见用途</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>Time(weight)</code></td>
-<td>运动时间</td>
-<td>保留时间效率，或作为多目标中的主项。</td>
-</tr>
-<tr>
-<td><code>ThermalEnergy(weight, normalize)</code></td>
-<td>热能相关项</td>
-<td>减少高力矩、高速度带来的热负担。</td>
-</tr>
-<tr>
-<td><code>TotalVariationTorque(weight, normalize)</code></td>
-<td>力矩总变差</td>
-<td>让 torque profile 更平滑。</td>
-</tr>
-<tr>
-<td><code>Linear(weight, alpha, beta)</code></td>
-<td>对 <span class="arithmatex">\(a\)</span>、<span class="arithmatex">\(b\)</span> 的线性偏好</td>
-<td>表达额外工程偏好或自定义代价。</td>
-</tr>
-</tbody>
-</table>
-<p>所有 COPP 目标都应使用非负且有限的权重。<code>normalize</code> 的长度需要匹配机器人维度；<code>Linear</code> 的 <code>alpha</code> 和 <code>beta</code> 长度需要匹配对应二阶或三阶问题的离散变量约定。</p>
-<h2 id="api">API 入口</h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="8:3"><input checked="checked" id="rust_7" name="__tabbed_8" type="radio" /><input id="c_7" name="__tabbed_8" type="radio" /><input id="python_1" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="rust_7">Rust</label><label for="c_7">C</label><label for="python_1">Python</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
+<h2 id="step-by-step">Step-by-Step工作流</h2>
+<p>我们以二维路径的时间最优参数化为例给出一个简单的例程，高级接口详见<a href="#docs-architecture">文档章节</a>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">const</span><span class="w"> </span><span class="n">DIM</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="step-1">Step 1. 构造几何路径</h3>
+<p>严格地说，几何路径<span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(s)\)</span>是用户端给<code>copp</code>的输入，而<code>copp</code>库提供了路径相关模块作为辅助。</p>
+<h4 id="option-a">Option A.  解析式自动微分</h4>
+<p>最简单的方式是通过解析式构造路径，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">path</span><span class="p">::</span><span class="n">autodiff</span><span class="p">::</span><span class="n">Jet3</span><span class="p">;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">path</span><span class="p">::{</span><span class="n">cos</span><span class="p">,</span><span class="w"> </span><span class="n">sin</span><span class="p">,</span><span class="w"> </span><span class="n">Path</span><span class="p">};</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">::</span><span class="n">from_parametric</span><span class="p">(</span><span class="o">|</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="nc">Jet3</span><span class="o">|</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="n">sin</span><span class="p">(</span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">s</span><span class="p">)],</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<h4 id="option-b">Option B. 路径点生成样条</h4>
+<p>如果提供路径点，可以通过如下方式构建样条路径，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">path</span><span class="p">::{</span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">SplineConfig</span><span class="p">};</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">use</span><span class="w"> </span><span class="n">nalgebra</span><span class="p">::</span><span class="n">DMatrix</span><span class="p">;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">waypoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DMatrix</span><span class="p">::</span><span class="n">from_row_slice</span><span class="p">(</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="c1">// dim</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="c1">// number of waypoints</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="o">&amp;</span><span class="p">[</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">        </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">        </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">    </span><span class="p">],</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="p">);</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="kd">let</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">::</span><span class="n">from_waypoints</span><span class="p">(</span><span class="o">&amp;</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="n">SplineConfig</span><span class="p">::</span><span class="n">default</span><span class="p">())</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="option-c">Option C. 用户手动微分</h3>
+<p>最一般的情况下，用户可以自行求导，在TOPP2/COPP2应在给定<span class="arithmatex">\(s\)</span>下提供<span class="arithmatex">\(\boldsymbol{q}(s),\boldsymbol{q}'(s),\boldsymbol{q}''(s)\)</span>，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">diag</span><span class="p">::</span><span class="n">PathError</span><span class="p">;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">path</span><span class="p">::{</span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">PathEvaluator2nd</span><span class="p">};</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="k">struct</span><span class="w"> </span><span class="nc">NormalizedEvaluator2nd</span><span class="p">;</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="k">impl</span><span class="w"> </span><span class="n">PathEvaluator2nd</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">NormalizedEvaluator2nd</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">dim</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="kt">usize</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">        </span><span class="mi">2</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">evaluate_up_to_2nd</span><span class="p">(</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">        </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">        </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">        </span><span class="n">q</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">        </span><span class="n">dq</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">        </span><span class="n">ddq</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">PathError</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">col</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">sj</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">s</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">enumerate</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">row0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">col</span><span class="p">;</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">            </span><span class="n">q</span><span class="p">[</span><span class="n">row0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sj</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sj</span><span class="p">;</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">            </span><span class="n">q</span><span class="p">[</span><span class="n">row0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sj</span><span class="p">;</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="w">            </span><span class="n">dq</span><span class="p">[</span><span class="n">row0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sj</span><span class="p">;</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">            </span><span class="n">dq</span><span class="p">[</span><span class="n">row0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">            </span><span class="n">ddq</span><span class="p">[</span><span class="n">row0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="p">;</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">            </span><span class="n">ddq</span><span class="p">[</span><span class="n">row0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="w">        </span><span class="nb">Ok</span><span class="p">(())</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a><span class="p">}</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a><span class="k">impl</span><span class="w"> </span><span class="n">PathEvaluator3rd</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">NormalizedEvaluator3rd</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a><span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">evaluate_up_to_3rd</span><span class="p">(</span>
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a><span class="w">        </span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a><span class="w">        </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a><span class="w">        </span><span class="n">q</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a><span class="w">        </span><span class="n">dq</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a><span class="w">        </span><span class="n">ddq</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a><span class="w">        </span><span class="n">dddq</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="p">[</span><span class="kt">f64</span><span class="p">],</span>
+<a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">Result</span><span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">PathError</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-40" name="__codelineno-15-40" href="#__codelineno-15-40"></a><span class="w">        </span><span class="bp">self</span><span class="p">.</span><span class="n">evaluate_up_to_2nd</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">q</span><span class="p">,</span><span class="w"> </span><span class="n">dq</span><span class="p">,</span><span class="w"> </span><span class="n">ddq</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-15-41" name="__codelineno-15-41" href="#__codelineno-15-41"></a><span class="w">        </span><span class="n">dddq</span><span class="p">.</span><span class="n">fill</span><span class="p">(</span><span class="mf">0.0</span><span class="p">);</span>
+<a id="__codelineno-15-42" name="__codelineno-15-42" href="#__codelineno-15-42"></a><span class="w">        </span><span class="nb">Ok</span><span class="p">(())</span>
+<a id="__codelineno-15-43" name="__codelineno-15-43" href="#__codelineno-15-43"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-44" name="__codelineno-15-44" href="#__codelineno-15-44"></a><span class="p">}</span>
+<a id="__codelineno-15-45" name="__codelineno-15-45" href="#__codelineno-15-45"></a>
+<a id="__codelineno-15-46" name="__codelineno-15-46" href="#__codelineno-15-46"></a><span class="kd">let</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">::</span><span class="n">from_evaluator_3rd</span><span class="p">(</span><span class="n">NormalizedEvaluator3rd</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-15-47" name="__codelineno-15-47" href="#__codelineno-15-47"></a><span class="c1">// If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `PathEvaluator3rd` can be removed and the path can be constructed by `from_evaluator_2nd`.</span>
+</code></pre></div>
+<h3 id="step-2">Step 2. 离散化路径信息</h3>
+<p>路径参数化问题需要在给定的<span class="arithmatex">\(s\)</span>离散网格上进行，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">// `n` is the number of path samples (s_i) to build robot constraints on.</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1001</span><span class="p">;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">f64</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="n">n</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">j</span><span class="o">|</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span>
+</code></pre></div>
+<p>创建机器人模型：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">robot</span><span class="p">::</span><span class="n">Robot</span><span class="p">;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Robot</span><span class="p">::</span><span class="n">with_capacity</span><span class="p">(</span><span class="n">DIM</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
+</code></pre></div>
+<p>输入<span class="arithmatex">\(s\)</span>网格与路径信息：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">robot</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span><span class="p">.</span><span class="n">with_s</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">as_slice</span><span class="p">())</span><span class="o">?</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="p">.</span><span class="n">with_q_from_path_3rd</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>在更灵活的情况下，路径可以在线加入、删除等，机器人可以包含逆运动学信息，这些高级接口详见<a href="#docs-architecture">文档章节</a>。</p>
+<h3 id="step-3">Step 3. 约束构造</h3>
+<p>通常情况下，我们推荐用户使用具备物理含义的高级接口，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">// The axial velocity is -1 &lt;= vel &lt;= 1 for each axis in this example</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">vel_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">DIM</span><span class="p">];</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">vel_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">DIM</span><span class="p">];</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1">// The axial acceleration is -1 &lt;= acc &lt;= 1 for each axis in this example.</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="kd">let</span><span class="w"> </span><span class="n">acc_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">DIM</span><span class="p">];</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">acc_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">DIM</span><span class="p">];</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="n">robot</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">    </span><span class="p">.</span><span class="n">with_axial_velocity</span><span class="p">((</span><span class="n">vel_max</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">vel_min</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">    </span><span class="p">.</span><span class="n">with_axial_acceleration</span><span class="p">((</span><span class="n">acc_max</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">acc_min</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>如果是求解三阶轨迹，则需要额外引入三阶约束，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1">// The axial jerk is -1 &lt;= jerk &lt;= 1 for each axis in this example.</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">jerk_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">DIM</span><span class="p">];</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">jerk_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">DIM</span><span class="p">];</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">robot</span><span class="p">.</span><span class="n">with_axial_jerk</span><span class="p">((</span><span class="n">jerk_max</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">jerk_min</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>更高级的调用接口详见<a href="#docs-architecture">文档章节</a>。</p>
+<h3 id="step-4">Step 4. 调用求解器</h3>
+<p>我们以求解TOPP2问题、调用<code>topp2_ra</code>为例。首先定义问题，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp2_ra</span><span class="p">::</span><span class="n">Topp2ProblemBuilder</span><span class="p">;</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">idx_s_interval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 0 &lt;= k &lt;= n-1</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">a_boundary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w"> </span><span class="c1">// a(0) = 0, a(1) = 0</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="kd">let</span><span class="w"> </span><span class="n">problem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Topp2ProblemBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="n">idx_s_interval</span><span class="p">,</span><span class="w"> </span><span class="n">a_boundary</span><span class="p">).</span><span class="n">build</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>然后构造求解设置并调用求解器，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp2_ra</span><span class="p">::{</span><span class="n">ReachSet2OptionsBuilder</span><span class="p">,</span><span class="w"> </span><span class="n">topp2_ra</span><span class="p">};</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReachSet2OptionsBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">().</span><span class="n">build</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">a_ra</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">topp2_ra</span><span class="p">(</span><span class="o">&amp;</span><span class="n">problem</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>据此，我们得到了<span class="arithmatex">\(a=a(s)\)</span>。</p>
+<h3 id="step-5">Step 5. 二阶轨迹后处理（仅二阶需要）</h3>
+<p>我们接下来希望得到真实的轨迹<span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(t)\)</span>，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解<span class="arithmatex">\(t=t(s)\)</span>，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp2_ra</span><span class="p">::</span><span class="n">s_to_t_topp2</span><span class="p">;</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="c1">// t_final is the traversal time of the path.</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1">// t_s[i] is the time at which the path parameter s[i] is reached.</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">t_final</span><span class="p">,</span><span class="w"> </span><span class="n">t_s</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s_to_t_topp2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a_ra</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>接下来求逆解<span class="arithmatex">\(s=s(t)\)</span>并插补，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp2_ra</span><span class="p">::</span><span class="n">t_to_s_topp2</span><span class="p">;</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">InterpolationMode</span><span class="p">;</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1">// s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="kd">let</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">s_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t_to_s_topp2</span><span class="p">(</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">    </span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">    </span><span class="o">&amp;</span><span class="n">a_ra</span><span class="p">,</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">    </span><span class="o">&amp;</span><span class="n">t_s</span><span class="p">,</span>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="w">    </span><span class="n">InterpolationMode</span><span class="p">::</span><span class="n">UniformTimeGrid</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">),</span>
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>上述插补也支持非均匀时间采样方式，详见<a href="#docs-architecture">文档章节</a>。最后可以求解插补轨迹<span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(t)\)</span>$，一种简单的做法是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">evaluate_q</span><span class="p">(</span><span class="n">s_t</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">q_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">q</span><span class="p">;</span>
+</code></pre></div>
+<p>由此完成了二阶轨迹的完整求解。如果是求解三阶轨迹，那么二阶轨迹后处理步骤可以跳过，并继续如下流程。</p>
+<h3 id="step-6">Step 6. 构造并求解三阶问题（仅三阶需要）</h3>
+<p>构造三阶问题如下，其中非凸的三阶约束用前面求解的二阶轨迹<code>a_ra</code>进行线性化：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp3_socp</span><span class="p">::</span><span class="n">Topp3ProblemBuilder</span><span class="p">;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="c1">// Note that in TOPP3Problem, the non-convex jerk constraints should be linearized into a convex one.</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1">// More details can be found in the documentation of `Topp3ProblemBuilder::build_with_linearization`.</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="kd">let</span><span class="w"> </span><span class="n">topp3_problem</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">    </span><span class="n">Topp3ProblemBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="n">idx_s_interval</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a_ra0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">))</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">    </span><span class="p">.</span><span class="n">build_with_linearization</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>我们以<code>topp3_socp</code>为例，调用求解器如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp3_socp</span><span class="p">::{</span><span class="n">ClarabelOptionsBuilder</span><span class="p">,</span><span class="w"> </span><span class="n">topp3_socp</span><span class="p">};</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">options_socp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ClarabelOptionsBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">()</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="p">.</span><span class="n">allow_almost_solved</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">    </span><span class="p">.</span><span class="n">build</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">topp3_socp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">topp3_problem</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options_socp</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>理论上这已经生成了一条可行、近优的三阶轨迹<span class="arithmatex">\(a_1(s),b_1(s)\)</span>了，可以直接进行下一步。如果希望通过更多的计算资源进一步地求解更优的轨迹，可以以<span class="arithmatex">\(a_1(s)\)</span>为线性化点再次求解新的线性化三阶问题：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">topp3_problem</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">    </span><span class="n">Topp3ProblemBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="n">idx_s_interval</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">profile</span><span class="p">.</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">))</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="p">.</span><span class="n">build_with_linearization</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">topp3_socp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">topp3_problem</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options_socp</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>在计算资源允许的情况下，可以重复进行上述过程，也就是用<span class="arithmatex">\(a_k(s)\)</span>线性化三阶非凸问题并求解得到<span class="arithmatex">\(a_{k+1}(s),b_{k+1}(s)\)</span>，在非退化情况下最终能够收敛到KKT解。从在线进行的实用角度，我们推荐完成1到2次线性化即足够。</p>
+<h3 id="step-7">Step 7. 三阶轨迹后处理（仅三阶需要）</h3>
+<p>我们接下来希望得到真实的轨迹<span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(t)\)</span>，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解<span class="arithmatex">\(t=t(s)\)</span>，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp3_socp</span><span class="p">::</span><span class="n">s_to_t_topp3</span><span class="p">;</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="c1">// t_final is the traversal time of the path.</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="c1">// t_s[i] is the time at which the path parameter s_i is reached.</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">t_final</span><span class="p">,</span><span class="w"> </span><span class="n">t_s</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s_to_t_topp3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">profile</span><span class="p">.</span><span class="n">as_parts</span><span class="p">(),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>接下来求逆解<span class="arithmatex">\(s=s(t)\)</span>并插补，例如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp3_socp</span><span class="p">::</span><span class="n">t_to_s_topp3</span><span class="p">;</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">InterpolationMode</span><span class="p">;</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="c1">// s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="kd">let</span><span class="w"> </span><span class="n">dt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">s_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t_to_s_topp3</span><span class="p">(</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">    </span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">    </span><span class="n">profile</span><span class="p">.</span><span class="n">as_parts</span><span class="p">(),</span>
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">    </span><span class="o">&amp;</span><span class="n">t_s</span><span class="p">,</span>
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">    </span><span class="n">InterpolationMode</span><span class="p">::</span><span class="n">UniformTimeGrid</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">),</span>
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</code></pre></div>
+<p>上述插补也支持非均匀时间采样方式，详见<a href="#docs-architecture">文档章节</a>。最后可以求解插补轨迹<span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(t)\)</span>$，一种简单的做法是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">evaluate_q</span><span class="p">(</span><span class="n">s_t</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">q_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">q</span><span class="p">;</span>
+</code></pre></div>
+<p>由此完成了三阶轨迹的完整求解。</p>
+<h3 id="step-by-step_1">Step-by-Step小结</h3>
+<p>总的来说，一个最小闭环包括：构造路径<span class="arithmatex">\(\boldsymbol{q}(s)\)</span>，在离散网格上构造<code>Robot</code>和约束，选择对应的problem builder和solver，得到<span class="arithmatex">\(a(s)\)</span>或<span class="arithmatex">\((a(s),b(s))\)</span>，再通过<code>s_to_t_*</code>和<code>t_to_s_*</code>转回时间域，最终在<span class="arithmatex">\(s(t)\)</span>上重新采样原始路径。仓库中也提供了TOPP2、COPP2、TOPP3、COPP3等可运行例程。</p>
+<h2 id="benchmark">Benchmark性能测试</h2>
+<p>以下测试来自仓库中的<code>tests/test_random_spline.rs</code>。测试条件为：</p>
 <ul>
-<li><a href="https://docs.rs/copp/latest/copp/">docs.rs 最新文档</a></li>
-<li><a href="/rust/v0.2.1/copp/">本地 Rust 文档：v0.2.1</a></li>
-<li><a href="/rust/v0.2.0/copp/">本地 Rust 文档：v0.2.0</a></li>
-<li><a href="/rust/v0.1.0/copp/">本地 Rust 文档：v0.1.0</a></li>
+<li><code>release, --include-ignored</code></li>
+<li>CPU: Intel(R) Core(TM) Ultra 9 285K.</li>
+<li>数据集：100条随机7-DOF样条路径，每条路径离散为1000个区间。</li>
 </ul>
+<p>所有指标均以<code>mean ± std</code>的形式列出。</p>
+<h4 id="time-optimal">时间最优 (Time-Optimal)</h4>
 <table>
 <thead>
 <tr>
-<th>模块或命名空间</th>
+<th>方法</th>
+<th style="text-align: right;">计算时间 (ms)</th>
+<th style="text-align: right;">终端时间 (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TOPP2-RA</td>
+<td style="text-align: right;">0.615425 ± 0.244409</td>
+<td style="text-align: right;">40.903420 ± 1.378671</td>
+</tr>
+<tr>
+<td>COPP2-SOCP</td>
+<td style="text-align: right;">149.969964 ± 9.364334</td>
+<td style="text-align: right;">40.900039 ± 1.378613</td>
+</tr>
+<tr>
+<td>COPP2-RDDP</td>
+<td style="text-align: right;">5.436142 ± 0.465495</td>
+<td style="text-align: right;">40.900135 ± 1.378613</td>
+</tr>
+<tr>
+<td>TOPP3-LP</td>
+<td style="text-align: right;">327.074029 ± 28.893341</td>
+<td style="text-align: right;">41.422945 ± 1.381874</td>
+</tr>
+<tr>
+<td>TOPP3-SOCP</td>
+<td style="text-align: right;">289.654071 ± 12.862133</td>
+<td style="text-align: right;">41.418608 ± 1.381202</td>
+</tr>
+<tr>
+<td>COPP3-SOCP</td>
+<td style="text-align: right;">285.004302 ± 13.471264</td>
+<td style="text-align: right;">41.418608 ± 1.381202</td>
+</tr>
+<tr>
+<td>TOPP3-RA (Iteration 1)</td>
+<td style="text-align: right;">10.571045 ± 0.857653</td>
+<td style="text-align: right;">41.499200 ± 1.385735</td>
+</tr>
+<tr>
+<td>TOPP3-RA (Iteration 2)</td>
+<td style="text-align: right;">20.300932 ± 1.237908</td>
+<td style="text-align: right;">41.399867 ± 1.386791</td>
+</tr>
+</tbody>
+</table>
+<h4 id="convex-objective">凸目标 (Convex-Objective)</h4>
+<p>在该测试中，TOPP方法仍以终端时间为优化目标。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th style="text-align: right;">计算时间 (ms)</th>
+<th style="text-align: right;">目标函数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TOPP2-RA</td>
+<td style="text-align: right;">0.534700 ± 0.069296</td>
+<td style="text-align: right;">217.444861 ± 12.462360</td>
+</tr>
+<tr>
+<td>COPP2-SOCP</td>
+<td style="text-align: right;">270.059250 ± 52.073677</td>
+<td style="text-align: right;">96.517354 ± 3.641154</td>
+</tr>
+<tr>
+<td>COPP2-RDDP</td>
+<td style="text-align: right;">12.667700 ± 0.429214</td>
+<td style="text-align: right;">96.525785 ± 3.639733</td>
+</tr>
+<tr>
+<td>TOPP3-LP</td>
+<td style="text-align: right;">348.000000 ± 9.326314</td>
+<td style="text-align: right;">211.611085 ± 12.367224</td>
+</tr>
+<tr>
+<td>TOPP3-SOCP</td>
+<td style="text-align: right;">301.227000 ± 12.938498</td>
+<td style="text-align: right;">211.974066 ± 12.323865</td>
+</tr>
+<tr>
+<td>COPP3-SOCP</td>
+<td style="text-align: right;">301.227000 ± 12.938498</td>
+<td style="text-align: right;">96.634962 ± 3.613264</td>
+</tr>
+<tr>
+<td>COPP3-RDDP</td>
+<td style="text-align: right;">65.823050 ± 0.087893</td>
+<td style="text-align: right;">98.708998 ± 3.354004</td>
+</tr>
+</tbody>
+</table>
+<h2 id="docs-architecture">文档与架构</h2>
+<h3 id="_4">文档</h3>
+<p>我们推荐使用<a href="https://docs.rs/copp/latest/copp/">docs.rs 最新文档</a>。也支持本地文档：</p>
+<ul>
+<li><a href="/rust/v0.2.1/copp/">v0.2.1 (Latest)</a></li>
+<li><a href="/rust/v0.2.0/copp/">v0.2.0</a></li>
+<li><a href="/rust/v0.1.0/copp/">v0.1.0</a></li>
+</ul>
+<p>如果需要查看main branch上尚未发布的更新，我们推荐在<code>copp</code>仓库根目录本地生成文档：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>cargo<span class="w"> </span>doc<span class="w"> </span>--no-deps<span class="w"> </span>--open
+</code></pre></div>
+<p>生成的文档包含数学基础、路径/约束构造方法、日志和输出约定、错误定义以及求解器接口。</p>
+<h3 id="_5">项目架构</h3>
+<table>
+<thead>
+<tr>
+<th>模块</th>
 <th>负责内容</th>
 </tr>
 </thead>
@@ -1288,20 +1768,12 @@ f_k(\boldsymbol{x}_k)\le 0,\qquad h_k(\boldsymbol{x}_k,u_k)\le 0.
 <td>机器人维度、逆动力学、物理约束入口。</td>
 </tr>
 <tr>
-<td><code>solver::topp2_ra</code></td>
-<td>TOPP2-RA、ReachSet2、二阶问题构造和插值。</td>
+<td><code>constraints</code></td>
+<td>更底层的约束接口。</td>
 </tr>
 <tr>
-<td><code>solver::copp2_socp</code></td>
-<td>COPP2-SOCP 和 Clarabel expert result。</td>
-</tr>
-<tr>
-<td><code>solver::topp3_lp</code> / <code>solver::topp3_socp</code></td>
-<td>三阶时间目标。</td>
-</tr>
-<tr>
-<td><code>solver::copp3_socp</code></td>
-<td>三阶凸目标。</td>
+<td><code>solver</code></td>
+<td>各个求解器。</td>
 </tr>
 <tr>
 <td><code>diag</code></td>
@@ -1309,94 +1781,36 @@ f_k(\boldsymbol{x}_k)\le 0,\qquad h_k(\boldsymbol{x}_k,u_k)\le 0.
 </tr>
 </tbody>
 </table>
-</div>
-<div class="tabbed-block">
-<ul>
-<li><a href="/c/v0.2.0/">本地 C 文档：v0.2.0</a></li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>头文件</th>
-<th>内容</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>copp/copp.h</code></td>
-<td>umbrella header，包含完整 C API。</td>
-</tr>
-<tr>
-<td><code>copp/core.h</code></td>
-<td>status、last error、matrix view、owned vector/matrix、Clarabel options。</td>
-</tr>
-<tr>
-<td><code>copp/path.h</code></td>
-<td>path handle、waypoint path、evaluator path、路径求导。</td>
-</tr>
-<tr>
-<td><code>copp/robot.h</code></td>
-<td>robot handle、station grid、path sampling、raw constraints、inverse dynamics callback。</td>
-</tr>
-<tr>
-<td><code>copp/formulation.h</code></td>
-<td>problem descriptor、objective、三阶 profile。</td>
-</tr>
-<tr>
-<td><code>copp/interpolation.h</code></td>
-<td>二阶/三阶插值和 profile 到时间域的转换。</td>
-</tr>
-<tr>
-<td><code>copp/topp2.h</code>、<code>copp/copp2.h</code></td>
-<td>TOPP2-RA、ReachSet2、COPP2-SOCP。</td>
-</tr>
-<tr>
-<td><code>copp/topp3.h</code>、<code>copp/copp3.h</code></td>
-<td>TOPP3-LP/SOCP、COPP3-SOCP。</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="tabbed-block">
-<ul>
-<li><a href="https://pypi.org/project/copp-py/">PyPI: copp-py</a></li>
-<li><a href="https://github.com/TOPP-THU/copp/tree/main/bindings/python">Python bindings 源码</a></li>
-</ul>
-<p>Python API 文档后续可以作为独立静态目录接入本站，接入方式与 Rust/C API 文档相同。</p>
-</div>
-</div>
-</div>
-<h2 id="pro">开源与 PRO</h2>
-<p>开源版本和 PRO 版本是互补关系。开源版本覆盖 TOPP2-RA、COPP2-SOCP、TOPP3-LP、TOPP3-SOCP 和 COPP3-SOCP，适合研究、验证和一般工程集成。对于需要更高解质量、更强数值稳定性或更低在线延迟的复杂轨迹规划任务，PRO 版本提供 RDDP/RA 系列高性能 solver，例如 COPP2-RDDP、TOPP3-RA 和 COPP3-RDDP。COPP2-RDDP 面向二阶凸目标，COPP3-RDDP 面向三阶目标/约束场景；后者也可作为高质量 TOPP3 solver 使用。</p>
-<p>许可、商业合作、技术咨询或一般问题，可以从 <a href="https://copp.pro/">COPP Homepage</a> 进入，或联系 <a href="mailto:hello@copp.pro">hello@copp.pro</a>。</p>
-<h2 id="_4">引用</h2>
-<p>如果你的工作使用了开源 TOPP3/COPP3 功能，建议引用：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>@article<span class="nb">{</span>wang2026online,
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>  title=<span class="nb">{</span>Online time-optimal trajectory planning along parametric toolpaths with strict constraint satisfaction and certifiable feasibility guarantee<span class="nb">}</span>,
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>  author=<span class="nb">{</span>Wang, Yunan and Hu, Chuxiong and Li, Yuanshenglong and Yu, Jichuan and Yan, Jizhou and Liang, Yixuan and Jin, Zhao<span class="nb">}</span>,
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>  journal=<span class="nb">{</span>International Journal of Machine Tools and Manufacture<span class="nb">}</span>,
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>  volume=<span class="nb">{</span>215<span class="nb">}</span>,
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>  pages=<span class="nb">{</span>104355<span class="nb">}</span>,
-<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
-<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="nb">}</span>
+<h2 id="_6">引用</h2>
+<p>如果你的工作使用了开源TOPP3/COPP3功能，建议引用：（即便是最基本的离散区间内profile模板也用到了该文章的贡献）</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>@article<span class="nb">{</span>wang2026online,
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>  title=<span class="nb">{</span>Online time-optimal trajectory planning along parametric toolpaths with strict constraint satisfaction and certifiable feasibility guarantee<span class="nb">}</span>,
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>  author=<span class="nb">{</span>Wang, Yunan and Hu, Chuxiong and Li, Yuanshenglong and Yu, Jichuan and Yan, Jizhou and Liang, Yixuan and Jin, Zhao<span class="nb">}</span>,
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>  journal=<span class="nb">{</span>International Journal of Machine Tools and Manufacture<span class="nb">}</span>,
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>  volume=<span class="nb">{</span>215<span class="nb">}</span>,
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>  pages=<span class="nb">{</span>104355<span class="nb">}</span>,
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="nb">}</span>
 </code></pre></div>
-<p>如果你的工作使用了 PRO 版本中的 RDDP 方法或TOPP3-RA，请同时引用：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>@article<span class="nb">{</span>wang2026reachability,
-<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  title=<span class="nb">{</span>Reachability-augmented dual dynamic programming for optimal path parameterization<span class="nb">}</span>,
-<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  author=<span class="nb">{</span>Yunan Wang and Jizhou Yan and Chuxiong Hu and Zeyang Li<span class="nb">}</span>,
-<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>  journal=<span class="nb">{</span>arXiv preprint arXiv:2605.19089<span class="nb">}</span>,
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
-<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="nb">}</span>
+<p>如果你的工作使用了PRO版本中的TOPP3-RA, COPP2-RDDP, COPP3-RDDP方法，建议引用：（其中TOPP3-RA基于该论文进行改进）</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>@article<span class="nb">{</span>wang2026reachability,
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>  title=<span class="nb">{</span>Reachability-augmented dual dynamic programming for optimal path parameterization<span class="nb">}</span>,
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>  author=<span class="nb">{</span>Yunan Wang and Jizhou Yan and Chuxiong Hu and Zeyang Li<span class="nb">}</span>,
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>  journal=<span class="nb">{</span>arXiv preprint arXiv:2605.19089<span class="nb">}</span>,
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a><span class="nb">}</span>
 </code></pre></div>
-<p>其他情况下可引用 COPP 项目本身：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>@misc<span class="nb">{</span>thu2026copp,
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  title = <span class="nb">{</span>COPP: Convex-Objective Path Parameterization<span class="nb">}</span>,
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>  author = <span class="nb">{</span>Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong<span class="nb">}</span>,
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>  year = <span class="nb">{</span>2026<span class="nb">}</span>,
-<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  publisher = <span class="nb">{</span>GitHub<span class="nb">}</span>,
-<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>  howpublished = <span class="nb">{</span><span class="k">\url</span><span class="nb">{</span>https://github.com/TOPP-THU/copp<span class="nb">}}</span>
-<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="nb">}</span>
+<p>其他情况下可引用COPP项目本身，或对应论文：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>@misc<span class="nb">{</span>thu2026copp,
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>  title = <span class="nb">{</span>COPP: Convex-Objective Path Parameterization<span class="nb">}</span>,
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>  author = <span class="nb">{</span>Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong<span class="nb">}</span>,
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>  year = <span class="nb">{</span>2026<span class="nb">}</span>,
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>  publisher = <span class="nb">{</span>GitHub<span class="nb">}</span>,
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>  howpublished = <span class="nb">{</span><span class="k">\url</span><span class="nb">{</span>https://github.com/TOPP-THU/copp<span class="nb">}}</span>
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="nb">}</span>
 </code></pre></div>
+<h2 id="_7">联系</h2>
+<p>如果需要COPP PRO授权、商业合作、技术咨询或一般问题，可以联系<a href="mailto:hello@copp.pro">hello@copp.pro</a>。</p>
 
 
 
