@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["CoppObjective"],"fn":["clarabel_to_copp3_solution","copp3_socp","copp3_socp_expert","s_to_t_topp3","t_to_s_topp3"],"struct":["ClarabelOptions","ClarabelOptionsBuilder","Copp3Problem","Copp3ProblemBuilder"]};

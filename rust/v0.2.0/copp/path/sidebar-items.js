@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["OutOfRangeMode"],"mod":["autodiff","spline"],"struct":["Path","PathDerivatives"],"trait":["PathEvaluator","PathEvaluator2nd","PathEvaluator3rd"],"type":["ParametricFn"]};

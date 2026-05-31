@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Constraint storage and access layer for TOPP/COPP pipelines."><title>copp::constraints - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="copp" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0-nightly (db3e99bba 2026-02-04)" data-channel="nightly" data-search-js="search-fb33671b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-f9617a14.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-12f88f4f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module constraints</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../copp/index.html">copp</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module constraints</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#method-identity" title="Method identity">Method identity</a></li><li><a href="#data-model-math--discrete-code-view" title="Data model (math + discrete code view)">Data model (math + discrete code view)</a></li><li><a href="#api-layering" title="API layering">API layering</a></li><li><a href="#user-guidance" title="User guidance">User guidance</a></li><li><a href="#contract-summary" title="Contract summary">Contract summary</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#traits" title="Traits">Traits</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="../index.html">In crate copp</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">copp</a></div><h1>Module <span>constraints</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/copp/copp/constraints.rs.html#1-2219">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Constraint storage and access layer for TOPP/COPP pipelines.</p>
+<h2 id="method-identity"><a class="doc-anchor" href="#method-identity">§</a>Method identity</h2>
+<p>This module provides a circular-buffer based constraint container shared by:</p>
+<ul>
+<li><strong>TOPP2 / COPP2</strong> (first-order + second-order constraints),</li>
+<li><strong>TOPP3 / COPP3</strong> (plus nonlinear / linearized third-order constraints).</li>
+</ul>
+<h2 id="data-model-math--discrete-code-view"><a class="doc-anchor" href="#data-model-math--discrete-code-view">§</a>Data model (math + discrete code view)</h2>
+<p>Continuous/discrete state definition:</p>
+<ul>
+<li>$a(s) = \dot{s}^2$;</li>
+<li>$b(s) = \ddot{s} = \frac{1}{2}\frac{\mathrm{d}a}{\mathrm{d}s}$;</li>
+<li>$c(s) = \frac{\dddot{s}}{\dot{s}} = \frac{\mathrm{d}b}{\mathrm{d}s}$.</li>
+</ul>
+<p>Continuous/discrete state definition at station $s_k$:</p>
+<ul>
+<li>$a_k = \dot{s}_k^2$;</li>
+<li>$b_k = \ddot{s}_k$;</li>
+<li>$c_k = \frac{\dddot{s}_k}{\dot{s}_k}$.</li>
+</ul>
+<p>Discrete code symbols in this module:</p>
+<ul>
+<li><code>a[k]</code> corresponds to $a_k$,</li>
+<li><code>b[k]</code> corresponds to $b_k$,</li>
+<li><code>c[k]</code> corresponds to $c_k$.</li>
+</ul>
+<p>Continuous constraint families:</p>
+<ul>
+<li>first-order rows: $a(s) \le a_{\text{max}}(s)$;</li>
+<li>second-order rows: $f_a(s) a(s) + f_b(s) b(s) \le f_{\text{max}}(s)$;</li>
+<li>third-order rows: $\sqrt{a(s)}(g_a(s) a(s) + g_b(s) b(s) + g_c(s) c(s) + g_d(s)) \le g_{\text{max}}(s)$;</li>
+<li>linearized third-order rows: $h_a(s) a(s) + h_b(s) b(s) + h_c(s) c(s) \le h_{\text{max}}(s)$.</li>
+</ul>
+<h2 id="api-layering"><a class="doc-anchor" href="#api-layering">§</a>API layering</h2>
+<ul>
+<li>Public safe getters <code>get_*</code> (e.g. <a href="struct.Constraints.html#method.get_s" title="method copp::constraints::Constraints::get_s"><code>get_s</code></a>, <a href="struct.Constraints.html#method.get_acc_constraints" title="method copp::constraints::Constraints::get_acc_constraints"><code>get_acc_constraints</code></a>, <a href="struct.Constraints.html#method.get_jerk_constraints" title="method copp::constraints::Constraints::get_jerk_constraints"><code>get_jerk_constraints</code></a>)
+return <code>Result&lt;_, ConstraintError&gt;</code> with explicit bounds contract.</li>
+<li>Internal fast getters <code>*_unchecked</code> are <code>pub(crate)</code> and require caller-side precondition guarantees.</li>
+</ul>
+<h2 id="user-guidance"><a class="doc-anchor" href="#user-guidance">§</a>User guidance</h2>
+<ul>
+<li>For most users, prefer <a href="../robot/struct.Robot.html" title="struct copp::robot::Robot"><code>Robot</code></a> as the entry point so
+constraints can be expressed with physical semantics (<code>with_axial_velocity</code>,
+<code>with_axial_acceleration</code>, torque-related APIs).</li>
+<li>Direct manipulation of <a href="struct.Constraints.html" title="struct copp::constraints::Constraints"><code>Constraints</code></a> is recommended for advanced users who
+need maximum flexibility and custom low-level constraint composition.</li>
+</ul>
+<h2 id="contract-summary"><a class="doc-anchor" href="#contract-summary">§</a>Contract summary</h2>
+<ul>
+<li>Public APIs validate station range before indexing.</li>
+<li>Internal unchecked APIs are for hot paths and guarded by debug assertions.</li>
+<li>Linearized jerk access requires builders to call
+<a href="../solver/topp3_lp/struct.Topp3ProblemBuilder.html#method.build_with_linearization" title="method copp::solver::topp3_lp::Topp3ProblemBuilder::build_with_linearization"><code>build_with_linearization</code></a> or
+<a href="../solver/copp3_socp/struct.Copp3ProblemBuilder.html#method.build_with_linearization" title="method copp::solver::copp3_socp::Copp3ProblemBuilder::build_with_linearization"><code>build_with_linearization</code></a> beforehand.</li>
+<li>For robust solver behavior, keep zero-state <code>a=b=c=0</code> strictly feasible at every station.
+In practice this means every active scalar RHS must stay strictly positive:
+<code>amax &gt; 0</code>, <code>acc_max &gt; 0</code>, and <code>jerk_max &gt; 0</code> (after sign normalization).</li>
+</ul>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Constraints.html" title="struct copp::constraints::Constraints">Constraints</a></dt><dd>Constraint storage and query object used by TOPP/COPP solvers.</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.ModePopConstraints.html" title="enum copp::constraints::ModePopConstraints">Mode<wbr>PopConstraints</a></dt><dd>The mode for popping constraints.</dd></dl><h2 id="traits" class="section-header">Traits<a href="#traits" class="anchor">§</a></h2><dl class="item-table"><dt><a class="trait" href="trait.AsInputMatrix1D.html" title="trait copp::constraints::AsInputMatrix1D">AsInput<wbr>Matrix1D</a></dt><dd>Conversion helper trait for 1D-like first-order inputs.</dd></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.InputMatrix.html" title="type copp::constraints::InputMatrix">Input<wbr>Matrix</a></dt><dd>Borrowed 2D matrix view type accepted by constraint-ingestion APIs.</dd></dl></section></div></main></body></html>

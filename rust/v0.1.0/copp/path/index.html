@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Path abstraction for trajectory planning."><title>copp::path - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="copp" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0-nightly (db3e99bba 2026-02-04)" data-channel="nightly" data-search-js="search-fb33671b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-f9617a14.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-12f88f4f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module path</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../copp/index.html">copp</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module path</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#examples" title="Examples">Examples</a><ul><li><a href="#analytic-path--automatic-differentiation" title="Analytic path — automatic differentiation">Analytic path — automatic differentiation</a></li><li><a href="#spline-path--waypoint-interpolation" title="Spline path — waypoint interpolation">Spline path — waypoint interpolation</a></li></ul></li></ul><h3><a href="#reexports">Module Items</a></h3><ul class="block"><li><a href="#reexports" title="Re-exports">Re-exports</a></li><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#enums" title="Enums">Enums</a></li><li><a href="#types" title="Type Aliases">Type Aliases</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="../index.html">In crate copp</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">copp</a></div><h1>Module <span>path</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/copp/path/mod.rs.html#1-598">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Path abstraction for trajectory planning.</p>
+<p>The main entry point is <a href="struct.Path.html" title="struct copp::path::Path"><code>Path</code></a>.  It supports two construction modes and a
+uniform evaluation API — pick the one that fits your use case:</p>
+<div><table><thead><tr><th>You have …</th><th>Use</th></tr></thead><tbody>
+<tr><td>An analytic formula <code>q(s)</code></td><td><a href="struct.Path.html#method.from_parametric" title="associated function copp::path::Path::from_parametric"><code>Path::from_parametric</code></a></td></tr>
+<tr><td>A set of waypoint positions</td><td><a href="struct.Path.html#method.from_waypoints" title="associated function copp::path::Path::from_waypoints"><code>Path::from_waypoints</code></a></td></tr>
+</tbody></table>
+</div>
+<p>Once built, call one of the evaluation methods with a one-dimensional parameter slice:</p>
+<div><table><thead><tr><th>Method</th><th>Output</th></tr></thead><tbody>
+<tr><td><a href="struct.Path.html#method.evaluate_q" title="method copp::path::Path::evaluate_q"><code>Path::evaluate_q</code></a></td><td>position <code>q</code> only</td></tr>
+<tr><td><a href="struct.Path.html#method.evaluate_up_to_2nd" title="method copp::path::Path::evaluate_up_to_2nd"><code>Path::evaluate_up_to_2nd</code></a></td><td><code>q</code>, <code>dq</code>, <code>ddq</code></td></tr>
+<tr><td><a href="struct.Path.html#method.evaluate_up_to_3rd" title="method copp::path::Path::evaluate_up_to_3rd"><code>Path::evaluate_up_to_3rd</code></a></td><td><code>q</code>, <code>dq</code>, <code>ddq</code>, <code>dddq</code></td></tr>
+</tbody></table>
+</div><h2 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h2><h3 id="analytic-path--automatic-differentiation"><a class="doc-anchor" href="#analytic-path--automatic-differentiation">§</a>Analytic path — automatic differentiation</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>copp::path::{Path, sin, cos};
+<span class="kw">use </span>copp::path::autodiff::Jet3;
+
+<span class="comment">// Build a 2-DOF path: q0 = sin(s), q1 = cos(s), s ∈ [0, 1]
+</span><span class="kw">let </span>path = Path::from_parametric(
+    |s: Jet3| <span class="macro">vec!</span>[sin(s), cos(s)],
+    <span class="number">0.0</span>, <span class="number">1.0</span>,
+).unwrap();
+
+<span class="comment">// Evaluate at 5 uniformly-spaced parameter values
+</span><span class="kw">let </span>s = [<span class="number">0.0</span>, <span class="number">0.25</span>, <span class="number">0.5</span>, <span class="number">0.75</span>, <span class="number">1.0</span>];
+<span class="kw">let </span>out = path.evaluate_up_to_3rd(<span class="kw-2">&amp;</span>s).unwrap();
+<span class="comment">// out.q    – shape (2, 5)
+// out.dq   – Some, shape (2, 5)   first derivative w.r.t. s
+// out.dddq – Some, shape (2, 5)   third derivative w.r.t. s</span></code></pre></div><h3 id="spline-path--waypoint-interpolation"><a class="doc-anchor" href="#spline-path--waypoint-interpolation">§</a>Spline path — waypoint interpolation</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>copp::path::{Path, SplineConfig};
+<span class="kw">use </span>nalgebra::DMatrix;
+
+<span class="comment">// 2-DOF path with 5 waypoints; the spline passes exactly through each one.
+// waypoints shape: (dim=2, n_points=5)
+</span><span class="kw">let </span>waypoints = DMatrix::from_row_slice(<span class="number">2</span>, <span class="number">5</span>, <span class="kw-2">&amp;</span>[
+    <span class="number">0.0</span>, <span class="number">0.25</span>, <span class="number">0.5</span>, <span class="number">0.75</span>, <span class="number">1.0</span>,   <span class="comment">// dim 0
+    </span><span class="number">0.0</span>, <span class="number">0.1</span>, -<span class="number">0.1</span>, <span class="number">0.2</span>,  <span class="number">0.0</span>,   <span class="comment">// dim 1
+</span>]);
+<span class="kw">let </span>path = Path::from_waypoints(<span class="kw-2">&amp;</span>waypoints, SplineConfig::default()).unwrap();
+
+<span class="kw">let </span>s = [<span class="number">0.0</span>, <span class="number">0.5</span>, <span class="number">1.0</span>];
+<span class="kw">let </span>out = path.evaluate_q(<span class="kw-2">&amp;</span>s).unwrap();
+<span class="comment">// out.q shape (2, 3);  out.dq / ddq / dddq are all None</span></code></pre></div></div></details><h2 id="reexports" class="section-header">Re-exports<a href="#reexports" class="anchor">§</a></h2><dl class="item-table reexports"><dt id="reexport.Jet3"><code>pub use autodiff::<a class="struct" href="autodiff/struct.Jet3.html" title="struct copp::path::autodiff::Jet3">Jet3</a>;</code></dt><dt id="reexport.cos"><code>pub use autodiff::<a class="fn" href="autodiff/fn.cos.html" title="fn copp::path::autodiff::cos">cos</a>;</code></dt><dt id="reexport.exp"><code>pub use autodiff::<a class="fn" href="autodiff/fn.exp.html" title="fn copp::path::autodiff::exp">exp</a>;</code></dt><dt id="reexport.ln"><code>pub use autodiff::<a class="fn" href="autodiff/fn.ln.html" title="fn copp::path::autodiff::ln">ln</a>;</code></dt><dt id="reexport.powi"><code>pub use autodiff::<a class="fn" href="autodiff/fn.powi.html" title="fn copp::path::autodiff::powi">powi</a>;</code></dt><dt id="reexport.sin"><code>pub use autodiff::<a class="fn" href="autodiff/fn.sin.html" title="fn copp::path::autodiff::sin">sin</a>;</code></dt><dt id="reexport.sqrt"><code>pub use autodiff::<a class="fn" href="autodiff/fn.sqrt.html" title="fn copp::path::autodiff::sqrt">sqrt</a>;</code></dt><dt id="reexport.Parametrization"><code>pub use spline::<a class="enum" href="spline/enum.Parametrization.html" title="enum copp::path::spline::Parametrization">Parametrization</a>;</code></dt><dt id="reexport.SplineConfig"><code>pub use spline::<a class="struct" href="spline/struct.SplineConfig.html" title="struct copp::path::spline::SplineConfig">SplineConfig</a>;</code></dt></dl><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="autodiff/index.html" title="mod copp::path::autodiff">autodiff</a></dt><dd>Third-order forward-mode automatic differentiation primitives.</dd><dt><a class="mod" href="spline/index.html" title="mod copp::path::spline">spline</a></dt><dd>Waypoint-based spline path construction and evaluation kernels.</dd></dl><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Path.html" title="struct copp::path::Path">Path</a></dt><dd>Unified path abstraction over parametric and spline representations.</dd><dt><a class="struct" href="struct.PathDerivatives.html" title="struct copp::path::PathDerivatives">Path<wbr>Derivatives</a></dt><dd>Output of path evaluation.</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.OutOfRangeMode.html" title="enum copp::path::OutOfRangeMode">OutOf<wbr>Range<wbr>Mode</a></dt></dl><h2 id="types" class="section-header">Type Aliases<a href="#types" class="anchor">§</a></h2><dl class="item-table"><dt><a class="type" href="type.ParametricFn.html" title="type copp::path::ParametricFn">Parametric<wbr>Fn</a></dt></dl></section></div></main></body></html>

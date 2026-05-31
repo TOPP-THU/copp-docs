@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ConstraintError","CoppError","PathError","Verbosity","VerbosityOutput"],"fn":["emit_verbosity_line","set_verbosity_log_file","set_verbosity_output","verbosity_output"],"macro":["verbosity_log"]};

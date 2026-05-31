@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="TOPP2 reachability-analysis solver."><title>copp::solver::topp2_ra - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="copp" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0-nightly (db3e99bba 2026-02-04)" data-channel="nightly" data-search-js="search-fb33671b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-f9617a14.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-12f88f4f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head><body class="rustdoc mod"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module topp2_ra</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../copp/index.html">copp</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module topp2_<wbr>ra</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#example" title="Example">Example</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#functions" title="Functions">Functions</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In copp::<wbr>solver</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">copp</a>::<wbr><a href="../index.html">solver</a></div><h1>Module <span>topp2_<wbr>ra</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/copp/lib.rs.html#89">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>TOPP2 reachability-analysis solver.</p>
+<p>Input: TOPP2 problem + RA options.<br />
+Output: time-optimal feasible <code>a</code> profile under second-order constraints.<br />
+Scenario: fast and reliable TOPP2 baseline for production pipelines.</p>
+<h2 id="example"><a class="doc-anchor" href="#example">§</a>Example</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="doccomment">//! This example uses [`topp2_ra`] to convert an analytic path into a second-order
+//! time-optimal trajectory whose axial velocity and acceleration both stay within
+//! `[-1, 1]`.
+
+</span><span class="kw">use </span>copp::InterpolationMode;
+<span class="kw">use </span>copp::diag::CoppError;
+<span class="kw">use </span>copp::path::{Jet3, Path, sin};
+<span class="kw">use </span>copp::robot::Robot;
+<span class="kw">use </span>copp::solver::topp2_ra::{
+    ReachSet2OptionsBuilder, Topp2ProblemBuilder, s_to_t_topp2, t_to_s_topp2, topp2_ra,
+};
+<span class="kw">use </span>std::f64::consts::PI;
+
+<span class="kw">fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;(), CoppError&gt; {
+    <span class="comment">// 1) Deterministic 3-axis Lissajous path q(s), s in [0, 1]
+    </span><span class="kw">let </span>path = Path::from_parametric(
+        |s: Jet3| {
+            <span class="macro">vec!</span>[
+                sin(<span class="number">2.0 </span>* PI * s + <span class="number">0.0</span>),
+                sin(<span class="number">3.0 </span>* PI * s + <span class="number">0.3</span>),
+                sin(<span class="number">5.0 </span>* PI * s + <span class="number">0.7</span>),
+            ]
+        },
+        <span class="number">0.0</span>,
+        <span class="number">1.0</span>,
+    )<span class="question-mark">?</span>;
+
+    <span class="comment">// `n` is the number of path samples (s_i) to build robot constraints on.
+    </span><span class="kw">let </span>n = <span class="number">1001</span>;
+    <span class="kw">let </span>s: Vec&lt;f64&gt; = (<span class="number">0</span>..n).map(|j| j <span class="kw">as </span>f64 / (n - <span class="number">1</span>) <span class="kw">as </span>f64).collect();
+    <span class="kw">let </span>derivs = path.evaluate_up_to_2nd(<span class="kw-2">&amp;</span>s)<span class="question-mark">?</span>;
+
+    <span class="comment">// 2) Build robot constraints (3-axis), then apply symmetric limits v/a = 1
+    </span><span class="kw">const </span>DIM: usize = <span class="number">3</span>;
+    <span class="kw">let </span><span class="kw-2">mut </span>robot = Robot::with_capacity(DIM, n);
+    robot.with_s(s.as_slice())<span class="question-mark">?</span>;
+    robot.with_q(
+        <span class="kw-2">&amp;</span>derivs.q.as_view(),
+        <span class="kw-2">&amp;</span>derivs.dq.as_ref().unwrap().as_view(),
+        <span class="kw-2">&amp;</span>derivs.ddq.as_ref().unwrap().as_view(),
+        <span class="prelude-val">None</span>,
+        <span class="number">0</span>,
+    )<span class="question-mark">?</span>;
+    <span class="comment">// The axial velocity is -1 &lt;= v &lt;= 1 for each axis in this example
+    </span><span class="kw">let </span>vel_max = <span class="macro">vec!</span>[<span class="number">1.0</span>; DIM];
+    <span class="kw">let </span>vel_min = <span class="macro">vec!</span>[-<span class="number">1.0</span>; DIM];
+    robot.with_axial_velocity((vel_max.as_slice(), n), (vel_min.as_slice(), n), <span class="number">0</span>)<span class="question-mark">?</span>;
+    <span class="comment">// The axial acceleration is -1 &lt;= a &lt;= 1 for each axis in this example.
+    </span><span class="kw">let </span>acc_max = <span class="macro">vec!</span>[<span class="number">1.0</span>; DIM];
+    <span class="kw">let </span>acc_min = <span class="macro">vec!</span>[-<span class="number">1.0</span>; DIM];
+    robot.with_axial_acceleration((acc_max.as_slice(), n), (acc_min.as_slice(), n), <span class="number">0</span>)<span class="question-mark">?</span>;
+
+    <span class="comment">// 3) Solve TOPP2-RA
+    </span><span class="kw">let </span>idx_s_interval = (<span class="number">0</span>, n - <span class="number">1</span>); <span class="comment">// 0 &lt;= k &lt;= n-1
+    </span><span class="kw">let </span>a_boundary = (<span class="number">0.0</span>, <span class="number">0.0</span>); <span class="comment">// a(0) = 0, a(1) = 0
+    </span><span class="kw">let </span>problem = Topp2ProblemBuilder::new(<span class="kw-2">&amp;</span>robot, idx_s_interval, a_boundary).build()<span class="question-mark">?</span>;
+    <span class="kw">let </span>options = ReachSet2OptionsBuilder::new().build()<span class="question-mark">?</span>;
+
+    <span class="kw">let </span>a_ra = topp2_ra(<span class="kw-2">&amp;</span>problem, <span class="kw-2">&amp;</span>options)<span class="question-mark">?</span>;
+
+    <span class="comment">// 4) Post-process TOPP2-RA results: a(s) -&gt; -&gt; t(s) -&gt; s(t)
+    // t_final is the traversal time of the path.
+    // t_s[i] is the time at which the path parameter s_i is reached.
+    </span><span class="kw">let </span>(t_final, t_s) = s_to_t_topp2(<span class="kw-2">&amp;</span>s, <span class="kw-2">&amp;</span>a_ra, <span class="number">0.0</span>);
+    <span class="comment">// s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    </span><span class="kw">let </span>dt = <span class="number">1e-3</span>;
+    <span class="kw">let </span>s_t = t_to_s_topp2(
+        <span class="kw-2">&amp;</span>s,
+        <span class="kw-2">&amp;</span>a_ra,
+        <span class="kw-2">&amp;</span>t_s,
+        InterpolationMode::UniformTimeGrid(<span class="number">0.0</span>, dt, <span class="bool-val">true</span>),
+    );
+
+    <span class="comment">// 5) Print some results. More detailed results and plots can be achieved by the user.
+    </span><span class="macro">println!</span>(<span class="string">"TOPP2-RA done."</span>);
+    <span class="macro">println!</span>(<span class="string">"dim = {DIM}, N = {n}"</span>);
+    <span class="macro">println!</span>(<span class="string">"t_final = {t_final:.6} s"</span>);
+    <span class="macro">println!</span>(<span class="string">"a_profile.len() = {}"</span>, a_ra.len());
+    <span class="macro">println!</span>(<span class="string">"s(t) samples = {}"</span>, s_t.len());
+
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div></div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.ReachSet2Options.html" title="struct copp::solver::topp2_ra::ReachSet2Options">Reach<wbr>Set2<wbr>Options</a></dt><dd>The options for <code>reach_set2</code>.</dd><dt><a class="struct" href="struct.ReachSet2OptionsBuilder.html" title="struct copp::solver::topp2_ra::ReachSet2OptionsBuilder">Reach<wbr>Set2<wbr>Options<wbr>Builder</a></dt><dd>Builder for <code>ReachSet2Options</code>.</dd><dt><a class="struct" href="struct.Topp2Problem.html" title="struct copp::solver::topp2_ra::Topp2Problem">Topp2<wbr>Problem</a></dt><dd>Formulated TOPP2 problem data.</dd><dt><a class="struct" href="struct.Topp2ProblemBuilder.html" title="struct copp::solver::topp2_ra::Topp2ProblemBuilder">Topp2<wbr>Problem<wbr>Builder</a></dt><dd>Builder for <a href="../reach_set2/struct.Topp2Problem.html" title="struct copp::solver::reach_set2::Topp2Problem"><code>Topp2Problem</code></a>.</dd></dl><h2 id="functions" class="section-header">Functions<a href="#functions" class="anchor">§</a></h2><dl class="item-table"><dt><a class="fn" href="fn.a_to_b_topp2.html" title="fn copp::solver::topp2_ra::a_to_b_topp2">a_<wbr>to_<wbr>b_<wbr>topp2</a></dt><dd>Compute segment profile <code>b</code> from node profile <code>a</code>.</dd><dt><a class="fn" href="fn.s_to_t_topp2.html" title="fn copp::solver::topp2_ra::s_to_t_topp2">s_<wbr>to_<wbr>t_<wbr>topp2</a></dt><dd>Compute cumulative time profile <code>t(s)</code> from <code>a(s)</code>.</dd><dt><a class="fn" href="fn.t_to_s_topp2.html" title="fn copp::solver::topp2_ra::t_to_s_topp2">t_<wbr>to_<wbr>s_<wbr>topp2</a></dt><dd>Interpolate inverse mapping <code>s(t)</code> from <code>a(s)</code> and sampled <code>t(s)</code>.</dd><dt><a class="fn" href="fn.topp2_ra.html" title="fn copp::solver::topp2_ra::topp2_ra">topp2_<wbr>ra</a></dt><dd>Solve TOPP2 with RA and return the profile $a(s)=\dot{s}^2$.</dd></dl></section></div></main></body></html>

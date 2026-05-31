@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ModePopConstraints"],"struct":["Constraints"],"trait":["AsInputMatrix1D"],"type":["InputMatrix"]};
