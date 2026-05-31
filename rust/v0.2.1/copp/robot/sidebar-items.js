@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["Robot"],"trait":["RobotBasic","RobotTorque","UpperBound"]};

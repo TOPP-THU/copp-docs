@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="User-provided path evaluator with explicit derivatives up to third order."><title>PathEvaluator3rd in copp::path - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="copp" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0-nightly (db3e99bba 2026-02-04)" data-channel="nightly" data-search-js="search-fb33671b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-f9617a14.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-12f88f4f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head><body class="rustdoc trait"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">PathEvaluator3rd</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../copp/index.html">copp</a><span class="version">0.2.1</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Path<wbr>Evaluator3rd</a></h2><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.evaluate_up_to_3rd" title="evaluate_up_to_3rd">evaluate_up_to_3rd</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2><a href="index.html">In copp::<wbr>path</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">copp</a>::<wbr><a href="index.html">path</a></div><h1>Trait <span class="trait">Path<wbr>Evaluator3rd</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/copp/path/path_core.rs.html#68-81">Source</a> </span></div><pre class="rust item-decl"><code>pub trait PathEvaluator3rd: <a class="trait" href="trait.PathEvaluator2nd.html" title="trait copp::path::PathEvaluator2nd">PathEvaluator2nd</a> {
+    // Required method
+    fn <a href="#tymethod.evaluate_up_to_3rd" class="fn">evaluate_up_to_3rd</a>(
+        &amp;self,
+        s: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+        q: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+        dq: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+        ddq: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+        dddq: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    ) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../diag/enum.PathError.html" title="enum copp::diag::PathError">PathError</a>&gt;;
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>User-provided path evaluator with explicit derivatives up to third order.</p>
+<p>This extends <a href="trait.PathEvaluator2nd.html" title="trait copp::path::PathEvaluator2nd"><code>PathEvaluator2nd</code></a> with jerk-level path derivatives. Use it
+when the path will be sampled by TOPP3/COPP3 workflows or any API that calls
+<a href="struct.Path.html#method.evaluate_up_to_3rd" title="method copp::path::Path::evaluate_up_to_3rd"><code>Path::evaluate_up_to_3rd</code></a>.</p>
+<p>See <a href="struct.Path.html#method.from_evaluator_3rd" title="associated function copp::path::Path::from_evaluator_3rd"><code>Path::from_evaluator_3rd</code></a> for a complete constructor example.</p>
+</div></details><h2 id="required-methods" class="section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="tymethod.evaluate_up_to_3rd" class="method"><a class="src rightside" href="../../src/copp/path/path_core.rs.html#73-80">Source</a><h4 class="code-header">fn <a href="#tymethod.evaluate_up_to_3rd" class="fn">evaluate_up_to_3rd</a>(
+    &amp;self,
+    s: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    q: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    dq: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    ddq: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    dddq: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../diag/enum.PathError.html" title="enum copp::diag::PathError">PathError</a>&gt;</h4></section></summary><div class="docblock"><p>Evaluate <code>q</code>, <code>dq</code>, <code>ddq</code>, and <code>dddq</code> at all supplied path parameters.</p>
+<p>All output buffers have length <code>dim() * s.len()</code> and use column-major
+layout.</p>
+</div></details></div><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"></div><script src="../../trait.impl/copp/path/path_core/trait.PathEvaluator3rd.js" async></script></section></div></main></body></html>

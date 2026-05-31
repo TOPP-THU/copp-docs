@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["cos","exp","ln","powi","sin","sqrt"],"struct":["Jet3"]};

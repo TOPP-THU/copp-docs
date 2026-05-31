@@ -1,5 +1,9 @@
 # COPP文档
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
+
+[![Rust](https://img.shields.io/badge/Rust-native-b7410e)](https://docs.rs/copp/latest/copp/) [![C](https://img.shields.io/badge/C-ABI-00599c)](bindings/c/README.md) [![Python](https://img.shields.io/badge/Python-bindings-3776ab)](bindings/python/README.md)
+
 ## 核心问题
 
 COPP专注于解决给定几何路径(path)生成时间参数化的轨迹 (trajectory)，并满足用户指定的约束、优化给定的目标。特别地，COPP规划的轨迹一般是二阶光滑（加速度有界）或三阶光滑（加加速度有界）。
@@ -82,14 +86,37 @@ Rust的安装非常简单，我们已经把`copp`库发布到[crates.io](https:/
 
 ```toml
 [dependencies]
-copp = "*"
+copp = "0.2.1"
 ```
 
-`copp` v0.2.0 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启Release模式，以显著提高计算效率。
+`copp` v0.2.1 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启Release模式，以显著提高计算效率。
 
 ## 算法选择
 
-TODO
+`copp`中算法的选择主要取决于三个因素：问题是二阶还是三阶、目标是时间最优还是一般凸目标、以及是否需要PRO版本提供的更高性能。
+
+| 问题类别 | 算法 | 可用版本 | 说明 |
+| -------- | ---- | -------- | ---- |
+| TOPP2 | TOPP2-RA | 开源 | 基于可达性分析的高速算法。在常见benchmark中相对全局优化基准的误差通常低于$10^{-4}$，适合作为二阶时间最优问题的默认入口。 |
+| COPP2 | COPP2-SOCP | 开源 | 将问题建模为SOCP并由`clarabel`求解。在凸建模假设下具备全局最优性，但计算开销通常明显高于RA类方法。 |
+| COPP2 | COPP2-RDDP | PRO | 原创的高速算法，保持全局最优解质量，并显著快于COPP2-SOCP。 |
+| TOPP3 | TOPP3-SOCP | 开源 | 基于`clarabel`的锥优化形式，通常能得到高质量的KKT解；在特定数据集上计算成本可能较高。 |
+| TOPP3 | TOPP3-LP | 开源 | TOPP3-SOCP的线性目标近似形式，通常更快；但在jerk约束较紧时可能次优，因此主要推荐在jerk边界较宽松时使用。 |
+| TOPP3 | TOPP3-RA | PRO | 基于可达性分析的高速三阶算法；在jerk约束较紧时可能次优，主要推荐在jerk边界较宽松时使用。 |
+| COPP3 | COPP3-SOCP | 开源 | 基于`clarabel`的锥优化形式，通常具有较强的实际最优性，但计算成本较高。 |
+| COPP3 | COPP3-RDDP | PRO | 高速原创算法，能够得到接近TOPP3-SOCP质量的KKT解，同时显著快于TOPP3-SOCP、TOPP3-LP和COPP3-SOCP。COPP3-RDDP也可以作为高质量TOPP3求解器使用；在长路径问题上，它可能比COPP3-SOCP具有更好的实际最优性和数值稳定性。 |
+
+更具体地说，可以按如下方式选择：
+
+| 场景 | 推荐算法 | 可用版本 | 主要原因 | 注意事项 | 备选方案 |
+| ---- | -------- | -------- | -------- | -------- | -------- |
+| 二阶时间最优，且要求极低计算时间 | TOPP2-RA | 开源 | 速度和性能折中极好，在典型benchmark中接近全局最优。 | 目标固定为最短时间。 |  |
+| 二阶凸目标，且更重视全局解质量 | COPP2-SOCP | 开源 | 凸锥优化形式，在模型假设下具有全局最优性。 | 计算时间高于RA/RDDP类方法。 | 若需要大幅提速，可使用COPP2-RDDP。 |
+| 二阶凸目标，且要求最高计算效率 | COPP2-RDDP | PRO | 保持全局最优解质量，同时显著提高计算速度。 | 需要PRO授权。 | COPP2-SOCP。 |
+| 三阶问题，且希望使用开源版本中最强的最优性质量 | TOPP3-SOCP / COPP3-SOCP | 开源 | 具有较强的KKT解质量和较广泛适用性。 | 在特定数据集上计算成本可能较高。 | 若需要大幅提速，可使用COPP3-RDDP。 |
+| 三阶时间最优，且希望使用更快的开源近似 | TOPP3-LP | 开源 | 当用户自己的路径数据集显示它具有更好的速度/性能表现时可以使用。 | jerk约束较紧时可能次优。 | TOPP3-SOCP或COPP3-RDDP。 |
+| 三阶时间最优，jerk边界较宽松且要求极低计算时间 | TOPP3-RA | PRO | 计算开销很低。 | jerk约束较紧时可能次优。 | COPP3-RDDP或TOPP3-SOCP。 |
+| 三阶高质量、高稳定性，特别是困难长路径规划 | COPP3-RDDP | PRO | 实际最优性强、计算速度高，并且通常在长时域问题上更稳定。 | 需要PRO授权。 | COPP3-SOCP。 |
 
 ## Step-by-Step工作流
 
@@ -123,8 +150,8 @@ use copp::path::{Path, SplineConfig};
 use nalgebra::DMatrix;
 
 let waypoints = DMatrix::from_row_slice(
-    2, // 维数
-    5, // 路径点个数
+    2, // dim
+    5, // number of waypoints
     &[
         0.0, 0.25, 0.5, 0.75, 1.0,
         0.0, 0.1, -0.1, 0.2, 0.0,
@@ -135,7 +162,7 @@ let path = Path::from_waypoints(&waypoints, SplineConfig::default())?;
 
 ### Option C. 用户手动微分
 
-最一般的情况下，用户可以自行求导，在TOPP2/COPP2应在给定$s$下提供$\boldsymbol{q}(s),\boldsymbol{q}'(s),\boldsymbol{q}''(s)$，在TOPP3/COPP3应额外提供$\boldsymbol{q}'''(s)$，例如：
+最一般的情况下，用户可以自行求导，在TOPP2/COPP2应在给定$s$下提供$\boldsymbol{q}(s),\boldsymbol{q}'(s),\boldsymbol{q}''(s)$，例如：
 
 ```rust
 use copp::diag::PathError;
@@ -168,7 +195,23 @@ impl PathEvaluator2nd for NormalizedEvaluator2nd {
     }
 }
 
-let path = Path::from_evaluator_2nd(NormalizedEvaluator2nd, 0.0, 1.0)?;
+impl PathEvaluator3rd for NormalizedEvaluator3rd {
+    fn evaluate_up_to_3rd(
+        &self,
+        s: &[f64],
+        q: &mut [f64],
+        dq: &mut [f64],
+        ddq: &mut [f64],
+        dddq: &mut [f64],
+    ) -> Result<(), PathError> {
+        self.evaluate_up_to_2nd(s, q, dq, ddq)?;
+        dddq.fill(0.0);
+        Ok(())
+    }
+}
+
+let path = Path::from_evaluator_3rd(NormalizedEvaluator3rd, 0.0, 1.0)?;
+// If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `PathEvaluator3rd` can be removed and the path can be constructed by `from_evaluator_2nd`.
 ```
 
 ### Step 2. 离散化路径信息
@@ -360,18 +403,113 @@ let q_t = out.q;
 
 由此完成了三阶轨迹的完整求解。
 
-## 文档
+### Step-by-Step小结
+
+总的来说，一个最小闭环包括：构造路径$\boldsymbol{q}(s)$，在离散网格上构造`Robot`和约束，选择对应的problem builder和solver，得到$a(s)$或$(a(s),b(s))$，再通过`s_to_t_*`和`t_to_s_*`转回时间域，最终在$s(t)$上重新采样原始路径。仓库中也提供了TOPP2、COPP2、TOPP3、COPP3等可运行例程。
+
+## Benchmark性能测试
+
+以下测试来自仓库中的`tests/test_random_spline.rs`。测试条件为：
+
+- `release, --include-ignored`
+- CPU: Intel(R) Core(TM) Ultra 9 285K.
+- 数据集：100条随机7-DOF样条路径，每条路径离散为1000个区间。
+
+所有指标均以`mean ± std`的形式列出。
+
+#### 时间最优 (Time-Optimal)
+
+| 方法 | 计算时间 (ms) | 终端时间 (s) |
+| ------ | --------------------: | -----------------: |
+| TOPP2-RA | 0.615425 ± 0.244409 | 40.903420 ± 1.378671 |
+| COPP2-SOCP | 149.969964 ± 9.364334 | 40.900039 ± 1.378613 |
+| COPP2-RDDP | 5.436142 ± 0.465495 | 40.900135 ± 1.378613 |
+| TOPP3-LP | 327.074029 ± 28.893341 | 41.422945 ± 1.381874 |
+| TOPP3-SOCP | 289.654071 ± 12.862133 | 41.418608 ± 1.381202 |
+| COPP3-SOCP | 285.004302 ± 13.471264 | 41.418608 ± 1.381202 |
+| TOPP3-RA (Iteration 1) | 10.571045 ± 0.857653 | 41.499200 ± 1.385735 |
+| TOPP3-RA (Iteration 2) | 20.300932 ± 1.237908 | 41.399867 ± 1.386791 |
+
+#### 凸目标 (Convex-Objective)
+
+在该测试中，TOPP方法仍以终端时间为优化目标。
+
+| 方法 | 计算时间 (ms) | 目标函数值 |
+| ------ | --------------------: | --------------: |
+| TOPP2-RA | 0.534700 ± 0.069296 | 217.444861 ± 12.462360 |
+| COPP2-SOCP | 270.059250 ± 52.073677 | 96.517354 ± 3.641154 |
+| COPP2-RDDP | 12.667700 ± 0.429214 | 96.525785 ± 3.639733 |
+| TOPP3-LP | 348.000000 ± 9.326314 | 211.611085 ± 12.367224 |
+| TOPP3-SOCP | 301.227000 ± 12.938498 | 211.974066 ± 12.323865 |
+| COPP3-SOCP | 301.227000 ± 12.938498 | 96.634962 ± 3.613264 |
+| COPP3-RDDP | 65.823050 ± 0.087893 | 98.708998 ± 3.354004 |
+
+## 文档与架构
+
+### 文档
 
 我们推荐使用[docs.rs 最新文档](https://docs.rs/copp/latest/copp/)。也支持本地文档：
 
-- [本地 Rust 文档：v0.2.0](rust/v0.2.0/copp/index.html)
-- [本地 Rust 文档：v0.1.0](rust/v0.1.0/copp/index.html)
+- [v0.2.1 (Latest)](rust/v0.2.1/copp/index.html)
+- [v0.2.0](rust/v0.2.0/copp/index.html)
+- [v0.1.0](rust/v0.1.0/copp/index.html)
+
+如果需要查看main branch上尚未发布的更新，我们推荐在`copp`仓库根目录本地生成文档：
+
+```shell
+cargo doc --no-deps --open
+```
+
+生成的文档包含数学基础、路径/约束构造方法、日志和输出约定、错误定义以及求解器接口。
+
+### 项目架构
 
 | 模块                            | 负责内容                                  |
 | ----------------------------------------- | ----------------------------------------- |
 | `path`                                    | 路径构造、参数范围、二阶/三阶求导。       |
 | `robot`                                   | 机器人维度、逆动力学、物理约束入口。      |
 | `constraints`                                   | 更底层的约束接口。      |
-| `solver`                        | 各个求解器 |
+| `solver`                        | 各个求解器。 |
 | `diag`                                    | 错误类型、日志 verbosity、诊断信息。      |
 
+## 引用
+
+如果你的工作使用了开源TOPP3/COPP3功能，建议引用：（即便是最基本的离散区间内profile模板也用到了该文章的贡献）
+
+```tex
+@article{wang2026online,
+  title={Online time-optimal trajectory planning along parametric toolpaths with strict constraint satisfaction and certifiable feasibility guarantee},
+  author={Wang, Yunan and Hu, Chuxiong and Li, Yuanshenglong and Yu, Jichuan and Yan, Jizhou and Liang, Yixuan and Jin, Zhao},
+  journal={International Journal of Machine Tools and Manufacture},
+  volume={215},
+  pages={104355},
+  year={2026}
+}
+```
+
+如果你的工作使用了PRO版本中的TOPP3-RA, COPP2-RDDP, COPP3-RDDP方法，建议引用：（其中TOPP3-RA基于该论文进行改进）
+
+```tex
+@article{wang2026reachability,
+  title={Reachability-augmented dual dynamic programming for optimal path parameterization},
+  author={Yunan Wang and Jizhou Yan and Chuxiong Hu and Zeyang Li},
+  journal={arXiv preprint arXiv:2605.19089},
+  year={2026}
+}
+```
+
+其他情况下可引用COPP项目本身，或对应论文：
+
+```tex
+@misc{thu2026copp,
+  title = {COPP: Convex-Objective Path Parameterization},
+  author = {Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong},
+  year = {2026},
+  publisher = {GitHub},
+  howpublished = {\url{https://github.com/TOPP-THU/copp}}
+}
+```
+
+## 联系
+
+如果需要COPP PRO授权、商业合作、技术咨询或一般问题，可以联系[hello@copp.pro](mailto:hello@copp.pro)。

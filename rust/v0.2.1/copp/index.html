@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="`copp` crate public API."><title>copp - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="copp" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0-nightly (db3e99bba 2026-02-04)" data-channel="nightly" data-search-js="search-fb33671b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../static.files/storage-f9617a14.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-12f88f4f.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head><body class="rustdoc mod crate"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Crate copp</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../copp/index.html">copp</a><span class="version">0.2.1</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#what-problem-does-this-library-solve" title="What problem does this library solve?">What problem does this library solve?</a></li><li><a href="#objective-families-topp-vs-copp" title="Objective families: TOPP vs COPP">Objective families: TOPP vs COPP</a></li><li><a href="#constraint-order-families-2nd-vs-3rd-order" title="Constraint-order families: 2nd vs 3rd order">Constraint-order families: 2nd vs 3rd order</a></li><li><a href="#supported-problem-classes" title="Supported problem classes">Supported problem classes</a></li><li><a href="#recommended-onboarding-path" title="Recommended onboarding path">Recommended onboarding path</a></li></ul><h3><a href="#modules">Crate Items</a></h3><ul class="block"><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#macros" title="Macros">Macros</a></li><li><a href="#enums" title="Enums">Enums</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1>Crate <span>copp</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/copp/lib.rs.html#1-249">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p><code>copp</code> crate public API.</p>
+<h2 id="what-problem-does-this-library-solve"><a class="doc-anchor" href="#what-problem-does-this-library-solve">§</a>What problem does this library solve?</h2>
+<p>This library targets <strong>OPP</strong> (Optimal Path Parameterization) problems.
+Given a geometric path parameterization
+$q = q(s)$, the solver finds a time law $s = s(t)$ such that constraints are
+satisfied while an objective is optimized.</p>
+<p>In short, we convert geometry-space motion into time-space scheduling:
+$$
+q = q(s) \quad \Longrightarrow \quad s = s(t),
+$$
+and solve for globally optimal / KKT-satisfying / heuristic near-optimal
+trajectories under the selected backend and objective model.</p>
+<h2 id="objective-families-topp-vs-copp"><a class="doc-anchor" href="#objective-families-topp-vs-copp">§</a>Objective families: TOPP vs COPP</h2>
+<ul>
+<li><strong>TOPP</strong>: Time-Optimal Path Parameterization (typical objective is minimum
+traversal time).</li>
+<li><strong>COPP</strong>: Convex-Objective Path Parameterization (supports richer convex
+objectives beyond pure time-optimality).</li>
+</ul>
+<p>For non-convex objectives, a practical approach is <strong>SCP</strong>:
+perform DC decomposition and iterative objective linearization. Constraint
+linearization (notably for third-order models) is already implemented in this
+crate. For objective modeling details, see COPP solver families and
+<a href="prelude/enum.CoppObjective.html" title="enum copp::prelude::CoppObjective"><code>CoppObjective</code></a>-related APIs.</p>
+<h2 id="constraint-order-families-2nd-vs-3rd-order"><a class="doc-anchor" href="#constraint-order-families-2nd-vs-3rd-order">§</a>Constraint-order families: 2nd vs 3rd order</h2>
+<ul>
+<li><strong>2nd-order</strong> (TOPP2/COPP2): commonly covers velocity, acceleration,
+and torque-related constraints.</li>
+<li><strong>3rd-order</strong> (TOPP3/COPP3): additionally models jerk-level effects.</li>
+</ul>
+<p>User-defined constraints are supported at different abstraction levels:</p>
+<ul>
+<li>prefer <a href="robot/struct.Robot.html" title="struct copp::robot::Robot"><code>robot::Robot</code></a> for physically meaningful high-level ingestion;</li>
+<li>use <a href="constraints/struct.Constraints.html" title="struct copp::constraints::Constraints"><code>constraints::Constraints</code></a> directly for maximum low-level flexibility.</li>
+</ul>
+<h2 id="supported-problem-classes"><a class="doc-anchor" href="#supported-problem-classes">§</a>Supported problem classes</h2>
+<p>This crate provides solvers for four major classes:</p>
+<ul>
+<li><code>TOPP2</code></li>
+<li><code>COPP2</code></li>
+<li><code>TOPP3</code></li>
+<li><code>COPP3</code></li>
+</ul>
+<h2 id="recommended-onboarding-path"><a class="doc-anchor" href="#recommended-onboarding-path">§</a>Recommended onboarding path</h2>
+<ol>
+<li>Build constraints with <a href="robot/struct.Robot.html" title="struct copp::robot::Robot"><code>robot::Robot</code></a> (or directly with
+<a href="constraints/struct.Constraints.html" title="struct copp::constraints::Constraints"><code>constraints::Constraints</code></a> for advanced customization).</li>
+<li>Choose a solver family from <a href="solver/index.html" title="mod copp::solver"><code>solver</code></a> based on objective/accuracy/runtime.</li>
+<li>Start quickly with <a href="prelude/index.html" title="mod copp::prelude"><code>prelude</code></a> for common imports.</li>
+</ol>
+</div></details><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="constraints/index.html" title="mod copp::constraints">constraints</a></dt><dd>Constraint storage and access layer for TOPP/COPP pipelines.</dd><dt><a class="mod" href="diag/index.html" title="mod copp::diag">diag</a></dt><dd>Core shared types and utilities.</dd><dt><a class="mod" href="path/index.html" title="mod copp::path">path</a></dt><dd>Path abstraction for trajectory planning.</dd><dt><a class="mod" href="prelude/index.html" title="mod copp::prelude">prelude</a></dt><dd>Commonly used public imports for application code.</dd><dt><a class="mod" href="robot/index.html" title="mod copp::robot">robot</a></dt><dd>Robot namespace for model abstractions and demo models.</dd><dt><a class="mod" href="solver/index.html" title="mod copp::solver">solver</a></dt><dd>Solver entry namespace (TOPP2/TOPP3/COPP2/COPP3).</dd></dl><h2 id="macros" class="section-header">Macros<a href="#macros" class="anchor">§</a></h2><dl class="item-table"><dt><a class="macro" href="macro.verbosity_log.html" title="macro copp::verbosity_log">verbosity_<wbr>log</a></dt><dd>Emit a formatted verbosity message through the global diagnostics backend.</dd></dl><h2 id="enums" class="section-header">Enums<a href="#enums" class="anchor">§</a></h2><dl class="item-table"><dt><a class="enum" href="enum.InterpolationMode.html" title="enum copp::InterpolationMode">Interpolation<wbr>Mode</a></dt><dd>Time-grid interpolation policy used when converting trajectory profiles to time-domain samples.</dd></dl></section></div></main></body></html>
