@@ -612,17 +612,68 @@ header, .context-menu, .megamenu-content, footer{
 </style><title>index</title>
 </head>
 <body class='typora-export os-windows'><div class='typora-export-content'>
-<div id='write'  class=''><h1 id='copp'><span>COPP</span></h1><h2 id='documentation'><span>Documentation</span></h2><h3 id='rust'><span>Rust</span></h3><p><span>For rust, we recommend using the </span><a href='https://docs.rs/copp/latest/copp/'><span>documentation on crates.io</span></a><span> directly.</span></p><details>
-    <summary>Select Version</summary>
-    <ul>
-        <li><a href="rust/v0.2.0/copp/index.html">v0.2.0 (Latest)</a></li>
-        <li><a href="rust/v0.1.0/copp/index.html">v0.1.0</a></li>
-    </ul>
-</details><h3 id='c'><span>C</span></h3><details>
-    <summary>Select Version</summary>
-    <ul>
-        <li><a href="c/v0.2.0/index.html">v0.2.0 (Latest)</a></li>
-    </ul>
-</details><p>&nbsp;</p></div></div>
+<div id='write'  class=''><h1 id='copp'><span>COPP</span></h1><p><span>Homepage: </span><a href='https://copp.pro/'><span>COPP Pro — Optimal motion, solved in milliseconds</span></a></p><h2 id='start-here'><span>Start Here</span></h2><ul><li><p><span>What is COPP?</span></p></li><li><p><span>Installation</span></p></li><li><p><span>Quick Start</span></p></li><li><p><span>Algorithm Selection</span></p></li><li><p><span>Examples</span></p></li><li><p><span>API Reference</span></p></li></ul><h2 id='overview'><span>Overview</span></h2><h3 id='problem-statement'><span>Problem Statement</span></h3><p><span>TBD</span></p><h3 id='concept-map'><span>Concept Map</span></h3><p><span>TBD</span></p><h3 id='open-source-and-pro'><span>Open-source and PRO</span></h3><p><span>TBD</span></p><h2 id='documentation'><span>Documentation</span></h2><style>
+.copp-lang-tabs {
+    border: 1px solid #dfe2e5;
+    border-radius: 6px;
+    margin: 1rem 0;
+    padding: 0.75rem;
+}
+.copp-lang-tabs > input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.copp-lang-tabs > label {
+    display: inline-block;
+    margin: 0 0.25rem 0.75rem 0;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid #dfe2e5;
+    border-radius: 4px;
+    color: #555;
+    cursor: pointer;
+    font-weight: 600;
+}
+#copp-doc-rust:checked ~ label[for="copp-doc-rust"],
+#copp-doc-c:checked ~ label[for="copp-doc-c"] {
+    border-color: #4183C4;
+    background: #eef6ff;
+    color: #1f5f99;
+}
+.copp-tab-panel {
+    display: none;
+    border-top: 1px solid #e7e7e7;
+    padding-top: 0.75rem;
+}
+#copp-doc-rust:checked ~ .copp-tab-rust,
+#copp-doc-c:checked ~ .copp-tab-c {
+    display: block;
+}
+</style><div class="copp-lang-tabs">
+    <input type="radio" name="copp-doc-lang" id="copp-doc-rust" checked>
+    <label for="copp-doc-rust">Rust</label>
+    <input type="radio" name="copp-doc-lang" id="copp-doc-c">
+    <label for="copp-doc-c">C</label>
+    <div class="copp-tab-panel copp-tab-rust">
+        <h3>Rust</h3>
+        <p>For Rust, we recommend using the <a href="https://docs.rs/copp/latest/copp/">documentation on crates.io</a> directly.</p>
+        <details>
+            <summary>Select Version</summary>
+            <ul>
+                <li><a href="rust/v0.2.0/copp/index.html">v0.2.0 (Latest)</a></li>
+                <li><a href="rust/v0.1.0/copp/index.html">v0.1.0</a></li>
+            </ul>
+        </details>
+    </div>
+    <div class="copp-tab-panel copp-tab-c">
+        <h3>C</h3>
+        <details>
+            <summary>Select Version</summary>
+            <ul>
+                <li><a href="c/v0.2.0/index.html">v0.2.0 (Latest)</a></li>
+            </ul>
+        </details>
+    </div>
+</div><h2 id='guides'><span>Guides</span></h2><h3 id='installation'><span>Installation</span></h3><p><span>TBD</span></p><h3 id='build-from-source'><span>Build From Source</span></h3><p><span>TBD</span></p><h3 id='general-workflow'><span>General Workflow</span></h3><p><span>TBD</span></p><h3 id='error-handling'><span>Error Handling</span></h3><p><span>TBD</span></p><h2 id='algorithms'><span>Algorithms</span></h2><h3 id='topp2'><span>TOPP2</span></h3><p><span>TBD</span></p><h3 id='copp2'><span>COPP2</span></h3><p><span>TBD</span></p><h3 id='topp3'><span>TOPP3</span></h3><p><span>TBD</span></p><h3 id='copp3'><span>COPP3</span></h3><p><span>TBD</span></p><h2 id='examples'><span>Examples</span></h2><h3 id='rust-examples'><span>Rust Examples</span></h3><p><span>TBD</span></p><h3 id='c-examples'><span>C Examples</span></h3><p><span>TBD</span></p><h2 id='reference'><span>Reference</span></h2><h3 id='benchmark'><span>Benchmark</span></h3><p><span>TBD</span></p><h3 id='citation'><span>Citation</span></h3><p><span>TBD</span></p><h3 id='contact'><span>Contact</span></h3><p><span>TBD</span></p></div></div>
 </body>
 </html>
