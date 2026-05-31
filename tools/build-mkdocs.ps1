@@ -53,7 +53,7 @@ try {
 
     & python -m mkdocs @mkdocsArgs
 
-    foreach ($name in @("rust", "c")) {
+    foreach ($name in @("rust", "c", "python")) {
         $src = Join-Path $RepoRoot $name
         $dst = Join-Path $SiteDir $name
         if (-not (Test-Path -LiteralPath $src)) {
@@ -70,14 +70,17 @@ try {
         Copy-Item -LiteralPath $cname -Destination (Join-Path $SiteDir "CNAME") -Force
     }
 
-    foreach ($file in @("index.html", "404.html", "sitemap.xml", "sitemap.xml.gz")) {
+    $nojekyll = Join-Path $SiteDir ".nojekyll"
+    New-Item -ItemType File -Path $nojekyll -Force | Out-Null
+
+    foreach ($file in @("index.html", "index-zh.html", "404.html", "sitemap.xml", "sitemap.xml.gz", ".nojekyll")) {
         $src = Join-Path $SiteDir $file
         if (Test-Path -LiteralPath $src) {
             Copy-Item -LiteralPath $src -Destination (Join-Path $RepoRoot $file) -Force
         }
     }
 
-    foreach ($dir in @("index-zh-rust")) {
+    foreach ($dir in @("index-zh-rust", "index-zh")) {
         Remove-GeneratedPath -Path (Join-Path $RepoRoot $dir)
     }
 

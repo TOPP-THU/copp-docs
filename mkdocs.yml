@@ -4,13 +4,13 @@ repo_url: https://github.com/TOPP-THU/copp
 repo_name: TOPP-THU/copp
 docs_dir: docs
 site_dir: site
-use_directory_urls: true
+use_directory_urls: false
 hooks:
   - tools/mkdocs_ignore_static_api_links.py
 
 theme:
   name: material
-  language: zh
+  language: en
   features:
     - navigation.instant
     - navigation.tracking
@@ -23,12 +23,17 @@ theme:
     - content.tabs.link
 
 nav:
-  - 首页: index.md
-  - API:
-      - Rust latest: https://docs.rs/copp/latest/copp/
-      - Rust v0.2.1: /rust/v0.2.1/copp/
-      - C v0.2.0: /c/v0.2.0/
-      - Python PyPI: https://pypi.org/project/copp-py/
+  - English: index.md
+  - 中文: index-zh.md
+
+extra:
+  alternate:
+    - name: English
+      link: index.html
+      lang: en
+    - name: 简体中文
+      link: index-zh.html
+      lang: zh
 
 markdown_extensions:
   - tables
