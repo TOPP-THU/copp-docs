@@ -126,7 +126,7 @@ $$
     cd topp
     ```
 
-    需要准备 Cargo、CMake 和 C 编译器工具链。C ABI 位于 Cargo 的 `c` feature 下，先在仓库根目录构建 native library：
+    需要准备 Cargo、CMake 和 C 编译器工具链：Windows 上建议安装带 C++ workload 的 Visual Studio Build Tools，Linux 上使用 GCC/Clang，macOS 上使用 Xcode Command Line Tools。C ABI 位于 Cargo 的 `c` feature 下，先在仓库根目录构建 native library：
 
     ```sh
     cargo build --release --lib --features c
@@ -134,16 +134,48 @@ $$
 
     然后配置并构建 CMake 工程：
 
-    ```sh
-    cmake -S bindings/c -B bindings/c/build
-    cmake --build bindings/c/build --config Release
-    ```
+    === "Windows"
+
+        ```powershell
+        cmake -S bindings/c -B bindings/c/build
+        cmake --build bindings/c/build --config Release
+        ```
+
+    === "Linux"
+
+        ```sh
+        cmake -S bindings/c -B bindings/c/build -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/c/build
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake -S bindings/c -B bindings/c/build -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/c/build
+        ```
 
     如果要安装成下游 CMake 工程可查找的 package：
 
-    ```sh
-    cmake --install bindings/c/build --config Release --prefix <install-prefix>
-    ```
+    === "Windows"
+
+        ```powershell
+        cmake --install bindings/c/build --config Release --prefix <install-prefix>
+        ```
+
+    === "Linux"
+
+        ```sh
+        cmake --install bindings/c/build --prefix <install-prefix>
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake --install bindings/c/build --prefix <install-prefix>
+        ```
+
+    将 `<install-prefix>` 替换为你自己的安装路径，例如 `C:/copp-install` 或 `$PWD/copp-install`。
 
     下游工程中使用：
 
@@ -161,13 +193,27 @@ $$
     cmake --build app/build --config Release
     ```
 
-    如果希望静态链接，在配置 COPP 的 CMake 项目时加入：
+    如果希望静态链接，在上面对应平台的 COPP CMake configure 命令中加入 `-DCOPP_LINK_STATIC=ON`。
 
-    ```sh
-    cmake -S bindings/c -B bindings/c/build -DCOPP_LINK_STATIC=ON
-    ```
+    若需要重新生成 C 头文件，先安装 `cbindgen`，再运行 PowerShell 头文件生成脚本；普通用户可以直接使用仓库中已生成的 `bindings/c/include/copp/` 头文件。
 
-    若需要重新生成 C 头文件，先安装 `cbindgen`，再运行 `bindings/c/scripts/generate_headers.ps1`；普通用户可以直接使用仓库中已生成的 `bindings/c/include/copp/` 头文件。
+    === "Windows"
+
+        ```powershell
+        powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_headers.ps1
+        ```
+
+    === "Linux"
+
+        ```sh
+        pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
+        ```
+
+    === "macOS"
+
+        ```sh
+        pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
+        ```
 
 === "Python"
 
@@ -183,7 +229,7 @@ $$
     import copp_py as copp
     ```
 
-    如果需要从本地源码构建，需要 Python 3.9 或更新版本、Rust/Cargo、平台 C/C++ 编译器，以及 `maturin`。可以从本地库开始：
+    如果需要从本地源码构建，需要 Python 3.9 或更新版本、Rust/Cargo、`maturin`，以及平台 C/C++ 编译器工具链：Windows 上建议安装带 C++ workload 的 Visual Studio Build Tools，Linux 上使用 GCC/Clang，macOS 上使用 Xcode Command Line Tools。可以从本地库开始：
 
     ```sh
     git clone https://github.com/TOPP-THU/topp.git
@@ -288,7 +334,7 @@ $$
 === "C"
 
     ```c
-    // C ABI 暂时没有提供自动微分接口，请选择 Options B or C
+    // C 的自动微分功能预计在 v0.2.2 实现。
     ```
 
 === "Python"
@@ -1376,15 +1422,29 @@ $$
     - [v0.2.1 (Latest)](c/v0.2.1/index.html)
     - [v0.2.0](c/v0.2.0/index.html)
 
-    如果需要本地生成 C 文档，先安装 Doxygen 和 Graphviz，然后在 `copp` 仓库根目录运行：
+    如果需要本地生成 C 文档，先安装 Doxygen、Graphviz 和 PowerShell 7（即 `pwsh`，脚本会用它重新生成头文件），然后在 `copp` 仓库根目录运行对应命令：
 
-    ```powershell
-    powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_docs.ps1
-    ```
+    === "Windows"
 
-    ```sh
-    sh bindings/c/scripts/generate_docs.sh
-    ```
+        ```powershell
+        winget install Doxygen.Doxygen Graphviz.Graphviz Microsoft.PowerShell
+        powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_docs.ps1
+        ```
+
+    === "Linux"
+
+        ```sh
+        # Debian/Ubuntu 示例；还需要单独安装 PowerShell 7，确保 `pwsh` 在 PATH 中。
+        sudo apt install doxygen graphviz
+        sh bindings/c/scripts/generate_docs.sh
+        ```
+
+    === "macOS"
+
+        ```sh
+        brew install doxygen graphviz powershell
+        sh bindings/c/scripts/generate_docs.sh
+        ```
 
     生成的入口页面是 `bindings/c/docs/html/index.html`。
 

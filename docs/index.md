@@ -126,7 +126,7 @@ In summary, the problem classes supported by `copp` are:
     cd topp
     ```
 
-    You need Cargo, CMake, and a C compiler toolchain. The C ABI is gated behind the Cargo `c` feature. First build the native library from the repository root:
+    You need Cargo, CMake, and a C compiler toolchain: Visual Studio Build Tools with the C++ workload on Windows, GCC/Clang on Linux, or Xcode Command Line Tools on macOS. The C ABI is gated behind the Cargo `c` feature. First build the native library from the repository root:
 
     ```sh
     cargo build --release --lib --features c
@@ -134,16 +134,48 @@ In summary, the problem classes supported by `copp` are:
 
     Then configure and build the CMake project:
 
-    ```sh
-    cmake -S bindings/c -B bindings/c/build
-    cmake --build bindings/c/build --config Release
-    ```
+    === "Windows"
+
+        ```powershell
+        cmake -S bindings/c -B bindings/c/build
+        cmake --build bindings/c/build --config Release
+        ```
+
+    === "Linux"
+
+        ```sh
+        cmake -S bindings/c -B bindings/c/build -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/c/build
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake -S bindings/c -B bindings/c/build -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/c/build
+        ```
 
     To install it as a package discoverable by downstream CMake projects:
 
-    ```sh
-    cmake --install bindings/c/build --config Release --prefix <install-prefix>
-    ```
+    === "Windows"
+
+        ```powershell
+        cmake --install bindings/c/build --config Release --prefix <install-prefix>
+        ```
+
+    === "Linux"
+
+        ```sh
+        cmake --install bindings/c/build --prefix <install-prefix>
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake --install bindings/c/build --prefix <install-prefix>
+        ```
+
+    Replace `<install-prefix>` with your own installation path, for example `C:/copp-install` or `$PWD/copp-install`.
 
     Use it from a downstream project as follows:
 
@@ -161,13 +193,27 @@ In summary, the problem classes supported by `copp` are:
     cmake --build app/build --config Release
     ```
 
-    If static linking is desired, add the following option when configuring COPP's CMake project:
+    If static linking is desired, add `-DCOPP_LINK_STATIC=ON` to the corresponding COPP CMake configure command above.
 
-    ```sh
-    cmake -S bindings/c -B bindings/c/build -DCOPP_LINK_STATIC=ON
-    ```
+    To regenerate the C headers, install `cbindgen` and run the PowerShell header-generation script. Most users can directly use the generated headers under `bindings/c/include/copp/`.
 
-    To regenerate the C headers, install `cbindgen` and run `bindings/c/scripts/generate_headers.ps1`. Most users can directly use the generated headers under `bindings/c/include/copp/`.
+    === "Windows"
+
+        ```powershell
+        powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_headers.ps1
+        ```
+
+    === "Linux"
+
+        ```sh
+        pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
+        ```
+
+    === "macOS"
+
+        ```sh
+        pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
+        ```
 
 === "Python"
 
@@ -183,7 +229,7 @@ In summary, the problem classes supported by `copp` are:
     import copp_py as copp
     ```
 
-    To build from local source, you need Python 3.9 or newer, Rust/Cargo, a platform C/C++ compiler, and `maturin`. Start with the repository:
+    To build from local source, you need Python 3.9 or newer, Rust/Cargo, `maturin`, and the platform C/C++ compiler toolchain: Visual Studio Build Tools with the C++ workload on Windows, GCC/Clang on Linux, or Xcode Command Line Tools on macOS. Start with the repository:
 
     ```sh
     git clone https://github.com/TOPP-THU/topp.git
@@ -288,7 +334,7 @@ The simplest approach is to construct the path from an analytic expression, for 
 === "C"
 
     ```c
-    // The C ABI does not currently expose automatic differentiation. Use Option B or C.
+    // Automatic differentiation for the C ABI is planned for v0.2.2.
     ```
 
 === "Python"
@@ -1376,15 +1422,29 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
     - [v0.2.1 (Latest)](c/v0.2.1/index.html)
     - [v0.2.0](c/v0.2.0/index.html)
 
-    To generate the C documentation locally, install Doxygen and Graphviz, then run one of the following commands from the `copp` repository root:
+    To generate the C documentation locally, install Doxygen, Graphviz, and PowerShell 7 (`pwsh`, used to regenerate headers), then run the corresponding command from the `copp` repository root:
 
-    ```powershell
-    powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_docs.ps1
-    ```
+    === "Windows"
 
-    ```sh
-    sh bindings/c/scripts/generate_docs.sh
-    ```
+        ```powershell
+        winget install Doxygen.Doxygen Graphviz.Graphviz Microsoft.PowerShell
+        powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_docs.ps1
+        ```
+
+    === "Linux"
+
+        ```sh
+        # Debian/Ubuntu example. Install PowerShell 7 separately so that `pwsh` is available.
+        sudo apt install doxygen graphviz
+        sh bindings/c/scripts/generate_docs.sh
+        ```
+
+    === "macOS"
+
+        ```sh
+        brew install doxygen graphviz powershell
+        sh bindings/c/scripts/generate_docs.sh
+        ```
 
     The generated entry page is `bindings/c/docs/html/index.html`.
 

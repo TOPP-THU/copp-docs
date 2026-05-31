@@ -1,50 +1,101 @@
 (function () {
     "use strict";
 
-    var STORAGE_KEY = "copp.docs.language-tab";
-    var LABELS = ["Rust", "C", "Python"];
+    var GROUPS = [
+        {
+            key: "language",
+            storageKey: "copp.docs.language-tab",
+            labels: ["Rust", "C", "Python"],
+        },
+        {
+            key: "platform",
+            storageKey: "copp.docs.platform-tab",
+            labels: ["Windows", "Linux", "macOS", "Linux / macOS"],
+            aliases: {
+                "Linux / macOS": "Linux",
+            },
+        },
+    ];
 
     function normalizeLabel(value) {
         return String(value || "").trim();
     }
 
-    function isLanguageLabel(value) {
-        return LABELS.indexOf(normalizeLabel(value)) >= 0;
+    function canonicalLabel(group, value) {
+        var label = normalizeLabel(value);
+        return (group.aliases && group.aliases[label]) || label;
     }
 
-    function storedLabel() {
-        try {
-            var own = window.localStorage.getItem(STORAGE_KEY);
-            if (isLanguageLabel(own)) {
-                return normalizeLabel(own);
+    function groupForLabel(value) {
+        var label = normalizeLabel(value);
+        for (var i = 0; i < GROUPS.length; i += 1) {
+            var group = GROUPS[i];
+            if (group.labels.indexOf(label) >= 0) {
+                return group;
             }
-        } catch (error) {
-            return "";
         }
+        return null;
+    }
 
-        if (typeof window.__md_get === "function") {
-            var materialTabs = window.__md_get("__tabs");
-            if (Array.isArray(materialTabs)) {
-                for (var i = 0; i < materialTabs.length; i += 1) {
-                    if (isLanguageLabel(materialTabs[i])) {
-                        return normalizeLabel(materialTabs[i]);
-                    }
+    function isGroupLabel(group, value) {
+        return group.labels.indexOf(normalizeLabel(value)) >= 0;
+    }
+
+    function storedLabels() {
+        var stored = {};
+
+        GROUPS.forEach(function (group) {
+            try {
+                var own = window.localStorage.getItem(group.storageKey);
+                if (isGroupLabel(group, own)) {
+                    stored[group.key] = canonicalLabel(group, own);
+                }
+            } catch (error) {
+                // Ignore storage errors in restricted browsing contexts.
+            }
+        });
+
+        try {
+            if (typeof window.__md_get === "function") {
+                var materialTabs = window.__md_get("__tabs");
+                if (Array.isArray(materialTabs)) {
+                    materialTabs.forEach(function (tab) {
+                        var group = groupForLabel(tab);
+                        if (group && !stored[group.key]) {
+                            stored[group.key] = canonicalLabel(group, tab);
+                        }
+                    });
                 }
             }
+        } catch (error) {
+            // Ignore malformed Material storage.
         }
 
-        return "";
+        return stored;
     }
 
-    function rememberLabel(label) {
+    function rememberLabel(group, label) {
         try {
-            window.localStorage.setItem(STORAGE_KEY, label);
+            window.localStorage.setItem(group.storageKey, label);
         } catch (error) {
             // Ignore storage errors in restricted browsing contexts.
         }
 
         if (typeof window.__md_set === "function") {
-            window.__md_set("__tabs", [label]);
+            var tabs = [];
+            try {
+                var materialTabs = window.__md_get("__tabs");
+                if (Array.isArray(materialTabs)) {
+                    tabs = materialTabs.filter(function (tab) {
+                        var tabGroup = groupForLabel(tab);
+                        return !tabGroup || tabGroup.key !== group.key;
+                    });
+                }
+            } catch (error) {
+                tabs = [];
+            }
+            tabs.push(label);
+            window.__md_set("__tabs", tabs);
         }
     }
 
@@ -55,16 +106,16 @@
         label.style.fontWeight = active ? "700" : "";
     }
 
-    function activateTabs(label, remember) {
-        var active = normalizeLabel(label);
-        if (!isLanguageLabel(active)) {
+    function activateTabs(group, label, remember) {
+        var active = canonicalLabel(group, label);
+        if (!isGroupLabel(group, active)) {
             return;
         }
 
         document.querySelectorAll(".tabbed-set").forEach(function (set) {
             var labels = Array.prototype.slice.call(set.querySelectorAll(".tabbed-labels > label"));
             var target = labels.find(function (item) {
-                return normalizeLabel(item.textContent) === active;
+                return groupForLabel(item.textContent) === group && canonicalLabel(group, item.textContent) === active;
             });
             if (!target) {
                 return;
@@ -81,7 +132,7 @@
         });
 
         if (remember) {
-            rememberLabel(active);
+            rememberLabel(group, active);
         }
     }
 
@@ -98,23 +149,29 @@
     function bindTabs() {
         document.addEventListener("click", function (event) {
             var label = event.target.closest(".tabbed-labels > label");
-            if (!label || !isLanguageLabel(label.textContent)) {
+            if (!label) {
+                return;
+            }
+
+            var group = groupForLabel(label.textContent);
+            if (!group) {
                 return;
             }
 
             window.requestAnimationFrame(function () {
-                activateTabs(label.textContent, true);
+                activateTabs(group, label.textContent, true);
             });
         });
     }
 
     function initTabs() {
-        var active = storedLabel();
-        if (active) {
-            activateTabs(active, false);
-        } else {
-            refreshActiveLabels();
-        }
+        var stored = storedLabels();
+        GROUPS.forEach(function (group) {
+            if (stored[group.key]) {
+                activateTabs(group, stored[group.key], false);
+            }
+        });
+        refreshActiveLabels();
     }
 
     bindTabs();
