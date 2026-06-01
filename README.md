@@ -1,8 +1,6 @@
 # COPP Documentation
 
-This repository contains the static documentation site for
-<https://docs.copp.pro>. The source pages live in `docs/` and are built with
-MkDocs Material.
+This repository contains the static documentation site for <https://docs.copp.pro>. The source pages live in `docs/` and are built with MkDocs Material.
 
 ## Build
 
@@ -12,20 +10,17 @@ Install the documentation dependencies:
 python -m pip install -r requirements.txt
 ```
 
+This installs MkDocs Material and the Pagefind extended binary used to build the full-site search index, including Chinese text and the copied API reference pages.
+
 Build the site:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File tools\build-mkdocs.ps1 -Strict
 ```
 
-The script uses `site/` as a temporary staging directory, then publishes the
-generated static files back to the repository root. This keeps the public
-`index.html` at the repository root for GitHub Pages, while avoiding the risk
-of asking MkDocs to clean and write directly into the root directory.
+The script uses `site/` as a temporary staging directory, then publishes the generated static files back to the repository root. This keeps the public `index.html` at the repository root for GitHub Pages, while avoiding the risk of asking MkDocs to clean and write directly into the root directory.
 
-The Rust and C API reference folders (`rust/` and `c/`) are copied into the
-staging build so that links such as `/rust/v0.2.1/copp/` and `/c/v0.2.0/`
-continue to work.
+The Rust, C, and Python API reference folders (`rust/`, `c/`, and `python/`) are copied into the staging build so that links such as `/rust/v0.2.1/copp/`, `/c/v0.2.0/`, and `/python/v0.2.1/` continue to work. Pagefind then indexes the complete staged site and publishes its static search bundle under `pagefind/`.
 
 ## Preview
 

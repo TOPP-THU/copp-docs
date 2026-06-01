@@ -60,6 +60,7 @@ extra_javascript:
   - javascripts/copp-tabs.js
   - javascripts/code-copy.js
   - javascripts/toc-cleanup.js
+  - javascripts/pagefind-search.js
 
 extra_css:
   - stylesheets/extra.css

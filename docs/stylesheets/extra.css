@@ -118,6 +118,123 @@
     display: block;
 }
 
+.copp-pagefind[hidden] {
+    display: none !important;
+}
+
+.md-search--pagefind-ready .md-search__form,
+.md-search--pagefind-ready .md-search__output {
+    display: none;
+}
+
+.md-search--pagefind-ready .copp-pagefind {
+    background: var(--md-default-bg-color);
+    border-radius: 0.1rem;
+    box-sizing: border-box;
+    color: var(--md-default-fg-color);
+    display: block;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+    width: 100%;
+}
+
+.md-search--pagefind-ready .copp-pagefind .pagefind-ui {
+    --pagefind-ui-scale: 0.58;
+    --pagefind-ui-primary: var(--md-primary-fg-color);
+    --pagefind-ui-text: var(--md-default-fg-color);
+    --pagefind-ui-background: var(--md-default-bg-color);
+    --pagefind-ui-border: var(--md-default-fg-color--lightest);
+    --pagefind-ui-tag: var(--md-code-bg-color);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 6px;
+    --pagefind-ui-font: var(--md-text-font-family);
+    position: relative;
+}
+
+.md-search--pagefind-ready .copp-pagefind .pagefind-ui__form {
+    margin: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.md-search--pagefind-ready .copp-pagefind .pagefind-ui__form::before {
+    background-color: var(--md-primary-bg-color);
+    height: 0.9rem;
+    left: 0.65rem;
+    opacity: 1;
+    top: 0.45rem;
+    width: 0.9rem;
+}
+
+.md-search--pagefind-ready .copp-pagefind .pagefind-ui__search-input {
+    background: #00000042;
+    border: 0;
+    border-radius: 0.1rem;
+    color: var(--md-primary-bg-color);
+    font-size: 0.8rem;
+    font-weight: 400;
+    height: 1.8rem;
+    min-height: 1.8rem;
+    padding: 0 1.9rem 0 2.2rem;
+}
+
+.md-search--pagefind-ready .copp-pagefind .pagefind-ui__search-input::placeholder {
+    color: var(--md-primary-bg-color--light);
+    opacity: 1;
+}
+
+.md-search--pagefind-ready .copp-pagefind .pagefind-ui__search-clear {
+    background: transparent;
+    color: var(--md-primary-bg-color--light);
+    height: 1.8rem;
+    padding: 0 0.55rem;
+    right: 0;
+    top: 0;
+}
+
+.md-search--pagefind-ready .copp-pagefind .pagefind-ui__drawer {
+    display: none;
+}
+
+.md-search--pagefind-ready .copp-pagefind .pagefind-ui__results-area {
+    margin: 0;
+    min-width: 0;
+    padding: 0 0.75rem;
+}
+
+[data-md-toggle=search]:checked ~ .md-header .md-search--pagefind-ready .copp-pagefind .pagefind-ui__form::before {
+    background-color: var(--md-default-fg-color--light);
+}
+
+[data-md-toggle=search]:checked ~ .md-header .md-search--pagefind-ready .copp-pagefind .pagefind-ui__search-input {
+    background: var(--md-default-bg-color);
+    border-radius: 0.1rem 0.1rem 0 0;
+    box-shadow: 0 0 0.6rem #00000012;
+    color: var(--md-default-fg-color);
+}
+
+[data-md-toggle=search]:checked ~ .md-header .md-search--pagefind-ready .copp-pagefind .pagefind-ui__search-input::placeholder {
+    color: transparent;
+}
+
+[data-md-toggle=search]:checked ~ .md-header .md-search--pagefind-ready .copp-pagefind .pagefind-ui__search-clear {
+    color: var(--md-default-fg-color--light);
+}
+
+[data-md-toggle=search]:checked ~ .md-header .md-search--pagefind-ready .copp-pagefind .pagefind-ui__drawer {
+    background: var(--md-default-bg-color);
+    box-shadow: var(--md-shadow-z3);
+    display: block;
+    left: 0;
+    max-height: 75vh;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 1.9rem;
+    z-index: 1;
+}
+
 .md-typeset .highlight {
     --copp-code-copy-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16h13c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>');
     --copp-code-check-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>');

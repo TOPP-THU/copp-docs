@@ -73,6 +73,21 @@ try {
     $nojekyll = Join-Path $SiteDir ".nojekyll"
     New-Item -ItemType File -Path $nojekyll -Force | Out-Null
 
+    & python -m pagefind `
+        --site $SiteDir `
+        --output-subdir pagefind `
+        --root-selector body `
+        --force-language en `
+        --include-characters "_:." `
+        --exclude-selectors "nav, header, footer, .md-sidebar, .md-header, .md-footer, .sidebar"
+
+    $searchIndexJson = Join-Path $SiteDir "search\search_index.json"
+    if (Test-Path -LiteralPath $searchIndexJson) {
+        $searchIndexJs = Join-Path $SiteDir "search\search_index.js"
+        $searchIndex = Get-Content -Raw -Encoding UTF8 $searchIndexJson
+        Set-Content -LiteralPath $searchIndexJs -Encoding UTF8 -Value "var __index = $searchIndex;"
+    }
+
     foreach ($file in @("index.html", "index-zh.html", "404.html", "sitemap.xml", "sitemap.xml.gz", ".nojekyll")) {
         $src = Join-Path $SiteDir $file
         if (Test-Path -LiteralPath $src) {
@@ -84,7 +99,7 @@ try {
         Remove-GeneratedPath -Path (Join-Path $RepoRoot $dir)
     }
 
-    foreach ($dir in @("javascripts", "stylesheets", "search")) {
+    foreach ($dir in @("javascripts", "stylesheets", "search", "pagefind")) {
         $src = Join-Path $SiteDir $dir
         $dst = Join-Path $RepoRoot $dir
         if (-not (Test-Path -LiteralPath $src)) {
