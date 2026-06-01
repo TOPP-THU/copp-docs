@@ -1,11 +1,16 @@
 (function () {
     "use strict";
 
-    var mounted = false;
-
     if (window.location.protocol === "file:") {
         return;
     }
+
+    var state = window.__coppPagefindSearch || {
+        loading: null,
+        mounted: false,
+        subscribed: false,
+    };
+    window.__coppPagefindSearch = state;
 
     function pagefindBaseUrl() {
         var scope = window.__md_scope || new URL(".", window.location.href);
@@ -75,14 +80,23 @@
         var search = document.querySelector(".md-search");
         var inner = document.querySelector(".md-search__inner");
         var existingContainer = document.getElementById("copp-pagefind-search");
-        if (mounted && existingContainer && document.body.contains(existingContainer)) {
-            return;
-        }
         if (!search || !inner) {
             return;
         }
+        if (existingContainer && document.body.contains(existingContainer)) {
+            if (existingContainer.querySelector(".pagefind-ui__search-input")) {
+                existingContainer.hidden = false;
+                search.classList.add("md-search--pagefind-ready");
+                state.mounted = true;
+                focusPagefindInput();
+            }
+            return;
+        }
+        if (state.loading) {
+            return;
+        }
 
-        mounted = true;
+        state.mounted = false;
 
         var container = document.createElement("div");
         container.className = "copp-pagefind";
@@ -92,7 +106,7 @@
 
         var base = pagefindBaseUrl();
         loadStylesheet(new URL("pagefind-ui.css", base).toString());
-        loadScript(new URL("pagefind-ui.js", base).toString())
+        state.loading = loadScript(new URL("pagefind-ui.js", base).toString())
             .then(function () {
                 if (!window.PagefindUI) {
                     throw new Error("PagefindUI was not loaded");
@@ -111,10 +125,13 @@
             .then(function () {
                 container.hidden = false;
                 search.classList.add("md-search--pagefind-ready");
+                state.loading = null;
+                state.mounted = true;
                 focusPagefindInput();
             })
             .catch(function () {
-                mounted = false;
+                state.loading = null;
+                state.mounted = false;
                 search.classList.remove("md-search--pagefind-ready");
                 container.remove();
             });
@@ -130,6 +147,7 @@
             var input = document.querySelector("#copp-pagefind-search .pagefind-ui__search-input");
             if (input) {
                 input.focus();
+                input.select();
             }
         }, 50);
     }
@@ -144,7 +162,8 @@
         searchToggle.addEventListener("change", focusPagefindInput);
     }
 
-    if (typeof window.document$ !== "undefined" && window.document$.subscribe) {
+    if (!state.subscribed && typeof window.document$ !== "undefined" && window.document$.subscribe) {
+        state.subscribed = true;
         window.document$.subscribe(function () {
             mountPagefind();
             bindSearchToggle();
