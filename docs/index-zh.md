@@ -1,8 +1,8 @@
-﻿# COPP 文档
+# COPP 文档
 
-[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/TOPP-THU/copp/blob/main/LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/TOPP-THU/copp/blob/main/LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg?color=b7410e)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
 
-[![Rust](https://img.shields.io/badge/Rust-native-b7410e)](https://docs.rs/copp/latest/copp/) [![C](https://img.shields.io/badge/C-ABI-00599c)](https://github.com/TOPP-THU/copp/tree/main/bindings/c) [![Python](https://img.shields.io/badge/Python-bindings-3776ab)](https://github.com/TOPP-THU/copp/tree/main/bindings/python)
+[![Rust](https://img.shields.io/badge/Rust-native-b7410e)](https://docs.rs/copp/latest/copp/) [![C](https://img.shields.io/badge/C-ABI-a8b9cc)](https://github.com/TOPP-THU/copp/tree/main/bindings/c) [![Python](https://img.shields.io/badge/Python-bindings-ffd43b)](https://github.com/TOPP-THU/copp/tree/main/bindings/python) [![C++](https://img.shields.io/badge/C%2B%2B-bindings-00599c)](https://github.com/TOPP-THU/copp/tree/main/bindings/cpp) [![MATLAB](https://img.shields.io/badge/MATLAB-bindings-e16737)](https://github.com/TOPP-THU/copp/tree/main/bindings/matlab)
 
 ## 核心问题
 
@@ -117,108 +117,6 @@ $$
 
     `copp` v0.2.1 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。
 
-=== "C++"
-
-    TODO
-
-=== "C"
-
-    C ABI 适合 C/C++ 工程、下游语言绑定和已有机器人软件栈。发布版本的预编译 C ABI SDK 可以从 [GitHub Releases](https://github.com/TOPP-THU/copp/releases) 获取；如果需要从源码构建，可以从本地库开始：
-
-    ```sh
-    git clone https://github.com/TOPP-THU/topp.git
-    cd topp
-    ```
-
-    需要准备 Cargo、CMake 和 C 编译器工具链：Windows 上建议安装带 C++ workload 的 Visual Studio Build Tools，Linux 上使用 GCC/Clang，macOS 上使用 Xcode Command Line Tools。C ABI 位于 Cargo 的 `c` feature 下，先在仓库根目录构建 native library：
-
-    ```sh
-    cargo build --release --lib --features c
-    ```
-
-    然后配置并构建 CMake 工程：
-
-    === "Windows"
-
-        ```powershell
-        cmake -S bindings/c -B bindings/c/build
-        cmake --build bindings/c/build --config Release
-        ```
-
-    === "Linux"
-
-        ```sh
-        cmake -S bindings/c -B bindings/c/build -DCMAKE_BUILD_TYPE=Release
-        cmake --build bindings/c/build
-        ```
-
-    === "macOS"
-
-        ```sh
-        cmake -S bindings/c -B bindings/c/build -DCMAKE_BUILD_TYPE=Release
-        cmake --build bindings/c/build
-        ```
-
-    如果要安装成下游 CMake 工程可查找的 package：
-
-    === "Windows"
-
-        ```powershell
-        cmake --install bindings/c/build --config Release --prefix <install-prefix>
-        ```
-
-    === "Linux"
-
-        ```sh
-        cmake --install bindings/c/build --prefix <install-prefix>
-        ```
-
-    === "macOS"
-
-        ```sh
-        cmake --install bindings/c/build --prefix <install-prefix>
-        ```
-
-    将 `<install-prefix>` 替换为你自己的安装路径，例如 `C:/copp-install` 或 `$PWD/copp-install`。
-
-    下游工程中使用：
-
-    ```cmake
-    find_package(copp CONFIG REQUIRED)
-
-    add_executable(app main.c)
-    target_link_libraries(app PRIVATE copp::copp)
-    ```
-
-    配置下游工程时把安装前缀传给 CMake：
-
-    ```sh
-    cmake -S app -B app/build -DCMAKE_PREFIX_PATH=<install-prefix>
-    cmake --build app/build --config Release
-    ```
-
-    如果希望静态链接，在上面对应平台的 COPP CMake configure 命令中加入 `-DCOPP_LINK_STATIC=ON`。
-
-    若需要重新生成 C 头文件，先安装 `cbindgen`，再运行 PowerShell 头文件生成脚本；普通用户可以直接使用仓库中已生成的 `bindings/c/include/copp/` 头文件。
-
-    === "Windows"
-
-        ```powershell
-        powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_headers.ps1
-        ```
-
-    === "Linux"
-
-        ```sh
-        pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
-        ```
-
-    === "macOS"
-
-        ```sh
-        pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
-        ```
-
 === "Python"
 
     Python 包发布在 [PyPI: copp-py](https://pypi.org/project/copp-py/)，安装命令是：
@@ -252,6 +150,186 @@ $$
 === "Matlab"
 
     TODO 这里后面再确定安装方式
+
+=== "C++"
+
+    C++ SDK 适合希望使用 RAII、`namespace copp`、`std::vector` / `copp::Matrix` / 可选 Eigen adapter 的工程。发布版本的预编译 C++ SDK 可以从 [GitHub Releases](https://github.com/TOPP-THU/copp/releases) 获取；目前 C++ 没有像 Rust 的 crates.io 或 Python 的 PyPI 那样唯一、事实标准的官方平台，常见选择是 GitHub Releases + CMake package，或后续再提供 vcpkg / Conan recipe。
+
+    如果需要从源码构建，可以从本地库开始：
+
+    ```sh
+    git clone https://github.com/TOPP-THU/topp.git
+    cd topp
+    ```
+
+    需要准备 Cargo、CMake 和支持 C++17 的编译器工具链：Windows 上建议安装带 C++ workload 的 Visual Studio Build Tools，Linux 上使用 GCC/Clang，macOS 上使用 Xcode Command Line Tools。若使用 `copp/eigen.hpp`，还需要安装 Eigen；若只使用核心 C++ API，可以在 CMake 中关闭 Eigen adapter。
+
+    C++ facade 位于 Cargo 的 `cpp` feature 下，先在仓库根目录构建 native library：
+
+    ```sh
+    cargo build --release --lib --features cpp
+    ```
+
+    然后配置并构建 CMake 工程：
+
+    === "Linux"
+
+        ```sh
+        cmake -S bindings/cpp -B bindings/cpp/build -DCOPP_CPP_WITH_EIGEN=OFF -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/cpp/build
+        ```
+
+    === "Windows"
+
+        ```powershell
+        cmake -S bindings/cpp -B bindings/cpp/build -DCOPP_CPP_WITH_EIGEN=OFF
+        cmake --build bindings/cpp/build --config Release
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake -S bindings/cpp -B bindings/cpp/build -DCOPP_CPP_WITH_EIGEN=OFF -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/cpp/build
+        ```
+
+    如果要安装成下游 CMake 工程可查找的 package：
+
+    === "Linux"
+
+        ```sh
+        cmake --install bindings/cpp/build --prefix <install-prefix>
+        ```
+
+    === "Windows"
+
+        ```powershell
+        cmake --install bindings/cpp/build --config Release --prefix <install-prefix>
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake --install bindings/cpp/build --prefix <install-prefix>
+        ```
+
+    将 `<install-prefix>` 替换为你自己的安装路径，例如 `C:/copp-install` 或 `$PWD/copp-install`。
+
+    下游工程中使用：
+
+    ```cmake
+    find_package(copp CONFIG REQUIRED)
+
+    add_executable(app main.cpp)
+    target_link_libraries(app PRIVATE copp::copp)
+    ```
+
+    配置下游工程时把安装前缀传给 CMake：
+
+    ```sh
+    cmake -S app -B app/build -DCMAKE_PREFIX_PATH=<install-prefix>
+    cmake --build app/build --config Release
+    ```
+
+    如果希望静态链接，在上面对应平台的 COPP CMake configure 命令中加入 `-DCOPP_LINK_STATIC=ON`。如果希望使用共享库，则加入 `-DCOPP_LINK_STATIC=OFF`，并确保运行时可以找到 `copp.dll`、`libcopp.so` 或 `libcopp.dylib`。
+
+=== "C"
+
+    C ABI 适合 C/C++ 工程、下游语言绑定和已有机器人软件栈。发布版本的预编译 C ABI SDK 可以从 [GitHub Releases](https://github.com/TOPP-THU/copp/releases) 获取；如果需要从源码构建，可以从本地库开始：
+
+    ```sh
+    git clone https://github.com/TOPP-THU/topp.git
+    cd topp
+    ```
+
+    需要准备 Cargo、CMake 和 C 编译器工具链：Windows 上建议安装带 C++ workload 的 Visual Studio Build Tools，Linux 上使用 GCC/Clang，macOS 上使用 Xcode Command Line Tools。C ABI 位于 Cargo 的 `c` feature 下，先在仓库根目录构建 native library：
+
+    ```sh
+    cargo build --release --lib --features c
+    ```
+
+    然后配置并构建 CMake 工程：
+
+    === "Linux"
+
+        ```sh
+        cmake -S bindings/c -B bindings/c/build -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/c/build
+        ```
+
+    === "Windows"
+
+        ```powershell
+        cmake -S bindings/c -B bindings/c/build
+        cmake --build bindings/c/build --config Release
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake -S bindings/c -B bindings/c/build -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/c/build
+        ```
+
+    如果要安装成下游 CMake 工程可查找的 package：
+
+    === "Linux"
+
+        ```sh
+        cmake --install bindings/c/build --prefix <install-prefix>
+        ```
+
+    === "Windows"
+
+        ```powershell
+        cmake --install bindings/c/build --config Release --prefix <install-prefix>
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake --install bindings/c/build --prefix <install-prefix>
+        ```
+
+    将 `<install-prefix>` 替换为你自己的安装路径，例如 `C:/copp-install` 或 `$PWD/copp-install`。
+
+    下游工程中使用：
+
+    ```cmake
+    find_package(copp CONFIG REQUIRED)
+
+    add_executable(app main.c)
+    target_link_libraries(app PRIVATE copp::copp)
+    ```
+
+    配置下游工程时把安装前缀传给 CMake：
+
+    ```sh
+    cmake -S app -B app/build -DCMAKE_PREFIX_PATH=<install-prefix>
+    cmake --build app/build --config Release
+    ```
+
+    如果希望静态链接，在上面对应平台的 COPP CMake configure 命令中加入 `-DCOPP_LINK_STATIC=ON`。
+
+    若需要重新生成 C 头文件，先安装 `cbindgen`，再运行 PowerShell 头文件生成脚本；普通用户可以直接使用仓库中已生成的 `bindings/c/include/copp/` 头文件。
+
+    === "Linux"
+
+        ```sh
+        pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
+        ```
+
+    === "Windows"
+
+        ```powershell
+        powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_headers.ps1
+        ```
+
+    === "macOS"
+
+        ```sh
+        pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
+        ```
 
 ## 算法选择
 
@@ -290,6 +368,21 @@ $$
     const DIM: usize = 2;
     ```
 
+=== "Python"
+
+    ```python
+    import copp_py as copp
+    import numpy as np
+
+    DIM = 2
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    DIM = 2;
+    ```
+
 === "C++"
 
     ```cpp
@@ -324,21 +417,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    import copp_py as copp
-    import numpy as np
-    
-    DIM = 2
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    DIM = 2;
-    ```
-
 ### Step 1. 构造几何路径
 
 严格地说，几何路径 $\boldsymbol{q}=\boldsymbol{q}(s)$ 是用户端给 `copp` 的输入，而 `copp` 库提供了路径相关模块作为辅助。
@@ -356,6 +434,35 @@ $$
 
     let path = Path::from_parametric(|s: Jet3| vec![sin(2.0 * PI * s), cos(2.0 * PI * s)], 0.0, 1.0)?;
     ```
+
+=== "Python"
+
+    ```python
+    import jax
+    import jax.numpy as jnp
+
+    jax.config.update("jax_enable_x64", True)
+
+    def q_fn(s):
+        freq = jnp.array([2.0 * jnp.pi, 2.0 * jnp.pi], dtype=jnp.float64)
+        phase = jnp.array([0.0, 0.0], dtype=jnp.float64)
+        return jnp.sin(freq * s + phase)
+
+    path = copp.Path.from_jax(q_fn, 0.0, 1.0)
+    ```
+
+    Python 的自动微分支持 `jax`, `autograd`, `casadi`, `sympy` 四种工具，可由作者自行选择并安装对应依赖包。
+
+
+=== "Matlab"
+
+    ```matlab
+    path = copp.Path.from_parametric( ...
+        @(s) [sin(2*pi*s); cos(2*pi*s)], ...
+        s_range=[0, 1]);
+    ```
+
+    `from_parametric` 使用 MATLAB 侧 `Jet3` 自动微分；公式返回向量长度就是路径维度 `dim`。
 
 === "C++"
 
@@ -375,37 +482,63 @@ $$
 === "C"
 
     ```c
-    // C 的自动微分功能预计在 v0.2.2 实现。
+    // C ABI uses a callback-backed path for analytic formulas.
+    // The callback below provides q, dq/ds, d2q/ds2, and d3q/ds3 for
+    // q(s) = [sin(2*pi*s), cos(2*pi*s)].
+    static enum CoppStatus evaluate_parametric_path_3rd(
+        void *user_data,
+        size_t dim,
+        size_t n,
+        const double *s,
+        double *q,
+        double *dq,
+        double *ddq,
+        double *dddq)
+    {
+        (void)user_data;
+        if (dim != DIM) {
+            return COPP_STATUS_INVALID_ARGUMENT;
+        }
+        if (n > 0 && (s == NULL || q == NULL || dq == NULL || ddq == NULL || dddq == NULL)) {
+            return COPP_STATUS_NULL_POINTER;
+        }
+
+        const double pi2 = 6.28318530717958647692;
+        const double pi2_sq = pi2 * pi2;
+        const double pi2_cu = pi2_sq * pi2;
+
+        for (size_t col = 0; col < n; ++col) {
+            const double sin_v = sin(pi2 * s[col]);
+            const double cos_v = cos(pi2 * s[col]);
+            const size_t row0 = col * dim;
+
+            q[row0] = sin_v;
+            q[row0 + 1] = cos_v;
+            dq[row0] = pi2 * cos_v;
+            dq[row0 + 1] = -pi2 * sin_v;
+            ddq[row0] = -pi2_sq * sin_v;
+            ddq[row0 + 1] = -pi2_sq * cos_v;
+            dddq[row0] = -pi2_cu * cos_v;
+            dddq[row0 + 1] = pi2_cu * sin_v;
+        }
+        return COPP_STATUS_OK;
+    }
+
+    struct CoppPath *path = NULL;
+    // On success, release `path` later with `copp_path_free(path)`.
+    if (check(
+            copp_path_from_evaluator_3rd(
+                DIM,
+                0.0,
+                1.0,
+                NULL,
+                evaluate_parametric_path_3rd,
+                NULL,
+                &path),
+            "copp_path_from_evaluator_3rd")) {
+        return 1;
+    }
     ```
-
-=== "Python"
-
-    ```python
-    import jax
-    import jax.numpy as jnp
-
-    jax.config.update("jax_enable_x64", True)
-    
-    def q_fn(s):
-        freq = jnp.array([2.0 * jnp.pi, 2.0 * jnp.pi], dtype=jnp.float64)
-        phase = jnp.array([0.0, 0.0], dtype=jnp.float64)
-        return jnp.sin(freq * s + phase)
-
-    path = copp.Path.from_jax(q_fn, 0.0, 1.0)
-    ```
-
-    Python 的自动微分支持 `jax`, `autograd`, `casadi`, `sympy` 四种工具，可由作者自行选择并安装对应依赖包。
-
-
-=== "Matlab"
-
-    ```matlab
-    path = copp_pro.Path.from_parametric( ...
-        @(s) [sin(2*pi*s); cos(2*pi*s)], ...
-        s_range=[0, 1]);
-    ```
-
-    `from_parametric` 使用 MATLAB 侧 `Jet3` 自动微分；公式返回向量长度就是路径维度 `dim`。
 
 #### Option B. 路径点生成样条
 
@@ -426,6 +559,36 @@ $$
         ],
     );
     let path = Path::from_waypoints(&waypoints, SplineConfig::default())?;
+    ```
+
+=== "Python"
+
+    ```python
+    waypoints = np.array(
+        [
+            [0.0, 0.0],
+            [0.25, 0.1],
+            [0.5, -0.1],
+            [0.75, 0.2],
+            [1.0, 0.0],
+        ],
+        dtype=np.float64,
+    )
+    path = copp.Path.from_waypoints(waypoints)
+    ```
+
+
+=== "Matlab"
+
+    ```matlab
+    waypoints = [ ...
+        0.0, 0.25, 0.5, 0.75, 1.0; ...
+        0.0, 0.10, -0.10, 0.20, 0.0];
+
+    path = copp.Path.from_waypoints( ...
+        waypoints, ...          % dim x n_waypoints
+        s_range=[0, 1], ...
+        order=3);
     ```
 
 === "C++"
@@ -469,36 +632,6 @@ $$
             "copp_path_from_waypoints")) {
         return 1;
     }
-    ```
-
-=== "Python"
-
-    ```python
-    waypoints = np.array(
-        [
-            [0.0, 0.0],
-            [0.25, 0.1],
-            [0.5, -0.1],
-            [0.75, 0.2],
-            [1.0, 0.0],
-        ],
-        dtype=np.float64,
-    )
-    path = copp.Path.from_waypoints(waypoints)
-    ```
-
-
-=== "Matlab"
-
-    ```matlab
-    waypoints = [ ...
-        0.0, 0.25, 0.5, 0.75, 1.0; ...
-        0.0, 0.10, -0.10, 0.20, 0.0];
-
-    path = copp_pro.Path.from_waypoints( ...
-        waypoints, ...          % dim x n_waypoints
-        s_range=[0, 1], ...
-        order=3);
     ```
 
 #### Option C. 用户手动微分
@@ -572,6 +705,70 @@ $$
     // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `PathEvaluator3rd`.
     let path = Path::from_evaluator_3rd(NormalizedEvaluator3rd, 0.0, 1.0)?;
     ```
+
+=== "Python"
+
+    ```python
+    class Evaluator:
+        dim = 2
+
+        def evaluate_q(self, s):
+            q = np.empty((s.size, self.dim), dtype=np.float64)
+            pi2 = 2.0 * np.pi
+            q[:, 0] = np.sin(pi2 * s)
+            q[:, 1] = np.cos(pi2 * s)
+            return q
+
+        def evaluate_up_to_2nd(self, s):
+            q = self.evaluate_q(s)
+            pi2 = 2.0 * np.pi
+            sin = np.sin(pi2 * s)
+            cos = np.cos(pi2 * s)
+
+            dq = np.empty_like(q)
+            dq[:, 0] = pi2 * cos
+            dq[:, 1] = -pi2 * sin
+
+            ddq = np.empty_like(q)
+            ddq[:, 0] = -(pi2**2) * sin
+            ddq[:, 1] = -(pi2**2) * cos
+
+            return q, dq, ddq
+
+        # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `evaluate_up_to_3rd` can be removed.
+        def evaluate_up_to_3rd(self, s):
+            q, dq, ddq = self.evaluate_up_to_2nd(s)
+            pi2 = 2.0 * np.pi
+            sin = np.sin(pi2 * s)
+            cos = np.cos(pi2 * s)
+
+            dddq = np.empty_like(q)
+            dddq[:, 0] = -(pi2**3) * cos
+            dddq[:, 1] = (pi2**3) * sin
+
+            return q, dq, ddq, dddq
+
+
+    # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_3rd` without dependence on `evaluate_up_to_3rd`.
+    path = copp.Path.from_evaluator_3rd(Evaluator(), 0.0, 1.0)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    eval3 = @(s) deal( ...
+        [sin(2*pi*s); cos(2*pi*s)], ...
+        [2*pi*cos(2*pi*s); -2*pi*sin(2*pi*s)], ...
+        [-(2*pi)^2*sin(2*pi*s); -(2*pi)^2*cos(2*pi*s)], ...
+        [-(2*pi)^3*cos(2*pi*s); (2*pi)^3*sin(2*pi*s)]);
+
+    % If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then
+    % the path can be constructed by Path.from_evaluator_2nd without dddq.
+    path = copp.Path.from_evaluator_3rd( ...
+        eval3, dim=DIM, s_range=[0, 1]);
+    ```
+
+    MATLAB evaluator 是 batch callback：输入 `s` 固定为 `1 x N`，输出 `q,dq,ddq,dddq` 固定为 `dim x N`。
 
 === "C++"
 
@@ -701,70 +898,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    class Evaluator:
-        dim = 2
-
-        def evaluate_q(self, s):
-            q = np.empty((s.size, self.dim), dtype=np.float64)
-            pi2 = 2.0 * np.pi
-            q[:, 0] = np.sin(pi2 * s)
-            q[:, 1] = np.cos(pi2 * s)
-            return q
-
-        def evaluate_up_to_2nd(self, s):
-            q = self.evaluate_q(s)
-            pi2 = 2.0 * np.pi
-            sin = np.sin(pi2 * s)
-            cos = np.cos(pi2 * s)
-
-            dq = np.empty_like(q)
-            dq[:, 0] = pi2 * cos
-            dq[:, 1] = -pi2 * sin
-
-            ddq = np.empty_like(q)
-            ddq[:, 0] = -(pi2**2) * sin
-            ddq[:, 1] = -(pi2**2) * cos
-
-            return q, dq, ddq
-
-        # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `evaluate_up_to_3rd` can be removed.
-        def evaluate_up_to_3rd(self, s):
-            q, dq, ddq = self.evaluate_up_to_2nd(s)
-            pi2 = 2.0 * np.pi
-            sin = np.sin(pi2 * s)
-            cos = np.cos(pi2 * s)
-
-            dddq = np.empty_like(q)
-            dddq[:, 0] = -(pi2**3) * cos
-            dddq[:, 1] = (pi2**3) * sin
-
-            return q, dq, ddq, dddq
-    
-
-    # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_3rd` without dependence on `evaluate_up_to_3rd`.
-    path = copp.Path.from_evaluator_3rd(Evaluator(), 0.0, 1.0)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    eval3 = @(s) deal( ...
-        [sin(2*pi*s); cos(2*pi*s)], ...
-        [2*pi*cos(2*pi*s); -2*pi*sin(2*pi*s)], ...
-        [-(2*pi)^2*sin(2*pi*s); -(2*pi)^2*cos(2*pi*s)], ...
-        [-(2*pi)^3*cos(2*pi*s); (2*pi)^3*sin(2*pi*s)]);
-
-    % If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then
-    % the path can be constructed by Path.from_evaluator_2nd without dddq.
-    path = copp_pro.Path.from_evaluator_3rd( ...
-        eval3, dim=DIM, s_range=[0, 1]);
-    ```
-
-    MATLAB evaluator 是 batch callback：输入 `s` 固定为 `1 x N`，输出 `q,dq,ddq,dddq` 固定为 `dim x N`。
-
 ### Step 2. 离散化路径信息
 
 路径参数化问题需要在给定的 $s$ 离散网格上进行，例如：
@@ -775,6 +908,20 @@ $$
     // `n` is the number of path samples (s_i) to build robot constraints on.
     let n = 1001;
     let s: Vec<f64> = (0..n).map(|j| j as f64 / (n - 1) as f64).collect();
+    ```
+
+=== "Python"
+
+    ```python
+    n = 1001
+    s = np.linspace(0.0, 1.0, n, dtype=np.float64)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    n = 1001;
+    s = linspace(0.0, 1.0, n).';
     ```
 
 === "C++"
@@ -799,20 +946,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    n = 1001
-    s = np.linspace(0.0, 1.0, n, dtype=np.float64)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    n = 1001;
-    s = linspace(0.0, 1.0, n).';
-    ```
-
 创建机器人模型：
 
 === "Rust"
@@ -821,6 +954,18 @@ $$
     use copp::robot::Robot;
 
     let mut robot = Robot::with_capacity(DIM, n);
+    ```
+
+=== "Python"
+
+    ```python
+    robot = copp.Robot(DIM, capacity=n)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    robot = copp.Robot(DIM, Capacity=n);
     ```
 
 === "C++"
@@ -839,18 +984,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    robot = copp.Robot(DIM, capacity=n)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    robot = copp_pro.Robot(DIM, Capacity=n);
-    ```
-
 输入 $s$ 网格与路径信息：
 
 === "Rust"
@@ -861,6 +994,22 @@ $$
         .with_s(s.as_slice())?
         .with_q_from_path_3rd(&path, 0, n)?;
     ```
+
+=== "Python"
+
+    ```python
+    robot.append_s(s)
+    robot.set_q_from_path_3rd(path, 0, n)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    robot.append_s(s);
+    robot.set_q_from_path_3rd(path);
+    ```
+
+    如果只求解 TOPP2/COPP2，也可以使用 `set_q_from_path_2nd`。
 
 === "C++"
 
@@ -884,22 +1033,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    robot.append_s(s)
-    robot.set_q_from_path_3rd(path, 0, n)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    robot.append_s(s);
-    robot.set_q_from_path_3rd(path);
-    ```
-
-    如果只求解 TOPP2/COPP2，也可以使用 `set_q_from_path_2nd`。
-
 在更灵活的情况下，路径可以在线加入、删除等，机器人可以包含逆运动学信息，这些高级接口详见[文档章节](#docs-architecture)。
 
 ### Step 3. 约束构造
@@ -919,6 +1052,30 @@ $$
     robot
         .with_axial_velocity((vel_max.as_slice(), n), (vel_min.as_slice(), n), 0)?
         .with_axial_acceleration((acc_max.as_slice(), n), (acc_min.as_slice(), n), 0)?;
+    ```
+
+=== "Python"
+
+    ```python
+    vel_max = np.ones(DIM, dtype=np.float64)
+    vel_min = -vel_max
+    acc_max = np.ones(DIM, dtype=np.float64)
+    acc_min = -acc_max
+
+    robot.add_velocity_limits(vel_max, vel_min, start_idx_s=0, length=n)
+    robot.add_acceleration_limits(acc_max, acc_min, start_idx_s=0, length=n)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    vel_max = ones(DIM, 1);
+    vel_min = -vel_max;
+    acc_max = ones(DIM, 1);
+    acc_min = -acc_max;
+
+    robot.add_velocity_limits(vel_max, vel_min);
+    robot.add_acceleration_limits(acc_max, acc_min);
     ```
 
 === "C++"
@@ -967,30 +1124,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    vel_max = np.ones(DIM, dtype=np.float64)
-    vel_min = -vel_max
-    acc_max = np.ones(DIM, dtype=np.float64)
-    acc_min = -acc_max
-
-    robot.add_velocity_limits(vel_max, vel_min, start_idx_s=0, length=n)
-    robot.add_acceleration_limits(acc_max, acc_min, start_idx_s=0, length=n)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    vel_max = ones(DIM, 1);
-    vel_min = -vel_max;
-    acc_max = ones(DIM, 1);
-    acc_min = -acc_max;
-
-    robot.add_velocity_limits(vel_max, vel_min);
-    robot.add_acceleration_limits(acc_max, acc_min);
-    ```
-
 如果是求解三阶轨迹，则需要额外引入三阶约束，例如：
 
 === "Rust"
@@ -1000,6 +1133,22 @@ $$
     let jerk_max = vec![1.0; DIM];
     let jerk_min = vec![-1.0; DIM];
     robot.with_axial_jerk((jerk_max.as_slice(), n), (jerk_min.as_slice(), n), 0)?;
+    ```
+
+=== "Python"
+
+    ```python
+    jerk_max = np.ones(DIM, dtype=np.float64)
+    jerk_min = -jerk_max
+    robot.add_jerk_limits(jerk_max, jerk_min, start_idx_s=0, length=n)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    jerk_max = ones(DIM, 1);
+    jerk_min = -jerk_max;
+    robot.add_jerk_limits(jerk_max, jerk_min);
     ```
 
 === "C++"
@@ -1029,22 +1178,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    jerk_max = np.ones(DIM, dtype=np.float64)
-    jerk_min = -jerk_max
-    robot.add_jerk_limits(jerk_max, jerk_min, start_idx_s=0, length=n)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    jerk_max = ones(DIM, 1);
-    jerk_min = -jerk_max;
-    robot.add_jerk_limits(jerk_max, jerk_min);
-    ```
-
 更底层、灵活的约束构造接口详见[文档章节](#docs-architecture)。
 
 ### Step 4. 调用求解器
@@ -1060,6 +1193,27 @@ $$
     let a_boundary = (0.0, 0.0); // a(0) = 0, a(1) = 0
     let problem = Topp2ProblemBuilder::new(&robot, idx_s_interval, a_boundary).build()?;
     ```
+
+=== "Python"
+
+    ```python
+    problem = copp.solver.topp2_ra.Problem(
+        robot.constraints,
+        idx_s_interval=(0, n - 1),
+        a_boundary=(0.0, 0.0),
+    )
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    problem = copp.solver.topp2_ra.Problem( ...
+        robot, ...
+        idx_s_interval=[1, n], ...
+        a_boundary=[0, 0]);
+    ```
+
+    MATLAB 用户侧索引是 1-based；这里 `[1,n]` 覆盖全部站点。
 
 === "C++"
 
@@ -1087,27 +1241,6 @@ $$
     };
     ```
 
-=== "Python"
-
-    ```python
-    problem = copp.solver.topp2_ra.Problem(
-        robot.constraints,
-        idx_s_interval=(0, n - 1),
-        a_boundary=(0.0, 0.0),
-    )
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    problem = copp_pro.solver.topp2_ra.Problem( ...
-        robot, ...
-        idx_s_interval=[1, n], ...
-        a_boundary=[0, 0]);
-    ```
-
-    MATLAB 用户侧索引是 1-based；这里 `[1,n]` 覆盖全部站点。
-
 然后构造求解设置并调用求解器，例如：
 
 === "Rust"
@@ -1117,6 +1250,22 @@ $$
 
     let options = ReachSet2OptionsBuilder::new().build()?;
     let a_ra = topp2_ra(&problem, &options)?;
+    ```
+
+=== "Python"
+
+    ```python
+    a_ra = copp.solver.topp2_ra.solve(
+        problem,
+        copp.solver.topp2_ra.Options(),
+    )
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    options = copp.solver.topp2_ra.Options();
+    a_ra = copp.solver.topp2_ra.solve(problem, options);
     ```
 
 === "C++"
@@ -1141,22 +1290,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    a_ra = copp.solver.topp2_ra.solve(
-        problem,
-        copp.solver.topp2_ra.Options(),
-    )
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    options = copp_pro.solver.topp2_ra.Options();
-    a_ra = copp_pro.solver.topp2_ra.solve(problem, options);
-    ```
-
 据此，我们得到了 $a=a(s)$。
 
 ### Step 5. 二阶轨迹后处理（仅二阶需要）
@@ -1171,6 +1304,19 @@ $$
     // t_final is the traversal time of the path.
     // t_s[i] is the time at which the path parameter s[i] is reached.
     let (t_final, t_s) = s_to_t_topp2(&s, &a_ra, 0.0)?;
+    ```
+
+=== "Python"
+
+    ```python
+    t_final, t_s = copp.interpolation.s_to_t_topp2(s, a_ra, 0.0)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    [t_final, t_s] = copp.solver.topp2_ra.s_to_t( ...
+        s, a_ra, t0=0.0);
     ```
 
 === "C++"
@@ -1202,19 +1348,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    t_final, t_s = copp.interpolation.s_to_t_topp2(s, a_ra, 0.0)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    [t_final, t_s] = copp_pro.interpolation.s_to_t_topp2( ...
-        s, a_ra, t0=0.0);
-    ```
-
 接下来求逆解 $s=s(t)$ 并插补，例如：
 
 === "Rust"
@@ -1231,6 +1364,28 @@ $$
         &t_s,
         InterpolationMode::UniformTimeGrid(0.0, dt, true),
     )?;
+    ```
+
+=== "Python"
+
+    ```python
+    s_t = copp.interpolation.t_to_s_topp2_uniform(
+        s,
+        a_ra,
+        t_s,
+        dt=1.0e-3,
+        t0=0.0,
+        include_final=True,
+    )
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    dt = 1.0e-3;
+    s_t = copp.solver.topp2_ra.t_to_s( ...
+        s, a_ra, t_s, dt=dt, ...
+        t0=0.0, include_final=true);
     ```
 
 === "C++"
@@ -1263,28 +1418,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    s_t = copp.interpolation.t_to_s_topp2_uniform(
-        s,
-        a_ra,
-        t_s,
-        dt=1.0e-3,
-        t0=0.0,
-        include_final=True,
-    )
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    dt = 1.0e-3;
-    s_t = copp_pro.interpolation.t_to_s_topp2_uniform( ...
-        s, a_ra, t_s, dt, ...
-        t0=0.0, include_final=true);
-    ```
-
 上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
 
 === "Rust"
@@ -1292,6 +1425,18 @@ $$
     ```rust
     let out = path.evaluate_q(&s_t)?;
     let q_t = out.q;
+    ```
+
+=== "Python"
+
+    ```python
+    q_t = path.evaluate_q(s_t).q
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    q_t = path.evaluate_q(s_t);  % dim x numel(s_t)
     ```
 
 === "C++"
@@ -1328,18 +1473,6 @@ $$
     copp_matrix_f64_free(q_t);
     ```
 
-=== "Python"
-
-    ```python
-    q_t = path.evaluate_q(s_t).q
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    q_t = path.evaluate_q(s_t);  % dim x numel(s_t)
-    ```
-
 由此完成了二阶轨迹的完整求解。如果是求解三阶轨迹，那么二阶轨迹后处理步骤可以跳过，并继续如下流程。
 
 ### Step 6. 构造并求解三阶问题（仅三阶需要）
@@ -1357,6 +1490,32 @@ $$
         Topp3ProblemBuilder::new(&mut robot, idx_s_interval.0, &a_ra, (0.0, 0.0), (0.0, 0.0))
         .build_with_linearization()?;
     ```
+
+=== "Python"
+
+    ```python
+    robot.constraints.amax_substitute(a_ra, 0)
+    problem = copp.solver.topp3_socp.Problem(
+        robot.constraints,
+        a_ra,
+        idx_s_start=0,
+        a_boundary=(0.0, 0.0),
+        b_boundary=(0.0, 0.0),
+    )
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    problem = copp.solver.topp3_socp.Problem( ...
+        robot, ...
+        a_ra, ...
+        idx_s_start=1, ...
+        a_boundary=[0, 0], ...
+        b_boundary=[0, 0]);
+    ```
+
+    三阶 MATLAB `Problem` 在 `solve` 时按 `a_ra` 进行 lazy linearize。
 
 === "C++"
 
@@ -1398,32 +1557,6 @@ $$
     };
     ```
 
-=== "Python"
-
-    ```python
-    robot.constraints.amax_substitute(a_ra, 0)
-    problem = copp.solver.topp3_socp.Problem(
-        robot.constraints,
-        a_ra,
-        idx_s_start=0,
-        a_boundary=(0.0, 0.0),
-        b_boundary=(0.0, 0.0),
-    )
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    problem = copp_pro.solver.topp3_socp.Problem( ...
-        robot, ...
-        a_ra, ...
-        idx_s_start=1, ...
-        a_boundary=[0, 0], ...
-        b_boundary=[0, 0]);
-    ```
-
-    三阶 MATLAB `Problem` 在 `solve` 时按 `a_ra` 进行 lazy linearize。
-
 我们以 `topp3_socp` 为例，调用求解器如下：
 
 === "Rust"
@@ -1435,6 +1568,21 @@ $$
         .allow_almost_solved(true)
         .build()?;
     let profile = topp3_socp(&topp3_problem, &options_socp)?;
+    ```
+
+=== "Python"
+
+    ```python
+    options = copp.solver.topp3_socp.Options(allow_almost_solved=True)
+    profile = copp.solver.topp3_socp.solve(problem, options)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    options = copp.solver.topp3_socp.Options( ...
+        allow_almost_solved=true);
+    profile = copp.solver.topp3_socp.solve(problem, options);
     ```
 
 === "C++"
@@ -1464,21 +1612,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    options = copp.solver.topp3_socp.Options(allow_almost_solved=True)
-    profile = copp.solver.topp3_socp.solve(problem, options)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    options = copp_pro.solver.topp3_socp.Options( ...
-        allow_almost_solved=true);
-    profile = copp_pro.solver.topp3_socp.solve(problem, options);
-    ```
-
 理论上这已经生成了一条可行、近优的三阶轨迹 $a_1(s),b_1(s)$ 了，可以直接进行下一步。如果希望通过更多的计算资源进一步地求解更优的轨迹，可以以 $a_1(s)$ 为线性化点再次求解新的线性化三阶问题：
 
 === "Rust"
@@ -1488,6 +1621,30 @@ $$
         Topp3ProblemBuilder::new(&mut robot, idx_s_interval.0, &profile.a, (0.0, 0.0), (0.0, 0.0))
         .build_with_linearization()?;
     let profile = topp3_socp(&topp3_problem, &options_socp)?;
+    ```
+
+=== "Python"
+
+    ```python
+    problem = copp.solver.topp3_socp.Problem(
+        robot.constraints,
+        profile.a,
+        idx_s_start=0,
+        a_boundary=(0.0, 0.0),
+        b_boundary=(0.0, 0.0),
+    )
+    profile = copp.solver.topp3_socp.solve(problem, options)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    problem = copp.solver.topp3_socp.Problem( ...
+        robot, profile.a, ...
+        idx_s_start=1, ...
+        a_boundary=[0, 0], ...
+        b_boundary=[0, 0]);
+    profile = copp.solver.topp3_socp.solve(problem, options);
     ```
 
 === "C++"
@@ -1532,30 +1689,6 @@ $$
     profile_next = (struct CoppProfile3rd){0};
     ```
 
-=== "Python"
-
-    ```python
-    problem = copp.solver.topp3_socp.Problem(
-        robot.constraints,
-        profile.a,
-        idx_s_start=0,
-        a_boundary=(0.0, 0.0),
-        b_boundary=(0.0, 0.0),
-    )
-    profile = copp.solver.topp3_socp.solve(problem, options)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    problem = copp_pro.solver.topp3_socp.Problem( ...
-        robot, profile.a, ...
-        idx_s_start=1, ...
-        a_boundary=[0, 0], ...
-        b_boundary=[0, 0]);
-    profile = copp_pro.solver.topp3_socp.solve(problem, options);
-    ```
-
 在计算资源允许的情况下，可以重复进行上述过程，也就是用 $a_k(s)$ 线性化三阶非凸问题并求解得到 $a_{k+1}(s),b_{k+1}(s)$，在非退化情况下最终能够收敛到 KKT 解。从在线进行的实用角度，我们推荐完成 1 到 2 次线性化即足够。
 
 ### Step 7. 三阶轨迹后处理（仅三阶需要）
@@ -1570,6 +1703,21 @@ $$
     // t_final is the traversal time of the path.
     // t_s[i] is the time at which the path parameter s[i] is reached.
     let (t_final, t_s) = s_to_t_topp3(&s, profile.as_parts(), 0.0)?;
+    ```
+
+=== "Python"
+
+    ```python
+    # t_final is the traversal time of the path.
+    # t_s[i] is the time at which the path parameter s[i] is reached.
+    t_final, t_s = copp.interpolation.s_to_t_topp3(s, profile, 0.0)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    [t_final, t_s] = copp.solver.topp3_socp.s_to_t( ...
+        s, profile, t0=0.0);
     ```
 
 === "C++"
@@ -1604,21 +1752,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    # t_final is the traversal time of the path.
-    # t_s[i] is the time at which the path parameter s[i] is reached.
-    t_final, t_s = copp.interpolation.s_to_t_topp3(s, profile, 0.0)
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    [t_final, t_s] = copp_pro.interpolation.s_to_t_topp3( ...
-        s, profile, t0=0.0);
-    ```
-
 接下来求逆解 $s=s(t)$ 并插补，例如：
 
 === "Rust"
@@ -1635,6 +1768,28 @@ $$
         &t_s,
         InterpolationMode::UniformTimeGrid(0.0, dt, true),
     )?;
+    ```
+
+=== "Python"
+
+    ```python
+    # s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    s_t = copp.interpolation.t_to_s_topp3_uniform(
+        s,
+        profile,
+        t_s,
+        dt = 1.0e-3,
+        t0=0.0,
+    )
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    dt = 1.0e-3;
+    s_t = copp.solver.topp3_socp.t_to_s( ...
+        s, profile, t_s, dt=dt, ...
+        t0=0.0, include_final=true);
     ```
 
 === "C++"
@@ -1670,28 +1825,6 @@ $$
     }
     ```
 
-=== "Python"
-
-    ```python
-    # s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
-    s_t = copp.interpolation.t_to_s_topp3_uniform(
-        s,
-        profile,
-        t_s,
-        dt = 1.0e-3,
-        t0=0.0,
-    )
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    dt = 1.0e-3;
-    s_t = copp_pro.interpolation.t_to_s_topp3_uniform( ...
-        s, profile, t_s, dt, ...
-        t0=0.0, include_final=true);
-    ```
-
 上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
 
 === "Rust"
@@ -1700,6 +1833,20 @@ $$
     let out = path.evaluate_q(&s_t)?;
     let q_t = out.q;
     ```
+
+=== "Python"
+
+    ```python
+    q_t = path.evaluate_q(s_t).q
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    [q_t, dq_t, ddq_t, dddq_t] = path.evaluate_up_to_3rd(s_t);
+    ```
+
+    输出矩阵均为 `dim x numel(s_t)`。
 
 === "C++"
 
@@ -1739,20 +1886,6 @@ $$
     copp_matrix_f64_free(q_t);
     ```
 
-=== "Python"
-
-    ```python
-    q_t = path.evaluate_q(s_t).q
-    ```
-
-=== "Matlab"
-
-    ```matlab
-    [q_t, dq_t, ddq_t, dddq_t] = path.evaluate_up_to_3rd(s_t);
-    ```
-
-    输出矩阵均为 `dim x numel(s_t)`。
-
 由此完成了三阶轨迹的完整求解。
 
 ### 资源释放
@@ -1760,6 +1893,19 @@ $$
 === "Rust"
 
     Rust 版本不需要手动释放资源，相关对象会在离开作用域时自动释放。
+
+=== "Python"
+
+    Python 版本不需要手动释放资源，相关对象由 Python 运行时自动管理。
+
+=== "Matlab"
+
+    MATLAB 对象会在 `delete` 时释放 native handle，普通脚本通常不需要手动释放。长脚本或测试中可以显式释放，或者使用 `onCleanup`：
+
+    ```matlab
+    cleanup_path = onCleanup(@() path.release());
+    cleanup_robot = onCleanup(@() robot.release());
+    ```
 
 === "C++"
 
@@ -1790,19 +1936,6 @@ $$
     ```
 
     如果只求解二阶轨迹，则没有 `profile`、`dddq_t` 等三阶对象；如果保留多次三阶迭代结果，例如 `profile_qp1` 和 `profile_qp2`，则每个未被移动走所有权的 `CoppProfile3rd` 都需要各自调用一次 `copp_profile_3rd_free`。仓库中的 C 例程也采用了这种集中释放方式。
-
-=== "Python"
-
-    Python 版本不需要手动释放资源，相关对象由 Python 运行时自动管理。
-
-=== "Matlab"
-
-    MATLAB 对象会在 `delete` 时释放 native handle，普通脚本通常不需要手动释放。长脚本或测试中可以显式释放，或者使用 `onCleanup`：
-
-    ```matlab
-    cleanup_path = onCleanup(@() path.release());
-    cleanup_robot = onCleanup(@() robot.release());
-    ```
 
 ### Step-by-Step 小结
 
@@ -1865,43 +1998,6 @@ $$
 
     生成的文档包含数学基础、路径/约束构造方法、日志和输出约定、错误定义以及求解器接口。
 
-=== "C++"
-
-    TODO
-
-=== "C"
-
-    C 文档如下：
-
-    - [v0.2.1 (Latest)](c/v0.2.1/index.html)
-    - [v0.2.0](c/v0.2.0/index.html)
-
-    如果需要本地生成 C 文档，先安装 Doxygen、Graphviz 和 PowerShell 7（即 `pwsh`，脚本会用它重新生成头文件），然后在 `copp` 仓库根目录运行对应命令：
-
-    === "Windows"
-
-        ```powershell
-        winget install Doxygen.Doxygen Graphviz.Graphviz Microsoft.PowerShell
-        powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_docs.ps1
-        ```
-
-    === "Linux"
-
-        ```sh
-        # Debian/Ubuntu 示例；还需要单独安装 PowerShell 7，确保 `pwsh` 在 PATH 中。
-        sudo apt install doxygen graphviz
-        sh bindings/c/scripts/generate_docs.sh
-        ```
-
-    === "macOS"
-
-        ```sh
-        brew install doxygen graphviz powershell
-        sh bindings/c/scripts/generate_docs.sh
-        ```
-
-    生成的入口页面是 `bindings/c/docs/html/index.html`。
-
 === "Python"
 
     Python 文档如下：
@@ -1926,7 +2022,50 @@ $$
     build_docs()
     ```
 
-    生成的入口页面位于 `bindings/matlab/docs/html/overview.html`。
+    生成的入口页面位于 `bindings/matlab/docs/html/index.html`。
+
+=== "C++"
+
+    C++ API 文档使用 Doxygen 生成，内容来自 `bindings/cpp/include/copp/*.hpp`、`bindings/cpp/docs/*.md` 和示例代码。发布版文档后续会随 SDK 一起整理；如果需要查看开发分支上的 C++ 接口，可以在 `copp` 仓库根目录本地生成：
+
+    ```sh
+    doxygen bindings/cpp/Doxyfile
+    ```
+
+    生成的入口页面是 `bindings/cpp/docs/html/index.html`。若希望渲染 include 关系图和调用图，需要额外安装 Graphviz；若公式显示异常，优先检查 Doxygen 的 MathJax 配置。
+
+=== "C"
+
+    C 文档如下：
+
+    - [v0.2.1 (Latest)](c/v0.2.1/index.html)
+    - [v0.2.0](c/v0.2.0/index.html)
+
+    如果需要本地生成 C 文档，先安装 Doxygen、Graphviz 和 PowerShell 7（即 `pwsh`，脚本会用它重新生成头文件），然后在 `copp` 仓库根目录运行对应命令：
+
+    === "Linux"
+
+        ```sh
+        # Debian/Ubuntu 示例；还需要单独安装 PowerShell 7，确保 `pwsh` 在 PATH 中。
+        sudo apt install doxygen graphviz
+        sh bindings/c/scripts/generate_docs.sh
+        ```
+
+    === "Windows"
+
+        ```powershell
+        winget install Doxygen.Doxygen Graphviz.Graphviz Microsoft.PowerShell
+        powershell -ExecutionPolicy Bypass -File bindings/c/scripts/generate_docs.ps1
+        ```
+
+    === "macOS"
+
+        ```sh
+        brew install doxygen graphviz powershell
+        sh bindings/c/scripts/generate_docs.sh
+        ```
+
+    生成的入口页面是 `bindings/c/docs/html/index.html`。
 
 ### 项目架构
 
@@ -1939,25 +2078,6 @@ $$
     | `constraints` | 更底层的约束接口。                   |
     | `solver`      | 各个求解器。                         |
     | `diag`        | 错误类型、日志 verbosity、诊断信息。 |
-
-=== "C++"
-
-    TODO
-
-=== "C"
-
-    | 头文件                 | 负责内容                                               |
-    | ---------------------- | ------------------------------------------------------ |
-    | `copp/copp.h`          | Umbrella header，包含完整 C ABI。                      |
-    | `copp/core.h`          | 状态码、last error、矩阵/向量视图、Clarabel 选项。     |
-    | `copp/path.h`          | 路径句柄、样条路径、callback 路径、路径求值。          |
-    | `copp/robot.h`         | 机器人句柄、路径采样、物理约束、逆动力学 callback。    |
-    | `copp/formulation.h`   | TOPP/COPP problem descriptor、目标函数、profile 类型。 |
-    | `copp/interpolation.h` | 二阶/三阶轨迹后处理与插补。                            |
-    | `copp/topp2.h`         | TOPP2-RA 和 ReachSet2 接口。                           |
-    | `copp/copp2.h`         | COPP2-SOCP 接口。                                      |
-    | `copp/topp3.h`         | TOPP3-LP 和 TOPP3-SOCP 接口。                          |
-    | `copp/copp3.h`         | COPP3-SOCP 接口。                                      |
 
 === "Python"
 
@@ -1977,14 +2097,41 @@ $$
 
     | 模块                                | 负责内容                                                       |
     | ----------------------------------- | -------------------------------------------------------------- |
-    | `copp_pro`                          | 顶层包，提供 `version`、错误 helper 和常用类型。               |
-    | `copp_pro.Path`                     | waypoint、evaluator、parametric、symbolic、CasADi 路径。       |
-    | `copp_pro.Robot`                    | 站点网格、路径采样、速度/加速度/jerk/力矩约束。                |
-    | `copp_pro.objective`                | 时间、线性、热能耗散、力矩全变分等 COPP 目标描述。             |
-    | `copp_pro.solver`                   | `topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_*`、`copp3_*`。 |
-    | `copp_pro.interpolation`            | 二阶/三阶 `s_to_t_*`、`t_to_s_*` 和 `a_to_b_topp2`。           |
-    | `copp_pro.ClarabelOptions/Settings` | Clarabel 求解器选项和 expert 诊断配置。                        |
-    | `copp_pro.CoppError` / `last_error` | MATLAB exception facade 和 MEX last-error 快照。               |
+    | `copp`                          | 顶层包，提供 `version`、`Path`、`Robot`、`Profile3rd` 等常用类型。 |
+    | `copp.Path`                     | waypoint、evaluator、parametric、symbolic、CasADi 路径。       |
+    | `copp.Robot`                    | 站点网格、路径采样、速度/加速度/jerk/力矩约束。                |
+    | `copp.objective`                | 时间、线性、热能耗散、力矩全变分等 COPP 目标描述。             |
+    | `copp.solver`                   | `topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_*`、`copp3_*`。 |
+    | `copp.interpolation`            | 二阶/三阶 `s_to_t_*`、`t_to_s_*` 和 `a_to_b_topp2`。           |
+    | `copp.clarabel`                 | Clarabel 求解器选项、设置和 direct solve method。              |
+    | `copp.diag`                     | MATLAB exception facade、verbosity 和 MEX last-error 快照。     |
+
+=== "C++"
+
+    | Header / Namespace                 | 负责内容                                               |
+    | ---------------------------------- | ------------------------------------------------------ |
+    | `copp/copp.hpp`                    | Umbrella header，包含 C++ public facade。              |
+    | `copp/core.hpp`                    | `Matrix`、`Span`、`Error`、`Expected` 等核心类型。      |
+    | `copp/path.hpp`                    | Waypoint / parametric / evaluator path 构造与求导。     |
+    | `copp/robot.hpp`                   | `Robot`、`Constraints`、逆动力学 callback 和物理约束。 |
+    | `copp/interpolation.hpp`           | TOPP2 / TOPP3 profile 与时间插值。                     |
+    | `copp/solver/*.hpp`                | TOPP/COPP 求解器 namespace 和 problem/options/result。 |
+    | `copp/eigen.hpp`                   | 可选 Eigen adapter；核心头不直接依赖 Eigen。           |
+    | CMake target `copp::copp`          | 下游 C++ 工程链接入口；C ABI 另有 `copp::c_abi`。      |
+=== "C"
+
+    | 头文件                 | 负责内容                                               |
+    | ---------------------- | ------------------------------------------------------ |
+    | `copp/copp.h`          | Umbrella header，包含完整 C ABI。                      |
+    | `copp/core.h`          | 状态码、last error、矩阵/向量视图、Clarabel 选项。     |
+    | `copp/path.h`          | 路径句柄、样条路径、callback 路径、路径求值。          |
+    | `copp/robot.h`         | 机器人句柄、路径采样、物理约束、逆动力学 callback。    |
+    | `copp/formulation.h`   | TOPP/COPP problem descriptor、目标函数、profile 类型。 |
+    | `copp/interpolation.h` | 二阶/三阶轨迹后处理与插补。                            |
+    | `copp/topp2.h`         | TOPP2-RA 和 ReachSet2 接口。                           |
+    | `copp/copp2.h`         | COPP2-SOCP 接口。                                      |
+    | `copp/topp3.h`         | TOPP3-LP 和 TOPP3-SOCP 接口。                          |
+    | `copp/copp3.h`         | COPP3-SOCP 接口。                                      |
 
 ## 引用
 

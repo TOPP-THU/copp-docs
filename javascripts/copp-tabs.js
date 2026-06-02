@@ -5,12 +5,12 @@
         {
             key: "language",
             storageKey: "copp.docs.language-tab",
-            labels: ["Rust", "C++", "C", "Python", "Matlab"],
+            labels: ["Rust", "Python", "Matlab", "C++", "C"],
         },
         {
             key: "platform",
             storageKey: "copp.docs.platform-tab",
-            labels: ["Windows", "Linux", "macOS", "Linux / macOS"],
+            labels: ["Linux", "Windows", "macOS", "Linux / macOS"],
             aliases: {
                 "Linux / macOS": "Linux",
             },
