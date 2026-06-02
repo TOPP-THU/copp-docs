@@ -5,7 +5,7 @@
         {
             key: "language",
             storageKey: "copp.docs.language-tab",
-            labels: ["Rust", "C", "Python"],
+            labels: ["Rust", "C++", "C", "Python", "Matlab"],
         },
         {
             key: "platform",

@@ -1112,7 +1112,7 @@ J_\text{lin}=\begin{cases}
 </tbody>
 </table>
 <h2 id="installation">Installation</h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="rust" name="__tabbed_1" type="radio" /><input id="c" name="__tabbed_1" type="radio" /><input id="python" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="rust">Rust</label><label for="c">C</label><label for="python">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="rust" name="__tabbed_1" type="radio" /><input id="c" name="__tabbed_1" type="radio" /><input id="c_1" name="__tabbed_1" type="radio" /><input id="python" name="__tabbed_1" type="radio" /><input id="matlab" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="rust">Rust</label><label for="c">C++</label><label for="c_1">C</label><label for="python">Python</label><label for="matlab">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>The <code>copp</code> crate is published on <a href="https://crates.io/crates/copp">crates.io</a>. Add the following dependency to the root <code>Cargo.toml</code>:</p>
@@ -1120,6 +1120,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">copp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.2.1&quot;</span>
 </code></pre></div>
 <p><code>copp</code> v0.2.1 requires Rust 1.88 or newer. We strongly recommend building in Release mode for substantially better computational performance.</p>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <p>The C ABI is suitable for C/C++ projects, downstream language bindings, and existing robotics software stacks. Prebuilt C ABI SDKs for released versions are available from <a href="https://github.com/TOPP-THU/copp/releases">GitHub Releases</a>. To build from source, start with the repository:</p>
@@ -1213,6 +1216,9 @@ J_\text{lin}=\begin{cases}
 <p><code>maturin develop</code> installs the Rust extension module directly into the current Python environment. Verify the build with:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import copp_py as copp; print(copp.version())&quot;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 </div>
 </div>
@@ -1351,11 +1357,14 @@ J_\text{lin}=\begin{cases}
 </table>
 <h2 id="step-by-step-workflow">Step-by-Step Workflow</h2>
 <p>We use time-optimal parameterization of a two-dimensional path as a simple example. Complete runnable examples are available under the <code>examples</code> directory for each language, and advanced APIs are described in the <a href="#docs-architecture">documentation and architecture</a> section.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:3"><input checked="checked" id="rust_1" name="__tabbed_5" type="radio" /><input id="c_1" name="__tabbed_5" type="radio" /><input id="python_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="rust_1">Rust</label><label for="c_1">C</label><label for="python_1">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:5"><input checked="checked" id="rust_1" name="__tabbed_5" type="radio" /><input id="c_2" name="__tabbed_5" type="radio" /><input id="c_3" name="__tabbed_5" type="radio" /><input id="python_1" name="__tabbed_5" type="radio" /><input id="matlab_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="rust_1">Rust</label><label for="c_2">C++</label><label for="c_3">C</label><label for="python_1">Python</label><label for="matlab_1">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">const</span><span class="w"> </span><span class="n">DIM</span><span class="p">:</span><span class="w"> </span><span class="kt">usize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;math.h&gt;</span>
@@ -1384,13 +1393,16 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">DIM</span> <span class="o">=</span> <span class="mi">2</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <h3 id="step-1-construct-the-geometric-path">Step 1. Construct the Geometric Path</h3>
 <p>Strictly speaking, the geometric path <span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(s)\)</span> is supplied by the user. The <code>copp</code> library provides path-related modules as convenient helpers.</p>
 <h4 id="option-a-analytic-expression-with-automatic-differentiation">Option A. Analytic Expression with Automatic Differentiation</h4>
 <p>The simplest approach is to construct the path from an analytic expression, for example:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="6:3"><input checked="checked" id="rust_2" name="__tabbed_6" type="radio" /><input id="c_2" name="__tabbed_6" type="radio" /><input id="python_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="rust_2">Rust</label><label for="c_2">C</label><label for="python_2">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:5"><input checked="checked" id="rust_2" name="__tabbed_6" type="radio" /><input id="c_4" name="__tabbed_6" type="radio" /><input id="c_5" name="__tabbed_6" type="radio" /><input id="python_2" name="__tabbed_6" type="radio" /><input id="matlab_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="rust_2">Rust</label><label for="c_4">C++</label><label for="c_5">C</label><label for="python_2">Python</label><label for="matlab_2">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">path</span><span class="p">::</span><span class="n">autodiff</span><span class="p">::</span><span class="n">Jet3</span><span class="p">;</span>
@@ -1399,6 +1411,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
 <a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="kd">let</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">::</span><span class="n">from_parametric</span><span class="p">(</span><span class="o">|</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="nc">Jet3</span><span class="o">|</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">),</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">PI</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">)],</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1">// Automatic differentiation for the C ABI is planned for v0.2.2.</span>
@@ -1419,11 +1434,14 @@ J_\text{lin}=\begin{cases}
 </code></pre></div>
 <p>Python automatic differentiation supports <code>jax</code>, <code>autograd</code>, <code>casadi</code>, and <code>sympy</code>. Choose one and install the corresponding dependency as needed.</p>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <h4 id="option-b-build-a-spline-from-waypoints">Option B. Build a Spline from Waypoints</h4>
 <p>If waypoints are available, a spline path can be constructed as follows:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:3"><input checked="checked" id="rust_3" name="__tabbed_7" type="radio" /><input id="c_3" name="__tabbed_7" type="radio" /><input id="python_3" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="rust_3">Rust</label><label for="c_3">C</label><label for="python_3">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:5"><input checked="checked" id="rust_3" name="__tabbed_7" type="radio" /><input id="c_6" name="__tabbed_7" type="radio" /><input id="c_7" name="__tabbed_7" type="radio" /><input id="python_3" name="__tabbed_7" type="radio" /><input id="matlab_3" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="rust_3">Rust</label><label for="c_6">C++</label><label for="c_7">C</label><label for="python_3">Python</label><label for="matlab_3">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">path</span><span class="p">::{</span><span class="n">Path</span><span class="p">,</span><span class="w"> </span><span class="n">SplineConfig</span><span class="p">};</span>
@@ -1439,6 +1457,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="p">);</span>
 <a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="kd">let</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">::</span><span class="n">from_waypoints</span><span class="p">(</span><span class="o">&amp;</span><span class="n">waypoints</span><span class="p">,</span><span class="w"> </span><span class="n">SplineConfig</span><span class="p">::</span><span class="n">default</span><span class="p">())</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">enum</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">NUM_WAYPOINTS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">};</span>
@@ -1483,11 +1504,14 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="n">path</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">from_waypoints</span><span class="p">(</span><span class="n">waypoints</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <h4 id="option-c-user-provided-derivatives">Option C. User-Provided Derivatives</h4>
 <p>In the most general case, users can provide derivatives manually. For TOPP2/COPP2, the evaluator should provide <span class="arithmatex">\(\boldsymbol{q}(s)\)</span>, <span class="arithmatex">\(\boldsymbol{q}'(s)\)</span>, and <span class="arithmatex">\(\boldsymbol{q}''(s)\)</span> at the requested <span class="arithmatex">\(s\)</span> values:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="8:3"><input checked="checked" id="rust_4" name="__tabbed_8" type="radio" /><input id="c_4" name="__tabbed_8" type="radio" /><input id="python_4" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="rust_4">Rust</label><label for="c_4">C</label><label for="python_4">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:5"><input checked="checked" id="rust_4" name="__tabbed_8" type="radio" /><input id="c_8" name="__tabbed_8" type="radio" /><input id="c_9" name="__tabbed_8" type="radio" /><input id="python_4" name="__tabbed_8" type="radio" /><input id="matlab_4" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="rust_4">Rust</label><label for="c_8">C++</label><label for="c_9">C</label><label for="python_4">Python</label><label for="matlab_4">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">diag</span><span class="p">::</span><span class="n">PathError</span><span class="p">;</span>
@@ -1554,6 +1578,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-27-62" name="__codelineno-27-62" href="#__codelineno-27-62"></a><span class="c1">// If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `PathEvaluator3rd`.</span>
 <a id="__codelineno-27-63" name="__codelineno-27-63" href="#__codelineno-27-63"></a><span class="kd">let</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span><span class="p">::</span><span class="n">from_evaluator_3rd</span><span class="p">(</span><span class="n">NormalizedEvaluator3rd</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">static</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">CoppStatus</span><span class="w"> </span><span class="nf">evaluate_path_2nd</span><span class="p">(</span>
@@ -1690,17 +1717,23 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-29-42" name="__codelineno-29-42" href="#__codelineno-29-42"></a><span class="n">path</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">from_evaluator_3rd</span><span class="p">(</span><span class="n">Evaluator</span><span class="p">(),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <h3 id="step-2-discretize-path-data">Step 2. Discretize Path Data</h3>
 <p>Path-parameterization problems are solved on a discrete <span class="arithmatex">\(s\)</span> grid, for example:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="9:3"><input checked="checked" id="rust_5" name="__tabbed_9" type="radio" /><input id="c_5" name="__tabbed_9" type="radio" /><input id="python_5" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="rust_5">Rust</label><label for="c_5">C</label><label for="python_5">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:5"><input checked="checked" id="rust_5" name="__tabbed_9" type="radio" /><input id="c_10" name="__tabbed_9" type="radio" /><input id="c_11" name="__tabbed_9" type="radio" /><input id="python_5" name="__tabbed_9" type="radio" /><input id="matlab_5" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="rust_5">Rust</label><label for="c_10">C++</label><label for="c_11">C</label><label for="python_5">Python</label><label for="matlab_5">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1">// `n` is the number of path samples (s_i) to build robot constraints on.</span>
 <a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1001</span><span class="p">;</span>
 <a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="kt">f64</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="n">n</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">j</span><span class="o">|</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">f64</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1">// `n` is the number of path samples (s_i) to build robot constraints on.</span>
@@ -1716,16 +1749,22 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>Create the robot model:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="10:3"><input checked="checked" id="rust_6" name="__tabbed_10" type="radio" /><input id="c_6" name="__tabbed_10" type="radio" /><input id="python_6" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="rust_6">Rust</label><label for="c_6">C</label><label for="python_6">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:5"><input checked="checked" id="rust_6" name="__tabbed_10" type="radio" /><input id="c_12" name="__tabbed_10" type="radio" /><input id="c_13" name="__tabbed_10" type="radio" /><input id="python_6" name="__tabbed_10" type="radio" /><input id="matlab_6" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="rust_6">Rust</label><label for="c_12">C++</label><label for="c_13">C</label><label for="python_6">Python</label><label for="matlab_6">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">robot</span><span class="p">::</span><span class="n">Robot</span><span class="p">;</span>
 <a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>
 <a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Robot</span><span class="p">::</span><span class="n">with_capacity</span><span class="p">(</span><span class="n">DIM</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">);</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppRobot</span><span class="w"> </span><span class="o">*</span><span class="n">robot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
@@ -1739,10 +1778,13 @@ J_\text{lin}=\begin{cases}
 <div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="n">robot</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">Robot</span><span class="p">(</span><span class="n">DIM</span><span class="p">,</span> <span class="n">capacity</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>Provide the <span class="arithmatex">\(s\)</span> grid and path data:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="11:3"><input checked="checked" id="rust_7" name="__tabbed_11" type="radio" /><input id="c_7" name="__tabbed_11" type="radio" /><input id="python_7" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="rust_7">Rust</label><label for="c_7">C</label><label for="python_7">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:5"><input checked="checked" id="rust_7" name="__tabbed_11" type="radio" /><input id="c_14" name="__tabbed_11" type="radio" /><input id="c_15" name="__tabbed_11" type="radio" /><input id="python_7" name="__tabbed_11" type="radio" /><input id="matlab_7" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="rust_7">Rust</label><label for="c_14">C++</label><label for="c_15">C</label><label for="python_7">Python</label><label for="matlab_7">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1">// If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then `with_q_from_path_3rd` should be replaced by `with_q_from_path_2nd` without dependence on `evaluate_up_to_3rd`.</span>
@@ -1750,6 +1792,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="p">.</span><span class="n">with_s</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">as_slice</span><span class="p">())</span><span class="o">?</span>
 <a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="w">    </span><span class="p">.</span><span class="n">with_q_from_path_3rd</span><span class="p">(</span><span class="o">&amp;</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="c1">// If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then</span>
@@ -1767,12 +1812,15 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="n">robot</span><span class="o">.</span><span class="n">set_q_from_path_3rd</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>For more flexible use cases, paths can be added or removed online, and the robot model can include inverse-kinematics information. These advanced APIs are described in the <a href="#docs-architecture">documentation and architecture</a> section.</p>
 <h3 id="step-3-construct-constraints">Step 3. Construct Constraints</h3>
 <p>In most cases, we recommend using high-level APIs with clear physical meaning, for example:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="12:3"><input checked="checked" id="rust_8" name="__tabbed_12" type="radio" /><input id="c_8" name="__tabbed_12" type="radio" /><input id="python_8" name="__tabbed_12" type="radio" /><div class="tabbed-labels"><label for="rust_8">Rust</label><label for="c_8">C</label><label for="python_8">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="12:5"><input checked="checked" id="rust_8" name="__tabbed_12" type="radio" /><input id="c_16" name="__tabbed_12" type="radio" /><input id="c_17" name="__tabbed_12" type="radio" /><input id="python_8" name="__tabbed_12" type="radio" /><input id="matlab_8" name="__tabbed_12" type="radio" /><div class="tabbed-labels"><label for="rust_8">Rust</label><label for="c_16">C++</label><label for="c_17">C</label><label for="python_8">Python</label><label for="matlab_8">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="c1">// The axial velocity is -1 &lt;= vel &lt;= 1 for each axis in this example</span>
@@ -1786,6 +1834,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a><span class="w">    </span><span class="p">.</span><span class="n">with_axial_velocity</span><span class="p">((</span><span class="n">vel_max</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">vel_min</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span>
 <a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a><span class="w">    </span><span class="p">.</span><span class="n">with_axial_acceleration</span><span class="p">((</span><span class="n">acc_max</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">acc_min</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="c1">// The axial velocity/acceleration is -1 &lt;= value &lt;= 1 for each axis.</span>
@@ -1822,10 +1873,13 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="n">robot</span><span class="o">.</span><span class="n">add_acceleration_limits</span><span class="p">(</span><span class="n">upper</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">start_idx_s</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>For third-order trajectories, additional third-order constraints are needed, for example:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="13:3"><input checked="checked" id="rust_9" name="__tabbed_13" type="radio" /><input id="c_9" name="__tabbed_13" type="radio" /><input id="python_9" name="__tabbed_13" type="radio" /><div class="tabbed-labels"><label for="rust_9">Rust</label><label for="c_9">C</label><label for="python_9">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="13:5"><input checked="checked" id="rust_9" name="__tabbed_13" type="radio" /><input id="c_18" name="__tabbed_13" type="radio" /><input id="c_19" name="__tabbed_13" type="radio" /><input id="python_9" name="__tabbed_13" type="radio" /><input id="matlab_9" name="__tabbed_13" type="radio" /><div class="tabbed-labels"><label for="rust_9">Rust</label><label for="c_18">C++</label><label for="c_19">C</label><label for="python_9">Python</label><label for="matlab_9">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c1">// The axial jerk is -1 &lt;= jerk &lt;= 1 for each axis in this example.</span>
@@ -1833,6 +1887,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">jerk_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="fm">vec!</span><span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">;</span><span class="w"> </span><span class="n">DIM</span><span class="p">];</span>
 <a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="n">robot</span><span class="p">.</span><span class="n">with_axial_jerk</span><span class="p">((</span><span class="n">jerk_max</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">jerk_min</span><span class="p">.</span><span class="n">as_slice</span><span class="p">(),</span><span class="w"> </span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="c1">// The axial jerk is -1 &lt;= jerk &lt;= 1 for each axis in this example.</span>
@@ -1852,12 +1909,15 @@ J_\text{lin}=\begin{cases}
 <div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="n">robot</span><span class="o">.</span><span class="n">add_jerk_limits</span><span class="p">(</span><span class="n">upper</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">start_idx_s</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>Lower-level and more flexible constraint-construction APIs are described in the <a href="#docs-architecture">documentation and architecture</a> section.</p>
 <h3 id="step-4-call-the-solver">Step 4. Call the Solver</h3>
 <p>Here we solve a TOPP2 problem with <code>topp2_ra</code>. First define the problem:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="14:3"><input checked="checked" id="rust_10" name="__tabbed_14" type="radio" /><input id="c_10" name="__tabbed_14" type="radio" /><input id="python_10" name="__tabbed_14" type="radio" /><div class="tabbed-labels"><label for="rust_10">Rust</label><label for="c_10">C</label><label for="python_10">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="14:5"><input checked="checked" id="rust_10" name="__tabbed_14" type="radio" /><input id="c_20" name="__tabbed_14" type="radio" /><input id="c_21" name="__tabbed_14" type="radio" /><input id="python_10" name="__tabbed_14" type="radio" /><input id="matlab_10" name="__tabbed_14" type="radio" /><div class="tabbed-labels"><label for="rust_10">Rust</label><label for="c_20">C++</label><label for="c_21">C</label><label for="python_10">Python</label><label for="matlab_10">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp2_ra</span><span class="p">::</span><span class="n">Topp2ProblemBuilder</span><span class="p">;</span>
@@ -1866,6 +1926,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">a_boundary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w"> </span><span class="c1">// a(0) = 0, a(1) = 0</span>
 <a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a><span class="kd">let</span><span class="w"> </span><span class="n">problem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Topp2ProblemBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="n">idx_s_interval</span><span class="p">,</span><span class="w"> </span><span class="n">a_boundary</span><span class="p">).</span><span class="n">build</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Topp2Problem</span><span class="w"> </span><span class="n">problem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
@@ -1885,10 +1948,13 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>Then build solver options and call the solver:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="15:3"><input checked="checked" id="rust_11" name="__tabbed_15" type="radio" /><input id="c_11" name="__tabbed_15" type="radio" /><input id="python_11" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="rust_11">Rust</label><label for="c_11">C</label><label for="python_11">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="15:5"><input checked="checked" id="rust_11" name="__tabbed_15" type="radio" /><input id="c_22" name="__tabbed_15" type="radio" /><input id="c_23" name="__tabbed_15" type="radio" /><input id="python_11" name="__tabbed_15" type="radio" /><input id="matlab_11" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="rust_11">Rust</label><label for="c_22">C++</label><label for="c_23">C</label><label for="python_11">Python</label><label for="matlab_11">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp2_ra</span><span class="p">::{</span><span class="n">ReachSet2OptionsBuilder</span><span class="p">,</span><span class="w"> </span><span class="n">topp2_ra</span><span class="p">};</span>
@@ -1896,6 +1962,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="kd">let</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReachSet2OptionsBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">().</span><span class="n">build</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
 <a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">a_ra</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">topp2_ra</span><span class="p">(</span><span class="o">&amp;</span><span class="n">problem</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Topp2RaOptions</span><span class="w"> </span><span class="n">options</span><span class="p">;</span>
@@ -1917,12 +1986,15 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>This gives the profile <span class="arithmatex">\(a=a(s)\)</span>.</p>
 <h3 id="step-5-post-process-the-second-order-trajectory-second-order-only">Step 5. Post-Process the Second-Order Trajectory (Second-Order Only)</h3>
 <p>Next we convert the result into the actual trajectory <span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(t)\)</span>, in particular an interpolated trajectory suitable for tracking by a low-level servo controller. First compute <span class="arithmatex">\(t=t(s)\)</span>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="16:3"><input checked="checked" id="rust_12" name="__tabbed_16" type="radio" /><input id="c_12" name="__tabbed_16" type="radio" /><input id="python_12" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="rust_12">Rust</label><label for="c_12">C</label><label for="python_12">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="16:5"><input checked="checked" id="rust_12" name="__tabbed_16" type="radio" /><input id="c_24" name="__tabbed_16" type="radio" /><input id="c_25" name="__tabbed_16" type="radio" /><input id="python_12" name="__tabbed_16" type="radio" /><input id="matlab_12" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="rust_12">Rust</label><label for="c_24">C++</label><label for="c_25">C</label><label for="python_12">Python</label><label for="matlab_12">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp2_ra</span><span class="p">::</span><span class="n">s_to_t_topp2</span><span class="p">;</span>
@@ -1931,6 +2003,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="c1">// t_s[i] is the time at which the path parameter s[i] is reached.</span>
 <a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">t_final</span><span class="p">,</span><span class="w"> </span><span class="n">t_s</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s_to_t_topp2</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a_ra</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="kt">double</span><span class="w"> </span><span class="n">t_final</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
@@ -1953,10 +2028,13 @@ J_\text{lin}=\begin{cases}
 <div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="n">t_final</span><span class="p">,</span> <span class="n">t_s</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">interpolation</span><span class="o">.</span><span class="n">s_to_t_topp2</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a_ra</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>Then invert the timing relation to obtain <span class="arithmatex">\(s=s(t)\)</span> and interpolate:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="17:3"><input checked="checked" id="rust_13" name="__tabbed_17" type="radio" /><input id="c_13" name="__tabbed_17" type="radio" /><input id="python_13" name="__tabbed_17" type="radio" /><div class="tabbed-labels"><label for="rust_13">Rust</label><label for="c_13">C</label><label for="python_13">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="17:5"><input checked="checked" id="rust_13" name="__tabbed_17" type="radio" /><input id="c_26" name="__tabbed_17" type="radio" /><input id="c_27" name="__tabbed_17" type="radio" /><input id="python_13" name="__tabbed_17" type="radio" /><input id="matlab_13" name="__tabbed_17" type="radio" /><div class="tabbed-labels"><label for="rust_13">Rust</label><label for="c_26">C++</label><label for="c_27">C</label><label for="python_13">Python</label><label for="matlab_13">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp2_ra</span><span class="p">::</span><span class="n">t_to_s_topp2</span><span class="p">;</span>
@@ -1971,6 +2049,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-54-10" name="__codelineno-54-10" href="#__codelineno-54-10"></a><span class="w">    </span><span class="n">InterpolationMode</span><span class="p">::</span><span class="n">UniformTimeGrid</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">),</span>
 <a id="__codelineno-54-11" name="__codelineno-54-11" href="#__codelineno-54-11"></a><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="c1">// s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.</span>
@@ -2003,15 +2084,21 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>The interpolation routines also support non-uniform time samples; see the <a href="#docs-architecture">documentation and architecture</a> section for details. Finally, evaluate the interpolated trajectory <span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(t)\)</span>. A simple approach is:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="18:3"><input checked="checked" id="rust_14" name="__tabbed_18" type="radio" /><input id="c_14" name="__tabbed_18" type="radio" /><input id="python_14" name="__tabbed_18" type="radio" /><div class="tabbed-labels"><label for="rust_14">Rust</label><label for="c_14">C</label><label for="python_14">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="18:5"><input checked="checked" id="rust_14" name="__tabbed_18" type="radio" /><input id="c_28" name="__tabbed_18" type="radio" /><input id="c_29" name="__tabbed_18" type="radio" /><input id="python_14" name="__tabbed_18" type="radio" /><input id="matlab_14" name="__tabbed_18" type="radio" /><div class="tabbed-labels"><label for="rust_14">Rust</label><label for="c_28">C++</label><label for="c_29">C</label><label for="python_14">Python</label><label for="matlab_14">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">evaluate_q</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s_t</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 <a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">q_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">q</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppMatrixF64</span><span class="w"> </span><span class="n">q_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
@@ -2040,12 +2127,15 @@ J_\text{lin}=\begin{cases}
 <div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="n">q_t</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">evaluate_q</span><span class="p">(</span><span class="n">s_t</span><span class="p">)</span><span class="o">.</span><span class="n">q</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>This completes the full second-order trajectory pipeline. For a third-order trajectory, skip the second-order post-processing step and continue with the following workflow.</p>
 <h3 id="step-6-construct-and-solve-the-third-order-problem-third-order-only">Step 6. Construct and Solve the Third-Order Problem (Third-Order Only)</h3>
 <p>Construct the third-order problem as follows. The non-convex third-order constraints are linearized using the previously computed second-order profile <code>a_ra</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="19:3"><input checked="checked" id="rust_15" name="__tabbed_19" type="radio" /><input id="c_15" name="__tabbed_19" type="radio" /><input id="python_15" name="__tabbed_19" type="radio" /><div class="tabbed-labels"><label for="rust_15">Rust</label><label for="c_15">C</label><label for="python_15">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="19:5"><input checked="checked" id="rust_15" name="__tabbed_19" type="radio" /><input id="c_30" name="__tabbed_19" type="radio" /><input id="c_31" name="__tabbed_19" type="radio" /><input id="python_15" name="__tabbed_19" type="radio" /><input id="matlab_15" name="__tabbed_19" type="radio" /><div class="tabbed-labels"><label for="rust_15">Rust</label><label for="c_30">C++</label><label for="c_31">C</label><label for="python_15">Python</label><label for="matlab_15">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp3_socp</span><span class="p">::</span><span class="n">Topp3ProblemBuilder</span><span class="p">;</span>
@@ -2056,6 +2146,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a><span class="w">    </span><span class="n">Topp3ProblemBuilder</span><span class="p">::</span><span class="n">new</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">robot</span><span class="p">,</span><span class="w"> </span><span class="n">idx_s_interval</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a_ra</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">))</span>
 <a id="__codelineno-60-7" name="__codelineno-60-7" href="#__codelineno-60-7"></a><span class="w">    </span><span class="p">.</span><span class="n">build_with_linearization</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">check</span><span class="p">(</span>
@@ -2092,10 +2185,13 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-62-8" name="__codelineno-62-8" href="#__codelineno-62-8"></a><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>Using <code>topp3_socp</code> as an example, call the solver as follows:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="20:3"><input checked="checked" id="rust_16" name="__tabbed_20" type="radio" /><input id="c_16" name="__tabbed_20" type="radio" /><input id="python_16" name="__tabbed_20" type="radio" /><div class="tabbed-labels"><label for="rust_16">Rust</label><label for="c_16">C</label><label for="python_16">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="20:5"><input checked="checked" id="rust_16" name="__tabbed_20" type="radio" /><input id="c_32" name="__tabbed_20" type="radio" /><input id="c_33" name="__tabbed_20" type="radio" /><input id="python_16" name="__tabbed_20" type="radio" /><input id="matlab_16" name="__tabbed_20" type="radio" /><div class="tabbed-labels"><label for="rust_16">Rust</label><label for="c_32">C++</label><label for="c_33">C</label><label for="python_16">Python</label><label for="matlab_16">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp3_socp</span><span class="p">::{</span><span class="n">ClarabelOptionsBuilder</span><span class="p">,</span><span class="w"> </span><span class="n">topp3_socp</span><span class="p">};</span>
@@ -2105,6 +2201,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a><span class="w">    </span><span class="p">.</span><span class="n">build</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
 <a id="__codelineno-63-6" name="__codelineno-63-6" href="#__codelineno-63-6"></a><span class="kd">let</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">topp3_socp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">topp3_problem</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options_socp</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppClarabelOptions</span><span class="w"> </span><span class="n">options_socp</span><span class="p">;</span>
@@ -2126,10 +2225,13 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a><span class="n">profile</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp3_socp</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>This already produces a feasible, near-optimal third-order trajectory <span class="arithmatex">\(a_1(s),b_1(s)\)</span> and can be used directly in the next step. If more computational budget is available, use <span class="arithmatex">\(a_1(s)\)</span> as the next linearization point and solve a new linearized third-order problem:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="21:3"><input checked="checked" id="rust_17" name="__tabbed_21" type="radio" /><input id="c_17" name="__tabbed_21" type="radio" /><input id="python_17" name="__tabbed_21" type="radio" /><div class="tabbed-labels"><label for="rust_17">Rust</label><label for="c_17">C</label><label for="python_17">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="21:5"><input checked="checked" id="rust_17" name="__tabbed_21" type="radio" /><input id="c_34" name="__tabbed_21" type="radio" /><input id="c_35" name="__tabbed_21" type="radio" /><input id="python_17" name="__tabbed_21" type="radio" /><input id="matlab_17" name="__tabbed_21" type="radio" /><div class="tabbed-labels"><label for="rust_17">Rust</label><label for="c_34">C++</label><label for="c_35">C</label><label for="python_17">Python</label><label for="matlab_17">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">topp3_problem</span><span class="w"> </span><span class="o">=</span>
@@ -2137,6 +2239,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a><span class="w">    </span><span class="p">.</span><span class="n">build_with_linearization</span><span class="p">()</span><span class="o">?</span><span class="p">;</span>
 <a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a><span class="kd">let</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">topp3_socp</span><span class="p">(</span><span class="o">&amp;</span><span class="n">topp3_problem</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">options_socp</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Topp3Problem</span><span class="w"> </span><span class="n">topp3_problem_next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
@@ -2177,12 +2282,15 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-68-8" name="__codelineno-68-8" href="#__codelineno-68-8"></a><span class="n">profile</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">topp3_socp</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>When computational resources allow, the above procedure can be repeated: linearize the third-order non-convex problem at <span class="arithmatex">\(a_k(s)\)</span> and solve for <span class="arithmatex">\(a_{k+1}(s),b_{k+1}(s)\)</span>. Under non-degenerate conditions, this process can converge to a KKT solution. For practical online use, one to two linearization iterations are usually sufficient.</p>
 <h3 id="step-7-post-process-the-third-order-trajectory-third-order-only">Step 7. Post-Process the Third-Order Trajectory (Third-Order Only)</h3>
 <p>Next we convert the third-order profile into the actual trajectory <span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(t)\)</span>, in particular an interpolated trajectory suitable for tracking by a low-level servo controller. First compute <span class="arithmatex">\(t=t(s)\)</span>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="22:3"><input checked="checked" id="rust_18" name="__tabbed_22" type="radio" /><input id="c_18" name="__tabbed_22" type="radio" /><input id="python_18" name="__tabbed_22" type="radio" /><div class="tabbed-labels"><label for="rust_18">Rust</label><label for="c_18">C</label><label for="python_18">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="22:5"><input checked="checked" id="rust_18" name="__tabbed_22" type="radio" /><input id="c_36" name="__tabbed_22" type="radio" /><input id="c_37" name="__tabbed_22" type="radio" /><input id="python_18" name="__tabbed_22" type="radio" /><input id="matlab_18" name="__tabbed_22" type="radio" /><div class="tabbed-labels"><label for="rust_18">Rust</label><label for="c_36">C++</label><label for="c_37">C</label><label for="python_18">Python</label><label for="matlab_18">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp3_socp</span><span class="p">::</span><span class="n">s_to_t_topp3</span><span class="p">;</span>
@@ -2191,6 +2299,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a><span class="c1">// t_s[i] is the time at which the path parameter s[i] is reached.</span>
 <a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">t_final</span><span class="p">,</span><span class="w"> </span><span class="n">t_s</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s_to_t_topp3</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">profile</span><span class="p">.</span><span class="n">as_parts</span><span class="p">(),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="kt">double</span><span class="w"> </span><span class="n">t_final</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span>
@@ -2218,10 +2329,13 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a><span class="n">t_final</span><span class="p">,</span> <span class="n">t_s</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">interpolation</span><span class="o">.</span><span class="n">s_to_t_topp3</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">profile</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>Then invert the timing relation to obtain <span class="arithmatex">\(s=s(t)\)</span> and interpolate:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="23:3"><input checked="checked" id="rust_19" name="__tabbed_23" type="radio" /><input id="c_19" name="__tabbed_23" type="radio" /><input id="python_19" name="__tabbed_23" type="radio" /><div class="tabbed-labels"><label for="rust_19">Rust</label><label for="c_19">C</label><label for="python_19">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="23:5"><input checked="checked" id="rust_19" name="__tabbed_23" type="radio" /><input id="c_38" name="__tabbed_23" type="radio" /><input id="c_39" name="__tabbed_23" type="radio" /><input id="python_19" name="__tabbed_23" type="radio" /><input id="matlab_19" name="__tabbed_23" type="radio" /><div class="tabbed-labels"><label for="rust_19">Rust</label><label for="c_38">C++</label><label for="c_39">C</label><label for="python_19">Python</label><label for="matlab_19">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="k">use</span><span class="w"> </span><span class="n">copp</span><span class="p">::</span><span class="n">solver</span><span class="p">::</span><span class="n">topp3_socp</span><span class="p">::</span><span class="n">t_to_s_topp3</span><span class="p">;</span>
@@ -2236,6 +2350,9 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a><span class="w">    </span><span class="n">InterpolationMode</span><span class="p">::</span><span class="n">UniformTimeGrid</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">dt</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">),</span>
 <a id="__codelineno-72-11" name="__codelineno-72-11" href="#__codelineno-72-11"></a><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a><span class="c1">// s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.</span>
@@ -2271,15 +2388,21 @@ J_\text{lin}=\begin{cases}
 <a id="__codelineno-74-8" name="__codelineno-74-8" href="#__codelineno-74-8"></a><span class="p">)</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>The interpolation routines also support non-uniform time samples; see the <a href="#docs-architecture">documentation and architecture</a> section for details. Finally, evaluate the interpolated trajectory <span class="arithmatex">\(\boldsymbol{q}=\boldsymbol{q}(t)\)</span>. A simple approach is:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="24:3"><input checked="checked" id="rust_20" name="__tabbed_24" type="radio" /><input id="c_20" name="__tabbed_24" type="radio" /><input id="python_20" name="__tabbed_24" type="radio" /><div class="tabbed-labels"><label for="rust_20">Rust</label><label for="c_20">C</label><label for="python_20">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="24:5"><input checked="checked" id="rust_20" name="__tabbed_24" type="radio" /><input id="c_40" name="__tabbed_24" type="radio" /><input id="c_41" name="__tabbed_24" type="radio" /><input id="python_20" name="__tabbed_24" type="radio" /><input id="matlab_20" name="__tabbed_24" type="radio" /><div class="tabbed-labels"><label for="rust_20">Rust</label><label for="c_40">C++</label><label for="c_41">C</label><label for="python_20">Python</label><label for="matlab_20">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a><span class="kd">let</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">evaluate_q</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s_t</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
 <a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a><span class="kd">let</span><span class="w"> </span><span class="n">q_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out</span><span class="p">.</span><span class="n">q</span><span class="p">;</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppMatrixF64</span><span class="w"> </span><span class="n">q_t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
@@ -2311,14 +2434,20 @@ J_\text{lin}=\begin{cases}
 <div class="highlight"><pre><span></span><code><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a><span class="n">q_t</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">evaluate_q</span><span class="p">(</span><span class="n">s_t</span><span class="p">)</span><span class="o">.</span><span class="n">q</span>
 </code></pre></div>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <p>This completes the full third-order trajectory pipeline.</p>
 <h3 id="resource-management">Resource Management</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="25:3"><input checked="checked" id="rust_21" name="__tabbed_25" type="radio" /><input id="c_21" name="__tabbed_25" type="radio" /><input id="python_21" name="__tabbed_25" type="radio" /><div class="tabbed-labels"><label for="rust_21">Rust</label><label for="c_21">C</label><label for="python_21">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="25:5"><input checked="checked" id="rust_21" name="__tabbed_25" type="radio" /><input id="c_42" name="__tabbed_25" type="radio" /><input id="c_43" name="__tabbed_25" type="radio" /><input id="python_21" name="__tabbed_25" type="radio" /><input id="matlab_21" name="__tabbed_25" type="radio" /><div class="tabbed-labels"><label for="rust_21">Rust</label><label for="c_42">C++</label><label for="c_43">C</label><label for="python_21">Python</label><label for="matlab_21">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>The Rust API does not require manual resource release. Objects are released automatically when they leave scope.</p>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <p>In the C ABI, <code>CoppSliceF64</code> and <code>CoppMatrixViewF64</code> only borrow user-owned memory and do not need to be released. All owned objects returned by COPP, including <code>CoppVecF64</code>, <code>CoppMatrixF64</code>, <code>CoppProfile3rd</code>, and the <code>CoppPath</code> and <code>CoppRobot</code> handles, must be released with their matching free functions. In real projects, we recommend initializing owned objects to <code>{0}</code> or <code>NULL</code> and using a centralized <code>cleanup</code> block so that resources already created are still released after an early error:</p>
@@ -2344,6 +2473,9 @@ J_\text{lin}=\begin{cases}
 </div>
 <div class="tabbed-block">
 <p>The Python API does not require manual resource release. Objects are managed by the Python runtime.</p>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 </div>
 </div>
@@ -2476,7 +2608,7 @@ J_\text{lin}=\begin{cases}
 </table>
 <h2 id="docs-architecture">Documentation and Architecture</h2>
 <h3 id="documentation">Documentation</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="26:3"><input checked="checked" id="rust_22" name="__tabbed_26" type="radio" /><input id="c_22" name="__tabbed_26" type="radio" /><input id="python_22" name="__tabbed_26" type="radio" /><div class="tabbed-labels"><label for="rust_22">Rust</label><label for="c_22">C</label><label for="python_22">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="26:5"><input checked="checked" id="rust_22" name="__tabbed_26" type="radio" /><input id="c_44" name="__tabbed_26" type="radio" /><input id="c_45" name="__tabbed_26" type="radio" /><input id="python_22" name="__tabbed_26" type="radio" /><input id="matlab_22" name="__tabbed_26" type="radio" /><div class="tabbed-labels"><label for="rust_22">Rust</label><label for="c_44">C++</label><label for="c_45">C</label><label for="python_22">Python</label><label for="matlab_22">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>We recommend using the <a href="https://docs.rs/copp/latest/copp/">latest docs.rs documentation</a>. Local documentation is also available:</p>
@@ -2489,6 +2621,9 @@ J_\text{lin}=\begin{cases}
 <div class="highlight"><pre><span></span><code><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>cargo<span class="w"> </span>doc<span class="w"> </span>--no-deps<span class="w"> </span>--open
 </code></pre></div>
 <p>The generated documentation includes mathematical foundations, path and constraint construction methods, logging and output conventions, error definitions, and solver interfaces.</p>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <p>C documentation:</p>
@@ -2530,10 +2665,13 @@ J_\text{lin}=\begin{cases}
 </code></pre></div>
 <p>The generated entry page is <code>bindings/python/docs/build/html/index.html</code>.</p>
 </div>
+<div class="tabbed-block">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <h3 id="project-architecture">Project Architecture</h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="28:3"><input checked="checked" id="rust_23" name="__tabbed_28" type="radio" /><input id="c_23" name="__tabbed_28" type="radio" /><input id="python_23" name="__tabbed_28" type="radio" /><div class="tabbed-labels"><label for="rust_23">Rust</label><label for="c_23">C</label><label for="python_23">Python</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="28:5"><input checked="checked" id="rust_23" name="__tabbed_28" type="radio" /><input id="c_46" name="__tabbed_28" type="radio" /><input id="c_47" name="__tabbed_28" type="radio" /><input id="python_23" name="__tabbed_28" type="radio" /><input id="matlab_23" name="__tabbed_28" type="radio" /><div class="tabbed-labels"><label for="rust_23">Rust</label><label for="c_46">C++</label><label for="c_47">C</label><label for="python_23">Python</label><label for="matlab_23">Matlab</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <table>
@@ -2566,6 +2704,9 @@ J_\text{lin}=\begin{cases}
 </tr>
 </tbody>
 </table>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 <div class="tabbed-block">
 <table>
@@ -2666,6 +2807,9 @@ J_\text{lin}=\begin{cases}
 </tr>
 </tbody>
 </table>
+</div>
+<div class="tabbed-block">
+<p>TODO</p>
 </div>
 </div>
 </div>

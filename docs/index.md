@@ -117,6 +117,10 @@ In summary, the problem classes supported by `copp` are:
 
     `copp` v0.2.1 requires Rust 1.88 or newer. We strongly recommend building in Release mode for substantially better computational performance.
 
+=== "C++"
+
+    TODO
+
 === "C"
 
     The C ABI is suitable for C/C++ projects, downstream language bindings, and existing robotics software stacks. Prebuilt C ABI SDKs for released versions are available from [GitHub Releases](https://github.com/TOPP-THU/copp/releases). To build from source, start with the repository:
@@ -245,6 +249,10 @@ In summary, the problem classes supported by `copp` are:
     python -c "import copp_py as copp; print(copp.version())"
     ```
 
+=== "Matlab"
+
+    TODO
+
 ## Algorithm Selection
 
 Algorithm selection in `copp` mainly depends on three factors: whether the problem is second-order or third-order, whether the objective is time-optimal or a general convex objective, and whether the higher-performance PRO algorithms are needed.
@@ -282,6 +290,10 @@ We use time-optimal parameterization of a two-dimensional path as a simple examp
     const DIM: usize = 2;
     ```
 
+=== "C++"
+
+    TODO
+
 === "C"
 
     ```c
@@ -313,6 +325,10 @@ We use time-optimal parameterization of a two-dimensional path as a simple examp
     DIM = 2
     ```
 
+=== "Matlab"
+
+    TODO
+
 ### Step 1. Construct the Geometric Path
 
 Strictly speaking, the geometric path $\boldsymbol{q}=\boldsymbol{q}(s)$ is supplied by the user. The `copp` library provides path-related modules as convenient helpers.
@@ -330,6 +346,10 @@ The simplest approach is to construct the path from an analytic expression, for 
 
     let path = Path::from_parametric(|s: Jet3| vec![sin(2.0 * PI * s), cos(2.0 * PI * s)], 0.0, 1.0)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -356,6 +376,10 @@ The simplest approach is to construct the path from an analytic expression, for 
     Python automatic differentiation supports `jax`, `autograd`, `casadi`, and `sympy`. Choose one and install the corresponding dependency as needed.
 
 
+=== "Matlab"
+
+    TODO
+
 #### Option B. Build a Spline from Waypoints
 
 If waypoints are available, a spline path can be constructed as follows:
@@ -376,6 +400,10 @@ If waypoints are available, a spline path can be constructed as follows:
     );
     let path = Path::from_waypoints(&waypoints, SplineConfig::default())?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -424,6 +452,10 @@ If waypoints are available, a spline path can be constructed as follows:
     path = copp.Path.from_waypoints(waypoints)
     ```
 
+
+=== "Matlab"
+
+    TODO
 
 #### Option C. User-Provided Derivatives
 
@@ -496,6 +528,10 @@ In the most general case, users can provide derivatives manually. For TOPP2/COPP
     // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `PathEvaluator3rd`.
     let path = Path::from_evaluator_3rd(NormalizedEvaluator3rd, 0.0, 1.0)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -636,6 +672,10 @@ In the most general case, users can provide derivatives manually. For TOPP2/COPP
     path = copp.Path.from_evaluator_3rd(Evaluator(), 0.0, 1.0)
     ```
 
+=== "Matlab"
+
+    TODO
+
 ### Step 2. Discretize Path Data
 
 Path-parameterization problems are solved on a discrete $s$ grid, for example:
@@ -647,6 +687,10 @@ Path-parameterization problems are solved on a discrete $s$ grid, for example:
     let n = 1001;
     let s: Vec<f64> = (0..n).map(|j| j as f64 / (n - 1) as f64).collect();
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -666,6 +710,10 @@ Path-parameterization problems are solved on a discrete $s$ grid, for example:
     s = np.linspace(0.0, 1.0, n, dtype=np.float64)
     ```
 
+=== "Matlab"
+
+    TODO
+
 Create the robot model:
 
 === "Rust"
@@ -675,6 +723,10 @@ Create the robot model:
 
     let mut robot = Robot::with_capacity(DIM, n);
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -692,6 +744,10 @@ Create the robot model:
     robot = copp.Robot(DIM, capacity=n)
     ```
 
+=== "Matlab"
+
+    TODO
+
 Provide the $s$ grid and path data:
 
 === "Rust"
@@ -702,6 +758,10 @@ Provide the $s$ grid and path data:
         .with_s(s.as_slice())?
         .with_q_from_path_3rd(&path, 0, n)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -723,6 +783,10 @@ Provide the $s$ grid and path data:
     robot.set_q_from_path_3rd(path, 0, n)
     ```
 
+=== "Matlab"
+
+    TODO
+
 For more flexible use cases, paths can be added or removed online, and the robot model can include inverse-kinematics information. These advanced APIs are described in the [documentation and architecture](#docs-architecture) section.
 
 ### Step 3. Construct Constraints
@@ -743,6 +807,10 @@ In most cases, we recommend using high-level APIs with clear physical meaning, f
         .with_axial_velocity((vel_max.as_slice(), n), (vel_min.as_slice(), n), 0)?
         .with_axial_acceleration((acc_max.as_slice(), n), (acc_min.as_slice(), n), 0)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -783,6 +851,10 @@ In most cases, we recommend using high-level APIs with clear physical meaning, f
     robot.add_acceleration_limits(upper, lower, start_idx_s=0, length=n)
     ```
 
+=== "Matlab"
+
+    TODO
+
 For third-order trajectories, additional third-order constraints are needed, for example:
 
 === "Rust"
@@ -793,6 +865,10 @@ For third-order trajectories, additional third-order constraints are needed, for
     let jerk_min = vec![-1.0; DIM];
     robot.with_axial_jerk((jerk_max.as_slice(), n), (jerk_min.as_slice(), n), 0)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -816,6 +892,10 @@ For third-order trajectories, additional third-order constraints are needed, for
     robot.add_jerk_limits(upper, lower, start_idx_s=0, length=n)
     ```
 
+=== "Matlab"
+
+    TODO
+
 Lower-level and more flexible constraint-construction APIs are described in the [documentation and architecture](#docs-architecture) section.
 
 ### Step 4. Call the Solver
@@ -831,6 +911,10 @@ Here we solve a TOPP2 problem with `topp2_ra`. First define the problem:
     let a_boundary = (0.0, 0.0); // a(0) = 0, a(1) = 0
     let problem = Topp2ProblemBuilder::new(&robot, idx_s_interval, a_boundary).build()?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -854,6 +938,10 @@ Here we solve a TOPP2 problem with `topp2_ra`. First define the problem:
     )
     ```
 
+=== "Matlab"
+
+    TODO
+
 Then build solver options and call the solver:
 
 === "Rust"
@@ -864,6 +952,10 @@ Then build solver options and call the solver:
     let options = ReachSet2OptionsBuilder::new().build()?;
     let a_ra = topp2_ra(&problem, &options)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -889,6 +981,10 @@ Then build solver options and call the solver:
     )
     ```
 
+=== "Matlab"
+
+    TODO
+
 This gives the profile $a=a(s)$.
 
 ### Step 5. Post-Process the Second-Order Trajectory (Second-Order Only)
@@ -904,6 +1000,10 @@ Next we convert the result into the actual trajectory $\boldsymbol{q}=\boldsymbo
     // t_s[i] is the time at which the path parameter s[i] is reached.
     let (t_final, t_s) = s_to_t_topp2(&s, &a_ra, 0.0)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -930,6 +1030,10 @@ Next we convert the result into the actual trajectory $\boldsymbol{q}=\boldsymbo
     t_final, t_s = copp.interpolation.s_to_t_topp2(s, a_ra, 0.0)
     ```
 
+=== "Matlab"
+
+    TODO
+
 Then invert the timing relation to obtain $s=s(t)$ and interpolate:
 
 === "Rust"
@@ -947,6 +1051,10 @@ Then invert the timing relation to obtain $s=s(t)$ and interpolate:
         InterpolationMode::UniformTimeGrid(0.0, dt, true),
     )?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -983,6 +1091,10 @@ Then invert the timing relation to obtain $s=s(t)$ and interpolate:
     )
     ```
 
+=== "Matlab"
+
+    TODO
+
 The interpolation routines also support non-uniform time samples; see the [documentation and architecture](#docs-architecture) section for details. Finally, evaluate the interpolated trajectory $\boldsymbol{q}=\boldsymbol{q}(t)$. A simple approach is:
 
 === "Rust"
@@ -991,6 +1103,10 @@ The interpolation routines also support non-uniform time samples; see the [docum
     let out = path.evaluate_q(&s_t)?;
     let q_t = out.q;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1023,6 +1139,10 @@ The interpolation routines also support non-uniform time samples; see the [docum
     q_t = path.evaluate_q(s_t).q
     ```
 
+=== "Matlab"
+
+    TODO
+
 This completes the full second-order trajectory pipeline. For a third-order trajectory, skip the second-order post-processing step and continue with the following workflow.
 
 ### Step 6. Construct and Solve the Third-Order Problem (Third-Order Only)
@@ -1040,6 +1160,10 @@ Construct the third-order problem as follows. The non-convex third-order constra
         Topp3ProblemBuilder::new(&mut robot, idx_s_interval.0, &a_ra, (0.0, 0.0), (0.0, 0.0))
         .build_with_linearization()?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1080,6 +1204,10 @@ Construct the third-order problem as follows. The non-convex third-order constra
     )
     ```
 
+=== "Matlab"
+
+    TODO
+
 Using `topp3_socp` as an example, call the solver as follows:
 
 === "Rust"
@@ -1092,6 +1220,10 @@ Using `topp3_socp` as an example, call the solver as follows:
         .build()?;
     let profile = topp3_socp(&topp3_problem, &options_socp)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1117,6 +1249,10 @@ Using `topp3_socp` as an example, call the solver as follows:
     profile = copp.solver.topp3_socp.solve(problem, options)
     ```
 
+=== "Matlab"
+
+    TODO
+
 This already produces a feasible, near-optimal third-order trajectory $a_1(s),b_1(s)$ and can be used directly in the next step. If more computational budget is available, use $a_1(s)$ as the next linearization point and solve a new linearized third-order problem:
 
 === "Rust"
@@ -1127,6 +1263,10 @@ This already produces a feasible, near-optimal third-order trajectory $a_1(s),b_
         .build_with_linearization()?;
     let profile = topp3_socp(&topp3_problem, &options_socp)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1171,6 +1311,10 @@ This already produces a feasible, near-optimal third-order trajectory $a_1(s),b_
     profile = copp.solver.topp3_socp.solve(problem, options)
     ```
 
+=== "Matlab"
+
+    TODO
+
 When computational resources allow, the above procedure can be repeated: linearize the third-order non-convex problem at $a_k(s)$ and solve for $a_{k+1}(s),b_{k+1}(s)$. Under non-degenerate conditions, this process can converge to a KKT solution. For practical online use, one to two linearization iterations are usually sufficient.
 
 ### Step 7. Post-Process the Third-Order Trajectory (Third-Order Only)
@@ -1186,6 +1330,10 @@ Next we convert the third-order profile into the actual trajectory $\boldsymbol{
     // t_s[i] is the time at which the path parameter s[i] is reached.
     let (t_final, t_s) = s_to_t_topp3(&s, profile.as_parts(), 0.0)?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1217,6 +1365,10 @@ Next we convert the third-order profile into the actual trajectory $\boldsymbol{
     t_final, t_s = copp.interpolation.s_to_t_topp3(s, profile, 0.0)
     ```
 
+=== "Matlab"
+
+    TODO
+
 Then invert the timing relation to obtain $s=s(t)$ and interpolate:
 
 === "Rust"
@@ -1234,6 +1386,10 @@ Then invert the timing relation to obtain $s=s(t)$ and interpolate:
         InterpolationMode::UniformTimeGrid(0.0, dt, true),
     )?;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1273,6 +1429,10 @@ Then invert the timing relation to obtain $s=s(t)$ and interpolate:
     )
     ```
 
+=== "Matlab"
+
+    TODO
+
 The interpolation routines also support non-uniform time samples; see the [documentation and architecture](#docs-architecture) section for details. Finally, evaluate the interpolated trajectory $\boldsymbol{q}=\boldsymbol{q}(t)$. A simple approach is:
 
 === "Rust"
@@ -1281,6 +1441,10 @@ The interpolation routines also support non-uniform time samples; see the [docum
     let out = path.evaluate_q(&s_t)?;
     let q_t = out.q;
     ```
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1316,6 +1480,10 @@ The interpolation routines also support non-uniform time samples; see the [docum
     q_t = path.evaluate_q(s_t).q
     ```
 
+=== "Matlab"
+
+    TODO
+
 This completes the full third-order trajectory pipeline.
 
 ### Resource Management
@@ -1323,6 +1491,10 @@ This completes the full third-order trajectory pipeline.
 === "Rust"
 
     The Rust API does not require manual resource release. Objects are released automatically when they leave scope.
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1353,6 +1525,10 @@ This completes the full third-order trajectory pipeline.
 === "Python"
 
     The Python API does not require manual resource release. Objects are managed by the Python runtime.
+
+=== "Matlab"
+
+    TODO
 
 ### Step-by-Step Summary
 
@@ -1415,6 +1591,10 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     The generated documentation includes mathematical foundations, path and constraint construction methods, logging and output conventions, error definitions, and solver interfaces.
 
+=== "C++"
+
+    TODO
+
 === "C"
 
     C documentation:
@@ -1463,6 +1643,10 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     The generated entry page is `bindings/python/docs/build/html/index.html`.
 
+=== "Matlab"
+
+    TODO
+
 ### Project Architecture
 
 === "Rust"
@@ -1474,6 +1658,10 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
     | `constraints` | Lower-level constraint interfaces.                                       |
     | `solver`      | Solvers for each problem class.                                          |
     | `diag`        | Error types, logging verbosity, and diagnostic information.              |
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -1503,6 +1691,10 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
     | `copp_py.objective`     | COPP2/COPP3 objective descriptions, including time, linear, thermal-energy, and torque-total-variation objectives.                                |
     | `copp_py.clarabel`      | Clarabel SOCP options, settings, solver status, and expert diagnostic results.                                                                    |
     | `copp_py.core`          | Version, error types, enums, matrix layouts, and common type conventions.                                                                         |
+
+=== "Matlab"
+
+    TODO
 
 ## Citing
 

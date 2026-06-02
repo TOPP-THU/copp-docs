@@ -1,4 +1,4 @@
-# COPP 文档
+﻿# COPP 文档
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/TOPP-THU/copp/blob/main/LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
 
@@ -116,6 +116,10 @@ $$
     ```
 
     `copp` v0.2.1 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。
+
+=== "C++"
+
+    TODO
 
 === "C"
 
@@ -245,32 +249,36 @@ $$
     python -c "import copp_py as copp; print(copp.version())"
     ```
 
+=== "Matlab"
+
+    TODO 这里后面再确定安装方式
+
 ## 算法选择
 
 `copp` 中算法的选择主要取决于三个因素：问题是二阶还是三阶、目标是时间最优还是一般凸目标、以及是否需要 PRO 版本提供的更高性能。
 
-| 问题类别 | 算法       | 可用版本 | 说明                                                                                                                                                                                                           |
-| -------- | ---------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TOPP2    | TOPP2-RA   | 开源     | 基于可达性分析的高速算法。在常见 benchmark 中相对全局优化基准的误差通常低于 $10^{-4}$，适合作为二阶时间最优问题的默认入口。                                                                                       |
-| COPP2    | COPP2-SOCP | 开源     | 将问题建模为 SOCP 并由 `clarabel` 求解。在凸建模假设下具备全局最优性，但计算开销通常明显高于 RA 类方法。                                                                                                             |
-| COPP2    | COPP2-RDDP | PRO      | 原创的高速算法，保持全局最优解质量，并显著快于 COPP2-SOCP。                                                                                                                                                     |
-| TOPP3    | TOPP3-SOCP | 开源     | 基于 `clarabel` 的锥优化形式，通常能得到高质量的 KKT 解；在特定数据集上计算成本可能较高。                                                                                                                          |
-| TOPP3    | TOPP3-LP   | 开源     | TOPP3-SOCP 的线性目标近似形式，通常更快；但在 jerk 约束较紧时可能次优，因此主要推荐在 jerk 边界较宽松时使用。                                                                                                       |
-| TOPP3    | TOPP3-RA   | PRO      | 基于可达性分析的高速三阶算法；在 jerk 约束较紧时可能次优，主要推荐在 jerk 边界较宽松时使用。                                                                                                                       |
-| COPP3    | COPP3-SOCP | 开源     | 基于 `clarabel` 的锥优化形式，通常具有较强的实际最优性，但计算成本较高。                                                                                                                                         |
+| 问题类别 | 算法       | 可用版本 | 说明                                                                                                                                                                                                                       |
+| -------- | ---------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| TOPP2    | TOPP2-RA   | 开源     | 基于可达性分析的高速算法。在常见 benchmark 中相对全局优化基准的误差通常低于 $10^{-4}$，适合作为二阶时间最优问题的默认入口。                                                                                                |
+| COPP2    | COPP2-SOCP | 开源     | 将问题建模为 SOCP 并由 `clarabel` 求解。在凸建模假设下具备全局最优性，但计算开销通常明显高于 RA 类方法。                                                                                                                   |
+| COPP2    | COPP2-RDDP | PRO      | 原创的高速算法，保持全局最优解质量，并显著快于 COPP2-SOCP。                                                                                                                                                                |
+| TOPP3    | TOPP3-SOCP | 开源     | 基于 `clarabel` 的锥优化形式，通常能得到高质量的 KKT 解；在特定数据集上计算成本可能较高。                                                                                                                                  |
+| TOPP3    | TOPP3-LP   | 开源     | TOPP3-SOCP 的线性目标近似形式，通常更快；但在 jerk 约束较紧时可能次优，因此主要推荐在 jerk 边界较宽松时使用。                                                                                                              |
+| TOPP3    | TOPP3-RA   | PRO      | 基于可达性分析的高速三阶算法；在 jerk 约束较紧时可能次优，主要推荐在 jerk 边界较宽松时使用。                                                                                                                               |
+| COPP3    | COPP3-SOCP | 开源     | 基于 `clarabel` 的锥优化形式，通常具有较强的实际最优性，但计算成本较高。                                                                                                                                                   |
 | COPP3    | COPP3-RDDP | PRO      | 高速原创算法，能够得到接近 TOPP3-SOCP 质量的 KKT 解，同时显著快于 TOPP3-SOCP、TOPP3-LP 和 COPP3-SOCP。COPP3-RDDP 也可以作为高质量 TOPP3 求解器使用；在长路径问题上，它可能比 COPP3-SOCP 具有更好的实际最优性和数值稳定性。 |
 
 更具体地说，可以按如下方式选择：
 
-| 场景                                           | 推荐算法                | 可用版本 | 主要原因                                                        | 注意事项                         | 备选方案                           |
-| ---------------------------------------------- | ----------------------- | -------- | --------------------------------------------------------------- | -------------------------------- | ---------------------------------- |
-| 二阶时间最优，且要求极低计算时间               | TOPP2-RA                | 开源     | 速度和性能折中极好，在典型 benchmark 中接近全局最优。             | 目标固定为最短时间。             |                                    |
-| 二阶凸目标，且更重视全局解质量                 | COPP2-SOCP              | 开源     | 凸锥优化形式，在模型假设下具有全局最优性。                      | 计算时间高于 RA/RDDP 类方法。      | 若需要大幅提速，可使用 COPP2-RDDP。 |
-| 二阶凸目标，且要求最高计算效率                 | COPP2-RDDP              | PRO      | 保持全局最优解质量，同时显著提高计算速度。                      | 需要 PRO 授权。                    | COPP2-SOCP。                       |
-| 三阶问题，且希望使用开源版本中最强的最优性质量 | TOPP3-SOCP / COPP3-SOCP | 开源     | 具有较强的 KKT 解质量和较广泛适用性。                             | 在特定数据集上计算成本可能较高。 | 若需要大幅提速，可使用 COPP3-RDDP。 |
-| 三阶时间最优，且希望使用更快的开源近似         | TOPP3-LP                | 开源     | 当用户自己的路径数据集显示它具有更好的速度/性能表现时可以使用。 | jerk 约束较紧时可能次优。         | TOPP3-SOCP 或 COPP3-RDDP。           |
-| 三阶时间最优，jerk 边界较宽松且要求极低计算时间 | TOPP3-RA                | PRO      | 计算开销很低。                                                  | jerk 约束较紧时可能次优。         | COPP3-RDDP 或 TOPP3-SOCP。           |
-| 三阶高质量、高稳定性，特别是困难长路径规划     | COPP3-RDDP              | PRO      | 实际最优性强、计算速度高，并且通常在长时域问题上更稳定。        | 需要 PRO 授权。                    | COPP3-SOCP。                       |
+| 场景                                            | 推荐算法                | 可用版本 | 主要原因                                                        | 注意事项                         | 备选方案                            |
+| ----------------------------------------------- | ----------------------- | -------- | --------------------------------------------------------------- | -------------------------------- | ----------------------------------- |
+| 二阶时间最优，且要求极低计算时间                | TOPP2-RA                | 开源     | 速度和性能折中极好，在典型 benchmark 中接近全局最优。           | 目标固定为最短时间。             |                                     |
+| 二阶凸目标，且更重视全局解质量                  | COPP2-SOCP              | 开源     | 凸锥优化形式，在模型假设下具有全局最优性。                      | 计算时间高于 RA/RDDP 类方法。    | 若需要大幅提速，可使用 COPP2-RDDP。 |
+| 二阶凸目标，且要求最高计算效率                  | COPP2-RDDP              | PRO      | 保持全局最优解质量，同时显著提高计算速度。                      | 需要 PRO 授权。                  | COPP2-SOCP。                        |
+| 三阶问题，且希望使用开源版本中最强的最优性质量  | TOPP3-SOCP / COPP3-SOCP | 开源     | 具有较强的 KKT 解质量和较广泛适用性。                           | 在特定数据集上计算成本可能较高。 | 若需要大幅提速，可使用 COPP3-RDDP。 |
+| 三阶时间最优，且希望使用更快的开源近似          | TOPP3-LP                | 开源     | 当用户自己的路径数据集显示它具有更好的速度/性能表现时可以使用。 | jerk 约束较紧时可能次优。        | TOPP3-SOCP 或 COPP3-RDDP。          |
+| 三阶时间最优，jerk 边界较宽松且要求极低计算时间 | TOPP3-RA                | PRO      | 计算开销很低。                                                  | jerk 约束较紧时可能次优。        | COPP3-RDDP 或 TOPP3-SOCP。          |
+| 三阶高质量、高稳定性，特别是困难长路径规划      | COPP3-RDDP              | PRO      | 实际最优性强、计算速度高，并且通常在长时域问题上更稳定。        | 需要 PRO 授权。                  | COPP3-SOCP。                        |
 
 ## Step-by-Step 工作流
 
@@ -280,6 +288,18 @@ $$
 
     ```rust
     const DIM: usize = 2;
+    ```
+
+=== "C++"
+
+    ```cpp
+    #include <cmath>
+    #include <cstddef>
+    #include <vector>
+
+    #include <copp/copp.hpp>
+
+    constexpr std::size_t DIM = 2;
     ```
 
 === "C"
@@ -313,13 +333,19 @@ $$
     DIM = 2
     ```
 
+=== "Matlab"
+
+    ```matlab
+    DIM = 2;
+    ```
+
 ### Step 1. 构造几何路径
 
 严格地说，几何路径 $\boldsymbol{q}=\boldsymbol{q}(s)$ 是用户端给 `copp` 的输入，而 `copp` 库提供了路径相关模块作为辅助。
 
 #### Option A. 解析式自动微分
 
-最简单的方式是通过解析式构造路径，例如：
+最简单的方式是通过解析式构造路径，例如用如下方式可以构造 $\boldsymbol{q}(s)=[sin(2\pi s), cos(2\pi s)]\in\mathbb{R}^2$的解析路径：
 
 === "Rust"
 
@@ -329,6 +355,21 @@ $$
     use std::f64::consts::PI;
 
     let path = Path::from_parametric(|s: Jet3| vec![sin(2.0 * PI * s), cos(2.0 * PI * s)], 0.0, 1.0)?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    auto path = copp::Path::from_parametric(
+        [](copp::Jet3 s) {
+            constexpr double pi = 3.14159265358979323846;
+            return std::vector<copp::Jet3>{
+                copp::sin(2.0 * pi * s),
+                copp::cos(2.0 * pi * s),
+            };
+        },
+        0.0,
+        1.0);
     ```
 
 === "C"
@@ -356,6 +397,16 @@ $$
     Python 的自动微分支持 `jax`, `autograd`, `casadi`, `sympy` 四种工具，可由作者自行选择并安装对应依赖包。
 
 
+=== "Matlab"
+
+    ```matlab
+    path = copp_pro.Path.from_parametric( ...
+        @(s) [sin(2*pi*s); cos(2*pi*s)], ...
+        s_range=[0, 1]);
+    ```
+
+    `from_parametric` 使用 MATLAB 侧 `Jet3` 自动微分；公式返回向量长度就是路径维度 `dim`。
+
 #### Option B. 路径点生成样条
 
 如果提供路径点，可以通过如下方式构建样条路径，例如：
@@ -375,6 +426,18 @@ $$
         ],
     );
     let path = Path::from_waypoints(&waypoints, SplineConfig::default())?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    auto path = copp::Path::from_waypoints({
+        {0.0, 0.0},
+        {0.25, 0.1},
+        {0.5, -0.1},
+        {0.75, 0.2},
+        {1.0, 0.0},
+    });
     ```
 
 === "C"
@@ -424,6 +487,19 @@ $$
     path = copp.Path.from_waypoints(waypoints)
     ```
 
+
+=== "Matlab"
+
+    ```matlab
+    waypoints = [ ...
+        0.0, 0.25, 0.5, 0.75, 1.0; ...
+        0.0, 0.10, -0.10, 0.20, 0.0];
+
+    path = copp_pro.Path.from_waypoints( ...
+        waypoints, ...          % dim x n_waypoints
+        s_range=[0, 1], ...
+        order=3);
+    ```
 
 #### Option C. 用户手动微分
 
@@ -495,6 +571,42 @@ $$
 
     // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `PathEvaluator3rd`.
     let path = Path::from_evaluator_3rd(NormalizedEvaluator3rd, 0.0, 1.0)?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    auto path = copp::Path::from_evaluator_3rd(
+        DIM,
+        0.0,
+        1.0,
+        [](copp::Span<const double> s,
+           copp::MatrixRef q,
+           copp::MatrixRef dq,
+           copp::MatrixRef ddq,
+           copp::MatrixRef dddq) {
+            const double pi2 = 2.0 * 3.14159265358979323846;
+            const double pi2_sq = pi2 * pi2;
+            const double pi2_cu = pi2_sq * pi2;
+
+            for (std::size_t col = 0; col < s.size(); ++col) {
+                const double sj = s[col];
+                const double sin_v = std::sin(pi2 * sj);
+                const double cos_v = std::cos(pi2 * sj);
+
+                q(0, col) = sin_v;
+                q(1, col) = cos_v;
+                dq(0, col) = pi2 * cos_v;
+                dq(1, col) = -pi2 * sin_v;
+                ddq(0, col) = -pi2_sq * sin_v;
+                ddq(1, col) = -pi2_sq * cos_v;
+                dddq(0, col) = -pi2_cu * cos_v;
+                dddq(1, col) = pi2_cu * sin_v;
+            }
+        });
+
+    // 如果只需要 TOPP2/COPP2，可以改用 `Path::from_evaluator_2nd`，
+    // 并省略 `dddq` 输出。
     ```
 
 === "C"
@@ -636,6 +748,23 @@ $$
     path = copp.Path.from_evaluator_3rd(Evaluator(), 0.0, 1.0)
     ```
 
+=== "Matlab"
+
+    ```matlab
+    eval3 = @(s) deal( ...
+        [sin(2*pi*s); cos(2*pi*s)], ...
+        [2*pi*cos(2*pi*s); -2*pi*sin(2*pi*s)], ...
+        [-(2*pi)^2*sin(2*pi*s); -(2*pi)^2*cos(2*pi*s)], ...
+        [-(2*pi)^3*cos(2*pi*s); (2*pi)^3*sin(2*pi*s)]);
+
+    % If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then
+    % the path can be constructed by Path.from_evaluator_2nd without dddq.
+    path = copp_pro.Path.from_evaluator_3rd( ...
+        eval3, dim=DIM, s_range=[0, 1]);
+    ```
+
+    MATLAB evaluator 是 batch callback：输入 `s` 固定为 `1 x N`，输出 `q,dq,ddq,dddq` 固定为 `dim x N`。
+
 ### Step 2. 离散化路径信息
 
 路径参数化问题需要在给定的 $s$ 离散网格上进行，例如：
@@ -646,6 +775,17 @@ $$
     // `n` is the number of path samples (s_i) to build robot constraints on.
     let n = 1001;
     let s: Vec<f64> = (0..n).map(|j| j as f64 / (n - 1) as f64).collect();
+    ```
+
+=== "C++"
+
+    ```cpp
+    // `n` is the number of path samples (s_i) to build robot constraints on.
+    const std::size_t n = 1001;
+    std::vector<double> s(n);
+    for (std::size_t j = 0; j < n; ++j) {
+        s[j] = static_cast<double>(j) / static_cast<double>(n - 1);
+    }
     ```
 
 === "C"
@@ -666,6 +806,13 @@ $$
     s = np.linspace(0.0, 1.0, n, dtype=np.float64)
     ```
 
+=== "Matlab"
+
+    ```matlab
+    n = 1001;
+    s = linspace(0.0, 1.0, n).';
+    ```
+
 创建机器人模型：
 
 === "Rust"
@@ -674,6 +821,12 @@ $$
     use copp::robot::Robot;
 
     let mut robot = Robot::with_capacity(DIM, n);
+    ```
+
+=== "C++"
+
+    ```cpp
+    copp::Robot robot(DIM, n);
     ```
 
 === "C"
@@ -692,6 +845,12 @@ $$
     robot = copp.Robot(DIM, capacity=n)
     ```
 
+=== "Matlab"
+
+    ```matlab
+    robot = copp_pro.Robot(DIM, Capacity=n);
+    ```
+
 输入 $s$ 网格与路径信息：
 
 === "Rust"
@@ -701,6 +860,15 @@ $$
     robot
         .with_s(s.as_slice())?
         .with_q_from_path_3rd(&path, 0, n)?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    // 如果只需要 TOPP2/COPP2，可以把 `set_q_from_path_3rd` 换成
+    // `set_q_from_path_2nd`，不依赖三阶路径求导。
+    robot.append_s(s)
+         .set_q_from_path_3rd(path, 0, n);
     ```
 
 === "C"
@@ -723,6 +891,15 @@ $$
     robot.set_q_from_path_3rd(path, 0, n)
     ```
 
+=== "Matlab"
+
+    ```matlab
+    robot.append_s(s);
+    robot.set_q_from_path_3rd(path);
+    ```
+
+    如果只求解 TOPP2/COPP2，也可以使用 `set_q_from_path_2nd`。
+
 在更灵活的情况下，路径可以在线加入、删除等，机器人可以包含逆运动学信息，这些高级接口详见[文档章节](#docs-architecture)。
 
 ### Step 3. 约束构造
@@ -744,20 +921,37 @@ $$
         .with_axial_acceleration((acc_max.as_slice(), n), (acc_min.as_slice(), n), 0)?;
     ```
 
+=== "C++"
+
+    ```cpp
+    // The axial velocity is -1 <= vel <= 1 for each axis.
+    std::vector<double> vel_max(DIM, 1.0);
+    std::vector<double> vel_min(DIM, -1.0);
+    // The axial acceleration is -1 <= acc <= 1 for each axis.
+    std::vector<double> acc_max(DIM, 1.0);
+    std::vector<double> acc_min(DIM, -1.0);
+
+    robot.add_velocity_limits(vel_max, vel_min, 0, n)
+         .add_acceleration_limits(acc_max, acc_min, 0, n);
+    ```
+
 === "C"
 
     ```c
-    // The axial velocity/acceleration is -1 <= value <= 1 for each axis.
-    double upper[DIM] = {1.0, 1.0};
-    double lower[DIM] = {-1.0, -1.0};
+    // The axial velocity is -1 <= vel <= 1 for each axis.
+    double vel_max[DIM] = {1.0, 1.0};
+    double vel_min[DIM] = {-1.0, -1.0};
+    // The axial acceleration is -1 <= acc <= 1 for each axis.
+    double acc_max[DIM] = {1.0, 1.0};
+    double acc_min[DIM] = {-1.0, -1.0};
 
     if (check(
             copp_add_axial_velocity_limits(
                 robot,
                 0,
                 n,
-                (struct CoppSliceF64){upper, DIM},
-                (struct CoppSliceF64){lower, DIM}),
+                (struct CoppSliceF64){vel_max, DIM},
+                (struct CoppSliceF64){vel_min, DIM}),
             "copp_add_axial_velocity_limits")) {
         return 1;
     }
@@ -766,8 +960,8 @@ $$
                 robot,
                 0,
                 n,
-                (struct CoppSliceF64){upper, DIM},
-                (struct CoppSliceF64){lower, DIM}),
+                (struct CoppSliceF64){acc_max, DIM},
+                (struct CoppSliceF64){acc_min, DIM}),
             "copp_add_axial_acceleration_limits")) {
         return 1;
     }
@@ -776,11 +970,25 @@ $$
 === "Python"
 
     ```python
-    upper = np.ones(DIM, dtype=np.float64)
-    lower = -upper
+    vel_max = np.ones(DIM, dtype=np.float64)
+    vel_min = -vel_max
+    acc_max = np.ones(DIM, dtype=np.float64)
+    acc_min = -acc_max
 
-    robot.add_velocity_limits(upper, lower, start_idx_s=0, length=n)
-    robot.add_acceleration_limits(upper, lower, start_idx_s=0, length=n)
+    robot.add_velocity_limits(vel_max, vel_min, start_idx_s=0, length=n)
+    robot.add_acceleration_limits(acc_max, acc_min, start_idx_s=0, length=n)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    vel_max = ones(DIM, 1);
+    vel_min = -vel_max;
+    acc_max = ones(DIM, 1);
+    acc_min = -acc_max;
+
+    robot.add_velocity_limits(vel_max, vel_min);
+    robot.add_acceleration_limits(acc_max, acc_min);
     ```
 
 如果是求解三阶轨迹，则需要额外引入三阶约束，例如：
@@ -794,17 +1002,28 @@ $$
     robot.with_axial_jerk((jerk_max.as_slice(), n), (jerk_min.as_slice(), n), 0)?;
     ```
 
+=== "C++"
+
+    ```cpp
+    // The axial jerk is -1 <= jerk <= 1 for each axis in this example.
+    std::vector<double> jerk_max(DIM, 1.0);
+    std::vector<double> jerk_min(DIM, -1.0);
+    robot.add_jerk_limits(jerk_max, jerk_min, 0, n);
+    ```
+
 === "C"
 
     ```c
     // The axial jerk is -1 <= jerk <= 1 for each axis in this example.
+    double jerk_max[DIM] = {1.0, 1.0};
+    double jerk_min[DIM] = {-1.0, -1.0};
     if (check(
             copp_add_axial_jerk_limits(
                 robot,
                 0,
                 n,
-                (struct CoppSliceF64){upper, DIM},
-                (struct CoppSliceF64){lower, DIM}),
+                (struct CoppSliceF64){jerk_max, DIM},
+                (struct CoppSliceF64){jerk_min, DIM}),
             "copp_add_axial_jerk_limits")) {
         return 1;
     }
@@ -813,7 +1032,17 @@ $$
 === "Python"
 
     ```python
-    robot.add_jerk_limits(upper, lower, start_idx_s=0, length=n)
+    jerk_max = np.ones(DIM, dtype=np.float64)
+    jerk_min = -jerk_max
+    robot.add_jerk_limits(jerk_max, jerk_min, start_idx_s=0, length=n)
+    ```
+
+=== "Matlab"
+
+    ```matlab
+    jerk_max = ones(DIM, 1);
+    jerk_min = -jerk_max;
+    robot.add_jerk_limits(jerk_max, jerk_min);
     ```
 
 更底层、灵活的约束构造接口详见[文档章节](#docs-architecture)。
@@ -830,6 +1059,20 @@ $$
     let idx_s_interval = (0, n - 1); // 0 <= k <= n-1
     let a_boundary = (0.0, 0.0); // a(0) = 0, a(1) = 0
     let problem = Topp2ProblemBuilder::new(&robot, idx_s_interval, a_boundary).build()?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    namespace topp2 = copp::solver::topp2_ra;
+
+    auto idx_s_interval = copp::IndexInterval{0, n - 1}; // 0 <= k <= n-1
+    auto a_boundary = copp::Boundary2{0.0, 0.0}; // a(0) = 0, a(1) = 0
+    topp2::Problem problem{
+        robot.constraints(),
+        idx_s_interval,
+        a_boundary,
+    };
     ```
 
 === "C"
@@ -854,6 +1097,17 @@ $$
     )
     ```
 
+=== "Matlab"
+
+    ```matlab
+    problem = copp_pro.solver.topp2_ra.Problem( ...
+        robot, ...
+        idx_s_interval=[1, n], ...
+        a_boundary=[0, 0]);
+    ```
+
+    MATLAB 用户侧索引是 1-based；这里 `[1,n]` 覆盖全部站点。
+
 然后构造求解设置并调用求解器，例如：
 
 === "Rust"
@@ -863,6 +1117,13 @@ $$
 
     let options = ReachSet2OptionsBuilder::new().build()?;
     let a_ra = topp2_ra(&problem, &options)?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    auto options = topp2::Options{};
+    auto a_ra = topp2::solve(problem, options);
     ```
 
 === "C"
@@ -889,6 +1150,13 @@ $$
     )
     ```
 
+=== "Matlab"
+
+    ```matlab
+    options = copp_pro.solver.topp2_ra.Options();
+    a_ra = copp_pro.solver.topp2_ra.solve(problem, options);
+    ```
+
 据此，我们得到了 $a=a(s)$。
 
 ### Step 5. 二阶轨迹后处理（仅二阶需要）
@@ -903,6 +1171,16 @@ $$
     // t_final is the traversal time of the path.
     // t_s[i] is the time at which the path parameter s[i] is reached.
     let (t_final, t_s) = s_to_t_topp2(&s, &a_ra, 0.0)?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    // t_final is the traversal time of the path.
+    // t_s[i] is the time at which the path parameter s[i] is reached.
+    auto time = copp::interpolation::s_to_t_topp2(s, a_ra, 0.0);
+    double t_final = time.t_final;
+    const auto &t_s = time.t_s;
     ```
 
 === "C"
@@ -930,6 +1208,13 @@ $$
     t_final, t_s = copp.interpolation.s_to_t_topp2(s, a_ra, 0.0)
     ```
 
+=== "Matlab"
+
+    ```matlab
+    [t_final, t_s] = copp_pro.interpolation.s_to_t_topp2( ...
+        s, a_ra, t0=0.0);
+    ```
+
 接下来求逆解 $s=s(t)$ 并插补，例如：
 
 === "Rust"
@@ -946,6 +1231,14 @@ $$
         &t_s,
         InterpolationMode::UniformTimeGrid(0.0, dt, true),
     )?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    // s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    const double dt = 1.0e-3;
+    auto s_t = copp::interpolation::t_to_s_topp2_uniform(s, a_ra, t_s, dt);
     ```
 
 === "C"
@@ -983,6 +1276,15 @@ $$
     )
     ```
 
+=== "Matlab"
+
+    ```matlab
+    dt = 1.0e-3;
+    s_t = copp_pro.interpolation.t_to_s_topp2_uniform( ...
+        s, a_ra, t_s, dt, ...
+        t0=0.0, include_final=true);
+    ```
+
 上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
 
 === "Rust"
@@ -990,6 +1292,15 @@ $$
     ```rust
     let out = path.evaluate_q(&s_t)?;
     let q_t = out.q;
+    ```
+
+=== "C++"
+
+    ```cpp
+    auto out = path.evaluate_up_to_2nd(s_t);
+    const auto &q_t = out.q;
+    const auto &dq_t = out.dq.value();
+    const auto &ddq_t = out.ddq.value();
     ```
 
 === "C"
@@ -1023,6 +1334,12 @@ $$
     q_t = path.evaluate_q(s_t).q
     ```
 
+=== "Matlab"
+
+    ```matlab
+    q_t = path.evaluate_q(s_t);  % dim x numel(s_t)
+    ```
+
 由此完成了二阶轨迹的完整求解。如果是求解三阶轨迹，那么二阶轨迹后处理步骤可以跳过，并继续如下流程。
 
 ### Step 6. 构造并求解三阶问题（仅三阶需要）
@@ -1039,6 +1356,20 @@ $$
     let topp3_problem =
         Topp3ProblemBuilder::new(&mut robot, idx_s_interval.0, &a_ra, (0.0, 0.0), (0.0, 0.0))
         .build_with_linearization()?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    robot.constraints().amax_substitute(a_ra, 0);
+
+    auto boundary = copp::Boundary3{0.0, 0.0, 0.0, 0.0};
+    copp::solver::topp3::Problem topp3_problem{
+        robot.constraints(),
+        a_ra,
+        0,
+        boundary,
+    };
     ```
 
 === "C"
@@ -1080,6 +1411,19 @@ $$
     )
     ```
 
+=== "Matlab"
+
+    ```matlab
+    problem = copp_pro.solver.topp3_socp.Problem( ...
+        robot, ...
+        a_ra, ...
+        idx_s_start=1, ...
+        a_boundary=[0, 0], ...
+        b_boundary=[0, 0]);
+    ```
+
+    三阶 MATLAB `Problem` 在 `solve` 时按 `a_ra` 进行 lazy linearize。
+
 我们以 `topp3_socp` 为例，调用求解器如下：
 
 === "Rust"
@@ -1091,6 +1435,16 @@ $$
         .allow_almost_solved(true)
         .build()?;
     let profile = topp3_socp(&topp3_problem, &options_socp)?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    namespace topp3_socp = copp::solver::topp3_socp;
+
+    copp::clarabel::Options options_socp;
+    options_socp.allow_almost_solved = true;
+    auto profile = topp3_socp::solve(topp3_problem, options_socp);
     ```
 
 === "C"
@@ -1117,6 +1471,14 @@ $$
     profile = copp.solver.topp3_socp.solve(problem, options)
     ```
 
+=== "Matlab"
+
+    ```matlab
+    options = copp_pro.solver.topp3_socp.Options( ...
+        allow_almost_solved=true);
+    profile = copp_pro.solver.topp3_socp.solve(problem, options);
+    ```
+
 理论上这已经生成了一条可行、近优的三阶轨迹 $a_1(s),b_1(s)$ 了，可以直接进行下一步。如果希望通过更多的计算资源进一步地求解更优的轨迹，可以以 $a_1(s)$ 为线性化点再次求解新的线性化三阶问题：
 
 === "Rust"
@@ -1126,6 +1488,18 @@ $$
         Topp3ProblemBuilder::new(&mut robot, idx_s_interval.0, &profile.a, (0.0, 0.0), (0.0, 0.0))
         .build_with_linearization()?;
     let profile = topp3_socp(&topp3_problem, &options_socp)?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    copp::solver::topp3::Problem topp3_problem_next{
+        robot.constraints(),
+        profile.a,
+        0,
+        boundary,
+    };
+    profile = topp3_socp::solve(topp3_problem_next, options_socp);
     ```
 
 === "C"
@@ -1171,6 +1545,17 @@ $$
     profile = copp.solver.topp3_socp.solve(problem, options)
     ```
 
+=== "Matlab"
+
+    ```matlab
+    problem = copp_pro.solver.topp3_socp.Problem( ...
+        robot, profile.a, ...
+        idx_s_start=1, ...
+        a_boundary=[0, 0], ...
+        b_boundary=[0, 0]);
+    profile = copp_pro.solver.topp3_socp.solve(problem, options);
+    ```
+
 在计算资源允许的情况下，可以重复进行上述过程，也就是用 $a_k(s)$ 线性化三阶非凸问题并求解得到 $a_{k+1}(s),b_{k+1}(s)$，在非退化情况下最终能够收敛到 KKT 解。从在线进行的实用角度，我们推荐完成 1 到 2 次线性化即足够。
 
 ### Step 7. 三阶轨迹后处理（仅三阶需要）
@@ -1185,6 +1570,16 @@ $$
     // t_final is the traversal time of the path.
     // t_s[i] is the time at which the path parameter s[i] is reached.
     let (t_final, t_s) = s_to_t_topp3(&s, profile.as_parts(), 0.0)?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    // t_final is the traversal time of the path.
+    // t_s[i] is the time at which the path parameter s[i] is reached.
+    auto time = copp::interpolation::s_to_t_topp3(s, profile, 0.0);
+    double t_final = time.t_final;
+    const auto &t_s = time.t_s;
     ```
 
 === "C"
@@ -1217,6 +1612,13 @@ $$
     t_final, t_s = copp.interpolation.s_to_t_topp3(s, profile, 0.0)
     ```
 
+=== "Matlab"
+
+    ```matlab
+    [t_final, t_s] = copp_pro.interpolation.s_to_t_topp3( ...
+        s, profile, t0=0.0);
+    ```
+
 接下来求逆解 $s=s(t)$ 并插补，例如：
 
 === "Rust"
@@ -1233,6 +1635,14 @@ $$
         &t_s,
         InterpolationMode::UniformTimeGrid(0.0, dt, true),
     )?;
+    ```
+
+=== "C++"
+
+    ```cpp
+    // s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    const double dt = 1.0e-3;
+    auto s_t = copp::interpolation::t_to_s_topp3_uniform(s, profile, t_s, dt);
     ```
 
 === "C"
@@ -1273,6 +1683,15 @@ $$
     )
     ```
 
+=== "Matlab"
+
+    ```matlab
+    dt = 1.0e-3;
+    s_t = copp_pro.interpolation.t_to_s_topp3_uniform( ...
+        s, profile, t_s, dt, ...
+        t0=0.0, include_final=true);
+    ```
+
 上述插补也支持非均匀时间采样方式，详见[文档章节](#docs-architecture)。最后可以求解插补轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，一种简单的做法是：
 
 === "Rust"
@@ -1280,6 +1699,16 @@ $$
     ```rust
     let out = path.evaluate_q(&s_t)?;
     let q_t = out.q;
+    ```
+
+=== "C++"
+
+    ```cpp
+    auto out = path.evaluate_up_to_3rd(s_t);
+    const auto &q_t = out.q;
+    const auto &dq_t = out.dq.value();
+    const auto &ddq_t = out.ddq.value();
+    const auto &dddq_t = out.dddq.value();
     ```
 
 === "C"
@@ -1316,6 +1745,14 @@ $$
     q_t = path.evaluate_q(s_t).q
     ```
 
+=== "Matlab"
+
+    ```matlab
+    [q_t, dq_t, ddq_t, dddq_t] = path.evaluate_up_to_3rd(s_t);
+    ```
+
+    输出矩阵均为 `dim x numel(s_t)`。
+
 由此完成了三阶轨迹的完整求解。
 
 ### 资源释放
@@ -1323,6 +1760,10 @@ $$
 === "Rust"
 
     Rust 版本不需要手动释放资源，相关对象会在离开作用域时自动释放。
+
+=== "C++"
+
+    C++ 版本不需要手动释放资源。`Path`、`Robot`、`Constraints`、`Profile3rd`、`Matrix` 等对象遵循 RAII，离开作用域后会自动释放 Rust 侧句柄和 C++ 侧存储。`Span`、`MatrixView` 和 `MatrixRef` 只是借用视图，不拥有内存，也不需要释放。
 
 === "C"
 
@@ -1353,6 +1794,15 @@ $$
 === "Python"
 
     Python 版本不需要手动释放资源，相关对象由 Python 运行时自动管理。
+
+=== "Matlab"
+
+    MATLAB 对象会在 `delete` 时释放 native handle，普通脚本通常不需要手动释放。长脚本或测试中可以显式释放，或者使用 `onCleanup`：
+
+    ```matlab
+    cleanup_path = onCleanup(@() path.release());
+    cleanup_robot = onCleanup(@() robot.release());
+    ```
 
 ### Step-by-Step 小结
 
@@ -1415,6 +1865,10 @@ $$
 
     生成的文档包含数学基础、路径/约束构造方法、日志和输出约定、错误定义以及求解器接口。
 
+=== "C++"
+
+    TODO
+
 === "C"
 
     C 文档如下：
@@ -1463,6 +1917,17 @@ $$
 
     生成的入口页面是 `bindings/python/docs/build/html/index.html`。
 
+=== "Matlab"
+
+    MATLAB 文档可在本地通过 `publish` 生成：
+
+    ```matlab
+    cd bindings/matlab/docs
+    build_docs()
+    ```
+
+    生成的入口页面位于 `bindings/matlab/docs/html/overview.html`。
+
 ### 项目架构
 
 === "Rust"
@@ -1475,34 +1940,51 @@ $$
     | `solver`      | 各个求解器。                         |
     | `diag`        | 错误类型、日志 verbosity、诊断信息。 |
 
+=== "C++"
+
+    TODO
+
 === "C"
 
-    | 头文件                 | 负责内容                                              |
-    | ---------------------- | ----------------------------------------------------- |
-    | `copp/copp.h`          | Umbrella header，包含完整 C ABI。                     |
+    | 头文件                 | 负责内容                                               |
+    | ---------------------- | ------------------------------------------------------ |
+    | `copp/copp.h`          | Umbrella header，包含完整 C ABI。                      |
     | `copp/core.h`          | 状态码、last error、矩阵/向量视图、Clarabel 选项。     |
     | `copp/path.h`          | 路径句柄、样条路径、callback 路径、路径求值。          |
     | `copp/robot.h`         | 机器人句柄、路径采样、物理约束、逆动力学 callback。    |
     | `copp/formulation.h`   | TOPP/COPP problem descriptor、目标函数、profile 类型。 |
-    | `copp/interpolation.h` | 二阶/三阶轨迹后处理与插补。                           |
-    | `copp/topp2.h`         | TOPP2-RA 和 ReachSet2 接口。                             |
+    | `copp/interpolation.h` | 二阶/三阶轨迹后处理与插补。                            |
+    | `copp/topp2.h`         | TOPP2-RA 和 ReachSet2 接口。                           |
     | `copp/copp2.h`         | COPP2-SOCP 接口。                                      |
-    | `copp/topp3.h`         | TOPP3-LP 和 TOPP3-SOCP 接口。                            |
+    | `copp/topp3.h`         | TOPP3-LP 和 TOPP3-SOCP 接口。                          |
     | `copp/copp3.h`         | COPP3-SOCP 接口。                                      |
 
 === "Python"
 
-    | 模块                    | 负责内容                                                                                             |
-    | ----------------------- | ---------------------------------------------------------------------------------------------------- |
-    | `copp_py`               | 顶层包，导出常用类型、函数和子模块入口。                                                             |
-    | `copp_py.path`          | `Path`、`SplineConfig`、路径求值、waypoint 样条、自动微分与用户 evaluator 路径。                        |
+    | 模块                    | 负责内容                                                                                              |
+    | ----------------------- | ----------------------------------------------------------------------------------------------------- |
+    | `copp_py`               | 顶层包，导出常用类型、函数和子模块入口。                                                              |
+    | `copp_py.path`          | `Path`、`SplineConfig`、路径求值、waypoint 样条、自动微分与用户 evaluator 路径。                      |
     | `copp_py.robot`         | `Robot`、路径采样、速度/加速度/jerk/力矩约束、高级物理约束入口和逆动力学 callback。                   |
-    | `copp_py.constraints`   | `Constraints` 原始约束缓冲区、一/二/三阶底层约束、`amax_substitute` 和滑动窗口操作。                   |
+    | `copp_py.constraints`   | `Constraints` 原始约束缓冲区、一/二/三阶底层约束、`amax_substitute` 和滑动窗口操作。                  |
     | `copp_py.solver`        | 求解器命名空间，包含 `topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_lp`、`topp3_socp`、`copp3_socp`。 |
-    | `copp_py.interpolation` | `Profile3rd`、二阶/三阶 `s_to_t_*`、`t_to_s_*` 和 `a_to_b_topp2` 轨迹后处理。                            |
+    | `copp_py.interpolation` | `Profile3rd`、二阶/三阶 `s_to_t_*`、`t_to_s_*` 和 `a_to_b_topp2` 轨迹后处理。                         |
     | `copp_py.objective`     | COPP2/COPP3 目标函数描述，包括时间、线性、热能耗散、力矩全变分等目标。                                |
-    | `copp_py.clarabel`      | Clarabel SOCP 选项、设置、solver 状态和 expert 诊断结果。                                                |
-    | `copp_py.core`          | 版本、错误类型、枚举、矩阵布局和通用类型约定。                                                       |
+    | `copp_py.clarabel`      | Clarabel SOCP 选项、设置、solver 状态和 expert 诊断结果。                                             |
+    | `copp_py.core`          | 版本、错误类型、枚举、矩阵布局和通用类型约定。                                                        |
+
+=== "Matlab"
+
+    | 模块                                | 负责内容                                                       |
+    | ----------------------------------- | -------------------------------------------------------------- |
+    | `copp_pro`                          | 顶层包，提供 `version`、错误 helper 和常用类型。               |
+    | `copp_pro.Path`                     | waypoint、evaluator、parametric、symbolic、CasADi 路径。       |
+    | `copp_pro.Robot`                    | 站点网格、路径采样、速度/加速度/jerk/力矩约束。                |
+    | `copp_pro.objective`                | 时间、线性、热能耗散、力矩全变分等 COPP 目标描述。             |
+    | `copp_pro.solver`                   | `topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_*`、`copp3_*`。 |
+    | `copp_pro.interpolation`            | 二阶/三阶 `s_to_t_*`、`t_to_s_*` 和 `a_to_b_topp2`。           |
+    | `copp_pro.ClarabelOptions/Settings` | Clarabel 求解器选项和 expert 诊断配置。                        |
+    | `copp_pro.CoppError` / `last_error` | MATLAB exception facade 和 MEX last-error 快照。               |
 
 ## 引用
 
