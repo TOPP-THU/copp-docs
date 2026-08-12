@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/TOPP-THU/copp/blob/main/LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
 
-[![Rust](https://img.shields.io/badge/Rust-native-b7410e)](https://docs.rs/copp/latest/copp/) [![C](https://img.shields.io/badge/C-ABI-00599c)](https://github.com/TOPP-THU/copp/tree/main/bindings/c) [![Python](https://img.shields.io/badge/Python-bindings-3776ab)](https://github.com/TOPP-THU/copp/tree/main/bindings/python)
+[![Rust](https://img.shields.io/badge/Rust-native-b7410e)](https://docs.rs/copp/latest/copp/) [![C](https://img.shields.io/badge/C-ABI-a8b9cc)](https://github.com/TOPP-THU/copp/tree/main/bindings/c) [![Python](https://img.shields.io/badge/Python-bindings-ffd43b)](https://github.com/TOPP-THU/copp/tree/main/bindings/python) [![C++](https://img.shields.io/badge/C%2B%2B-bindings-00599c)](https://github.com/TOPP-THU/copp/tree/main/bindings/cpp) [![MATLAB](https://img.shields.io/badge/MATLAB-bindings-e16737)](https://github.com/TOPP-THU/copp/tree/main/bindings/matlab)
 
 ## Core Problem
 
@@ -134,8 +134,8 @@ In summary, the problem classes supported by `copp` are:
     To build from local source, you need Python 3.9 or newer, Rust/Cargo, `maturin`, and the platform C/C++ compiler toolchain: Visual Studio Build Tools with the C++ workload on Windows, GCC/Clang on Linux, or Xcode Command Line Tools on macOS. Start with the repository:
 
     ```sh
-    git clone https://github.com/TOPP-THU/topp.git
-    cd topp
+    git clone https://github.com/TOPP-THU/copp.git
+    cd copp
     python -m pip install -U pip
     python -m pip install -U maturin numpy jax
     maturin develop --release --features python
@@ -149,19 +149,148 @@ In summary, the problem classes supported by `copp` are:
 
 === "Matlab"
 
-    TODO
+    Prebuilt MATLAB toolboxes are published with every release on the [COPP GitHub Releases page](https://github.com/TOPP-THU/copp/releases). Each release ships one `.mltbx` per platform, named `copp-matlab-<version>-<platform>.mltbx`, where `<platform>` is one of `windows-x86_64`, `linux-x86_64`, `macos-aarch64`, or `macos-x86_64`. Each `.mltbx` is accompanied by a `.sha256` checksum file. MATLAB R2024b or newer is required.
+
+    Download the asset matching your platform. If you are unsure which one that is, run `computer("arch")` in MATLAB and use the table below:
+
+    | `computer("arch")` | Release asset platform |
+    | ------------------ | ---------------------- |
+    | `win64`            | `windows-x86_64`       |
+    | `glnxa64`          | `linux-x86_64`         |
+    | `maca64`           | `macos-aarch64`        |
+    | `maci64`           | `macos-x86_64`         |
+
+    Pick the macOS asset carefully. MATLAB toolboxes only distinguish Windows, macOS, and Linux, so both macOS packages declare plain macOS support and MATLAB will not stop you from installing the Apple-silicon package on an Intel Mac; the mismatch would only surface later, when the MEX gateway fails to load.
+
+    Install the downloaded toolbox by double-clicking it in MATLAB, or from the Command Window:
+
+    ```matlab
+    matlab.addons.toolbox.installToolbox("copp-matlab-<version>-<platform>.mltbx", true)
+    copp.version()
+    ```
+
+    `copp.version()` reads the version out of the linked native library through the MEX gateway, so a successful call also confirms that the toolbox loaded correctly. Do not unpack `.mltbx` files manually: they are MATLAB toolbox installers, and installing them manages the MATLAB path for you.
+
+    If you have the repository checked out, `bindings/matlab/install_copp.m` automates the same steps. It detects the platform, downloads the matching release asset, and installs it:
+
+    ```matlab
+    cd bindings/matlab
+    install_copp()                    % latest release
+    install_copp(Version="v0.2.2")    % a specific release
+    ```
+
+    To build from source instead, you additionally need Rust/Cargo and a MATLAB-supported C++ compiler. Start with the repository:
+
+    ```sh
+    git clone https://github.com/TOPP-THU/copp.git
+    cd copp
+    cargo build --release --lib --features matlab
+    ```
+
+    The Cargo `matlab` feature reuses the C ABI internally, so it does not enable MATLAB code in default pure-Rust builds. Then, in the MATLAB Command Window:
+
+    ```matlab
+    cd bindings/matlab
+    mex -setup C++   % only needed the first time, or when changing compiler
+    build()
+    addpath(pwd)
+    rehash
+    copp.version()
+    ```
+
+    `build()` links statically by default, which is the recommended build for ordinary use. `build(Linkage="dynamic")` produces a smaller MEX file but requires the native library to be discoverable at runtime.
+
+    Two path constructors need optional dependencies: `copp.Path.from_symbolic` requires the Symbolic Math Toolbox, and `copp.Path.from_casadi` requires CasADi. Everything else works with base MATLAB.
 
 === "C++"
 
-    TODO
+    The C++ SDK suits projects that prefer RAII, `namespace copp`, `std::vector` / `copp::Matrix`, and an optional Eigen adapter. Prebuilt C++ SDKs for released versions are available from [GitHub Releases](https://github.com/TOPP-THU/copp/releases). C++ currently has no single de-facto official distribution platform comparable to crates.io for Rust or PyPI for Python; the common choices are GitHub Releases plus a CMake package, or a vcpkg / Conan recipe provided later.
+
+    To build from source, start with the repository:
+
+    ```sh
+    git clone https://github.com/TOPP-THU/copp.git
+    cd copp
+    ```
+
+    You need Cargo, CMake, and a C++17-capable compiler toolchain: Visual Studio Build Tools with the C++ workload on Windows, GCC/Clang on Linux, or Xcode Command Line Tools on macOS. If you use `copp/eigen.hpp`, Eigen is required as well; if you only use the core C++ API, the Eigen adapter can be turned off in CMake.
+
+    The C++ facade is gated behind the Cargo `cpp` feature. First build the native library from the repository root:
+
+    ```sh
+    cargo build --release --lib --features cpp
+    ```
+
+    Then configure and build the CMake project:
+
+    === "Linux"
+
+        ```sh
+        cmake -S bindings/cpp -B bindings/cpp/build -DCOPP_CPP_WITH_EIGEN=OFF -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/cpp/build
+        ```
+
+    === "Windows"
+
+        ```powershell
+        cmake -S bindings/cpp -B bindings/cpp/build -DCOPP_CPP_WITH_EIGEN=OFF
+        cmake --build bindings/cpp/build --config Release
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake -S bindings/cpp -B bindings/cpp/build -DCOPP_CPP_WITH_EIGEN=OFF -DCMAKE_BUILD_TYPE=Release
+        cmake --build bindings/cpp/build
+        ```
+
+    To install it as a package discoverable by downstream CMake projects:
+
+    === "Linux"
+
+        ```sh
+        cmake --install bindings/cpp/build --prefix <install-prefix>
+        ```
+
+    === "Windows"
+
+        ```powershell
+        cmake --install bindings/cpp/build --config Release --prefix <install-prefix>
+        ```
+
+    === "macOS"
+
+        ```sh
+        cmake --install bindings/cpp/build --prefix <install-prefix>
+        ```
+
+    Replace `<install-prefix>` with your own installation path, for example `C:/copp-install` or `$PWD/copp-install`.
+
+    Use it from a downstream project as follows:
+
+    ```cmake
+    find_package(copp CONFIG REQUIRED)
+
+    add_executable(app main.cpp)
+    target_link_libraries(app PRIVATE copp::copp)
+    ```
+
+    Pass the installation prefix to CMake when configuring the downstream project:
+
+    ```sh
+    cmake -S app -B app/build -DCMAKE_PREFIX_PATH=<install-prefix>
+    cmake --build app/build --config Release
+    ```
+
+    If static linking is desired, add `-DCOPP_LINK_STATIC=ON` to the corresponding COPP CMake configure command above. If you prefer a shared library, add `-DCOPP_LINK_STATIC=OFF` instead and make sure `copp.dll`, `libcopp.so`, or `libcopp.dylib` is discoverable at runtime.
 
 === "C"
 
     The C ABI is suitable for C/C++ projects, downstream language bindings, and existing robotics software stacks. Prebuilt C ABI SDKs for released versions are available from [GitHub Releases](https://github.com/TOPP-THU/copp/releases). To build from source, start with the repository:
 
     ```sh
-    git clone https://github.com/TOPP-THU/topp.git
-    cd topp
+    git clone https://github.com/TOPP-THU/copp.git
+    cd copp
     ```
 
     You need Cargo, CMake, and a C compiler toolchain: Visual Studio Build Tools with the C++ workload on Windows, GCC/Clang on Linux, or Xcode Command Line Tools on macOS. The C ABI is gated behind the Cargo `c` feature. First build the native library from the repository root:
@@ -301,11 +430,21 @@ We use time-optimal parameterization of a two-dimensional path as a simple examp
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    DIM = 2;
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    #include <cmath>
+    #include <cstddef>
+    #include <vector>
+
+    #include <copp/copp.hpp>
+
+    constexpr std::size_t DIM = 2;
+    ```
 
 === "C"
 
@@ -357,7 +496,7 @@ The simplest approach is to construct the path from an analytic expression, for 
 
     def q_fn(s):
         freq = jnp.array([2.0 * jnp.pi, 2.0 * jnp.pi], dtype=jnp.float64)
-        phase = jnp.array([0.0, 0.0], dtype=jnp.float64)
+        phase = jnp.array([0.0, 0.5 * jnp.pi], dtype=jnp.float64)
         return jnp.sin(freq * s + phase)
 
     path = copp.Path.from_jax(q_fn, 0.0, 1.0)
@@ -368,17 +507,62 @@ The simplest approach is to construct the path from an analytic expression, for 
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    path = copp.Path.from_parametric( ...
+        @(s) [sin(2*pi*s); cos(2*pi*s)], ...
+        s_range=[0, 1]);
+    ```
+
+    `from_parametric` uses the MATLAB-side `Jet3` automatic differentiation; the length of the vector returned by the formula is the path dimension `dim`.
 
 === "C++"
 
-    TODO
+    ```cpp
+    auto path = copp::Path::from_parametric(
+        [](copp::Jet3 s) {
+            constexpr double pi = 3.14159265358979323846;
+            return std::vector<copp::Jet3>{
+                copp::sin(2.0 * pi * s),
+                copp::cos(2.0 * pi * s),
+            };
+        },
+        0.0,
+        1.0);
+    ```
 
 === "C"
 
     ```c
-    // Automatic differentiation for the C ABI is planned for v0.2.2.
+    static enum CoppStatus evaluate_parametric_path(
+        void *user_data,
+        size_t dim,
+        struct CoppJet3 s,
+        struct CoppJet3 *q)
+    {
+        (void)user_data;
+        if (dim != DIM || q == NULL) {
+            return COPP_STATUS_INVALID_ARGUMENT;
+        }
+
+        // `s` arrives seeded with ds/ds = 1, and the inline Jet3 helpers in
+        // `copp/path.h` propagate derivatives up to third order. Only q(s)
+        // has to be written; dq, ddq, and dddq come out of the helpers.
+        const struct CoppJet3 w = copp_mul_f64(s, 6.28318530717958647692);
+        q[0] = copp_sin(w);
+        q[1] = copp_cos(w);
+        return COPP_STATUS_OK;
+    }
+
+    struct CoppPath *path = NULL;
+    // On success, release `path` later with `copp_path_free(path)`.
+    if (check(
+            copp_path_from_parametric(DIM, 0.0, 1.0, evaluate_parametric_path, NULL, &path),
+            "copp_path_from_parametric")) {
+        return 1;
+    }
     ```
+
+    `copp_path_from_parametric` and `CoppJet3` require v0.2.2 or newer. Besides `copp_sin`, `copp_cos`, and `copp_mul_f64`, the header provides `copp_add`, `copp_sub`, `copp_mul`, `copp_div`, `copp_neg`, `copp_exp`, `copp_log`, `copp_sqrt`, `copp_powi`, `copp_constant`, and their scalar variants. On earlier versions, supply the derivatives manually through `copp_path_from_evaluator_3rd`, as shown in Option C below.
 
 #### Option B. Build a Spline from Waypoints
 
@@ -420,11 +604,28 @@ If waypoints are available, a spline path can be constructed as follows:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    waypoints = [ ...
+        0.0, 0.25, 0.5, 0.75, 1.0; ...
+        0.0, 0.10, -0.10, 0.20, 0.0];
+
+    path = copp.Path.from_waypoints( ...
+        waypoints, ...          % dim x n_waypoints
+        s_range=[0, 1], ...
+        order=3);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    auto path = copp::Path::from_waypoints({
+        {0.0, 0.0},
+        {0.25, 0.1},
+        {0.5, -0.1},
+        {0.75, 0.2},
+        {1.0, 0.0},
+    });
+    ```
 
 === "C"
 
@@ -526,7 +727,7 @@ In the most general case, users can provide derivatives manually. For TOPP2/COPP
     }
 
     // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `PathEvaluator3rd`.
-    let path = Path::from_evaluator_3rd(NormalizedEvaluator3rd, 0.0, 1.0)?;
+    let path = Path::from_evaluator_3rd(NormalizedEvaluator, 0.0, 1.0)?;
     ```
 
 === "Python"
@@ -572,17 +773,62 @@ In the most general case, users can provide derivatives manually. For TOPP2/COPP
             return q, dq, ddq, dddq
 
 
-    # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_3rd` without dependence on `evaluate_up_to_3rd`.
+    # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `evaluate_up_to_3rd`.
     path = copp.Path.from_evaluator_3rd(Evaluator(), 0.0, 1.0)
     ```
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    eval3 = @(s) deal( ...
+        [sin(2*pi*s); cos(2*pi*s)], ...
+        [2*pi*cos(2*pi*s); -2*pi*sin(2*pi*s)], ...
+        [-(2*pi)^2*sin(2*pi*s); -(2*pi)^2*cos(2*pi*s)], ...
+        [-(2*pi)^3*cos(2*pi*s); (2*pi)^3*sin(2*pi*s)]);
+
+    % If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then
+    % the path can be constructed by Path.from_evaluator_2nd without dddq.
+    path = copp.Path.from_evaluator_3rd( ...
+        eval3, dim=DIM, s_range=[0, 1]);
+    ```
+
+    The MATLAB evaluator is a batch callback: the input `s` is always `1 x N`, and the outputs `q,dq,ddq,dddq` are always `dim x N`.
 
 === "C++"
 
-    TODO
+    ```cpp
+    auto path = copp::Path::from_evaluator_3rd(
+        DIM,
+        0.0,
+        1.0,
+        [](copp::Span<const double> s,
+           copp::MatrixRef q,
+           copp::MatrixRef dq,
+           copp::MatrixRef ddq,
+           copp::MatrixRef dddq) {
+            const double pi2 = 2.0 * 3.14159265358979323846;
+            const double pi2_sq = pi2 * pi2;
+            const double pi2_cu = pi2_sq * pi2;
+
+            for (std::size_t col = 0; col < s.size(); ++col) {
+                const double sj = s[col];
+                const double sin_v = std::sin(pi2 * sj);
+                const double cos_v = std::cos(pi2 * sj);
+
+                q(0, col) = sin_v;
+                q(1, col) = cos_v;
+                dq(0, col) = pi2 * cos_v;
+                dq(1, col) = -pi2 * sin_v;
+                ddq(0, col) = -pi2_sq * sin_v;
+                ddq(1, col) = -pi2_sq * cos_v;
+                dddq(0, col) = -pi2_cu * cos_v;
+                dddq(1, col) = pi2_cu * sin_v;
+            }
+        });
+
+    // If only TOPP2/COPP2 is required, use `Path::from_evaluator_2nd` instead
+    // and omit the `dddq` output.
+    ```
 
 === "C"
 
@@ -697,11 +943,21 @@ Path-parameterization problems are solved on a discrete $s$ grid, for example:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    n = 1001;
+    s = linspace(0.0, 1.0, n).';
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    // `n` is the number of path samples (s_i) to build robot constraints on.
+    const std::size_t n = 1001;
+    std::vector<double> s(n);
+    for (std::size_t j = 0; j < n; ++j) {
+        s[j] = static_cast<double>(j) / static_cast<double>(n - 1);
+    }
+    ```
 
 === "C"
 
@@ -732,11 +988,15 @@ Create the robot model:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    robot = copp.Robot(DIM, Capacity=n);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    copp::Robot robot(DIM, n);
+    ```
 
 === "C"
 
@@ -768,11 +1028,21 @@ Provide the $s$ grid and path data:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    robot.append_s(s);
+    robot.set_q_from_path_3rd(path);
+    ```
+
+    If only TOPP2/COPP2 is solved, `set_q_from_path_2nd` can be used instead.
 
 === "C++"
 
-    TODO
+    ```cpp
+    // If only TOPP2/COPP2 is required, replace `set_q_from_path_3rd` with
+    // `set_q_from_path_2nd`, which does not depend on third-order path derivatives.
+    robot.append_s(s)
+         .set_q_from_path_3rd(path, 0, n);
+    ```
 
 === "C"
 
@@ -820,11 +1090,29 @@ In most cases, we recommend using high-level APIs with clear physical meaning, f
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    vel_max = ones(DIM, 1);
+    vel_min = -vel_max;
+    acc_max = ones(DIM, 1);
+    acc_min = -acc_max;
+
+    robot.add_velocity_limits(vel_max, vel_min);
+    robot.add_acceleration_limits(acc_max, acc_min);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    // The axial velocity is -1 <= vel <= 1 for each axis.
+    std::vector<double> vel_max(DIM, 1.0);
+    std::vector<double> vel_min(DIM, -1.0);
+    // The axial acceleration is -1 <= acc <= 1 for each axis.
+    std::vector<double> acc_max(DIM, 1.0);
+    std::vector<double> acc_min(DIM, -1.0);
+
+    robot.add_velocity_limits(vel_max, vel_min, 0, n)
+         .add_acceleration_limits(acc_max, acc_min, 0, n);
+    ```
 
 === "C"
 
@@ -874,11 +1162,20 @@ For third-order trajectories, additional third-order constraints are needed, for
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    jerk_max = ones(DIM, 1);
+    jerk_min = -jerk_max;
+    robot.add_jerk_limits(jerk_max, jerk_min);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    // The axial jerk is -1 <= jerk <= 1 for each axis in this example.
+    std::vector<double> jerk_max(DIM, 1.0);
+    std::vector<double> jerk_min(DIM, -1.0);
+    robot.add_jerk_limits(jerk_max, jerk_min, 0, n);
+    ```
 
 === "C"
 
@@ -924,11 +1221,28 @@ Here we solve a TOPP2 problem with `topp2_ra`. First define the problem:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    problem = copp.solver.topp2_ra.Problem( ...
+        robot, ...
+        idx_s_interval=[1, n], ...
+        a_boundary=[0, 0]);
+    ```
+
+    MATLAB-side indices are 1-based; `[1,n]` here covers every station.
 
 === "C++"
 
-    TODO
+    ```cpp
+    namespace topp2 = copp::solver::topp2_ra;
+
+    auto idx_s_interval = copp::IndexInterval{0, n - 1}; // 0 <= k <= n-1
+    auto a_boundary = copp::Boundary2{0.0, 0.0}; // a(0) = 0, a(1) = 0
+    topp2::Problem problem{
+        robot.constraints(),
+        idx_s_interval,
+        a_boundary,
+    };
+    ```
 
 === "C"
 
@@ -964,11 +1278,17 @@ Then build solver options and call the solver:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    options = copp.solver.topp2_ra.Options();
+    a_ra = copp.solver.topp2_ra.solve(problem, options);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    auto options = topp2::Options{};
+    auto a_ra = topp2::solve(problem, options);
+    ```
 
 === "C"
 
@@ -1009,11 +1329,20 @@ Next we convert the result into the actual trajectory $\boldsymbol{q}=\boldsymbo
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    [t_final, t_s] = copp.solver.topp2_ra.s_to_t( ...
+        s, a_ra, t0=0.0);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    // t_final is the traversal time of the path.
+    // t_s[i] is the time at which the path parameter s[i] is reached.
+    auto time = copp::interpolation::s_to_t_topp2(s, a_ra, 0.0);
+    double t_final = time.t_final;
+    const auto &t_s = time.t_s;
+    ```
 
 === "C"
 
@@ -1067,11 +1396,20 @@ Then invert the timing relation to obtain $s=s(t)$ and interpolate:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    dt = 1.0e-3;
+    s_t = copp.solver.topp2_ra.t_to_s( ...
+        s, a_ra, t_s, dt=dt, ...
+        t0=0.0, include_final=true);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    // s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    const double dt = 1.0e-3;
+    auto s_t = copp::interpolation::t_to_s_topp2_uniform(s, a_ra, t_s, dt);
+    ```
 
 === "C"
 
@@ -1112,11 +1450,18 @@ The interpolation routines also support non-uniform time samples; see the [docum
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    q_t = path.evaluate_q(s_t);  % dim x numel(s_t)
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    auto out = path.evaluate_up_to_2nd(s_t);
+    const auto &q_t = out.q;
+    const auto &dq_t = out.dq.value();
+    const auto &ddq_t = out.ddq.value();
+    ```
 
 === "C"
 
@@ -1176,11 +1521,30 @@ Construct the third-order problem as follows. The non-convex third-order constra
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    problem = copp.solver.topp3_socp.Problem( ...
+        robot, ...
+        a_ra, ...
+        idx_s_start=1, ...
+        a_boundary=[0, 0], ...
+        b_boundary=[0, 0]);
+    ```
+
+    The third-order MATLAB `Problem` lazily linearizes around `a_ra` when `solve` is called.
 
 === "C++"
 
-    TODO
+    ```cpp
+    robot.constraints().amax_substitute(a_ra, 0);
+
+    auto boundary = copp::Boundary3{0.0, 0.0, 0.0, 0.0};
+    copp::solver::topp3::Problem topp3_problem{
+        robot.constraints(),
+        a_ra,
+        0,
+        boundary,
+    };
+    ```
 
 === "C"
 
@@ -1230,11 +1594,21 @@ Using `topp3_socp` as an example, call the solver as follows:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    options = copp.solver.topp3_socp.Options( ...
+        allow_almost_solved=true);
+    profile = copp.solver.topp3_socp.solve(problem, options);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    namespace topp3_socp = copp::solver::topp3_socp;
+
+    copp::clarabel::Options options_socp;
+    options_socp.allow_almost_solved = true;
+    auto profile = topp3_socp::solve(topp3_problem, options_socp);
+    ```
 
 === "C"
 
@@ -1279,11 +1653,26 @@ This already produces a feasible, near-optimal third-order trajectory $a_1(s),b_
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    problem = copp.solver.topp3_socp.Problem( ...
+        robot, profile.a, ...
+        idx_s_start=1, ...
+        a_boundary=[0, 0], ...
+        b_boundary=[0, 0]);
+    profile = copp.solver.topp3_socp.solve(problem, options);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    copp::solver::topp3::Problem topp3_problem_next{
+        robot.constraints(),
+        profile.a,
+        0,
+        boundary,
+    };
+    profile = topp3_socp::solve(topp3_problem_next, options_socp);
+    ```
 
 === "C"
 
@@ -1341,11 +1730,20 @@ Next we convert the third-order profile into the actual trajectory $\boldsymbol{
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    [t_final, t_s] = copp.solver.topp3_socp.s_to_t( ...
+        s, profile, t0=0.0);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    // t_final is the traversal time of the path.
+    // t_s[i] is the time at which the path parameter s[i] is reached.
+    auto time = copp::interpolation::s_to_t_topp3(s, profile, 0.0);
+    double t_final = time.t_final;
+    const auto &t_s = time.t_s;
+    ```
 
 === "C"
 
@@ -1402,11 +1800,20 @@ Then invert the timing relation to obtain $s=s(t)$ and interpolate:
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    dt = 1.0e-3;
+    s_t = copp.solver.topp3_socp.t_to_s( ...
+        s, profile, t_s, dt=dt, ...
+        t0=0.0, include_final=true);
+    ```
 
 === "C++"
 
-    TODO
+    ```cpp
+    // s_t is a uniform time grid of s(t) with dt = 1e-3s. This is useful for plotting and downstream control.
+    const double dt = 1.0e-3;
+    auto s_t = copp::interpolation::t_to_s_topp3_uniform(s, profile, t_s, dt);
+    ```
 
 === "C"
 
@@ -1450,11 +1857,21 @@ The interpolation routines also support non-uniform time samples; see the [docum
 
 === "Matlab"
 
-    TODO
+    ```matlab
+    [q_t, dq_t, ddq_t, dddq_t] = path.evaluate_up_to_3rd(s_t);
+    ```
+
+    All output matrices have shape `dim x numel(s_t)`.
 
 === "C++"
 
-    TODO
+    ```cpp
+    auto out = path.evaluate_up_to_3rd(s_t);
+    const auto &q_t = out.q;
+    const auto &dq_t = out.dq.value();
+    const auto &ddq_t = out.ddq.value();
+    const auto &dddq_t = out.dddq.value();
+    ```
 
 === "C"
 
@@ -1498,11 +1915,16 @@ This completes the full third-order trajectory pipeline.
 
 === "Matlab"
 
-    TODO
+    MATLAB objects release their native handle on `delete`, so ordinary scripts usually do not need to free anything manually. Long scripts and tests can release explicitly, or use `onCleanup`:
+
+    ```matlab
+    cleanup_path = onCleanup(@() path.release());
+    cleanup_robot = onCleanup(@() robot.release());
+    ```
 
 === "C++"
 
-    TODO
+    The C++ API does not require manual resource release. `Path`, `Robot`, `Constraints`, `Profile3rd`, `Matrix`, and similar objects follow RAII and release both the Rust-side handle and the C++-side storage when they leave scope. `Span`, `MatrixView`, and `MatrixRef` are borrowed views that do not own memory and do not need to be released.
 
 === "C"
 
@@ -1536,13 +1958,13 @@ Overall, a minimal closed loop consists of: construct the path $\boldsymbol{q}(s
 
 ## Benchmark
 
-The following results are from `tests/test_random_spline.rs`. Test conditions:
+The open-source rows are reproducible from `tests/test_random_spline.rs` in the repository. The PRO rows (COPP2-RDDP, TOPP3-RA, COPP3-RDDP) come from the same benchmark run on the PRO release and are therefore not part of the open-source test file. Test conditions:
 
 - `release, --include-ignored`
 - CPU: Intel(R) Core(TM) Ultra 9 285K.
 - Dataset: 100 random 7-DOF spline paths, each discretized into 1000 intervals.
 
-All metrics are reported as `mean ± std`.
+All metrics are reported as `mean ± std`. Computation times are machine- and run-dependent, so absolute values will differ from your own runs; the relative comparison between methods is the meaningful part.
 
 #### Time-Optimal
 
@@ -1579,7 +2001,8 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     We recommend using the [latest docs.rs documentation](https://docs.rs/copp/latest/copp/). Local documentation is also available:
 
-    - [v0.2.1 (Latest)](rust/v0.2.1/copp/)
+    - [v0.2.2 (Latest)](rust/v0.2.2/copp/)
+    - [v0.2.1](rust/v0.2.1/copp/)
     - [v0.2.0](rust/v0.2.0/copp/)
     - [v0.1.0](rust/v0.1.0/copp/)
 
@@ -1595,7 +2018,8 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     Python documentation:
 
-    - [v0.2.1 (Latest)](python/v0.2.1/index.html)
+    - [v0.2.2 (Latest)](python/v0.2.2/index.html)
+    - [v0.2.1](python/v0.2.1/index.html)
 
     To generate the Python documentation locally, install Sphinx and build the HTML pages from the `copp` repository root:
 
@@ -1608,17 +2032,53 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
 === "Matlab"
 
-    TODO
+    MATLAB documentation:
+
+    - [v0.2.2 (Latest)](matlab/v0.2.2/index.html)
+
+    It can also be generated locally through `publish`. Run these commands in the **MATLAB Command Window**, not in a system shell:
+
+    ```matlab
+    cd bindings/matlab/docs
+    build_docs()
+    ```
+
+    `build_docs` adds `bindings/matlab` to the MATLAB path itself, so no manual `addpath` is needed. It does, however, execute the code in the documentation pages (`EvalCode` defaults to `true`), and those pages call the COPP API, so the MEX gateway must already be built. Check it first:
+
+    ```matlab
+    copp.version()
+    ```
+
+    If that errors, build the MEX before generating the documentation, as described in the [installation](#installation) section.
+
+    To generate the documentation without leaving a system shell, use MATLAB batch mode:
+
+    ```powershell
+    matlab -batch "cd('bindings/matlab/docs'); build_docs()"
+    ```
+
+    The generated entry page is `bindings/matlab/docs/html/index.html`.
 
 === "C++"
 
-    TODO
+    C++ documentation:
+
+    - [v0.2.2 (Latest)](cpp/v0.2.2/index.html)
+
+    The C++ API documentation is generated with Doxygen from `bindings/cpp/include/copp/*.hpp`, `bindings/cpp/docs/*.md`, and the example code. To inspect the C++ interface on the development branch, generate it locally from the `copp` repository root:
+
+    ```sh
+    doxygen bindings/cpp/Doxyfile
+    ```
+
+    The generated entry page is `bindings/cpp/docs/html/index.html`. Rendering include graphs and call graphs additionally requires Graphviz; if formulas do not display correctly, check the Doxygen MathJax configuration first.
 
 === "C"
 
     C documentation:
 
-    - [v0.2.1 (Latest)](c/v0.2.1/index.html)
+    - [v0.2.2 (Latest)](c/v0.2.2/index.html)
+    - [v0.2.1](c/v0.2.1/index.html)
     - [v0.2.0](c/v0.2.0/index.html)
 
     To generate the C documentation locally, install Doxygen, Graphviz, and PowerShell 7 (`pwsh`, used to regenerate headers), then run the corresponding command from the `copp` repository root:
@@ -1675,11 +2135,29 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
 === "Matlab"
 
-    TODO
+    | Module               | Responsibility                                                        |
+    | -------------------- | --------------------------------------------------------------------- |
+    | `copp`               | Top-level package providing `version`, `Path`, `Robot`, `Profile3rd`. |
+    | `copp.Path`          | Waypoint, evaluator, parametric, symbolic, and CasADi paths.          |
+    | `copp.Robot`         | Station grid, path sampling, velocity/acceleration/jerk/torque limits. |
+    | `copp.objective`     | COPP objectives: time, linear, thermal energy, torque total variation. |
+    | `copp.solver`        | `topp2_ra`, `reach_set2`, `copp2_socp`, `topp3_*`, `copp3_*`.         |
+    | `copp.interpolation` | Second/third-order `s_to_t_*`, `t_to_s_*`, and `a_to_b_topp2`.        |
+    | `copp.clarabel`      | Clarabel solver options, settings, and direct solve method.           |
+    | `copp.diag`          | MATLAB exception facade, verbosity, and MEX last-error snapshots.     |
 
 === "C++"
 
-    TODO
+    | Header / Namespace        | Responsibility                                                   |
+    | ------------------------- | ---------------------------------------------------------------- |
+    | `copp/copp.hpp`           | Umbrella header containing the C++ public facade.                |
+    | `copp/core.hpp`           | Core types such as `Matrix`, `Span`, `Error`, and `Expected`.    |
+    | `copp/path.hpp`           | Waypoint / parametric / evaluator path construction and derivatives. |
+    | `copp/robot.hpp`          | `Robot`, `Constraints`, inverse-dynamics callbacks, and physical constraints. |
+    | `copp/interpolation.hpp`  | TOPP2 / TOPP3 profiles and time interpolation.                   |
+    | `copp/solver/*.hpp`       | TOPP/COPP solver namespaces with problem/options/result types.   |
+    | `copp/eigen.hpp`          | Optional Eigen adapter; the core headers do not depend on Eigen. |
+    | CMake target `copp::copp` | Link entry point for downstream C++ projects; the C ABI is also available as `copp::c_abi`. |
 
 === "C"
 

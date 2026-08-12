@@ -53,7 +53,7 @@ try {
 
     & python -m mkdocs @mkdocsArgs
 
-    foreach ($name in @("rust", "c", "python")) {
+    foreach ($name in @("rust", "c", "cpp", "python", "matlab")) {
         $src = Join-Path $RepoRoot $name
         $dst = Join-Path $SiteDir $name
         if (-not (Test-Path -LiteralPath $src)) {

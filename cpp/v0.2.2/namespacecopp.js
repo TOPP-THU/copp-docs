@@ -1,0 +1,107 @@
+var namespacecopp =
+[
+    [ "clarabel", "namespacecopp_1_1clarabel.html", "namespacecopp_1_1clarabel" ],
+    [ "detail", "namespacecopp_1_1detail.html", [
+      [ "expected_from", "namespacecopp_1_1detail.html#aa6fb7422aa3b651d52a997556b6c3de3", null ],
+      [ "path_handle", "namespacecopp_1_1detail.html#ae09d7bba826f105087254aa0933c314c", null ],
+      [ "robot_handle", "namespacecopp_1_1detail.html#a38537eb3c7b30c9f553efc3f411d6034", null ],
+      [ "robot_handle_mut", "namespacecopp_1_1detail.html#a261e280370565456a7bd88bcae047d19", null ],
+      [ "constraints_handle", "namespacecopp_1_1detail.html#a4c21449097a6c1eb25eb543ca1f05ac8", null ],
+      [ "constraints_handle_mut", "namespacecopp_1_1detail.html#a16184d146b084b206de85bf1a78f26b0", null ]
+    ] ],
+    [ "eigen", "namespacecopp_1_1eigen.html", [
+      [ "ColMajorMatrix", "namespacecopp_1_1eigen.html#a58dd56208feefcc497733270cdf6cf2e", null ],
+      [ "RowMajorMatrix", "namespacecopp_1_1eigen.html#ad921bd831ff01cdbdfe5a97dd2f7f132", null ],
+      [ "Vector", "namespacecopp_1_1eigen.html#a969eca484220f4d59e4d807f2718b3e4", null ],
+      [ "matrix_view", "namespacecopp_1_1eigen.html#af97f054315460f3d6a68bea456bd9b93", null ],
+      [ "matrix_view", "namespacecopp_1_1eigen.html#a8f541ff79799f307234c046addb52c2d", null ],
+      [ "span", "namespacecopp_1_1eigen.html#ad52d8a139c475ffbbf9507bd501d2615", null ],
+      [ "map", "namespacecopp_1_1eigen.html#aa255096be5f7485b8cb4dc9374c313fb", null ],
+      [ "map", "namespacecopp_1_1eigen.html#a73685fad104d35b318dbc2185b7a792b", null ],
+      [ "copy", "namespacecopp_1_1eigen.html#a86dbeb5555c8a6eb3fd3a8bc1c62d1df", null ]
+    ] ],
+    [ "interpolation", "namespacecopp_1_1interpolation.html", "namespacecopp_1_1interpolation" ],
+    [ "objective", "namespacecopp_1_1objective.html", [
+      [ "Time", "namespacecopp_1_1objective.html#ac9a6fd082697060720e07dd32a046844", null ],
+      [ "Linear", "namespacecopp_1_1objective.html#a2febc2163b2013859579d2d7ec996e77", null ],
+      [ "Linear", "namespacecopp_1_1objective.html#ad334784180858f5e774c952b62d8657e", null ],
+      [ "ThermalEnergy", "namespacecopp_1_1objective.html#a412ec9d83fa872673bec5b0721f4deea", null ],
+      [ "ThermalEnergy", "namespacecopp_1_1objective.html#aed3f71362fbad4004947d31ecf722890", null ],
+      [ "TotalVariationTorque", "namespacecopp_1_1objective.html#a7cfd220b5ccd064611eb116fed543abf", null ],
+      [ "TotalVariationTorque", "namespacecopp_1_1objective.html#a6db287e788400c73aa3685db5bfdf6a6", null ]
+    ] ],
+    [ "solver", "namespacecopp_1_1solver.html", "namespacecopp_1_1solver" ],
+    [ "Boundary2", "structcopp_1_1_boundary2.html", "structcopp_1_1_boundary2" ],
+    [ "Boundary3", "structcopp_1_1_boundary3.html", "structcopp_1_1_boundary3" ],
+    [ "Constraints", "classcopp_1_1_constraints.html", "classcopp_1_1_constraints" ],
+    [ "ConstraintsRef", "classcopp_1_1_constraints_ref.html", "classcopp_1_1_constraints_ref" ],
+    [ "Error", "classcopp_1_1_error.html", "classcopp_1_1_error" ],
+    [ "ErrorInfo", "structcopp_1_1_error_info.html", "structcopp_1_1_error_info" ],
+    [ "Expected", "classcopp_1_1_expected.html", "classcopp_1_1_expected" ],
+    [ "IndexInterval", "structcopp_1_1_index_interval.html", "structcopp_1_1_index_interval" ],
+    [ "Jet3", "structcopp_1_1_jet3.html", "structcopp_1_1_jet3" ],
+    [ "Matrix", "classcopp_1_1_matrix.html", "classcopp_1_1_matrix" ],
+    [ "MatrixRef", "classcopp_1_1_matrix_ref.html", "classcopp_1_1_matrix_ref" ],
+    [ "MatrixView", "classcopp_1_1_matrix_view.html", "classcopp_1_1_matrix_view" ],
+    [ "NoThrowTag", "structcopp_1_1_no_throw_tag.html", "structcopp_1_1_no_throw_tag" ],
+    [ "Objective", "classcopp_1_1_objective.html", "classcopp_1_1_objective" ],
+    [ "Path", "classcopp_1_1_path.html", "classcopp_1_1_path" ],
+    [ "PathDerivatives", "structcopp_1_1_path_derivatives.html", "structcopp_1_1_path_derivatives" ],
+    [ "Profile3rd", "structcopp_1_1_profile3rd.html", "structcopp_1_1_profile3rd" ],
+    [ "Profile3rdRef", "structcopp_1_1_profile3rd_ref.html", "structcopp_1_1_profile3rd_ref" ],
+    [ "Robot", "classcopp_1_1_robot.html", "classcopp_1_1_robot" ],
+    [ "Span", "classcopp_1_1_span.html", "classcopp_1_1_span" ],
+    [ "SplineConfig", "structcopp_1_1_spline_config.html", "structcopp_1_1_spline_config" ],
+    [ "PathParametric", "namespacecopp.html#a31e4a4ebd5daebb6a22fbe1d22c5cff7", null ],
+    [ "PathParametricWriter", "namespacecopp.html#ad94330c825b54088be0beb32d7fb42c7", null ],
+    [ "PathEvaluator2nd", "namespacecopp.html#a61cb4cea3bd37df65395485ebc80f210", null ],
+    [ "PathEvaluator3rd", "namespacecopp.html#a0ad043df96018a4bcd68032ea6f703c4", null ],
+    [ "InverseDynamics", "namespacecopp.html#a8abfb0bb5430f16f23efd56e49207b33", null ],
+    [ "Status", "namespacecopp.html#a2e440d42f762b0690879866e399d9637", [
+      [ "ok", "namespacecopp.html#a2e440d42f762b0690879866e399d9637a444bcb3a3fcf8389296c49467f27e1d6", null ],
+      [ "invalid_input", "namespacecopp.html#a2e440d42f762b0690879866e399d9637a1080ed39e08a161dc545804658700e33", null ],
+      [ "bridge_error", "namespacecopp.html#a2e440d42f762b0690879866e399d9637acbcfecbd12d644d855680e9f08570760", null ]
+    ] ],
+    [ "Verbosity", "namespacecopp.html#a2c52e7c5634826967f0a2aaae7e229cc", [
+      [ "Silent", "namespacecopp.html#a2c52e7c5634826967f0a2aaae7e229cca1e3332b2cd20d2d3db407a20f6913d0d", null ],
+      [ "Summary", "namespacecopp.html#a2c52e7c5634826967f0a2aaae7e229cca290612199861c31d1036b185b4e69b75", null ],
+      [ "Debug", "namespacecopp.html#a2c52e7c5634826967f0a2aaae7e229ccaa603905470e2a5b8c13e96b579ef0dba", null ],
+      [ "Trace", "namespacecopp.html#a2c52e7c5634826967f0a2aaae7e229ccadd4ec0ac4e58f7c32a01244ae91150b1", null ]
+    ] ],
+    [ "MatrixLayout", "namespacecopp.html#a1a25b7095770246ca1b29ddf9157997d", [
+      [ "ColumnMajor", "namespacecopp.html#a1a25b7095770246ca1b29ddf9157997daf695e73139b1c1d06d77655104370f00", null ],
+      [ "RowMajor", "namespacecopp.html#a1a25b7095770246ca1b29ddf9157997dabba47a7c03289a67ca347baa3f55be2f", null ]
+    ] ],
+    [ "ObjectiveKind", "namespacecopp.html#affb88b4a12072922bfbbafef58638235", [
+      [ "Time", "namespacecopp.html#affb88b4a12072922bfbbafef58638235aa76d4ef5f3f6a672bbfab2865563e530", null ],
+      [ "Linear", "namespacecopp.html#affb88b4a12072922bfbbafef58638235a32a843da6ea40ab3b17a3421ccdf671b", null ],
+      [ "ThermalEnergy", "namespacecopp.html#affb88b4a12072922bfbbafef58638235a6ac8b564223d6460476933ee2ee1889e", null ],
+      [ "TotalVariationTorque", "namespacecopp.html#affb88b4a12072922bfbbafef58638235aa42dce4b5b07f1930ba86eaf21125dd9", null ]
+    ] ],
+    [ "OutOfRangeMode", "namespacecopp.html#a724c8e565f6748f8e8048d5c41b29e6a", [
+      [ "Error", "namespacecopp.html#a724c8e565f6748f8e8048d5c41b29e6aa902b0d55fddef6f8d651fe1035b7d4bd", null ],
+      [ "Clamp", "namespacecopp.html#a724c8e565f6748f8e8048d5c41b29e6aa08825280e3f8137556325061ba67ff8c", null ]
+    ] ],
+    [ "version", "namespacecopp.html#a7355ac32c50f76f5599fe57d186c3457", null ],
+    [ "operator+", "namespacecopp.html#a6fb3aa0913dac5d17e1c2ef33a75181e", null ],
+    [ "operator+", "namespacecopp.html#ace563aab0d13a589e1d8acac4d37ba0b", null ],
+    [ "operator+", "namespacecopp.html#ae48769db0d7bf5d3c55ed77ea3566bff", null ],
+    [ "operator-", "namespacecopp.html#a19f34fa6e82363eb2768a9bb497f2e65", null ],
+    [ "operator-", "namespacecopp.html#aa5b05ac9a8ac817d86d1cebbac9d30d6", null ],
+    [ "operator-", "namespacecopp.html#af4f1fe732ca4db4a0bc25fbf80d89521", null ],
+    [ "operator-", "namespacecopp.html#a067870b4331000ef01d837cc8377aa1b", null ],
+    [ "operator*", "namespacecopp.html#afa13abbea39b0c5e2fd701ac5cbd1754", null ],
+    [ "operator*", "namespacecopp.html#a5ab7ee70433dba620195bdd46425a1d3", null ],
+    [ "operator*", "namespacecopp.html#af2eea253214f1850263433c29acf0482", null ],
+    [ "operator/", "namespacecopp.html#ac18d1efa9f76e02c0254a876a37d346f", null ],
+    [ "operator/", "namespacecopp.html#a24b9b0ed1632eb263949aa39794ddc4b", null ],
+    [ "operator/", "namespacecopp.html#ac59f0a4e12c772ec96b3df2633165434", null ],
+    [ "sin", "namespacecopp.html#a02ff99d679a7f5cc47fe09a5395e626a", null ],
+    [ "cos", "namespacecopp.html#a7b9eaf8ddf4a8d112b590539ba96cec8", null ],
+    [ "exp", "namespacecopp.html#a748751219f65e24638418d010c564d5e", null ],
+    [ "log", "namespacecopp.html#a4769deac26d425bb0c709fe7a3e1c966", null ],
+    [ "ln", "namespacecopp.html#aee45ac26ddbecf15d2cfe19bfacd3aec", null ],
+    [ "sqrt", "namespacecopp.html#a2752dded6f4b8635bca553dd5a34d1cd", null ],
+    [ "powi", "namespacecopp.html#a07e24593fc3b62c5e05903e43102f618", null ],
+    [ "no_throw", "namespacecopp.html#a69dc464119d42eec88c5cc32938c3a0c", null ]
+];

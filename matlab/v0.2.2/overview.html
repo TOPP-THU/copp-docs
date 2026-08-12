@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>COPP for MATLAB - COPP MATLAB Reference</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2026-08-12">
+<meta name="DC.source" content="overview.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  
+/* COPP MATLAB reference theme. Designed for MATLAB publish HTML from R2024b. */
+:root { --mw-bg:#ffffff; --mw-page-bg:#f7f7f7; --mw-text:#333333; --mw-muted:#666666; --mw-border:#d6d6d6; --mw-border-light:#e5e5e5; --mw-link:#0076a8; --mw-link-hover:#005f87; --mw-code-bg:#f5f5f5; --mw-code-border:#dcdcdc; --mw-table-head:#f3f3f3; --mw-accent:#c45400; }
+html { min-height:100%; background:var(--mw-page-bg); }
+html body.mw-doc-body, html body { margin:0; background:var(--mw-page-bg); color:var(--mw-text); font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:1.55; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+body, body * { box-sizing:border-box; }
+.skip-link { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+.skip-link:focus { left:16px; top:12px; width:auto; height:auto; z-index:1000; padding:7px 10px; background:#fff; border:1px solid var(--mw-border); color:var(--mw-link); }
+.mw-site-header { background:#f2f2f2; border-top:4px solid var(--mw-accent); border-bottom:1px solid #cfcfcf; color:#333; }
+.mw-site-header-inner { max-width:1180px; min-height:54px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.mw-brand-block { display:flex; align-items:baseline; gap:12px; min-width:0; }
+.mw-brand-title { color:#222; font-size:18px; font-weight:400; white-space:nowrap; }
+.mw-brand-subtitle { color:#666; font-size:13px; white-space:nowrap; }
+.mw-search-box { width:268px; min-height:31px; padding:6px 34px 6px 11px; border:1px solid #bdbdbd; border-radius:2px; background:#fff; color:#777; font-size:13px; line-height:17px; text-align:left; }
+.content { max-width:1180px; min-height:calc(100vh - 59px); margin:0 auto; padding:28px 34px 52px; background:var(--mw-bg); border-left:1px solid #eeeeee; border-right:1px solid #eeeeee; }
+.mw-page-head { max-width:860px; outline:none; }
+.breadcrumb { display:flex; flex-wrap:wrap; align-items:center; gap:0; margin:0 0 19px; color:#6f6f6f; font-size:12px; line-height:1.35; }
+.breadcrumb span { display:inline-block; }
+.breadcrumb-separator { margin:0 7px; color:#a0a0a0; }
+.breadcrumb-current { color:#555; }
+h1 { margin:0 0 4px; padding:0; color:#333; font-size:32px; font-weight:400; line-height:1.15; letter-spacing:-0.01em; }
+.function-label { max-width:850px; margin:0 0 23px; color:#555; font-size:15px; line-height:1.45; }
+h2 { clear:left; max-width:850px; margin:31px 0 14px; padding:23px 0 7px; border-bottom:1px solid var(--mw-border); color:#333; font-size:24px; font-weight:400; line-height:1.25; }
+h2.ref-section-syntax { margin-top:24px; }
+h3 { max-width:850px; margin:22px 0 8px; padding:0; color:#333; font-size:17px; font-weight:600; line-height:1.35; }
+h4 { max-width:850px; margin:18px 0 7px; padding:0; color:#333; font-size:14px; font-weight:600; line-height:1.35; }
+p { max-width:850px; margin:0 0 14px; color:#333; font-size:14px; line-height:1.55; }
+a { color:var(--mw-link); text-decoration:none; }
+a:hover, a:focus { color:var(--mw-link-hover); text-decoration:underline; }
+a:visited { color:#005f87; }
+ul, ol { max-width:850px; margin:0 0 18px 23px; padding:0; }
+ul { list-style:square; }
+ol { list-style:decimal; }
+li { margin:4px 0 6px; padding:0; line-height:1.5; }
+li ul, li ol { margin-top:6px; margin-bottom:7px; }
+tt, code, pre { font-family:Consolas, 'Courier New', Courier, monospace; }
+tt, code { color:#222; font-size:.95em; background:var(--mw-code-bg); border:1px solid var(--mw-code-border); border-radius:3px; padding:1px 4px; }
+pre code, pre tt, .ref-syntax code, .syntax-list code { background:transparent; border:0; border-radius:0; padding:0; }
+.ref-syntax { max-width:850px; margin:0 0 19px; }
+.ref-syntax pre.language-matlab { margin:0; padding:0; border:0; background:#fff; color:#111; font-size:14px; line-height:1.8; white-space:pre-wrap; overflow:visible; }
+pre.language-matlab { max-width:850px; margin:8px 0 18px; padding:10px 12px; border:1px solid var(--mw-code-border); background:var(--mw-code-bg); color:#222; font-size:13px; line-height:1.45; overflow:auto; }
+.code-example, .code-output { max-width:850px; margin:10px 0 18px; border:1px solid var(--mw-code-border); background:var(--mw-code-bg); }
+.code-output { margin-top:-10px; background:#fff; }
+.code-toolbar { min-height:28px; padding:5px 10px 4px; border-bottom:1px solid var(--mw-code-border); background:#eeeeee; color:#666; font-size:11px; line-height:18px; text-transform:uppercase; letter-spacing:.03em; }
+.code-output-toolbar { background:#fafafa; color:#777; }
+pre.codeinput, pre.codeoutput { max-width:none; margin:0; border:0; border-radius:0; font-size:13px; line-height:1.48; overflow:auto; }
+pre.codeinput { padding:11px 12px 12px; background:var(--mw-code-bg); color:#222; }
+pre.codeoutput { padding:10px 12px 12px; background:#fff; color:#4c4c4c; }
+pre.error { max-width:850px; padding:10px 12px; border:1px solid #d9534f; background:#fff4f4; color:#b00000; }
+span.keyword { color:#0000ff; }
+span.comment { color:#228b22; }
+span.string { color:#a020f0; }
+span.untermstring { color:#b20000; }
+span.syscmd { color:#b28c00; }
+span.typesection { color:#a0522d; }
+.argument-name { max-width:850px; margin:22px 0 5px; padding:0; border:0; color:#333; font-size:17px; font-weight:600; line-height:1.35; }
+.argument-name tt { font-size:1em; font-weight:600; color:#111; }
+.argument-dash { color:#777; font-weight:400; }
+.argument-summary { color:#333; font-weight:400; }
+.argument-meta, .argument-example { max-width:850px; margin:-2px 0 13px; color:#666; font-size:13px; line-height:1.45; }
+.argument-meta tt, .argument-example tt { color:#333; }
+.syntax-list { max-width:850px; margin:0 0 12px; }
+.syntax-list ul { margin:0 0 12px 19px; }
+.syntax-list code { color:var(--mw-link); }
+.api-grid { max-width:920px; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px; margin:8px 0 22px; }
+.api-card { min-width:0; padding:11px 13px 12px; border:1px solid var(--mw-border); background:#fff; }
+.api-card h3 { margin:0 0 5px; font-size:15px; font-weight:600; line-height:1.35; }
+.api-card p { margin:0; color:#555; font-size:13px; line-height:1.45; }
+.api-kind { margin:0 0 5px; color:#777; font-size:11px; line-height:1.2; text-transform:uppercase; letter-spacing:.03em; }
+.api-link code, a.api-link { color:var(--mw-link); }
+.api-related { max-width:850px; columns:2; column-gap:28px; }
+.api-description { max-width:850px; margin:0 0 16px; }
+.api-description p { margin:0 0 12px; }
+.api-detail { max-width:920px; margin:0 0 24px; padding:0 0 6px; border-bottom:1px solid var(--mw-border-light); }
+.api-detail h3 { margin-top:18px; }
+.argument-list { max-width:920px; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px; margin:8px 0 22px; }
+.argument-item { min-width:0; padding:10px 12px 11px; border-left:3px solid var(--mw-border); background:#fafafa; }
+.argument-item h3 { margin:0 0 5px; font-size:15px; }
+.argument-item p { margin:0; color:#555; font-size:13px; line-height:1.45; }
+.argument-default { display:block; margin-top:5px; color:#666; }
+.on-page { float:right; position:sticky; top:16px; width:270px; margin:0 0 24px 42px; padding:13px 15px 14px; border:1px solid var(--mw-border); background:#f7f7f7; color:#333; }
+.on-page-title { margin:0 0 8px; color:#333; font-size:13px; font-weight:600; line-height:1.35; }
+.on-page-list ul { margin:0; padding:0 0 0 17px; list-style:square; }
+.on-page-list li { margin:4px 0; color:#777; font-size:13px; line-height:1.35; }
+.on-page-list a { color:var(--mw-link); }
+table { max-width:850px; width:auto; margin:10px 0 22px; border-collapse:collapse; border-spacing:0; font-size:13px; line-height:1.45; }
+table th, table td { padding:7px 9px; border:1px solid var(--mw-border); text-align:left; vertical-align:top; }
+table th { background:var(--mw-table-head); color:#333; font-weight:600; }
+table tr:nth-child(even) td { background:#fbfbfb; }
+img { max-width:100%; height:auto; border:0; }
+p img { display:inline-block; margin:2px 0 5px; vertical-align:middle; }
+.mathjax-display { display:block; max-width:850px; margin:2px 0 16px; overflow-x:auto; overflow-y:hidden; }
+.MathJax { font-size:100% !important; }
+.see-also-list { max-width:850px; margin:3px 0 20px; }
+.see-also-list p { margin:0; line-height:2.05; }
+.see-also-list tt { display:inline-block; margin:0 4px 7px 0; padding:2px 7px; border:1px solid #d7e7ef; border-radius:2px; background:#f2f8fb; color:var(--mw-link); font-size:13px; line-height:1.5; }
+.footer { clear:both; max-width:850px; margin:36px 0 0; padding:14px 0 0; border-top:1px solid var(--mw-border); color:#777; font-size:12px; font-style:normal; line-height:1.45; }
+.footer p { margin:0; color:#777; font-size:12px; }
+.footer a, .footer a:visited { color:#777; }
+@media (max-width: 1080px) { .on-page { float:none; position:static; width:auto; max-width:850px; margin:0 0 24px; } .mw-page-head, h2, h3, p, ul, ol, table, .ref-syntax, .code-example, .code-output, .see-also-list, .footer { max-width:100%; } }
+@media (max-width: 760px) { .mw-site-header-inner { min-height:auto; padding:10px 18px; align-items:flex-start; flex-direction:column; gap:8px; } .mw-brand-block { display:block; } .mw-brand-title { font-size:17px; } .mw-brand-subtitle { margin-top:1px; } .mw-search-box { display:none; } .content { padding:22px 18px 38px; border-left:0; border-right:0; } h1 { font-size:28px; } h2 { font-size:21px; margin-top:27px; } h3, .argument-name { font-size:16px; } pre.codeinput, pre.codeoutput, pre.language-matlab { font-size:12px; } }
+@media print { html body.mw-doc-body, html body { background:#fff; } .mw-site-header, .on-page, .skip-link { display:none; } .content { max-width:none; min-height:0; padding:0; border:0; } pre.codeinput, pre.codeoutput, pre.language-matlab { white-space:pre-wrap; word-wrap:break-word; overflow:visible; } a { color:#000; text-decoration:none; } }
+</style>
+<script>
+window.MathJax = { tex: { displayMath: [['\\[','\\]']], inlineMath: [['\\(','\\)']], processEscapes: true }, chtml: { matchFontHeight: false } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="mw-doc-body">
+<a class="skip-link" href="#mw-main-content">Skip to content</a>
+<header class="mw-site-header" role="banner">
+  <div class="mw-site-header-inner">
+    <div class="mw-brand-block">
+      <div class="mw-brand-title">COPP Help Center</div>
+      <div class="mw-brand-subtitle">MATLAB Reference</div>
+    </div>
+    <div class="mw-search-box" aria-hidden="true">Search Help Center</div>
+  </div>
+</header>
+
+<div class="content">
+<div class="mw-page-head" id="mw-main-content" tabindex="-1">
+<nav class="breadcrumb" aria-label="Breadcrumb"><span>Documentation Home</span><span class="breadcrumb-separator">/</span><span>COPP</span><span class="breadcrumb-separator">/</span><span class="breadcrumb-current">MATLAB</span></nav>
+<h1>COPP for MATLAB</h1>
+<div class="function-label">Mathematical orientation, package layout, and a complete first workflow.</div>
+</div>
+<!--introduction-->
+<p>COPP solves optimal path-parameterization problems. A geometric path is written as</p>
+<div class="mathjax-display">\[q = q(s), \qquad s \in [s_{\min}, s_{\max}],\]</div>
+<p>where \(q\) is robot configuration and \(s\) is a scalar path coordinate. The solver does not change the geometric path. It computes a time law</p>
+<div class="mathjax-display">\[s = s(t)\]</div>
+<p>so the robot traverses the path while respecting velocity, acceleration, torque, jerk, and user-supplied constraints. In short, COPP turns a geometry-space path into a feasible and optimized time schedule.</p>
+<p>The MATLAB package is named <tt><a class="api-link" href="ref/copp.html">copp</a></tt>. Public code should call APIs through that package namespace.</p>
+<!--/introduction-->
+<nav class="on-page" aria-labelledby="on-page-title">
+<div class="on-page-title" id="on-page-title">On this page</div>
+<div class="on-page-list">
+<ul>
+<li>
+<a href="#1">Solver profiles</a>
+</li>
+<li>
+<a href="#2">TOPP and COPP</a>
+</li>
+<li>
+<a href="#3">Package layout</a>
+</li>
+<li>
+<a href="#4">Shape glossary</a>
+</li>
+<li>
+<a href="#5">First complete workflow</a>
+</li>
+<li>
+<a href="#6">Reading the rest of the documentation</a>
+</li>
+</ul>
+</div>
+</nav>
+<h2 id="1">Solver profiles</h2>
+<p>Solvers return compact path-speed profiles rather than time-sampled robot trajectories. In second-order solvers the main output is \(a\), the squared path speed at station nodes. Third-order solvers return <tt><a class="api-link" href="ref/copp.Profile3rd.html">copp.Profile3rd</a></tt>, which stores the node profiles needed by the third-order interpolation helpers.</p>
+<p>Use the interpolation functions to convert solver output into time-domain data:</p>
+<div>
+<ul>
+<li>
+<tt><a class="api-link" href="ref/copp.interpolation.s_to_t_topp2.html">copp.interpolation.s_to_t_topp2</a></tt> converts a TOPP2/COPP2 profile into cumulative arrival times.</li>
+<li>
+<tt><a class="api-link" href="ref/copp.interpolation.s_to_t_topp3.html">copp.interpolation.s_to_t_topp3</a></tt> converts <tt><a class="api-link" href="ref/copp.Profile3rd.html">copp.Profile3rd</a></tt> into cumulative arrival times.</li>
+<li>
+<tt>t_to_s_*</tt> helpers sample the path position at requested times.</li>
+</ul>
+</div>
+<h2 id="2">TOPP and COPP</h2>
+<p>
+<b>TOPP</b> means time-optimal path parameterization. A TOPP solver seeks the shortest feasible traversal time under a selected constraint model.</p>
+<p>
+<b>COPP</b> means convex-objective path parameterization. COPP solvers keep the same path-domain constraints, but optimize convex objective terms such as time, linear penalties, thermal energy, or total variation of torque.</p>
+<p>The MATLAB binding exposes both second-order and third-order families:</p>
+<div>
+<ul>
+<li>
+<tt><a class="api-link" href="ref/copp.solver.topp2_ra.html">solver.topp2_ra</a></tt> - second-order reachability-analysis TOPP.</li>
+<li>
+<tt><a class="api-link" href="ref/copp.solver.reach_set2.html">solver.reach_set2</a></tt> - second-order reachable-set construction.</li>
+<li>
+<tt><a class="api-link" href="ref/copp.solver.copp2_socp.html">solver.copp2_socp</a></tt> - second-order Clarabel/SOCP COPP.</li>
+<li>
+<tt><a class="api-link" href="ref/copp.solver.topp3_lp.html">solver.topp3_lp</a></tt> and <tt><a class="api-link" href="ref/copp.solver.topp3_socp.html">solver.topp3_socp</a></tt> - third-order Clarabel TOPP.</li>
+<li>
+<tt><a class="api-link" href="ref/copp.solver.copp3_socp.html">solver.copp3_socp</a></tt> - third-order COPP.</li>
+</ul>
+</div>
+<h2 id="3">Package layout</h2>
+<p>The MATLAB API mirrors the Rust and Python structure while using MATLAB idioms:</p>
+<div>
+<ul>
+<li>
+<tt><a class="api-link" href="ref/copp.Path.html">copp.Path</a></tt> builds and evaluates \(q(s)\).</li>
+<li>
+<tt><a class="api-link" href="ref/copp.Robot.html">copp.Robot</a></tt> stores station grids, path derivatives, and constraints.</li>
+<li>
+<tt>copp.objective.*</tt> creates objective descriptors for COPP solvers.</li>
+<li>
+<tt>copp.solver.&lt;algorithm&gt;</tt> contains Problem, Options, Result, and solve entry points.</li>
+<li>
+<tt>copp.interpolation.*</tt> converts path-domain profiles into time-domain samples.</li>
+<li>
+<tt><a class="api-link" href="ref/copp.diag.CoppError.html">copp.diag.CoppError</a></tt> and <tt><a class="api-link" href="ref/copp.diag.last_error.html">copp.diag.last_error</a></tt> help diagnose failures.</li>
+</ul>
+</div>
+<p>MATLAB public station indices are 1-based. Matrices use MATLAB's natural column-major convention: a \(\mathrm{dim} \times N\) matrix stores one station/sample per column.</p>
+<p>The MATLAB binding is a workflow facade, not a one-to-one C ABI mirror. It prioritizes the public <tt><a class="api-link" href="ref/copp.Path.html">Path</a></tt>, <tt><a class="api-link" href="ref/copp.Robot.html">Robot</a></tt>, solver, objective, and interpolation workflows. Raw native pointers, owned C buffers, status-code plumbing, and low-level debug/introspection calls are intentionally hidden unless they make a user-facing workflow clearer.</p>
+<h2 id="4">Shape glossary</h2>
+<p>The binding deliberately uses one convention across all MATLAB entry points:</p>
+<div>
+<ul>
+<li>\(\mathrm{dim}\) is the robot/path dimension, equal to <tt>robot.dim</tt> or <tt>path.dim</tt>.</li>
+<li>\(N\) is the number of station or query samples covered by the current call.</li>
+<li><a class="api-link" href="ref/copp.Path.html">Path</a> and robot derivative matrices \(q\), \(\dot{q}\), \(\ddot{q}\), and \(q^{(3)}\) are always \(\mathrm{dim} \times N\). Column \(k\) belongs to station/query sample \(k\).</li>
+<li>Query vectors such as \(s\), \(a\), \(b\), \(t_s\), and \(t_\mathrm{sample}\) may be row or column inputs, but profile and interpolation outputs are returned as <a class="api-link" href="ref/copp.Jet3.html#method-double">double</a> column vectors.</li>
+<li>Evaluator callbacks receive \(s\) as a \(1 \times N\) row vector and return \(\mathrm{dim} \times N\) derivative matrices.</li>
+<li>Per-axis limit vectors have <a class="api-link" href="ref/copp.Profile3rd.html#method-length">length</a> \(\mathrm{dim}\) and are broadcast over stations. Per-axis limit matrices are \(\mathrm{dim} \times N\). Raw constraint matrices are \(R \times N\), where \(R\) is the number of inequality rows per station.</li>
+</ul>
+</div>
+<p>A quick mental check: if a matrix is about robot coordinates, rows are axes and columns are stations. If a matrix is about raw inequalities, rows are inequality rows and columns are stations.</p>
+<h2 id="5">First complete workflow</h2>
+<p>This example solves a compact TOPP2-RA problem. The path is \(q(s)=s\), sampled on seven stations. The robot starts and ends at rest, with unit velocity and acceleration bounds.</p>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">n = 7;
+s = linspace(0.0, 1.0, n).';
+
+robot = copp.Robot(1, Capacity=n);
+cleanup = onCleanup(@() robot.release());
+robot.append_s(s);
+<span class="comment">% q, dq, and ddq are dim x N matrices. Here dim=1 and N=n.</span>
+robot.set_q_2nd(s.', ones(1, n), zeros(1, n));
+robot.add_velocity_limits(1, -1);
+robot.add_acceleration_limits(1, -1);
+
+problem = copp.solver.topp2_ra.Problem( <span class="keyword">...</span>
+    robot, <span class="keyword">...</span>
+    idx_s_interval=[1, n], <span class="keyword">...</span>
+    a_boundary=[0, 0]);
+a = copp.solver.topp2_ra.solve(problem);
+[t_final, t_s] = copp.interpolation.s_to_t_topp2(s, a);
+
+fprintf(<span class="string">"a shape: %d x %d, t_s shape: %d x %d\n"</span>, <span class="keyword">...</span>
+    size(a, 1), size(a, 2), size(t_s, 1), size(t_s, 2));
+summary = table(s, a, t_s, <span class="string">'VariableNames'</span>, {<span class="string">'s'</span>, <span class="string">'a'</span>, <span class="string">'t_s'</span>});
+disp(summary)
+fprintf(<span class="string">"Final traversal time: %.6f seconds\n"</span>, t_final);
+</pre></div>
+<h2 id="6">Reading the rest of the documentation</h2>
+<p>A useful learning order is:</p>
+<div>
+<ol>
+<li>
+<tt><a class="api-link" href="ref/copp.Path.html">Path</a> Module</tt> - choose how to represent geometry.</li>
+<li>
+<tt><a class="api-link" href="ref/copp.Robot.html">Robot</a> and Constraints</tt> - convert geometry into station-indexed limits.</li>
+<li>
+<tt>TOPP2 and COPP2 Solvers</tt> - solve the easiest full problems first.</li>
+<li>
+<tt>TOPP3 and COPP3 Solvers</tt> - add jerk-level modeling.</li>
+<li>
+<tt>Interpolation</tt> - turn \(a(s)\) or <tt><a class="api-link" href="ref/copp.Profile3rd.html">Profile3rd</a></tt> into \(s(t)\).</li>
+<li>
+<tt>Errors and Diagnostics</tt> - understand exceptions, expert solver statuses, and verbosity.</li>
+</ol>
+</div>
+<footer class="footer"><p>
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p></footer></div></body>
+</html>

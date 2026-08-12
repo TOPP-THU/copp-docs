@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Core &#8212; copp-py Python v0.2.2</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=fbb87d90"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Interpolation" href="interpolation.html" />
+    <link rel="prev" title="API Reference" href="index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="core">
+<h1>Core<a class="headerlink" href="#core" title="Link to this heading">¶</a></h1>
+<section id="module-copp_py">
+<span id="package"></span><h2>Package<a class="headerlink" href="#module-copp_py" title="Link to this heading">¶</a></h2>
+<p>Python interface for COPP.</p>
+<p>Import the package as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">copp_py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">copp</span>
+</pre></div>
+</div>
+<p>The public package follows the Rust crate layout. Core modeling types are
+available through focused namespaces such as <code class="docutils literal notranslate"><span class="pre">copp.path</span></code>, <code class="docutils literal notranslate"><span class="pre">copp.robot</span></code>,
+<code class="docutils literal notranslate"><span class="pre">copp.constraints</span></code>, <code class="docutils literal notranslate"><span class="pre">copp.objective</span></code>, <code class="docutils literal notranslate"><span class="pre">copp.interpolation</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">copp.clarabel</span></code>. Solver entry points live under <code class="docutils literal notranslate"><span class="pre">copp.solver</span></code> with one
+module per algorithm, for example <code class="docutils literal notranslate"><span class="pre">copp.solver.topp2_ra.solve</span></code> and
+<code class="docutils literal notranslate"><span class="pre">copp.solver.copp3_socp.solve</span></code>.</p>
+<p>A few frequently used core types are also re-exported at the package root for
+interactive use. Solver-specific problem, option, result, and function names
+are intentionally kept inside their algorithm modules.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.version">
+<span class="sig-prename descclassname"><span class="pre">copp_py.</span></span><span class="sig-name descname"><span class="pre">version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.version" title="Link to this definition">¶</a></dt>
+<dd><p>Return the copp-py package version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The version compiled into the native extension.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="errors">
+<h2>Errors<a class="headerlink" href="#errors" title="Link to this heading">¶</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="copp_py.CoppError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.</span></span><span class="sig-name descname"><span class="pre">CoppError</span></span><a class="headerlink" href="#copp_py.CoppError" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Base exception for errors reported by the Rust COPP core.</p>
+<p>Python wrapper argument errors, such as invalid dtype or mutually exclusive keyword arguments, use standard Python exceptions like ValueError. This exception is reserved for errors returned by the underlying COPP library.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="copp_py.PathError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.</span></span><span class="sig-name descname"><span class="pre">PathError</span></span><a class="headerlink" href="#copp_py.PathError" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#copp_py.CoppError" title="copp_py.CoppError"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoppError</span></code></a></p>
+<p>Exception for errors reported by Rust path construction and evaluation APIs.</p>
+<p>This is a subclass of CoppError.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="copp_py.ConstraintError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.</span></span><span class="sig-name descname"><span class="pre">ConstraintError</span></span><a class="headerlink" href="#copp_py.ConstraintError" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#copp_py.CoppError" title="copp_py.CoppError"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoppError</span></code></a></p>
+<p>Exception for errors reported by Rust constraint storage and query APIs.</p>
+<p>This is a subclass of CoppError.</p>
+</dd></dl>
+
+</section>
+<section id="enums">
+<h2>Enums<a class="headerlink" href="#enums" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.OutOfRangeMode">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.</span></span><span class="sig-name descname"><span class="pre">OutOfRangeMode</span></span><a class="headerlink" href="#copp_py.OutOfRangeMode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python enum mirroring [<cite>RustOutOfRangeMode</cite>].</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.Parametrization">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.</span></span><span class="sig-name descname"><span class="pre">Parametrization</span></span><a class="headerlink" href="#copp_py.Parametrization" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python enum mirroring [<cite>RustParametrization</cite>].</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.MatrixLayout">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.</span></span><span class="sig-name descname"><span class="pre">MatrixLayout</span></span><a class="headerlink" href="#copp_py.MatrixLayout" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Matrix layout contract used by Python path inputs and outputs.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.Verbosity">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.</span></span><span class="sig-name descname"><span class="pre">Verbosity</span></span><a class="headerlink" href="#copp_py.Verbosity" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Verbosity level used by Rust solver diagnostics.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robot.html">Robot And Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html">Clarabel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp2.html">TOPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp2.html">COPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp3.html">TOPP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp3.html">COPP3</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">API Reference</a></li>
+      <li>Next: <a href="interpolation.html" title="next chapter">Interpolation</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/core.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

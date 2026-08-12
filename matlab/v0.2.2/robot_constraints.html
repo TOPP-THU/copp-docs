@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title><a class="api-link" href="ref/copp.Robot.html">Robot</a> and Constraints - COPP MATLAB Reference</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2026-08-12">
+<meta name="DC.source" content="robot_constraints.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  
+/* COPP MATLAB reference theme. Designed for MATLAB publish HTML from R2024b. */
+:root { --mw-bg:#ffffff; --mw-page-bg:#f7f7f7; --mw-text:#333333; --mw-muted:#666666; --mw-border:#d6d6d6; --mw-border-light:#e5e5e5; --mw-link:#0076a8; --mw-link-hover:#005f87; --mw-code-bg:#f5f5f5; --mw-code-border:#dcdcdc; --mw-table-head:#f3f3f3; --mw-accent:#c45400; }
+html { min-height:100%; background:var(--mw-page-bg); }
+html body.mw-doc-body, html body { margin:0; background:var(--mw-page-bg); color:var(--mw-text); font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:1.55; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+body, body * { box-sizing:border-box; }
+.skip-link { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+.skip-link:focus { left:16px; top:12px; width:auto; height:auto; z-index:1000; padding:7px 10px; background:#fff; border:1px solid var(--mw-border); color:var(--mw-link); }
+.mw-site-header { background:#f2f2f2; border-top:4px solid var(--mw-accent); border-bottom:1px solid #cfcfcf; color:#333; }
+.mw-site-header-inner { max-width:1180px; min-height:54px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.mw-brand-block { display:flex; align-items:baseline; gap:12px; min-width:0; }
+.mw-brand-title { color:#222; font-size:18px; font-weight:400; white-space:nowrap; }
+.mw-brand-subtitle { color:#666; font-size:13px; white-space:nowrap; }
+.mw-search-box { width:268px; min-height:31px; padding:6px 34px 6px 11px; border:1px solid #bdbdbd; border-radius:2px; background:#fff; color:#777; font-size:13px; line-height:17px; text-align:left; }
+.content { max-width:1180px; min-height:calc(100vh - 59px); margin:0 auto; padding:28px 34px 52px; background:var(--mw-bg); border-left:1px solid #eeeeee; border-right:1px solid #eeeeee; }
+.mw-page-head { max-width:860px; outline:none; }
+.breadcrumb { display:flex; flex-wrap:wrap; align-items:center; gap:0; margin:0 0 19px; color:#6f6f6f; font-size:12px; line-height:1.35; }
+.breadcrumb span { display:inline-block; }
+.breadcrumb-separator { margin:0 7px; color:#a0a0a0; }
+.breadcrumb-current { color:#555; }
+h1 { margin:0 0 4px; padding:0; color:#333; font-size:32px; font-weight:400; line-height:1.15; letter-spacing:-0.01em; }
+.function-label { max-width:850px; margin:0 0 23px; color:#555; font-size:15px; line-height:1.45; }
+h2 { clear:left; max-width:850px; margin:31px 0 14px; padding:23px 0 7px; border-bottom:1px solid var(--mw-border); color:#333; font-size:24px; font-weight:400; line-height:1.25; }
+h2.ref-section-syntax { margin-top:24px; }
+h3 { max-width:850px; margin:22px 0 8px; padding:0; color:#333; font-size:17px; font-weight:600; line-height:1.35; }
+h4 { max-width:850px; margin:18px 0 7px; padding:0; color:#333; font-size:14px; font-weight:600; line-height:1.35; }
+p { max-width:850px; margin:0 0 14px; color:#333; font-size:14px; line-height:1.55; }
+a { color:var(--mw-link); text-decoration:none; }
+a:hover, a:focus { color:var(--mw-link-hover); text-decoration:underline; }
+a:visited { color:#005f87; }
+ul, ol { max-width:850px; margin:0 0 18px 23px; padding:0; }
+ul { list-style:square; }
+ol { list-style:decimal; }
+li { margin:4px 0 6px; padding:0; line-height:1.5; }
+li ul, li ol { margin-top:6px; margin-bottom:7px; }
+tt, code, pre { font-family:Consolas, 'Courier New', Courier, monospace; }
+tt, code { color:#222; font-size:.95em; background:var(--mw-code-bg); border:1px solid var(--mw-code-border); border-radius:3px; padding:1px 4px; }
+pre code, pre tt, .ref-syntax code, .syntax-list code { background:transparent; border:0; border-radius:0; padding:0; }
+.ref-syntax { max-width:850px; margin:0 0 19px; }
+.ref-syntax pre.language-matlab { margin:0; padding:0; border:0; background:#fff; color:#111; font-size:14px; line-height:1.8; white-space:pre-wrap; overflow:visible; }
+pre.language-matlab { max-width:850px; margin:8px 0 18px; padding:10px 12px; border:1px solid var(--mw-code-border); background:var(--mw-code-bg); color:#222; font-size:13px; line-height:1.45; overflow:auto; }
+.code-example, .code-output { max-width:850px; margin:10px 0 18px; border:1px solid var(--mw-code-border); background:var(--mw-code-bg); }
+.code-output { margin-top:-10px; background:#fff; }
+.code-toolbar { min-height:28px; padding:5px 10px 4px; border-bottom:1px solid var(--mw-code-border); background:#eeeeee; color:#666; font-size:11px; line-height:18px; text-transform:uppercase; letter-spacing:.03em; }
+.code-output-toolbar { background:#fafafa; color:#777; }
+pre.codeinput, pre.codeoutput { max-width:none; margin:0; border:0; border-radius:0; font-size:13px; line-height:1.48; overflow:auto; }
+pre.codeinput { padding:11px 12px 12px; background:var(--mw-code-bg); color:#222; }
+pre.codeoutput { padding:10px 12px 12px; background:#fff; color:#4c4c4c; }
+pre.error { max-width:850px; padding:10px 12px; border:1px solid #d9534f; background:#fff4f4; color:#b00000; }
+span.keyword { color:#0000ff; }
+span.comment { color:#228b22; }
+span.string { color:#a020f0; }
+span.untermstring { color:#b20000; }
+span.syscmd { color:#b28c00; }
+span.typesection { color:#a0522d; }
+.argument-name { max-width:850px; margin:22px 0 5px; padding:0; border:0; color:#333; font-size:17px; font-weight:600; line-height:1.35; }
+.argument-name tt { font-size:1em; font-weight:600; color:#111; }
+.argument-dash { color:#777; font-weight:400; }
+.argument-summary { color:#333; font-weight:400; }
+.argument-meta, .argument-example { max-width:850px; margin:-2px 0 13px; color:#666; font-size:13px; line-height:1.45; }
+.argument-meta tt, .argument-example tt { color:#333; }
+.syntax-list { max-width:850px; margin:0 0 12px; }
+.syntax-list ul { margin:0 0 12px 19px; }
+.syntax-list code { color:var(--mw-link); }
+.api-grid { max-width:920px; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px; margin:8px 0 22px; }
+.api-card { min-width:0; padding:11px 13px 12px; border:1px solid var(--mw-border); background:#fff; }
+.api-card h3 { margin:0 0 5px; font-size:15px; font-weight:600; line-height:1.35; }
+.api-card p { margin:0; color:#555; font-size:13px; line-height:1.45; }
+.api-kind { margin:0 0 5px; color:#777; font-size:11px; line-height:1.2; text-transform:uppercase; letter-spacing:.03em; }
+.api-link code, a.api-link { color:var(--mw-link); }
+.api-related { max-width:850px; columns:2; column-gap:28px; }
+.api-description { max-width:850px; margin:0 0 16px; }
+.api-description p { margin:0 0 12px; }
+.api-detail { max-width:920px; margin:0 0 24px; padding:0 0 6px; border-bottom:1px solid var(--mw-border-light); }
+.api-detail h3 { margin-top:18px; }
+.argument-list { max-width:920px; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px; margin:8px 0 22px; }
+.argument-item { min-width:0; padding:10px 12px 11px; border-left:3px solid var(--mw-border); background:#fafafa; }
+.argument-item h3 { margin:0 0 5px; font-size:15px; }
+.argument-item p { margin:0; color:#555; font-size:13px; line-height:1.45; }
+.argument-default { display:block; margin-top:5px; color:#666; }
+.on-page { float:right; position:sticky; top:16px; width:270px; margin:0 0 24px 42px; padding:13px 15px 14px; border:1px solid var(--mw-border); background:#f7f7f7; color:#333; }
+.on-page-title { margin:0 0 8px; color:#333; font-size:13px; font-weight:600; line-height:1.35; }
+.on-page-list ul { margin:0; padding:0 0 0 17px; list-style:square; }
+.on-page-list li { margin:4px 0; color:#777; font-size:13px; line-height:1.35; }
+.on-page-list a { color:var(--mw-link); }
+table { max-width:850px; width:auto; margin:10px 0 22px; border-collapse:collapse; border-spacing:0; font-size:13px; line-height:1.45; }
+table th, table td { padding:7px 9px; border:1px solid var(--mw-border); text-align:left; vertical-align:top; }
+table th { background:var(--mw-table-head); color:#333; font-weight:600; }
+table tr:nth-child(even) td { background:#fbfbfb; }
+img { max-width:100%; height:auto; border:0; }
+p img { display:inline-block; margin:2px 0 5px; vertical-align:middle; }
+.mathjax-display { display:block; max-width:850px; margin:2px 0 16px; overflow-x:auto; overflow-y:hidden; }
+.MathJax { font-size:100% !important; }
+.see-also-list { max-width:850px; margin:3px 0 20px; }
+.see-also-list p { margin:0; line-height:2.05; }
+.see-also-list tt { display:inline-block; margin:0 4px 7px 0; padding:2px 7px; border:1px solid #d7e7ef; border-radius:2px; background:#f2f8fb; color:var(--mw-link); font-size:13px; line-height:1.5; }
+.footer { clear:both; max-width:850px; margin:36px 0 0; padding:14px 0 0; border-top:1px solid var(--mw-border); color:#777; font-size:12px; font-style:normal; line-height:1.45; }
+.footer p { margin:0; color:#777; font-size:12px; }
+.footer a, .footer a:visited { color:#777; }
+@media (max-width: 1080px) { .on-page { float:none; position:static; width:auto; max-width:850px; margin:0 0 24px; } .mw-page-head, h2, h3, p, ul, ol, table, .ref-syntax, .code-example, .code-output, .see-also-list, .footer { max-width:100%; } }
+@media (max-width: 760px) { .mw-site-header-inner { min-height:auto; padding:10px 18px; align-items:flex-start; flex-direction:column; gap:8px; } .mw-brand-block { display:block; } .mw-brand-title { font-size:17px; } .mw-brand-subtitle { margin-top:1px; } .mw-search-box { display:none; } .content { padding:22px 18px 38px; border-left:0; border-right:0; } h1 { font-size:28px; } h2 { font-size:21px; margin-top:27px; } h3, .argument-name { font-size:16px; } pre.codeinput, pre.codeoutput, pre.language-matlab { font-size:12px; } }
+@media print { html body.mw-doc-body, html body { background:#fff; } .mw-site-header, .on-page, .skip-link { display:none; } .content { max-width:none; min-height:0; padding:0; border:0; } pre.codeinput, pre.codeoutput, pre.language-matlab { white-space:pre-wrap; word-wrap:break-word; overflow:visible; } a { color:#000; text-decoration:none; } }
+</style>
+<script>
+window.MathJax = { tex: { displayMath: [['\\[','\\]']], inlineMath: [['\\(','\\)']], processEscapes: true }, chtml: { matchFontHeight: false } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="mw-doc-body">
+<a class="skip-link" href="#mw-main-content">Skip to content</a>
+<header class="mw-site-header" role="banner">
+  <div class="mw-site-header-inner">
+    <div class="mw-brand-block">
+      <div class="mw-brand-title">COPP Help Center</div>
+      <div class="mw-brand-subtitle">MATLAB Reference</div>
+    </div>
+    <div class="mw-search-box" aria-hidden="true">Search Help Center</div>
+  </div>
+</header>
+
+<div class="content">
+<div class="mw-page-head" id="mw-main-content" tabindex="-1">
+<nav class="breadcrumb" aria-label="Breadcrumb"><span>Documentation Home</span><span class="breadcrumb-separator">/</span><span>COPP</span><span class="breadcrumb-separator">/</span><span>MATLAB</span><span class="breadcrumb-separator">/</span><span class="breadcrumb-current"><a class="api-link" href="ref/copp.Robot.html">Robot</a></span></nav>
+<h1><a class="api-link" href="ref/copp.Robot.html">Robot</a> and Constraints</h1>
+<div class="function-label">Store station grids, sampled derivatives, physical limits, raw inequalities, and inverse dynamics.</div>
+</div>
+<!--introduction-->
+<p>
+<tt><a class="api-link" href="ref/copp.Robot.html">copp.Robot</a></tt> is the station-indexed data container used by all MATLAB solver Problem objects. It stores:</p>
+<div>
+<ul>
+<li>a strictly increasing station grid \(s\);</li>
+<li>sampled path derivatives \(q\), \(\dot{q}\), \(\ddot{q}\), and optionally \(q^{(3)}\);</li>
+<li>velocity, acceleration, torque, jerk, and raw inequality constraints.</li>
+</ul>
+</div>
+<p>Public MATLAB station indices are 1-based. The MEX layer converts them to the native 0-based indices used by Rust/C/C++.</p>
+<!--/introduction-->
+<nav class="on-page" aria-labelledby="on-page-title">
+<div class="on-page-title" id="on-page-title">On this page</div>
+<div class="on-page-list">
+<ul>
+<li>
+<a href="#1">Matrix and interval convention</a>
+</li>
+<li>
+<a href="#2">Build a second-order robot</a>
+</li>
+<li>
+<a href="#3">Sample \(q(s)\) from a Path</a>
+</li>
+<li>
+<a href="#4">Torque limits and inverse dynamics</a>
+</li>
+<li>
+<a href="#5">Raw constraints</a>
+</li>
+<li>
+<a href="#6">Queue-style operations</a>
+</li>
+<li>
+<a href="#7">Clearing constraints</a>
+</li>
+<li>
+<a href="#8">Practical checklist</a>
+</li>
+</ul>
+</div>
+</nav>
+<h2 id="1">Matrix and interval convention</h2>
+<p>A \(\mathrm{dim} \times N\) matrix stores one station per column. If <tt>start_idx_s=3</tt> and a derivative matrix has four columns, it writes stations 3, 4, 5, and 6.</p>
+<p>Vector limit inputs such as \(\mathrm{upper}=\mathbf{1}_{\mathrm{dim} \times 1}\) are broadcast over an interval. Matrix limit inputs such as \(\mathrm{upper}=\mathbf{1}_{\mathrm{dim} \times N}\) are station varying and do not need a separate <tt><a class="api-link" href="ref/copp.Profile3rd.html#method-length">length</a></tt> argument.</p>
+<p>One-dimensional station/profile vectors such as \(s\) may be \(1 \times N\) or \(N \times 1\) on input. The <a class="api-link" href="ref/copp.Robot.html">Robot</a> stores station samples internally; solver and interpolation profile outputs are returned as \(N \times 1\) columns.</p>
+<p>Raw constraints do not use \(\mathrm{dim}\) rows. They use \(R \times N\) matrices, where \(R\) is the number of inequality rows per station. For example, \(\mathrm{zeros}(2,N)\) adds two raw rows at each of the \(N\) stations.</p>
+<h2 id="2">Build a second-order robot</h2>
+<p>This example uses \(q(s)=s\) in one dimension. It is intentionally small but it follows the same API shape as a multi-axis robot.</p>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">n = 7;
+s = linspace(0.0, 1.0, n).';
+
+robot2 = copp.Robot(1, Capacity=n);
+cleanup2 = onCleanup(@() robot2.release());
+robot2.append_s(s);
+robot2.set_q_2nd(s.', ones(1, n), zeros(1, n));
+fprintf(<span class="string">"set_q_2nd used q/dq/ddq shapes: %d x %d\n"</span>, size(s.', 1), size(s.', 2));
+robot2.add_velocity_limits(1, -1);
+robot2.add_acceleration_limits(1, -1);
+
+fprintf(<span class="string">"Second-order robot: dim=%d, len=%d, capacity=%d\n"</span>, <span class="keyword">...</span>
+    robot2.dim, robot2.len, robot2.capacity);
+</pre></div>
+<h2 id="3">Sample \(q(s)\) from a <a class="api-link" href="ref/copp.Path.html">Path</a></h2>
+<p>Formula or waypoint paths can populate the robot derivative buffers. This keeps user code close to the mathematical path and avoids manual derivative array assembly.</p>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">path = copp.Path.from_parametric(@(u) [sin(u); cos(2*u)], s_range=[0, 1]);
+cleanup_path = onCleanup(@() path.release());
+
+robot3 = copp.Robot(path.dim, Capacity=n);
+cleanup3 = onCleanup(@() robot3.release());
+robot3.append_s(s);
+robot3.set_q_from_path_3rd(path);
+
+upper = 100.0 * ones(robot3.dim, 1);
+robot3.add_velocity_limits(upper, -upper);
+robot3.add_acceleration_limits(upper, -upper);
+robot3.add_jerk_limits(upper, -upper);
+
+fprintf(<span class="string">"Third-order robot sampled from Path: dim=%d, len=%d\n"</span>, <span class="keyword">...</span>
+    robot3.dim, robot3.len);
+</pre></div>
+<h2 id="4">Torque limits and inverse dynamics</h2>
+<p>Torque limits use the robot's inverse-dynamics callback. Without a callback, the native default is point dynamics, equivalent to \(\tau=\ddot{q}\). For quick modeling or tests, install a MATLAB callback. The callback is pointwise, not batched: \(q\), \(\dot{q}\), \(\ddot{q}\), and returned \(\tau\) are all \(\mathrm{dim} \times 1\) vectors.</p>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">robot2.set_inverse_dynamics(@(q, dq, ddq) ddq + 0.05*dq + 0.0*q);
+robot2.add_torque_limits(10, -10);
+robot2.clear_inverse_dynamics();
+
+fprintf(<span class="string">"Torque limits accepted with a MATLAB inverse-dynamics callback.\n"</span>);
+</pre></div>
+<h2 id="5">Raw constraints</h2>
+<p>High-level limit functions are preferred for ordinary use. Raw constraints are available for advanced users who already have inequality rows in native path-domain form.</p>
+<p>First order:</p>
+<div class="mathjax-display">\[a \le a_{\max}.\]</div>
+<p>Second order:</p>
+<div class="mathjax-display">\[A a + B b \le h.\]</div>
+<p>Third order:</p>
+<div class="mathjax-display">\[A a + B b + C c + D \le h.\]</div>
+<p>The MATLAB facade exposes both direct robot methods and a lightweight <tt>robot.constraints</tt> forwarding facade.</p>
+<p>In the calls below, each raw array is \(1 \times N\), meaning one inequality row at each station. To provide \(R\) raw rows per station, pass \(R \times N\) arrays with matching shapes.</p>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">robot2.constraints.add_raw_constraint_1st(ones(1, n), start_idx_s=1);
+robot2.constraints.add_raw_constraint_2nd( <span class="keyword">...</span>
+    zeros(1, n), zeros(1, n), 100 * ones(1, n), start_idx_s=1);
+
+fprintf(<span class="string">"Raw first- and second-order constraints added.\n"</span>);
+</pre></div>
+<h2 id="6">Queue-style operations</h2>
+<p>Receding-horizon code can discard stations from either end. These operations mutate the native robot buffer, so any Problem object built before mutation should be rebuilt.</p>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">robot2.pop_front_n(1);
+robot2.pop_back_n(1);
+fprintf(<span class="string">"After pop operations, robot2.len=%d\n"</span>, robot2.len);
+</pre></div>
+<h2 id="7">Clearing constraints</h2>
+<p>
+<tt><a class="api-link" href="ref/copp.Robot.html#method-clear-constraints">clear_constraints</a>(keep_idx_s=true)</tt> keeps the station grid but removes path derivatives and constraints. Use <tt>keep_idx_s=false</tt> to clear everything.</p>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">robot2.clear_constraints(keep_idx_s=true);
+fprintf(<span class="string">"After clearing constraints with stations kept, robot2.len=%d\n"</span>, robot2.len);
+</pre></div>
+<h2 id="8">Practical checklist</h2>
+<p>Before constructing a solver Problem:</p>
+<div>
+<ol>
+<li>Append a strictly increasing station grid.</li>
+<li>Fill \(q,\dot{q},\ddot{q}\) for TOPP2/COPP2 or \(q,\dot{q},\ddot{q},q^{(3)}\) for TOPP3/COPP3.</li>
+<li>Add enough limits or raw constraints to make the problem meaningful.</li>
+<li>Use 1-based <tt>idx_s_interval</tt> or <tt>idx_s_start</tt> values in MATLAB.</li>
+<li>Rebuild Problem objects after mutating the robot cache.</li>
+</ol>
+</div>
+<footer class="footer"><p>
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p></footer></div></body>
+</html>

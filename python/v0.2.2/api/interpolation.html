@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Interpolation &#8212; copp-py Python v0.2.2</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=fbb87d90"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Path" href="path.html" />
+    <link rel="prev" title="Core" href="core.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="interpolation">
+<h1>Interpolation<a class="headerlink" href="#interpolation" title="Link to this heading">¶</a></h1>
+<p>Interpolation helpers convert solver profiles from the path domain into
+arrival times <code class="docutils literal notranslate"><span class="pre">t(s)</span></code> and sampled inverse trajectories <code class="docutils literal notranslate"><span class="pre">s(t)</span></code>.</p>
+<section id="second-order">
+<h2>Second Order<a class="headerlink" href="#second-order" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.a_to_b_topp2">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">a_to_b_topp2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.a_to_b_topp2" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the segment acceleration-like profile <code class="docutils literal notranslate"><span class="pre">b</span></code> from a TOPP2/COPP2
+node profile <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p>
+<p>For each segment <code class="docutils literal notranslate"><span class="pre">[s[k],</span> <span class="pre">s[k</span> <span class="pre">+</span> <span class="pre">1]]</span></code>, this returns
+<code class="docutils literal notranslate"><span class="pre">b[k]</span> <span class="pre">=</span> <span class="pre">0.5</span> <span class="pre">*</span> <span class="pre">(a[k</span> <span class="pre">+</span> <span class="pre">1]</span> <span class="pre">-</span> <span class="pre">a[k])</span> <span class="pre">/</span> <span class="pre">(s[k</span> <span class="pre">+</span> <span class="pre">1]</span> <span class="pre">-</span> <span class="pre">s[k])</span></code>. In the TOPP2/COPP2
+convention, <code class="docutils literal notranslate"><span class="pre">a</span></code> stores <code class="docutils literal notranslate"><span class="pre">ds/dt</span></code> squared at station nodes, while <code class="docutils literal notranslate"><span class="pre">b</span></code>
+stores <code class="docutils literal notranslate"><span class="pre">dds/dt</span></code> on path segments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>ArrayLike</em>) – One-dimensional station grid convertible to float64. Must be strictly
+increasing and contain at least two entries.</p></li>
+<li><p><strong>a</strong> (<em>ArrayLike</em>) – One-dimensional node profile convertible to float64 with
+<code class="docutils literal notranslate"><span class="pre">len(a)</span> <span class="pre">==</span> <span class="pre">len(s)</span></code>. Values must be finite.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Segment profile with length <code class="docutils literal notranslate"><span class="pre">len(s)</span> <span class="pre">-</span> <span class="pre">1</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray[numpy.float64]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If an input cannot be converted to a one-dimensional float64 array.</p></li>
+<li><p><a class="reference internal" href="core.html#copp_py.CoppError" title="copp_py.CoppError"><strong>CoppError</strong></a> – If the COPP core rejects the grid or profile, for example because
+    lengths differ, <code class="docutils literal notranslate"><span class="pre">s</span></code> is not strictly increasing, or values are not
+    finite.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">copp_py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">copp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copp</span><span class="o">.</span><span class="n">a_to_b_topp2</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="go">array([0., 0.])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.s_to_t_topp2">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">s_to_t_topp2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.s_to_t_topp2" title="Link to this definition">¶</a></dt>
+<dd><p>Integrate a TOPP2/COPP2 node profile <code class="docutils literal notranslate"><span class="pre">a(s)</span></code> into cumulative arrival times
+<code class="docutils literal notranslate"><span class="pre">t(s)</span></code>.</p>
+<p>The returned array <code class="docutils literal notranslate"><span class="pre">t_s</span></code> satisfies <code class="docutils literal notranslate"><span class="pre">t_s[i]</span> <span class="pre">==</span> <span class="pre">t(s[i])</span></code> and starts from
+<code class="docutils literal notranslate"><span class="pre">t_s[0]</span> <span class="pre">==</span> <span class="pre">t0</span></code>. The scalar <code class="docutils literal notranslate"><span class="pre">t_final</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">t_s[-1]</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>ArrayLike</em>) – One-dimensional station grid convertible to float64. Must be strictly
+increasing and contain at least two entries.</p></li>
+<li><p><strong>a</strong> (<em>ArrayLike</em>) – One-dimensional node profile convertible to float64 with
+<code class="docutils literal notranslate"><span class="pre">len(a)</span> <span class="pre">==</span> <span class="pre">len(s)</span></code>. Values must be finite and non-negative. Each interval must have a
+positive finite speed denominator.</p></li>
+<li><p><strong>t0</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – Initial time assigned to <code class="docutils literal notranslate"><span class="pre">s[0]</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">(t_final,</span> <span class="pre">t_s)</span></code> where <code class="docutils literal notranslate"><span class="pre">t_s</span></code> has the same length as <code class="docutils literal notranslate"><span class="pre">s</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[float, numpy.ndarray[numpy.float64]]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If an input cannot be converted to a one-dimensional float64 array.</p></li>
+<li><p><a class="reference internal" href="core.html#copp_py.CoppError" title="copp_py.CoppError"><strong>CoppError</strong></a> – If the COPP core rejects the grid, profile, or time initial condition.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This routine uses the same deterministic trapezoid-like TOPP2 timing model
+as the Rust API. It does not resample the trajectory; it only computes the
+arrival time at the provided station nodes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.t_to_s_topp2_uniform">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">t_to_s_topp2_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">t0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_final</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.t_to_s_topp2_uniform" title="Link to this definition">¶</a></dt>
+<dd><p>Sample the inverse TOPP2/COPP2 mapping <code class="docutils literal notranslate"><span class="pre">s(t)</span></code> on a uniform time grid.</p>
+<p>This explicit entry point is preferred over the compatibility wrapper
+[<cite>t_to_s_topp2</cite>] when the query grid is generated from a time step.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.t_to_s_topp2_samples">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">t_to_s_topp2_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.t_to_s_topp2_samples" title="Link to this definition">¶</a></dt>
+<dd><p>Sample the inverse TOPP2/COPP2 mapping <code class="docutils literal notranslate"><span class="pre">s(t)</span></code> at explicit query times.</p>
+<p>This explicit entry point is preferred over the compatibility wrapper
+[<cite>t_to_s_topp2</cite>] when the query grid is supplied by the caller.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.t_to_s_topp2">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">t_to_s_topp2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_s</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">t0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_final</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.t_to_s_topp2" title="Link to this definition">¶</a></dt>
+<dd><p>Compatibility wrapper for sampling inverse TOPP2/COPP2 mappings.</p>
+<p>New code should prefer [<cite>t_to_s_topp2_uniform</cite>] or
+[<cite>t_to_s_topp2_samples</cite>], which avoid mutually exclusive keyword modes.</p>
+<p>Exactly one sampling mode must be selected:</p>
+<ul class="simple">
+<li><p>pass <code class="docutils literal notranslate"><span class="pre">dt</span></code> for a uniform time grid starting at <code class="docutils literal notranslate"><span class="pre">t0</span></code>;</p></li>
+<li><p>pass <code class="docutils literal notranslate"><span class="pre">t_sample</span></code> for an explicit strictly increasing nonuniform time
+grid.</p></li>
+</ul>
+<p>Out-of-range query times are returned as <code class="docutils literal notranslate"><span class="pre">NaN</span></code> by the COPP core.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>ArrayLike</em>) – One-dimensional station grid convertible to float64. Values must be
+strictly increasing.</p></li>
+<li><p><strong>a</strong> (<em>ArrayLike</em>) – One-dimensional TOPP2/COPP2 node profile convertible to float64. Must
+have the same length as <code class="docutils literal notranslate"><span class="pre">s</span></code>.</p></li>
+<li><p><strong>t_s</strong> (<em>ArrayLike</em>) – One-dimensional arrival-time profile convertible to float64, usually
+returned by <code class="docutils literal notranslate"><span class="pre">s_to_t_topp2</span></code>. Must have the same length as <code class="docutils literal notranslate"><span class="pre">s</span></code> and be
+strictly increasing.</p></li>
+<li><p><strong>t0</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – Start time for uniform-grid sampling. Ignored when <code class="docutils literal notranslate"><span class="pre">t_sample</span></code> is
+provided.</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em> | </em><em>None</em><em>, </em><em>default=None</em>) – Positive uniform time step. Mutually exclusive with <code class="docutils literal notranslate"><span class="pre">t_sample</span></code>.</p></li>
+<li><p><strong>include_final</strong> (<em>bool</em><em>, </em><em>default=True</em>) – When using <code class="docutils literal notranslate"><span class="pre">dt</span></code>, append <code class="docutils literal notranslate"><span class="pre">s[-1]</span></code> if the generated uniform grid does
+not already include the final station.</p></li>
+<li><p><strong>t_sample</strong> (<em>ArrayLike</em><em> | </em><em>None</em><em>, </em><em>default=None</em>) – Explicit nonuniform query times. Must be one-dimensional, finite,
+non-empty, and strictly increasing. Mutually exclusive with <code class="docutils literal notranslate"><span class="pre">dt</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled station values <code class="docutils literal notranslate"><span class="pre">s(t)</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray[numpy.float64]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If inputs cannot be converted to one-dimensional float64 arrays, if
+    neither sampling mode is selected, or if both <code class="docutils literal notranslate"><span class="pre">dt</span></code> and <code class="docutils literal notranslate"><span class="pre">t_sample</span></code>
+    are provided.</p></li>
+<li><p><a class="reference internal" href="core.html#copp_py.CoppError" title="copp_py.CoppError"><strong>CoppError</strong></a> – If the COPP core rejects the grid, profile, arrival times, or sampling
+    parameters.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">copp_py</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">copp</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">t_s</span> <span class="o">=</span> <span class="n">copp</span><span class="o">.</span><span class="n">s_to_t_topp2</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copp</span><span class="o">.</span><span class="n">t_to_s_topp2_uniform</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">t_s</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+<span class="go">array([0.  , 0.25, 0.5 , 0.75, 1.  ])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="third-order">
+<h2>Third Order<a class="headerlink" href="#third-order" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.interpolation.Profile3rd">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">Profile3rd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_stationary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.Profile3rd" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python-owned third-order TOPP/COPP profile.</p>
+<p>The object stores node profiles <cite>a = (ds/dt)^2</cite> and <cite>b = dds/dt</cite>, plus
+stationary boundary interval counts. It owns copies of the input arrays so
+later mutation of user-provided NumPy arrays cannot silently change solver
+inputs.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.interpolation.Profile3rd.a">
+<span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#copp_py.interpolation.Profile3rd.a" title="Link to this definition">¶</a></dt>
+<dd><p>Return a copy of the node profile <cite>a = (ds/dt)^2</cite>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.interpolation.Profile3rd.b">
+<span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#copp_py.interpolation.Profile3rd.b" title="Link to this definition">¶</a></dt>
+<dd><p>Return a copy of the node profile <cite>b = dds/dt</cite>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.interpolation.Profile3rd.len">
+<span class="sig-name descname"><span class="pre">len</span></span><a class="headerlink" href="#copp_py.interpolation.Profile3rd.len" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of station nodes in the profile.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.interpolation.Profile3rd.num_stationary">
+<span class="sig-name descname"><span class="pre">num_stationary</span></span><a class="headerlink" href="#copp_py.interpolation.Profile3rd.num_stationary" title="Link to this definition">¶</a></dt>
+<dd><p>Return stationary boundary interval counts as <cite>(start, end)</cite>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.interpolation.Profile3rd.num_stationary_end">
+<span class="sig-name descname"><span class="pre">num_stationary_end</span></span><a class="headerlink" href="#copp_py.interpolation.Profile3rd.num_stationary_end" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of stationary intervals at the end boundary.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.interpolation.Profile3rd.num_stationary_start">
+<span class="sig-name descname"><span class="pre">num_stationary_start</span></span><a class="headerlink" href="#copp_py.interpolation.Profile3rd.num_stationary_start" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of stationary intervals at the start boundary.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.s_to_t_topp3">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">s_to_t_topp3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.s_to_t_topp3" title="Link to this definition">¶</a></dt>
+<dd><p>Integrate a TOPP3/COPP3 profile into cumulative arrival times <code class="docutils literal notranslate"><span class="pre">t(s)</span></code>.</p>
+<p>The input profile is node-based: both <code class="docutils literal notranslate"><span class="pre">profile.a</span></code> and <code class="docutils literal notranslate"><span class="pre">profile.b</span></code> must
+have the same length as <code class="docutils literal notranslate"><span class="pre">s</span></code>. The returned array <code class="docutils literal notranslate"><span class="pre">t_s</span></code> satisfies
+<code class="docutils literal notranslate"><span class="pre">t_s[i]</span> <span class="pre">==</span> <span class="pre">t(s[i])</span></code> and starts from <code class="docutils literal notranslate"><span class="pre">t_s[0]</span> <span class="pre">==</span> <span class="pre">t0</span></code>. The scalar
+<code class="docutils literal notranslate"><span class="pre">t_final</span></code> is equal to <code class="docutils literal notranslate"><span class="pre">t_s[-1]</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>ArrayLike</em>) – One-dimensional station grid convertible to float64. Values must be
+strictly increasing.</p></li>
+<li><p><strong>profile</strong> (<a class="reference internal" href="#copp_py.interpolation.Profile3rd" title="copp_py.interpolation.Profile3rd"><em>Profile3rd</em></a>) – Third-order profile containing node samples of <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">(ds/dt)^2</span></code> and
+<code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">dds/dt</span></code> plus stationary boundary counts.</p></li>
+<li><p><strong>t0</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – Initial time assigned to <code class="docutils literal notranslate"><span class="pre">s[0]</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">(t_final,</span> <span class="pre">t_s)</span></code> where <code class="docutils literal notranslate"><span class="pre">t_s</span></code> has the same length as <code class="docutils literal notranslate"><span class="pre">s</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[float, numpy.ndarray[numpy.float64]]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">s</span></code> cannot be converted to a one-dimensional float64 array.</p></li>
+<li><p><a class="reference internal" href="core.html#copp_py.CoppError" title="copp_py.CoppError"><strong>CoppError</strong></a> – If the COPP core rejects the grid, profile, stationary counts, or time
+    initial condition.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.t_to_s_topp3_uniform">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">t_to_s_topp3_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">t0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_final</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.t_to_s_topp3_uniform" title="Link to this definition">¶</a></dt>
+<dd><p>Sample the inverse TOPP3/COPP3 mapping <code class="docutils literal notranslate"><span class="pre">s(t)</span></code> on a uniform time grid.</p>
+<p>This explicit entry point is preferred over the compatibility wrapper
+[<cite>t_to_s_topp3</cite>] when the query grid is generated from a time step.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.t_to_s_topp3_samples">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">t_to_s_topp3_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.t_to_s_topp3_samples" title="Link to this definition">¶</a></dt>
+<dd><p>Sample the inverse TOPP3/COPP3 mapping <code class="docutils literal notranslate"><span class="pre">s(t)</span></code> at explicit query times.</p>
+<p>This explicit entry point is preferred over the compatibility wrapper
+[<cite>t_to_s_topp3</cite>] when the query grid is supplied by the caller.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="copp_py.interpolation.t_to_s_topp3">
+<span class="sig-prename descclassname"><span class="pre">copp_py.interpolation.</span></span><span class="sig-name descname"><span class="pre">t_to_s_topp3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_s</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">t0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_final</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_sample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.interpolation.t_to_s_topp3" title="Link to this definition">¶</a></dt>
+<dd><p>Compatibility wrapper for sampling inverse TOPP3/COPP3 mappings.</p>
+<p>New code should prefer [<cite>t_to_s_topp3_uniform</cite>] or
+[<cite>t_to_s_topp3_samples</cite>], which avoid mutually exclusive keyword modes.</p>
+<p>Exactly one sampling mode must be selected:</p>
+<ul class="simple">
+<li><p>pass <code class="docutils literal notranslate"><span class="pre">dt</span></code> for a uniform time grid starting at <code class="docutils literal notranslate"><span class="pre">t0</span></code>;</p></li>
+<li><p>pass <code class="docutils literal notranslate"><span class="pre">t_sample</span></code> for an explicit strictly increasing nonuniform time
+grid.</p></li>
+</ul>
+<p>Out-of-range query times are returned as <code class="docutils literal notranslate"><span class="pre">NaN</span></code> by the COPP core.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<em>ArrayLike</em>) – One-dimensional station grid convertible to float64. Values must be
+strictly increasing.</p></li>
+<li><p><strong>profile</strong> (<a class="reference internal" href="#copp_py.interpolation.Profile3rd" title="copp_py.interpolation.Profile3rd"><em>Profile3rd</em></a>) – Third-order profile used to integrate and invert the time mapping.</p></li>
+<li><p><strong>t_s</strong> (<em>ArrayLike</em>) – One-dimensional arrival-time profile convertible to float64, usually
+returned by <code class="docutils literal notranslate"><span class="pre">s_to_t_topp3</span></code>. Must have the same length as <code class="docutils literal notranslate"><span class="pre">s</span></code> and be
+strictly increasing.</p></li>
+<li><p><strong>t0</strong> (<em>float</em><em>, </em><em>default=0.0</em>) – Start time for uniform-grid sampling. Ignored when <code class="docutils literal notranslate"><span class="pre">t_sample</span></code> is
+provided.</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em> | </em><em>None</em><em>, </em><em>default=None</em>) – Positive uniform time step. Mutually exclusive with <code class="docutils literal notranslate"><span class="pre">t_sample</span></code>.</p></li>
+<li><p><strong>include_final</strong> (<em>bool</em><em>, </em><em>default=True</em>) – When using <code class="docutils literal notranslate"><span class="pre">dt</span></code>, append <code class="docutils literal notranslate"><span class="pre">s[-1]</span></code> if the generated uniform grid does
+not already include the final station.</p></li>
+<li><p><strong>t_sample</strong> (<em>ArrayLike</em><em> | </em><em>None</em><em>, </em><em>default=None</em>) – Explicit nonuniform query times. Must be one-dimensional, finite,
+non-empty, and strictly increasing. Mutually exclusive with <code class="docutils literal notranslate"><span class="pre">dt</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sampled station values <code class="docutils literal notranslate"><span class="pre">s(t)</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray[numpy.float64]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If inputs cannot be converted to one-dimensional float64 arrays, if
+    neither sampling mode is selected, or if both <code class="docutils literal notranslate"><span class="pre">dt</span></code> and <code class="docutils literal notranslate"><span class="pre">t_sample</span></code>
+    are provided.</p></li>
+<li><p><a class="reference internal" href="core.html#copp_py.CoppError" title="copp_py.CoppError"><strong>CoppError</strong></a> – If the COPP core rejects the grid, profile, arrival times, or sampling
+    parameters.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robot.html">Robot And Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html">Clarabel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp2.html">TOPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp2.html">COPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp3.html">TOPP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp3.html">COPP3</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="core.html" title="previous chapter">Core</a></li>
+      <li>Next: <a href="path.html" title="next chapter">Path</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/interpolation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

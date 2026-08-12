@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['data_0',['data',['../classcopp_1_1_span.html#ab8684f35db7e2a166a9da250314c1202',1,'copp::Span::data()'],['../classcopp_1_1_matrix_view.html#af5593ea828180fca24ddd4b523cb4fc6',1,'copp::MatrixView::data()'],['../classcopp_1_1_matrix_ref.html#a67dda2b12b6f3a3b86cda3580d924bce',1,'copp::MatrixRef::data()'],['../classcopp_1_1_matrix.html#adc3b352517d9cc2a78fef030def4b554',1,'copp::Matrix::data() noexcept'],['../classcopp_1_1_matrix.html#a0d40d3c928f3a93958ab37c0893d2a93',1,'copp::Matrix::data() const noexcept']]],
+  ['defaults_1',['defaults',['../structcopp_1_1clarabel_1_1_settings.html#a18e97486448957f6a718a40222131ef3',1,'copp::clarabel::Settings::defaults()'],['../structcopp_1_1clarabel_1_1_options.html#aab2dfb3e13fbcbae7d6665348def5c21',1,'copp::clarabel::Options::defaults()']]],
+  ['dim_2',['dim',['../classcopp_1_1_path.html#a3c106448e8b76efaa64c6410b101c0e2',1,'copp::Path::dim()'],['../classcopp_1_1_constraints_ref.html#a928bb596aeaeb2c6b3413afc6b4d5752',1,'copp::ConstraintsRef::dim()'],['../classcopp_1_1_constraints.html#ac20183ac5e9ab3344f959aeb08f44621',1,'copp::Constraints::dim()'],['../classcopp_1_1_robot.html#a575192c3b84615025b08dcf25d7e5e0a',1,'copp::Robot::dim()']]]
+];

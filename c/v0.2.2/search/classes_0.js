@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['copp2problem_0',['Copp2Problem',['../struct_copp2_problem.html',1,'']]],
+  ['copp2socpresult_1',['Copp2SocpResult',['../struct_copp2_socp_result.html',1,'']]],
+  ['copp3problem_2',['Copp3Problem',['../struct_copp3_problem.html',1,'']]],
+  ['copp3socpresult_3',['Copp3SocpResult',['../struct_copp3_socp_result.html',1,'']]],
+  ['coppclarabellinearsolverinfo_4',['CoppClarabelLinearSolverInfo',['../struct_copp_clarabel_linear_solver_info.html',1,'']]],
+  ['coppclarabeloptions_5',['CoppClarabelOptions',['../struct_copp_clarabel_options.html',1,'']]],
+  ['coppclarabelsettings_6',['CoppClarabelSettings',['../struct_copp_clarabel_settings.html',1,'']]],
+  ['coppjet3_7',['CoppJet3',['../struct_copp_jet3.html',1,'']]],
+  ['coppmatrixf64_8',['CoppMatrixF64',['../struct_copp_matrix_f64.html',1,'']]],
+  ['coppmatrixviewf64_9',['CoppMatrixViewF64',['../struct_copp_matrix_view_f64.html',1,'']]],
+  ['coppobjective_10',['CoppObjective',['../struct_copp_objective.html',1,'']]],
+  ['copppathoptions_11',['CoppPathOptions',['../struct_copp_path_options.html',1,'']]],
+  ['coppprofile3rd_12',['CoppProfile3rd',['../struct_copp_profile3rd.html',1,'']]],
+  ['coppreachset2result_13',['CoppReachSet2Result',['../struct_copp_reach_set2_result.html',1,'']]],
+  ['coppslicef64_14',['CoppSliceF64',['../struct_copp_slice_f64.html',1,'']]],
+  ['coppslicemutf64_15',['CoppSliceMutF64',['../struct_copp_slice_mut_f64.html',1,'']]],
+  ['coppvecf64_16',['CoppVecF64',['../struct_copp_vec_f64.html',1,'']]],
+  ['coppvecusize_17',['CoppVecUsize',['../struct_copp_vec_usize.html',1,'']]]
+];

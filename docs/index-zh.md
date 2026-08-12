@@ -104,7 +104,7 @@ $$
 | 时间目标   | TOPP2                          | TOPP3                                    |
 | 一般凸目标 | COPP2                          | COPP3                                    |
 
-## 安装
+## 安装 { #installation }
 
 === "Rust"
 
@@ -134,8 +134,8 @@ $$
     如果需要从本地源码构建，需要 Python 3.9 或更新版本、Rust/Cargo、`maturin`，以及平台 C/C++ 编译器工具链：Windows 上建议安装带 C++ workload 的 Visual Studio Build Tools，Linux 上使用 GCC/Clang，macOS 上使用 Xcode Command Line Tools。可以从本地库开始：
 
     ```sh
-    git clone https://github.com/TOPP-THU/topp.git
-    cd topp
+    git clone https://github.com/TOPP-THU/copp.git
+    cd copp
     python -m pip install -U pip
     python -m pip install -U maturin numpy jax
     maturin develop --release --features python
@@ -149,7 +149,58 @@ $$
 
 === "Matlab"
 
-    TODO 这里后面再确定安装方式
+    每个发布版本都会在 [COPP GitHub Releases 页面](https://github.com/TOPP-THU/copp/releases)提供预编译的 MATLAB toolbox。每个版本按平台各提供一个 `.mltbx`，命名为 `copp-matlab-<version>-<platform>.mltbx`，其中 `<platform>` 为 `windows-x86_64`、`linux-x86_64`、`macos-aarch64` 或 `macos-x86_64`，每个 `.mltbx` 都附带一个 `.sha256` 校验文件。需要 MATLAB R2024b 或更新版本。
+
+    请下载与自己平台匹配的文件。如果不确定是哪一个，可以在 MATLAB 中运行 `computer("arch")`，再对照下表：
+
+    | `computer("arch")` | 对应的发布包平台 |
+    | ------------------ | ---------------- |
+    | `win64`            | `windows-x86_64` |
+    | `glnxa64`          | `linux-x86_64`   |
+    | `maca64`           | `macos-aarch64`  |
+    | `maci64`           | `macos-x86_64`   |
+
+    macOS 用户需要特别留意：MATLAB toolbox 只区分 Windows、macOS 和 Linux 三类平台，因此两个 macOS 包都只声明 macOS 支持，MATLAB 不会阻止你在 Intel Mac 上安装 Apple silicon 的包；这种不匹配只会在之后 MEX 网关加载失败时才暴露出来。
+
+    下载后在 MATLAB 中双击安装，或在命令行窗口执行：
+
+    ```matlab
+    matlab.addons.toolbox.installToolbox("copp-matlab-<version>-<platform>.mltbx", true)
+    copp.version()
+    ```
+
+    `copp.version()` 通过 MEX 网关读取所链接的 native library 的版本号，因此调用成功也就同时验证了 toolbox 已正确加载。请不要手动解压 `.mltbx`：它是 MATLAB 的 toolbox 安装包，安装过程会自动管理 MATLAB 路径。
+
+    如果本地已有仓库，`bindings/matlab/install_copp.m` 可以自动完成上述步骤——识别平台、下载对应的发布包并安装：
+
+    ```matlab
+    cd bindings/matlab
+    install_copp()                    % 最新发布版本
+    install_copp(Version="v0.2.2")    % 指定发布版本
+    ```
+
+    如果需要从源码构建，还需要准备 Rust/Cargo 和 MATLAB 支持的 C++ 编译器。可以从本地库开始：
+
+    ```sh
+    git clone https://github.com/TOPP-THU/copp.git
+    cd copp
+    cargo build --release --lib --features matlab
+    ```
+
+    Cargo 的 `matlab` feature 内部复用 C ABI，因此不会在默认的纯 Rust 构建中引入 MATLAB 相关代码。然后在 MATLAB 命令行窗口中执行：
+
+    ```matlab
+    cd bindings/matlab
+    mex -setup C++   % 仅首次或更换编译器时需要
+    build()
+    addpath(pwd)
+    rehash
+    copp.version()
+    ```
+
+    `build()` 默认静态链接，这也是普通用户推荐的构建方式；`build(Linkage="dynamic")` 生成的 MEX 文件更小，但需要保证运行时能找到 native library。
+
+    有两个路径构造接口需要额外依赖：`copp.Path.from_symbolic` 需要 Symbolic Math Toolbox，`copp.Path.from_casadi` 需要 CasADi。其余功能使用基础 MATLAB 即可。
 
 === "C++"
 
@@ -158,8 +209,8 @@ $$
     如果需要从源码构建，可以从本地库开始：
 
     ```sh
-    git clone https://github.com/TOPP-THU/topp.git
-    cd topp
+    git clone https://github.com/TOPP-THU/copp.git
+    cd copp
     ```
 
     需要准备 Cargo、CMake 和支持 C++17 的编译器工具链：Windows 上建议安装带 C++ workload 的 Visual Studio Build Tools，Linux 上使用 GCC/Clang，macOS 上使用 Xcode Command Line Tools。若使用 `copp/eigen.hpp`，还需要安装 Eigen；若只使用核心 C++ API，可以在 CMake 中关闭 Eigen adapter。
@@ -238,8 +289,8 @@ $$
     C ABI 适合 C/C++ 工程、下游语言绑定和已有机器人软件栈。发布版本的预编译 C ABI SDK 可以从 [GitHub Releases](https://github.com/TOPP-THU/copp/releases) 获取；如果需要从源码构建，可以从本地库开始：
 
     ```sh
-    git clone https://github.com/TOPP-THU/topp.git
-    cd topp
+    git clone https://github.com/TOPP-THU/copp.git
+    cd copp
     ```
 
     需要准备 Cargo、CMake 和 C 编译器工具链：Windows 上建议安装带 C++ workload 的 Visual Studio Build Tools，Linux 上使用 GCC/Clang，macOS 上使用 Xcode Command Line Tools。C ABI 位于 Cargo 的 `c` feature 下，先在仓库根目录构建 native library：
@@ -445,7 +496,7 @@ $$
 
     def q_fn(s):
         freq = jnp.array([2.0 * jnp.pi, 2.0 * jnp.pi], dtype=jnp.float64)
-        phase = jnp.array([0.0, 0.0], dtype=jnp.float64)
+        phase = jnp.array([0.0, 0.5 * jnp.pi], dtype=jnp.float64)
         return jnp.sin(freq * s + phase)
 
     path = copp.Path.from_jax(q_fn, 0.0, 1.0)
@@ -482,63 +533,35 @@ $$
 === "C"
 
     ```c
-    // C ABI uses a callback-backed path for analytic formulas.
-    // The callback below provides q, dq/ds, d2q/ds2, and d3q/ds3 for
-    // q(s) = [sin(2*pi*s), cos(2*pi*s)].
-    static enum CoppStatus evaluate_parametric_path_3rd(
+    static enum CoppStatus evaluate_parametric_path(
         void *user_data,
         size_t dim,
-        size_t n,
-        const double *s,
-        double *q,
-        double *dq,
-        double *ddq,
-        double *dddq)
+        struct CoppJet3 s,
+        struct CoppJet3 *q)
     {
         (void)user_data;
-        if (dim != DIM) {
+        if (dim != DIM || q == NULL) {
             return COPP_STATUS_INVALID_ARGUMENT;
         }
-        if (n > 0 && (s == NULL || q == NULL || dq == NULL || ddq == NULL || dddq == NULL)) {
-            return COPP_STATUS_NULL_POINTER;
-        }
 
-        const double pi2 = 6.28318530717958647692;
-        const double pi2_sq = pi2 * pi2;
-        const double pi2_cu = pi2_sq * pi2;
-
-        for (size_t col = 0; col < n; ++col) {
-            const double sin_v = sin(pi2 * s[col]);
-            const double cos_v = cos(pi2 * s[col]);
-            const size_t row0 = col * dim;
-
-            q[row0] = sin_v;
-            q[row0 + 1] = cos_v;
-            dq[row0] = pi2 * cos_v;
-            dq[row0 + 1] = -pi2 * sin_v;
-            ddq[row0] = -pi2_sq * sin_v;
-            ddq[row0 + 1] = -pi2_sq * cos_v;
-            dddq[row0] = -pi2_cu * cos_v;
-            dddq[row0 + 1] = pi2_cu * sin_v;
-        }
+        // `s` 传入时已经播种了 ds/ds = 1，`copp/path.h` 中的内联 Jet3 helper
+        // 会自动传播到三阶导数。这里只需要写出 q(s)，dq、ddq、dddq 由 helper 得到。
+        const struct CoppJet3 w = copp_mul_f64(s, 6.28318530717958647692);
+        q[0] = copp_sin(w);
+        q[1] = copp_cos(w);
         return COPP_STATUS_OK;
     }
 
     struct CoppPath *path = NULL;
     // On success, release `path` later with `copp_path_free(path)`.
     if (check(
-            copp_path_from_evaluator_3rd(
-                DIM,
-                0.0,
-                1.0,
-                NULL,
-                evaluate_parametric_path_3rd,
-                NULL,
-                &path),
-            "copp_path_from_evaluator_3rd")) {
+            copp_path_from_parametric(DIM, 0.0, 1.0, evaluate_parametric_path, NULL, &path),
+            "copp_path_from_parametric")) {
         return 1;
     }
     ```
+
+    `copp_path_from_parametric` 和 `CoppJet3` 需要 v0.2.2 或更新版本。除了 `copp_sin`、`copp_cos`、`copp_mul_f64`，头文件还提供 `copp_add`、`copp_sub`、`copp_mul`、`copp_div`、`copp_neg`、`copp_exp`、`copp_log`、`copp_sqrt`、`copp_powi`、`copp_constant` 及它们的标量变体。更早的版本请按下面 Option C 的方式，通过 `copp_path_from_evaluator_3rd` 手动提供导数。
 
 #### Option B. 路径点生成样条
 
@@ -703,7 +726,7 @@ $$
     }
 
     // If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `PathEvaluator3rd`.
-    let path = Path::from_evaluator_3rd(NormalizedEvaluator3rd, 0.0, 1.0)?;
+    let path = Path::from_evaluator_3rd(NormalizedEvaluator, 0.0, 1.0)?;
     ```
 
 === "Python"
@@ -749,7 +772,7 @@ $$
             return q, dq, ddq, dddq
 
 
-    # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_3rd` without dependence on `evaluate_up_to_3rd`.
+    # If only TOPP2/COPP2 is required and TOPP3/COPP3 is not called, then the path can be constructed by `from_evaluator_2nd` without dependence on `evaluate_up_to_3rd`.
     path = copp.Path.from_evaluator_3rd(Evaluator(), 0.0, 1.0)
     ```
 
@@ -1943,13 +1966,13 @@ $$
 
 ## Benchmark 性能测试
 
-以下测试来自仓库中的 `tests/test_random_spline.rs`。测试条件为：
+其中开源算法的各行可以用仓库中的 `tests/test_random_spline.rs` 复现；PRO 算法的各行（COPP2-RDDP、TOPP3-RA、COPP3-RDDP）来自 PRO 版本上同条件的测试，因此不包含在开源测试文件中。测试条件为：
 
 - `release, --include-ignored`
 - CPU: Intel(R) Core(TM) Ultra 9 285K.
 - 数据集：100 条随机 7-DOF 样条路径，每条路径离散为 1000 个区间。
 
-所有指标均以 `mean ± std` 的形式列出。
+所有指标均以 `mean ± std` 的形式列出。计算时间与机器和运行状态相关，绝对数值会与你自己的运行结果有出入，方法之间的相对比较才是有意义的部分。
 
 #### 时间最优 (Time-Optimal)
 
@@ -1986,7 +2009,8 @@ $$
 
     我们推荐使用 [docs.rs 最新文档](https://docs.rs/copp/latest/copp/)，也支持本地文档：
 
-    - [v0.2.1 (Latest)](rust/v0.2.1/copp/)
+    - [v0.2.2 (Latest)](rust/v0.2.2/copp/)
+    - [v0.2.1](rust/v0.2.1/copp/)
     - [v0.2.0](rust/v0.2.0/copp/)
     - [v0.1.0](rust/v0.1.0/copp/)
 
@@ -2002,7 +2026,8 @@ $$
 
     Python 文档如下：
 
-    - [v0.2.1 (Latest)](python/v0.2.1/index.html)
+    - [v0.2.2 (Latest)](python/v0.2.2/index.html)
+    - [v0.2.1](python/v0.2.1/index.html)
 
     如果需要本地生成 Python 文档，先安装 Sphinx，然后在 `copp` 仓库根目录运行：
 
@@ -2015,18 +2040,40 @@ $$
 
 === "Matlab"
 
-    MATLAB 文档可在本地通过 `publish` 生成：
+    MATLAB 文档如下：
+
+    - [v0.2.2 (Latest)](matlab/v0.2.2/index.html)
+
+    也可以在本地通过 `publish` 生成。下列命令需要在 **MATLAB 命令行窗口**中运行，而不是系统终端：
 
     ```matlab
     cd bindings/matlab/docs
     build_docs()
     ```
 
+    `build_docs` 会自行把 `bindings/matlab` 加入 MATLAB 路径，不需要手动 `addpath`。但它会执行文档页面中的代码（`EvalCode` 默认为 `true`），而这些页面会调用 COPP 接口，因此 MEX 网关必须事先编译好。可以先检查：
+
+    ```matlab
+    copp.version()
+    ```
+
+    如果这一步报错，请先按[安装](#installation)章节的说明构建 MEX，再生成文档。
+
+    如果不希望离开系统终端，可以使用 MATLAB 的 batch 模式：
+
+    ```powershell
+    matlab -batch "cd('bindings/matlab/docs'); build_docs()"
+    ```
+
     生成的入口页面位于 `bindings/matlab/docs/html/index.html`。
 
 === "C++"
 
-    C++ API 文档使用 Doxygen 生成，内容来自 `bindings/cpp/include/copp/*.hpp`、`bindings/cpp/docs/*.md` 和示例代码。发布版文档后续会随 SDK 一起整理；如果需要查看开发分支上的 C++ 接口，可以在 `copp` 仓库根目录本地生成：
+    C++ 文档如下：
+
+    - [v0.2.2 (Latest)](cpp/v0.2.2/index.html)
+
+    C++ API 文档使用 Doxygen 生成，内容来自 `bindings/cpp/include/copp/*.hpp`、`bindings/cpp/docs/*.md` 和示例代码。如果需要查看开发分支上的 C++ 接口，可以在 `copp` 仓库根目录本地生成：
 
     ```sh
     doxygen bindings/cpp/Doxyfile
@@ -2038,7 +2085,8 @@ $$
 
     C 文档如下：
 
-    - [v0.2.1 (Latest)](c/v0.2.1/index.html)
+    - [v0.2.2 (Latest)](c/v0.2.2/index.html)
+    - [v0.2.1](c/v0.2.1/index.html)
     - [v0.2.0](c/v0.2.0/index.html)
 
     如果需要本地生成 C 文档，先安装 Doxygen、Graphviz 和 PowerShell 7（即 `pwsh`，脚本会用它重新生成头文件），然后在 `copp` 仓库根目录运行对应命令：
@@ -2118,6 +2166,7 @@ $$
     | `copp/solver/*.hpp`                | TOPP/COPP 求解器 namespace 和 problem/options/result。 |
     | `copp/eigen.hpp`                   | 可选 Eigen adapter；核心头不直接依赖 Eigen。           |
     | CMake target `copp::copp`          | 下游 C++ 工程链接入口；C ABI 另有 `copp::c_abi`。      |
+
 === "C"
 
     | 头文件                 | 负责内容                                               |

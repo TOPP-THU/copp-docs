@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Robot And Constraints &#8212; copp-py Python v0.2.2</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=fbb87d90"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Objectives" href="objective.html" />
+    <link rel="prev" title="Path" href="path.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="robot-and-constraints">
+<h1>Robot And Constraints<a class="headerlink" href="#robot-and-constraints" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">Robot</span></code> is the recommended high-level container for sampled path derivatives,
+physical limits, optional inverse dynamics, and the underlying raw constraint
+buffer. Use <code class="docutils literal notranslate"><span class="pre">Constraints</span></code> directly when you already have path-domain rows and
+do not need robot derivative storage.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.robot.Robot">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.robot.</span></span><span class="sig-name descname"><span class="pre">Robot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverse_dynamics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python-owned robot wrapper backed by [<cite>RustRobot</cite>].</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.add_acceleration_limits">
+<span class="sig-name descname"><span class="pre">add_acceleration_limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_idx_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.add_acceleration_limits" title="Link to this definition">¶</a></dt>
+<dd><p>Add axial acceleration limits over an existing station interval.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.add_jerk_limits">
+<span class="sig-name descname"><span class="pre">add_jerk_limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_idx_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.add_jerk_limits" title="Link to this definition">¶</a></dt>
+<dd><p>Add axial jerk limits over an existing station interval.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.add_torque_limits">
+<span class="sig-name descname"><span class="pre">add_torque_limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_idx_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.add_torque_limits" title="Link to this definition">¶</a></dt>
+<dd><p>Add axial torque limits using point or Python inverse dynamics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.add_velocity_limits">
+<span class="sig-name descname"><span class="pre">add_velocity_limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_idx_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.add_velocity_limits" title="Link to this definition">¶</a></dt>
+<dd><p>Add axial velocity limits over an existing station interval.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.append_s">
+<span class="sig-name descname"><span class="pre">append_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.append_s" title="Link to this definition">¶</a></dt>
+<dd><p>Append strictly increasing station samples to the robot.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.capacity">
+<span class="sig-name descname"><span class="pre">capacity</span></span><a class="headerlink" href="#copp_py.robot.Robot.capacity" title="Link to this definition">¶</a></dt>
+<dd><p>Return the allocated station-buffer capacity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.clear_inverse_dynamics">
+<span class="sig-name descname"><span class="pre">clear_inverse_dynamics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.clear_inverse_dynamics" title="Link to this definition">¶</a></dt>
+<dd><p>Clear the Python inverse-dynamics callback and restore point dynamics.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.constraints">
+<span class="sig-name descname"><span class="pre">constraints</span></span><a class="headerlink" href="#copp_py.robot.Robot.constraints" title="Link to this definition">¶</a></dt>
+<dd><p>Return a lightweight proxy for raw constraint-buffer operations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><a class="headerlink" href="#copp_py.robot.Robot.dim" title="Link to this definition">¶</a></dt>
+<dd><p>Return the robot dimension.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.has_inverse_dynamics">
+<span class="sig-name descname"><span class="pre">has_inverse_dynamics</span></span><a class="headerlink" href="#copp_py.robot.Robot.has_inverse_dynamics" title="Link to this definition">¶</a></dt>
+<dd><p>Return whether a Python inverse-dynamics callback is installed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.idx_s_range">
+<span class="sig-name descname"><span class="pre">idx_s_range</span></span><a class="headerlink" href="#copp_py.robot.Robot.idx_s_range" title="Link to this definition">¶</a></dt>
+<dd><p>Return the active global station-id range <code class="docutils literal notranslate"><span class="pre">(idx_s_start,</span> <span class="pre">idx_s_end)</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.is_empty">
+<span class="sig-name descname"><span class="pre">is_empty</span></span><a class="headerlink" href="#copp_py.robot.Robot.is_empty" title="Link to this definition">¶</a></dt>
+<dd><p>Return whether the constraint buffer contains no stations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.len">
+<span class="sig-name descname"><span class="pre">len</span></span><a class="headerlink" href="#copp_py.robot.Robot.len" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of station samples currently stored.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.point_mass">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">point_mass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.point_mass" title="Link to this definition">¶</a></dt>
+<dd><p>Construct an explicit point-mass robot, where <code class="docutils literal notranslate"><span class="pre">tau</span> <span class="pre">=</span> <span class="pre">ddq</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.set_inverse_dynamics">
+<span class="sig-name descname"><span class="pre">set_inverse_dynamics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inverse_dynamics</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.set_inverse_dynamics" title="Link to this definition">¶</a></dt>
+<dd><p>Replace the Python inverse-dynamics callback.</p>
+<p>The callback may be a plain callable <code class="docutils literal notranslate"><span class="pre">f(q,</span> <span class="pre">dq,</span> <span class="pre">ddq)</span></code> or an object with
+a callable <code class="docutils literal notranslate"><span class="pre">inverse_dynamics(q,</span> <span class="pre">dq,</span> <span class="pre">ddq)</span></code> method. It must return a
+vector convertible to contiguous <code class="docutils literal notranslate"><span class="pre">float64</span></code> with shape <code class="docutils literal notranslate"><span class="pre">(dim,)</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.set_q">
+<span class="sig-name descname"><span class="pre">set_q</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ddq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_s</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">dddq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.set_q" title="Link to this definition">¶</a></dt>
+<dd><p>Store discrete path derivatives over an existing station interval.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.set_q_from_path_2nd">
+<span class="sig-name descname"><span class="pre">set_q_from_path_2nd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_s_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_s_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.set_q_from_path_2nd" title="Link to this definition">¶</a></dt>
+<dd><p>Sample a path and store derivatives up to second order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.robot.Robot.set_q_from_path_3rd">
+<span class="sig-name descname"><span class="pre">set_q_from_path_3rd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_s_from</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_s_to</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.robot.Robot.set_q_from_path_3rd" title="Link to this definition">¶</a></dt>
+<dd><p>Sample a path and store derivatives up to third order.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.constraints.</span></span><span class="sig-name descname"><span class="pre">Constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">capacity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Raw constraint-buffer proxy returned by [<cite>PyRobot::constraints</cite>].</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.add_constraint_1st">
+<span class="sig-name descname"><span class="pre">add_constraint_1st</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx_s</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.add_constraint_1st" title="Link to this definition">¶</a></dt>
+<dd><p>Add or tighten first-order raw constraints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.add_constraint_2nd">
+<span class="sig-name descname"><span class="pre">add_constraint_2nd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">acc_b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acc_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_s</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_negative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.add_constraint_2nd" title="Link to this definition">¶</a></dt>
+<dd><p>Add second-order raw constraints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.add_constraint_3rd">
+<span class="sig-name descname"><span class="pre">add_constraint_3rd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">jerk_b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jerk_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jerk_d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jerk_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_s</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_negative</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.add_constraint_3rd" title="Link to this definition">¶</a></dt>
+<dd><p>Add third-order raw constraints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.amax_substitute">
+<span class="sig-name descname"><span class="pre">amax_substitute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">idx_s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.amax_substitute" title="Link to this definition">¶</a></dt>
+<dd><p>Overwrite first-order bounds over a station interval.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.amax_values">
+<span class="sig-name descname"><span class="pre">amax_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx_s_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.amax_values" title="Link to this definition">¶</a></dt>
+<dd><p>Export first-order upper bounds over a half-open station-id interval.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.append_s">
+<span class="sig-name descname"><span class="pre">append_s</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.append_s" title="Link to this definition">¶</a></dt>
+<dd><p>Append strictly increasing station samples to the constraint buffer.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.capacity">
+<span class="sig-name descname"><span class="pre">capacity</span></span><a class="headerlink" href="#copp_py.constraints.Constraints.capacity" title="Link to this definition">¶</a></dt>
+<dd><p>Return the allocated station-buffer capacity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.clear" title="Link to this definition">¶</a></dt>
+<dd><p>Clear all stored constraints and station data.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><a class="headerlink" href="#copp_py.constraints.Constraints.dim" title="Link to this definition">¶</a></dt>
+<dd><p>Return the robot/path dimension.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.idx_s_range">
+<span class="sig-name descname"><span class="pre">idx_s_range</span></span><a class="headerlink" href="#copp_py.constraints.Constraints.idx_s_range" title="Link to this definition">¶</a></dt>
+<dd><p>Return the active global station-id range <code class="docutils literal notranslate"><span class="pre">(idx_s_start,</span> <span class="pre">idx_s_end)</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.is_empty">
+<span class="sig-name descname"><span class="pre">is_empty</span></span><a class="headerlink" href="#copp_py.constraints.Constraints.is_empty" title="Link to this definition">¶</a></dt>
+<dd><p>Return whether the constraint buffer contains no stations.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.len">
+<span class="sig-name descname"><span class="pre">len</span></span><a class="headerlink" href="#copp_py.constraints.Constraints.len" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of station samples currently stored.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.pop_back_n">
+<span class="sig-name descname"><span class="pre">pop_back_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_cols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.pop_back_n" title="Link to this definition">¶</a></dt>
+<dd><p>Remove <code class="docutils literal notranslate"><span class="pre">n_cols</span></code> station samples from the back.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.pop_back_until">
+<span class="sig-name descname"><span class="pre">pop_back_until</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx_s_cut</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.pop_back_until" title="Link to this definition">¶</a></dt>
+<dd><p>Remove back samples until the kept window ends before <code class="docutils literal notranslate"><span class="pre">idx_s_cut</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.pop_front_n">
+<span class="sig-name descname"><span class="pre">pop_front_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_cols</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.pop_front_n" title="Link to this definition">¶</a></dt>
+<dd><p>Remove <code class="docutils literal notranslate"><span class="pre">n_cols</span></code> station samples from the front.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.pop_front_until">
+<span class="sig-name descname"><span class="pre">pop_front_until</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx_s_cut</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.pop_front_until" title="Link to this definition">¶</a></dt>
+<dd><p>Remove front samples until the kept window starts at <code class="docutils literal notranslate"><span class="pre">idx_s_cut</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.constraints.Constraints.s_values">
+<span class="sig-name descname"><span class="pre">s_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx_s_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.constraints.Constraints.s_values" title="Link to this definition">¶</a></dt>
+<dd><p>Export station samples over a half-open station-id interval.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html">Path</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Robot And Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html">Clarabel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp2.html">TOPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp2.html">COPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp3.html">TOPP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp3.html">COPP3</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="path.html" title="previous chapter">Path</a></li>
+      <li>Next: <a href="objective.html" title="next chapter">Objectives</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/robot.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

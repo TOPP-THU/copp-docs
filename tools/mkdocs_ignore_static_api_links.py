@@ -7,7 +7,7 @@ import re
 
 
 STATIC_API_LINK_WARNING = re.compile(
-    r"(?:link|url|target|path to) ['\"]/?(?:c|rust|python)/",
+    r"(?:link|url|target|path to) ['\"]/?(?:cpp|c|rust|python|matlab)/",
     re.IGNORECASE,
 )
 

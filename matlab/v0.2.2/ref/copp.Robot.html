@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>copp.Robot - COPP MATLAB Reference</title>
+<style>
+
+/* COPP MATLAB reference theme. Designed for MATLAB publish HTML from R2024b. */
+:root { --mw-bg:#ffffff; --mw-page-bg:#f7f7f7; --mw-text:#333333; --mw-muted:#666666; --mw-border:#d6d6d6; --mw-border-light:#e5e5e5; --mw-link:#0076a8; --mw-link-hover:#005f87; --mw-code-bg:#f5f5f5; --mw-code-border:#dcdcdc; --mw-table-head:#f3f3f3; --mw-accent:#c45400; }
+html { min-height:100%; background:var(--mw-page-bg); }
+html body.mw-doc-body, html body { margin:0; background:var(--mw-page-bg); color:var(--mw-text); font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:1.55; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+body, body * { box-sizing:border-box; }
+.skip-link { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+.skip-link:focus { left:16px; top:12px; width:auto; height:auto; z-index:1000; padding:7px 10px; background:#fff; border:1px solid var(--mw-border); color:var(--mw-link); }
+.mw-site-header { background:#f2f2f2; border-top:4px solid var(--mw-accent); border-bottom:1px solid #cfcfcf; color:#333; }
+.mw-site-header-inner { max-width:1180px; min-height:54px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.mw-brand-block { display:flex; align-items:baseline; gap:12px; min-width:0; }
+.mw-brand-title { color:#222; font-size:18px; font-weight:400; white-space:nowrap; }
+.mw-brand-subtitle { color:#666; font-size:13px; white-space:nowrap; }
+.mw-search-box { width:268px; min-height:31px; padding:6px 34px 6px 11px; border:1px solid #bdbdbd; border-radius:2px; background:#fff; color:#777; font-size:13px; line-height:17px; text-align:left; }
+.content { max-width:1180px; min-height:calc(100vh - 59px); margin:0 auto; padding:28px 34px 52px; background:var(--mw-bg); border-left:1px solid #eeeeee; border-right:1px solid #eeeeee; }
+.mw-page-head { max-width:860px; outline:none; }
+.breadcrumb { display:flex; flex-wrap:wrap; align-items:center; gap:0; margin:0 0 19px; color:#6f6f6f; font-size:12px; line-height:1.35; }
+.breadcrumb span { display:inline-block; }
+.breadcrumb-separator { margin:0 7px; color:#a0a0a0; }
+.breadcrumb-current { color:#555; }
+h1 { margin:0 0 4px; padding:0; color:#333; font-size:32px; font-weight:400; line-height:1.15; letter-spacing:-0.01em; }
+.function-label { max-width:850px; margin:0 0 23px; color:#555; font-size:15px; line-height:1.45; }
+h2 { clear:left; max-width:850px; margin:31px 0 14px; padding:23px 0 7px; border-bottom:1px solid var(--mw-border); color:#333; font-size:24px; font-weight:400; line-height:1.25; }
+h2.ref-section-syntax { margin-top:24px; }
+h3 { max-width:850px; margin:22px 0 8px; padding:0; color:#333; font-size:17px; font-weight:600; line-height:1.35; }
+h4 { max-width:850px; margin:18px 0 7px; padding:0; color:#333; font-size:14px; font-weight:600; line-height:1.35; }
+p { max-width:850px; margin:0 0 14px; color:#333; font-size:14px; line-height:1.55; }
+a { color:var(--mw-link); text-decoration:none; }
+a:hover, a:focus { color:var(--mw-link-hover); text-decoration:underline; }
+a:visited { color:#005f87; }
+ul, ol { max-width:850px; margin:0 0 18px 23px; padding:0; }
+ul { list-style:square; }
+ol { list-style:decimal; }
+li { margin:4px 0 6px; padding:0; line-height:1.5; }
+li ul, li ol { margin-top:6px; margin-bottom:7px; }
+tt, code, pre { font-family:Consolas, 'Courier New', Courier, monospace; }
+tt, code { color:#222; font-size:.95em; background:var(--mw-code-bg); border:1px solid var(--mw-code-border); border-radius:3px; padding:1px 4px; }
+pre code, pre tt, .ref-syntax code, .syntax-list code { background:transparent; border:0; border-radius:0; padding:0; }
+.ref-syntax { max-width:850px; margin:0 0 19px; }
+.ref-syntax pre.language-matlab { margin:0; padding:0; border:0; background:#fff; color:#111; font-size:14px; line-height:1.8; white-space:pre-wrap; overflow:visible; }
+pre.language-matlab { max-width:850px; margin:8px 0 18px; padding:10px 12px; border:1px solid var(--mw-code-border); background:var(--mw-code-bg); color:#222; font-size:13px; line-height:1.45; overflow:auto; }
+.code-example, .code-output { max-width:850px; margin:10px 0 18px; border:1px solid var(--mw-code-border); background:var(--mw-code-bg); }
+.code-output { margin-top:-10px; background:#fff; }
+.code-toolbar { min-height:28px; padding:5px 10px 4px; border-bottom:1px solid var(--mw-code-border); background:#eeeeee; color:#666; font-size:11px; line-height:18px; text-transform:uppercase; letter-spacing:.03em; }
+.code-output-toolbar { background:#fafafa; color:#777; }
+pre.codeinput, pre.codeoutput { max-width:none; margin:0; border:0; border-radius:0; font-size:13px; line-height:1.48; overflow:auto; }
+pre.codeinput { padding:11px 12px 12px; background:var(--mw-code-bg); color:#222; }
+pre.codeoutput { padding:10px 12px 12px; background:#fff; color:#4c4c4c; }
+pre.error { max-width:850px; padding:10px 12px; border:1px solid #d9534f; background:#fff4f4; color:#b00000; }
+span.keyword { color:#0000ff; }
+span.comment { color:#228b22; }
+span.string { color:#a020f0; }
+span.untermstring { color:#b20000; }
+span.syscmd { color:#b28c00; }
+span.typesection { color:#a0522d; }
+.argument-name { max-width:850px; margin:22px 0 5px; padding:0; border:0; color:#333; font-size:17px; font-weight:600; line-height:1.35; }
+.argument-name tt { font-size:1em; font-weight:600; color:#111; }
+.argument-dash { color:#777; font-weight:400; }
+.argument-summary { color:#333; font-weight:400; }
+.argument-meta, .argument-example { max-width:850px; margin:-2px 0 13px; color:#666; font-size:13px; line-height:1.45; }
+.argument-meta tt, .argument-example tt { color:#333; }
+.syntax-list { max-width:850px; margin:0 0 12px; }
+.syntax-list ul { margin:0 0 12px 19px; }
+.syntax-list code { color:var(--mw-link); }
+.api-grid { max-width:920px; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px; margin:8px 0 22px; }
+.api-card { min-width:0; padding:11px 13px 12px; border:1px solid var(--mw-border); background:#fff; }
+.api-card h3 { margin:0 0 5px; font-size:15px; font-weight:600; line-height:1.35; }
+.api-card p { margin:0; color:#555; font-size:13px; line-height:1.45; }
+.api-kind { margin:0 0 5px; color:#777; font-size:11px; line-height:1.2; text-transform:uppercase; letter-spacing:.03em; }
+.api-link code, a.api-link { color:var(--mw-link); }
+.api-related { max-width:850px; columns:2; column-gap:28px; }
+.api-description { max-width:850px; margin:0 0 16px; }
+.api-description p { margin:0 0 12px; }
+.api-detail { max-width:920px; margin:0 0 24px; padding:0 0 6px; border-bottom:1px solid var(--mw-border-light); }
+.api-detail h3 { margin-top:18px; }
+.argument-list { max-width:920px; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px; margin:8px 0 22px; }
+.argument-item { min-width:0; padding:10px 12px 11px; border-left:3px solid var(--mw-border); background:#fafafa; }
+.argument-item h3 { margin:0 0 5px; font-size:15px; }
+.argument-item p { margin:0; color:#555; font-size:13px; line-height:1.45; }
+.argument-default { display:block; margin-top:5px; color:#666; }
+.on-page { float:right; position:sticky; top:16px; width:270px; margin:0 0 24px 42px; padding:13px 15px 14px; border:1px solid var(--mw-border); background:#f7f7f7; color:#333; }
+.on-page-title { margin:0 0 8px; color:#333; font-size:13px; font-weight:600; line-height:1.35; }
+.on-page-list ul { margin:0; padding:0 0 0 17px; list-style:square; }
+.on-page-list li { margin:4px 0; color:#777; font-size:13px; line-height:1.35; }
+.on-page-list a { color:var(--mw-link); }
+table { max-width:850px; width:auto; margin:10px 0 22px; border-collapse:collapse; border-spacing:0; font-size:13px; line-height:1.45; }
+table th, table td { padding:7px 9px; border:1px solid var(--mw-border); text-align:left; vertical-align:top; }
+table th { background:var(--mw-table-head); color:#333; font-weight:600; }
+table tr:nth-child(even) td { background:#fbfbfb; }
+img { max-width:100%; height:auto; border:0; }
+p img { display:inline-block; margin:2px 0 5px; vertical-align:middle; }
+.mathjax-display { display:block; max-width:850px; margin:2px 0 16px; overflow-x:auto; overflow-y:hidden; }
+.MathJax { font-size:100% !important; }
+.see-also-list { max-width:850px; margin:3px 0 20px; }
+.see-also-list p { margin:0; line-height:2.05; }
+.see-also-list tt { display:inline-block; margin:0 4px 7px 0; padding:2px 7px; border:1px solid #d7e7ef; border-radius:2px; background:#f2f8fb; color:var(--mw-link); font-size:13px; line-height:1.5; }
+.footer { clear:both; max-width:850px; margin:36px 0 0; padding:14px 0 0; border-top:1px solid var(--mw-border); color:#777; font-size:12px; font-style:normal; line-height:1.45; }
+.footer p { margin:0; color:#777; font-size:12px; }
+.footer a, .footer a:visited { color:#777; }
+@media (max-width: 1080px) { .on-page { float:none; position:static; width:auto; max-width:850px; margin:0 0 24px; } .mw-page-head, h2, h3, p, ul, ol, table, .ref-syntax, .code-example, .code-output, .see-also-list, .footer { max-width:100%; } }
+@media (max-width: 760px) { .mw-site-header-inner { min-height:auto; padding:10px 18px; align-items:flex-start; flex-direction:column; gap:8px; } .mw-brand-block { display:block; } .mw-brand-title { font-size:17px; } .mw-brand-subtitle { margin-top:1px; } .mw-search-box { display:none; } .content { padding:22px 18px 38px; border-left:0; border-right:0; } h1 { font-size:28px; } h2 { font-size:21px; margin-top:27px; } h3, .argument-name { font-size:16px; } pre.codeinput, pre.codeoutput, pre.language-matlab { font-size:12px; } }
+@media print { html body.mw-doc-body, html body { background:#fff; } .mw-site-header, .on-page, .skip-link { display:none; } .content { max-width:none; min-height:0; padding:0; border:0; } pre.codeinput, pre.codeoutput, pre.language-matlab { white-space:pre-wrap; word-wrap:break-word; overflow:visible; } a { color:#000; text-decoration:none; } }
+.helptext { max-width:920px; margin:0 0 22px; padding:0; border:0; background:#fff; color:#222; font-family:Consolas, 'Courier New', monospace; font-size:13px; line-height:1.5; white-space:pre-wrap; overflow:auto; }
+.api-links { max-width:850px; margin:0 0 22px; color:#555; font-size:13px; }
+</style>
+<script>
+window.MathJax = { tex: { displayMath: [['\\[','\\]']], inlineMath: [['\\(','\\)']], processEscapes: true }, chtml: { matchFontHeight: false } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="mw-doc-body">
+<a class="skip-link" href="#mw-main-content">Skip to content</a>
+<header class="mw-site-header" role="banner"><div class="mw-site-header-inner"><div class="mw-brand-block"><div class="mw-brand-title">COPP Help Center</div><div class="mw-brand-subtitle">MATLAB Reference</div></div><div class="mw-search-box" aria-hidden="true">Search Help Center</div></div></header>
+<main class="content">
+<div class="mw-page-head" id="mw-main-content" tabindex="-1">
+<nav class="breadcrumb" aria-label="Breadcrumb"><span>Documentation Home</span><span class="breadcrumb-separator">/</span><span>COPP</span><span class="breadcrumb-separator">/</span><span>MATLAB</span><span class="breadcrumb-separator">/</span><span class="breadcrumb-current">API Reference</span></nav>
+<h1>copp.Robot</h1>
+<div class="function-label">Native robot model and station-indexed constraint buffer.</div>
+</div>
+<div class="api-links"><a href="../api_reference.html">API Reference</a> | <a href="copp.html">copp</a> | <a href="../index.html">User Guide</a></div>
+<h2 id="syntax">Syntax</h2>
+<div class="syntax-list"><ul>
+<li><a href="#syntax-1"><code>OBJ = copp.Robot(DIM)</code></a></li>
+<li><a href="#syntax-2"><code>OBJ = copp.Robot(DIM, CAPACITY)</code></a></li>
+<li><a href="#syntax-3"><code>OBJ = copp.Robot(DIM, Capacity=CAPACITY)</code></a></li>
+</ul></div>
+<pre id="syntax-1" class="language-matlab">OBJ = copp.Robot(DIM)</pre>
+<pre id="syntax-2" class="language-matlab">OBJ = copp.Robot(DIM, CAPACITY)</pre>
+<pre id="syntax-3" class="language-matlab">OBJ = copp.Robot(DIM, Capacity=CAPACITY)</pre>
+<h2 id="description">Description</h2>
+<p><a class="api-link" href="copp.Robot.html">Robot</a> owns a native CoppRobot handle. The handle stores station samples, sampled path derivatives, and constraints used by TOPP/COPP solvers. This MATLAB class exposes the workflow-oriented surface used by TOPP and COPP solvers: station append, path derivative input, limit helpers, raw constraints, inverse dynamics callbacks, and solver metadata.</p>
+<p>Matrix convention: MATLAB inputs use \(\mathrm{dim} \times N\) column-major matrices for robot/path data. Here dim is robot.dim and N is the number of station samples covered by the call. Each column corresponds to one station sample. One-dimensional station/profile inputs may be row or column vectors, but solver/profile outputs are returned as <a class="api-link" href="copp.Jet3.html#method-double">double</a> column vectors.</p>
+<p>Constraint convention: Per-axis limit vectors have shape \(\mathrm{dim} \times 1\) or 1-by-dim and are broadcast over the selected station interval. Per-axis station-varying limit matrices have shape \(\mathrm{dim} \times N\). Raw constraint matrices have shape R-by-N, where R is the number of inequality rows per station.</p>
+<h2 id="input-arguments">Input Arguments</h2>
+<div class="argument-list">
+<article class="argument-item"><h3><code>dim</code></h3><p>Positive integer path or robot dimension.</p></article>
+<article class="argument-item"><h3><code>capacity</code></h3><p>Input value for copp.Robot. See Description for accepted shape and constraints. <span class="argument-default">Default: <code>0</code></span></p></article>
+</div>
+<h2 id="name-value-arguments">Name-Value Arguments</h2>
+<div class="argument-list">
+<article class="argument-item"><h3><code>Capacity</code></h3><p>Name-value option for copp.Robot. <span class="argument-default">Default: <code>capacity</code></span></p></article>
+</div>
+<h2 id="properties">Properties</h2>
+<div class="api-grid">
+<article class="api-card" id="member-dim"><h3><a href="#member-dim"><code>dim</code></a></h3><p><a class="api-link" href="copp.Robot.html">Robot</a>/path dimension.</p></article>
+<article class="api-card" id="member-len"><h3><a href="#member-len"><code>len</code></a></h3><p>Number of logical station samples currently stored.</p></article>
+<article class="api-card" id="member-capacity"><h3><a href="#member-capacity"><code>capacity</code></a></h3><p>Allocated native station-buffer capacity.</p></article>
+<article class="api-card" id="member-constraints"><h3><a href="#member-constraints"><code>constraints</code></a></h3><p>Lightweight facade that forwards to <a class="api-link" href="copp.Robot.html">Robot</a> constraint APIs.</p></article>
+</div>
+<h2 id="methods">Methods</h2>
+<div class="api-grid">
+<article class="api-card" id="member-robot"><h3><a href="#method-robot"><code>Robot</code></a></h3><p>Construct a native robot and empty constraint buffer.</p></article>
+<article class="api-card" id="member-delete"><h3><a href="#method-delete"><code>delete</code></a></h3><p>Release the native robot handle during MATLAB cleanup.</p></article>
+<article class="api-card" id="member-release"><h3><a href="#method-release"><code>release</code></a></h3><p>Explicitly release the native CoppRobot handle.</p></article>
+<article class="api-card" id="member-is-valid"><h3><a href="#method-is-valid"><code>is_valid</code></a></h3><p>Return whether this object still owns a live native robot.</p></article>
+<article class="api-card" id="member-append-s"><h3><a href="#method-append-s"><code>append_s</code></a></h3><p>Append strictly increasing path station samples.</p></article>
+<article class="api-card" id="member-set-q-2nd"><h3><a href="#method-set-q-2nd"><code>set_q_2nd</code></a></h3><p>Store q, dq/ds, and d2q/ds2 over a station interval.</p></article>
+<article class="api-card" id="member-set-q-3rd"><h3><a href="#method-set-q-3rd"><code>set_q_3rd</code></a></h3><p>Store q and derivatives through third order.</p></article>
+<article class="api-card" id="member-set-q-from-path-2nd"><h3><a href="#method-set-q-from-path-2nd"><code>set_q_from_path_2nd</code></a></h3><p>Sample a <a class="api-link" href="copp.Path.html">Path</a> and store second-order derivatives.</p></article>
+<article class="api-card" id="member-set-q-from-path-3rd"><h3><a href="#method-set-q-from-path-3rd"><code>set_q_from_path_3rd</code></a></h3><p>Sample a <a class="api-link" href="copp.Path.html">Path</a> and store third-order derivatives.</p></article>
+<article class="api-card" id="member-add-velocity-limits"><h3><a href="#method-add-velocity-limits"><code>add_velocity_limits</code></a></h3><p>Add axial velocity bounds.</p></article>
+<article class="api-card" id="member-add-acceleration-limits"><h3><a href="#method-add-acceleration-limits"><code>add_acceleration_limits</code></a></h3><p>Add axial acceleration bounds.</p></article>
+<article class="api-card" id="member-add-jerk-limits"><h3><a href="#method-add-jerk-limits"><code>add_jerk_limits</code></a></h3><p>Add axial jerk bounds for third-order solvers.</p></article>
+<article class="api-card" id="member-add-torque-limits"><h3><a href="#method-add-torque-limits"><code>add_torque_limits</code></a></h3><p>Add axial torque bounds using inverse dynamics.</p></article>
+<article class="api-card" id="member-add-raw-constraint-1st"><h3><a href="#method-add-raw-constraint-1st"><code>add_raw_constraint_1st</code></a></h3><p>Add rows a &lt;= amax over a station interval.</p></article>
+<article class="api-card" id="member-add-raw-constraint-2nd"><h3><a href="#method-add-raw-constraint-2nd"><code>add_raw_constraint_2nd</code></a></h3><p>Add rows <code>acc_a</code>*a + <code>acc_b</code>*b &lt;= acc_max.</p></article>
+<article class="api-card" id="member-add-raw-constraint-3rd"><h3><a href="#method-add-raw-constraint-3rd"><code>add_raw_constraint_3rd</code></a></h3><p>Add third-order raw jerk inequalities.</p></article>
+<article class="api-card" id="member-clear-constraints"><h3><a href="#method-clear-constraints"><code>clear_constraints</code></a></h3><p>Clear station samples, derivatives, and constraints.</p></article>
+<article class="api-card" id="member-pop-front-n"><h3><a href="#method-pop-front-n"><code>pop_front_n</code></a></h3><p>Remove N logical stations from the front.</p></article>
+<article class="api-card" id="member-pop-back-n"><h3><a href="#method-pop-back-n"><code>pop_back_n</code></a></h3><p>Remove N logical stations from the back.</p></article>
+<article class="api-card" id="member-set-inverse-dynamics"><h3><a href="#method-set-inverse-dynamics"><code>set_inverse_dynamics</code></a></h3><p>Install a MATLAB inverse-dynamics callback.</p></article>
+<article class="api-card" id="member-clear-inverse-dynamics"><h3><a href="#method-clear-inverse-dynamics"><code>clear_inverse_dynamics</code></a></h3><p>Restore default point dynamics \(\tau = \ddot{q}\).</p></article>
+</div>
+<h2 id="method-details">Method Details</h2>
+<section class="api-detail" id="method-robot">
+<h3><code>Robot</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-robot-syntax-1"><code>OBJ = copp.Robot(DIM)</code></a></li>
+<li><a href="#method-robot-syntax-2"><code>OBJ = copp.Robot(DIM, CAPACITY)</code></a></li>
+<li><a href="#method-robot-syntax-3"><code>OBJ = copp.Robot(DIM, Capacity=CAPACITY)</code></a></li>
+</ul></div>
+<pre id="method-robot-syntax-1" class="language-matlab">OBJ = copp.Robot(DIM)</pre>
+<pre id="method-robot-syntax-2" class="language-matlab">OBJ = copp.Robot(DIM, CAPACITY)</pre>
+<pre id="method-robot-syntax-3" class="language-matlab">OBJ = copp.Robot(DIM, Capacity=CAPACITY)</pre>
+<div class="api-description"><p>creates an empty DIM-dimensional robot. OBJ = <a class="api-link" href="copp.Robot.html">copp.Robot</a>(DIM, CAPACITY) also gives the native station buffer an initial capacity hint. CAPACITY may be zero. OBJ = <a class="api-link" href="copp.Robot.html">copp.Robot</a>(DIM, Capacity=CAPACITY) is the name-value equivalent, matching the style used by the rest of the MATLAB facade.</p></div>
+</section>
+<section class="api-detail" id="method-delete">
+<h3><code>delete</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-delete-syntax-1"><code>delete(obj)</code></a></li>
+</ul></div>
+<pre id="method-delete-syntax-1" class="language-matlab">delete(obj)</pre>
+</section>
+<section class="api-detail" id="method-release">
+<h3><code>release</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-release-syntax-1"><code>RELEASED = release(OBJ)</code></a></li>
+</ul></div>
+<pre id="method-release-syntax-1" class="language-matlab">RELEASED = release(OBJ)</pre>
+</section>
+<section class="api-detail" id="method-is-valid">
+<h3><code>is_valid</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-is-valid-syntax-1"><code>tf = is_valid(obj)</code></a></li>
+</ul></div>
+<pre id="method-is-valid-syntax-1" class="language-matlab">tf = is_valid(obj)</pre>
+</section>
+<section class="api-detail" id="method-append-s">
+<h3><code>append_s</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-append-s-syntax-1"><code>obj = append_s(obj, s)</code></a></li>
+</ul></div>
+<pre id="method-append-s-syntax-1" class="language-matlab">obj = append_s(obj, s)</pre>
+<div class="api-description"><p>appends a real finite vector of station values. S may be \(1 \times N\) or \(N \times 1\). S must be strictly increasing, and if OBJ already stores stations then S(1) must be greater than the current last station.</p>
+<p>The method returns OBJ to support chaining.</p></div>
+</section>
+<section class="api-detail" id="method-set-q-2nd">
+<h3><code>set_q_2nd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-set-q-2nd-syntax-1"><code>This mirrors Python Robot.set_q(..., dddq=None), while MATLAB</code></a></li>
+</ul></div>
+<pre id="method-set-q-2nd-syntax-1" class="language-matlab">This mirrors Python Robot.set_q(..., dddq=None), while MATLAB</pre>
+<div class="api-description"><p>writes second-order geometric path derivatives starting at station 1. Q, DQ, and DDQ must have the same \(\mathrm{dim} \times N\) shape. Column k corresponds to station <code>start_idx_s</code> + k - 1.</p>
+<p>Name-value options: <code>start_idx_s</code>: 1-based global station index where the first column is written. Defaults to 1.</p>
+<p>This mirrors Python <code>Robot.set_q</code>(..., dddq=None), while MATLAB keeps the explicit second-order name for readability.</p></div>
+</section>
+<section class="api-detail" id="method-set-q-3rd">
+<h3><code>set_q_3rd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-set-q-3rd-syntax-1"><code>obj = set_q_3rd(obj, q, dq, ddq, dddq)</code></a></li>
+<li><a href="#method-set-q-3rd-syntax-2"><code>obj = set_q_3rd(obj, q, dq, ddq, dddq, start_idx_s=start_idx_s)</code></a></li>
+</ul></div>
+<pre id="method-set-q-3rd-syntax-1" class="language-matlab">obj = set_q_3rd(obj, q, dq, ddq, dddq)</pre>
+<pre id="method-set-q-3rd-syntax-2" class="language-matlab">obj = set_q_3rd(obj, q, dq, ddq, dddq, start_idx_s=start_idx_s)</pre>
+<div class="api-description"><p>writes third-order geometric path derivatives starting at station 1. All matrices must have the same \(\mathrm{dim} \times N\) shape, with one column per station.</p>
+<p>Name-value options: <code>start_idx_s</code>: 1-based global station index where the first column is written. Defaults to 1.</p></div>
+</section>
+<section class="api-detail" id="method-set-q-from-path-2nd">
+<h3><code>set_q_from_path_2nd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-set-q-from-path-2nd-syntax-1"><code>set_q_from_path_2nd(..., idx_s_from=I, idx_s_to=J)</code></a></li>
+</ul></div>
+<pre id="method-set-q-from-path-2nd-syntax-1" class="language-matlab">set_q_from_path_2nd(..., idx_s_from=I, idx_s_to=J)</pre>
+<div class="api-description"><p>evaluates PATH at the station values already stored in OBJ and writes q, dq/ds, and d2q/ds2 from station 1 through <code>OBJ.len</code>.</p>
+<p>PATH must remain valid only for the duration of this call; the sampled derivatives are copied into the native Robot.</p></div>
+</section>
+<section class="api-detail" id="method-set-q-from-path-3rd">
+<h3><code>set_q_from_path_3rd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-set-q-from-path-3rd-syntax-1"><code>set_q_from_path_3rd(..., idx_s_from=I, idx_s_to=J)</code></a></li>
+</ul></div>
+<pre id="method-set-q-from-path-3rd-syntax-1" class="language-matlab">set_q_from_path_3rd(..., idx_s_from=I, idx_s_to=J)</pre>
+<div class="api-description"><p>evaluates PATH at OBJ&#39;s stored station values and writes q, dq/ds, d2q/ds2, and d3q/ds3 from station 1 through <code>OBJ.len</code>.</p></div>
+</section>
+<section class="api-detail" id="method-add-velocity-limits">
+<h3><code>add_velocity_limits</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-add-velocity-limits-syntax-1"><code>obj = add_velocity_limits(obj, upper, lower)</code></a></li>
+<li><a href="#method-add-velocity-limits-syntax-2"><code>obj = add_velocity_limits(obj, upper, lower, start_idx_s=start_idx_s, length=length)</code></a></li>
+</ul></div>
+<pre id="method-add-velocity-limits-syntax-1" class="language-matlab">obj = add_velocity_limits(obj, upper, lower)</pre>
+<pre id="method-add-velocity-limits-syntax-2" class="language-matlab">obj = add_velocity_limits(obj, upper, lower, start_idx_s=start_idx_s, length=length)</pre>
+<div class="api-description"><p>adds per-axis bounds over the interval from station 1 through <code>OBJ.len</code>. Vector inputs must have <a class="api-link" href="copp.Profile3rd.html#method-length">length</a> dim (\(\mathrm{dim} \times 1\) or 1-by-dim) and are broadcast over the interval. Matrix inputs must have shape \(\mathrm{dim} \times N\) and specify station-varying limits, where N is the selected interval length.</p>
+<p>Name-value options: <code>start_idx_s</code>: 1-based first station receiving the limits. Defaults to 1. <a class="api-link" href="copp.Profile3rd.html#method-length">length</a>: Number of stations for broadcast vector limits. When omitted, <a class="api-link" href="copp.Profile3rd.html#method-length">length</a> is inferred as <code>OBJ.len</code> - <code>start_idx_s</code> + 1.</p>
+<p>The method returns OBJ to support chaining.</p></div>
+</section>
+<section class="api-detail" id="method-add-acceleration-limits">
+<h3><code>add_acceleration_limits</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-add-acceleration-limits-syntax-1"><code>obj = add_acceleration_limits(obj, upper, lower)</code></a></li>
+<li><a href="#method-add-acceleration-limits-syntax-2"><code>obj = add_acceleration_limits(obj, upper, lower, start_idx_s=start_idx_s, length=length)</code></a></li>
+</ul></div>
+<pre id="method-add-acceleration-limits-syntax-1" class="language-matlab">obj = add_acceleration_limits(obj, upper, lower)</pre>
+<pre id="method-add-acceleration-limits-syntax-2" class="language-matlab">obj = add_acceleration_limits(obj, upper, lower, start_idx_s=start_idx_s, length=length)</pre>
+<div class="api-description"><p>This method has the same vector/matrix shape, indexing, Inf, and <a class="api-link" href="copp.Profile3rd.html#method-length">length</a> inference rules as <code><a class="api-link" href="copp.Robot.html#method-add-velocity-limits">add_velocity_limits</a></code>(), but it writes second-order acceleration constraints used by TOPP2/COPP2.</p>
+<p>The method returns OBJ to support chaining.</p></div>
+</section>
+<section class="api-detail" id="method-add-jerk-limits">
+<h3><code>add_jerk_limits</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-add-jerk-limits-syntax-1"><code>obj = add_jerk_limits(obj, upper, lower)</code></a></li>
+<li><a href="#method-add-jerk-limits-syntax-2"><code>obj = add_jerk_limits(obj, upper, lower, start_idx_s=start_idx_s, length=length)</code></a></li>
+</ul></div>
+<pre id="method-add-jerk-limits-syntax-1" class="language-matlab">obj = add_jerk_limits(obj, upper, lower)</pre>
+<pre id="method-add-jerk-limits-syntax-2" class="language-matlab">obj = add_jerk_limits(obj, upper, lower, start_idx_s=start_idx_s, length=length)</pre>
+<div class="api-description"><p>This method has the same vector/matrix shape, indexing, Inf, and <a class="api-link" href="copp.Profile3rd.html#method-length">length</a> inference rules as <code><a class="api-link" href="copp.Robot.html#method-add-velocity-limits">add_velocity_limits</a></code>(), but it writes third-order jerk constraints used by TOPP3/COPP3 solvers. The robot must already contain third-order path derivative data over the target interval.</p></div>
+</section>
+<section class="api-detail" id="method-add-torque-limits">
+<h3><code>add_torque_limits</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-add-torque-limits-syntax-1"><code>obj = add_torque_limits(obj, upper, lower)</code></a></li>
+<li><a href="#method-add-torque-limits-syntax-2"><code>obj = add_torque_limits(obj, upper, lower, start_idx_s=start_idx_s, length=length)</code></a></li>
+</ul></div>
+<pre id="method-add-torque-limits-syntax-1" class="language-matlab">obj = add_torque_limits(obj, upper, lower)</pre>
+<pre id="method-add-torque-limits-syntax-2" class="language-matlab">obj = add_torque_limits(obj, upper, lower, start_idx_s=start_idx_s, length=length)</pre>
+<div class="api-description"><p>This method has the same vector/matrix shape, indexing, Inf, and <a class="api-link" href="copp.Profile3rd.html#method-length">length</a> inference rules as <code><a class="api-link" href="copp.Robot.html#method-add-velocity-limits">add_velocity_limits</a></code>(): vector bounds have <a class="api-link" href="copp.Profile3rd.html#method-length">length</a> dim and are broadcast, while matrix bounds are \(\mathrm{dim} \times N\) with one column per station. Torque evaluation uses the currently installed inverse-dynamics callback, or the native default point dynamics \(\tau = \ddot{q}\) when no callback is installed.</p></div>
+</section>
+<section class="api-detail" id="method-add-raw-constraint-1st">
+<h3><code>add_raw_constraint_1st</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-add-raw-constraint-1st-syntax-1"><code>obj = add_raw_constraint_1st(obj, amax)</code></a></li>
+<li><a href="#method-add-raw-constraint-1st-syntax-2"><code>obj = add_raw_constraint_1st(obj, amax, start_idx_s=start_idx_s)</code></a></li>
+</ul></div>
+<pre id="method-add-raw-constraint-1st-syntax-1" class="language-matlab">obj = add_raw_constraint_1st(obj, amax)</pre>
+<pre id="method-add-raw-constraint-1st-syntax-2" class="language-matlab">obj = add_raw_constraint_1st(obj, amax, start_idx_s=start_idx_s)</pre>
+<div class="api-description"><p>AMAX may be a vector of <a class="api-link" href="copp.Profile3rd.html#method-length">length</a> N for one raw row per station, or an R-by-N matrix for R raw inequality rows per station. Column k corresponds to station <code>start_idx_s</code> + k - 1.</p></div>
+</section>
+<section class="api-detail" id="method-add-raw-constraint-2nd">
+<h3><code>add_raw_constraint_2nd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-add-raw-constraint-2nd-syntax-1"><code>obj = add_raw_constraint_2nd(obj, acc_a, acc_b, acc_max)</code></a></li>
+<li><a href="#method-add-raw-constraint-2nd-syntax-2"><code>obj = add_raw_constraint_2nd(obj, acc_a, acc_b, acc_max, start_idx_s=start_idx_s)</code></a></li>
+</ul></div>
+<pre id="method-add-raw-constraint-2nd-syntax-1" class="language-matlab">obj = add_raw_constraint_2nd(obj, acc_a, acc_b, acc_max)</pre>
+<pre id="method-add-raw-constraint-2nd-syntax-2" class="language-matlab">obj = add_raw_constraint_2nd(obj, acc_a, acc_b, acc_max, start_idx_s=start_idx_s)</pre>
+<div class="api-description"><p><code>ACC_A</code>, <code>ACC_B</code>, and <code>ACC_MAX</code> must have identical shapes. Use a <a class="api-link" href="copp.Profile3rd.html#method-length">length</a>-N vector for one row per station, or an R-by-N matrix for R raw rows per station. Columns are station samples.</p></div>
+</section>
+<section class="api-detail" id="method-add-raw-constraint-3rd">
+<h3><code>add_raw_constraint_3rd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-add-raw-constraint-3rd-syntax-1"><code>obj = add_raw_constraint_3rd(obj, jerk_a, jerk_b, jerk_c, jerk_d, jerk_max)</code></a></li>
+<li><a href="#method-add-raw-constraint-3rd-syntax-2"><code>obj = add_raw_constraint_3rd(obj, jerk_a, jerk_b, jerk_c, jerk_d, jerk_max, start_idx_s=start_idx_s)</code></a></li>
+</ul></div>
+<pre id="method-add-raw-constraint-3rd-syntax-1" class="language-matlab">obj = add_raw_constraint_3rd(obj, jerk_a, jerk_b, jerk_c, jerk_d, jerk_max)</pre>
+<pre id="method-add-raw-constraint-3rd-syntax-2" class="language-matlab">obj = add_raw_constraint_3rd(obj, jerk_a, jerk_b, jerk_c, jerk_d, jerk_max, start_idx_s=start_idx_s)</pre>
+<div class="api-description"><p><code>JERK_A</code>, <code>JERK_B</code>, <code>JERK_C</code>, <code>JERK_D</code>, and <code>JERK_MAX</code> must have identical shapes. Use a <a class="api-link" href="copp.Profile3rd.html#method-length">length</a>-N vector for one row per station, or an R-by-N matrix for R raw rows per station. Columns are station samples.</p></div>
+</section>
+<section class="api-detail" id="method-clear-constraints">
+<h3><code>clear_constraints</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-clear-constraints-syntax-1"><code>obj = clear_constraints(obj)</code></a></li>
+<li><a href="#method-clear-constraints-syntax-2"><code>obj = clear_constraints(obj, keep_idx_s=keep_idx_s)</code></a></li>
+</ul></div>
+<pre id="method-clear-constraints-syntax-1" class="language-matlab">obj = clear_constraints(obj)</pre>
+<pre id="method-clear-constraints-syntax-2" class="language-matlab">obj = clear_constraints(obj, keep_idx_s=keep_idx_s)</pre>
+<div class="api-description"><p><code>keep_idx_s</code>=true keeps the \(1 \times N\)/\(N \times 1\) station vector S and clears derivative and constraint buffers. <code>keep_idx_s</code>=false clears the station vector as well.</p></div>
+</section>
+<section class="api-detail" id="method-pop-front-n">
+<h3><code>pop_front_n</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-pop-front-n-syntax-1"><code>obj = pop_front_n(obj, n)</code></a></li>
+</ul></div>
+<pre id="method-pop-front-n-syntax-1" class="language-matlab">obj = pop_front_n(obj, n)</pre>
+</section>
+<section class="api-detail" id="method-pop-back-n">
+<h3><code>pop_back_n</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-pop-back-n-syntax-1"><code>obj = pop_back_n(obj, n)</code></a></li>
+</ul></div>
+<pre id="method-pop-back-n-syntax-1" class="language-matlab">obj = pop_back_n(obj, n)</pre>
+</section>
+<section class="api-detail" id="method-set-inverse-dynamics">
+<h3><code>set_inverse_dynamics</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-set-inverse-dynamics-syntax-1"><code>tau = callback(q, dq, ddq)</code></a></li>
+</ul></div>
+<pre id="method-set-inverse-dynamics-syntax-1" class="language-matlab">tau = callback(q, dq, ddq)</pre>
+<div class="api-description"><p>CALLBACK is called pointwise, not batched:</p></div>
+</section>
+<section class="api-detail" id="method-clear-inverse-dynamics">
+<h3><code>clear_inverse_dynamics</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-clear-inverse-dynamics-syntax-1"><code>obj = clear_inverse_dynamics(obj)</code></a></li>
+</ul></div>
+<pre id="method-clear-inverse-dynamics-syntax-1" class="language-matlab">obj = clear_inverse_dynamics(obj)</pre>
+</section>
+
+<h2 id="see-also">See Also</h2>
+<p><a href="copp.html">copp</a></p>
+<ul class="api-related">
+<li><a href="copp.Jet3.html"><code>Jet3</code></a></li>
+<li><a href="copp.Path.html"><code>Path</code></a></li>
+<li><a href="copp.Profile3rd.html"><code>Profile3rd</code></a></li>
+<li><a href="copp.version.html"><code>version</code></a></li>
+</ul>
+<footer class="footer"><p>Generated from MATLAB help comments.</p></footer>
+</main>
+</body>
+</html>

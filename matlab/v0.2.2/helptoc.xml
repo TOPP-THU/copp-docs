@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<toc version="2.0">
+  <tocitem target="index.html">COPP MATLAB
+    <tocitem target="index.html" image="HelpIcon.GETTING_STARTED">Getting Started</tocitem>
+    <tocitem target="path.html" image="HelpIcon.USER_GUIDE">User Guide
+      <tocitem target="path.html">Path Module</tocitem>
+      <tocitem target="robot_constraints.html">Robot and Constraints</tocitem>
+      <tocitem target="objectives_clarabel.html">Objectives and Clarabel</tocitem>
+      <tocitem target="solvers_topp2_copp2.html">TOPP2 and COPP2 Solvers</tocitem>
+      <tocitem target="solvers_topp3_copp3.html">TOPP3 and COPP3 Solvers</tocitem>
+      <tocitem target="interpolation.html">Interpolation</tocitem>
+      <tocitem target="errors_diagnostics.html">Errors and Diagnostics</tocitem>
+      <tocitem target="s_to_t_topp2.html">s_to_t_topp2</tocitem>
+    </tocitem>
+    <tocitem target="api_reference.html" image="HelpIcon.FUNCTION">API Reference
+      <tocitem target="api_reference.html#1">Core Package
+        <tocitem target="ref/copp.html">copp
+          <tocitem target="ref/copp.Jet3.html">copp.Jet3</tocitem>
+          <tocitem target="ref/copp.Path.html">copp.Path</tocitem>
+          <tocitem target="ref/copp.Profile3rd.html">copp.Profile3rd</tocitem>
+          <tocitem target="ref/copp.Robot.html">copp.Robot</tocitem>
+          <tocitem target="ref/copp.version.html">copp.version</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.clarabel.html">copp.clarabel
+          <tocitem target="ref/copp.clarabel.DirectSolveMethod.html">copp.clarabel.DirectSolveMethod</tocitem>
+          <tocitem target="ref/copp.clarabel.Options.html">copp.clarabel.Options</tocitem>
+          <tocitem target="ref/copp.clarabel.Settings.html">copp.clarabel.Settings</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.diag.html">copp.diag
+          <tocitem target="ref/copp.diag.CoppError.html">copp.diag.CoppError</tocitem>
+          <tocitem target="ref/copp.diag.is_copp_error.html">copp.diag.is_copp_error</tocitem>
+          <tocitem target="ref/copp.diag.last_error.html">copp.diag.last_error</tocitem>
+          <tocitem target="ref/copp.diag.Verbosity.html">copp.diag.Verbosity</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.interpolation.html">copp.interpolation
+          <tocitem target="ref/copp.interpolation.a_to_b_topp2.html">copp.interpolation.a_to_b_topp2</tocitem>
+          <tocitem target="ref/copp.interpolation.s_to_t_topp2.html">copp.interpolation.s_to_t_topp2</tocitem>
+          <tocitem target="ref/copp.interpolation.s_to_t_topp3.html">copp.interpolation.s_to_t_topp3</tocitem>
+          <tocitem target="ref/copp.interpolation.t_to_s_topp2.html">copp.interpolation.t_to_s_topp2</tocitem>
+          <tocitem target="ref/copp.interpolation.t_to_s_topp2_samples.html">copp.interpolation.t_to_s_topp2_samples</tocitem>
+          <tocitem target="ref/copp.interpolation.t_to_s_topp2_uniform.html">copp.interpolation.t_to_s_topp2_uniform</tocitem>
+          <tocitem target="ref/copp.interpolation.t_to_s_topp3.html">copp.interpolation.t_to_s_topp3</tocitem>
+          <tocitem target="ref/copp.interpolation.t_to_s_topp3_samples.html">copp.interpolation.t_to_s_topp3_samples</tocitem>
+          <tocitem target="ref/copp.interpolation.t_to_s_topp3_uniform.html">copp.interpolation.t_to_s_topp3_uniform</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.objective.html">copp.objective
+          <tocitem target="ref/copp.objective.linear.html">copp.objective.linear</tocitem>
+          <tocitem target="ref/copp.objective.thermal_energy.html">copp.objective.thermal_energy</tocitem>
+          <tocitem target="ref/copp.objective.time.html">copp.objective.time</tocitem>
+          <tocitem target="ref/copp.objective.total_variation_torque.html">copp.objective.total_variation_torque</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.solver.html">copp.solver
+        </tocitem>
+      </tocitem>
+      <tocitem target="api_reference.html#5">Options and Diagnostics
+      </tocitem>
+      <tocitem target="api_reference.html#4">Objective Descriptors
+      </tocitem>
+      <tocitem target="api_reference.html#6">Second-Order Solvers
+        <tocitem target="ref/copp.solver.copp2_socp.html">copp.solver.copp2_socp
+          <tocitem target="ref/copp.solver.copp2_socp.a_to_b.html">copp.solver.copp2_socp.a_to_b</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.ClarabelDirectSolveMethod.html">copp.solver.copp2_socp.ClarabelDirectSolveMethod</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.ClarabelOptions.html">copp.solver.copp2_socp.ClarabelOptions</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.ClarabelSettings.html">copp.solver.copp2_socp.ClarabelSettings</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.Options.html">copp.solver.copp2_socp.Options</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.Problem.html">copp.solver.copp2_socp.Problem</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.Result.html">copp.solver.copp2_socp.Result</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.s_to_t.html">copp.solver.copp2_socp.s_to_t</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.solve.html">copp.solver.copp2_socp.solve</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.solve_expert.html">copp.solver.copp2_socp.solve_expert</tocitem>
+          <tocitem target="ref/copp.solver.copp2_socp.t_to_s.html">copp.solver.copp2_socp.t_to_s</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.solver.reach_set2.html">copp.solver.reach_set2
+          <tocitem target="ref/copp.solver.reach_set2.backward.html">copp.solver.reach_set2.backward</tocitem>
+          <tocitem target="ref/copp.solver.reach_set2.bidirectional.html">copp.solver.reach_set2.bidirectional</tocitem>
+          <tocitem target="ref/copp.solver.reach_set2.Options.html">copp.solver.reach_set2.Options</tocitem>
+          <tocitem target="ref/copp.solver.reach_set2.Problem.html">copp.solver.reach_set2.Problem</tocitem>
+          <tocitem target="ref/copp.solver.reach_set2.ReachSet.html">copp.solver.reach_set2.ReachSet</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.solver.topp2_ra.html">copp.solver.topp2_ra
+          <tocitem target="ref/copp.solver.topp2_ra.a_to_b.html">copp.solver.topp2_ra.a_to_b</tocitem>
+          <tocitem target="ref/copp.solver.topp2_ra.Options.html">copp.solver.topp2_ra.Options</tocitem>
+          <tocitem target="ref/copp.solver.topp2_ra.Problem.html">copp.solver.topp2_ra.Problem</tocitem>
+          <tocitem target="ref/copp.solver.topp2_ra.s_to_t.html">copp.solver.topp2_ra.s_to_t</tocitem>
+          <tocitem target="ref/copp.solver.topp2_ra.solve.html">copp.solver.topp2_ra.solve</tocitem>
+          <tocitem target="ref/copp.solver.topp2_ra.t_to_s.html">copp.solver.topp2_ra.t_to_s</tocitem>
+        </tocitem>
+      </tocitem>
+      <tocitem target="api_reference.html#7">Third-Order Solvers
+        <tocitem target="ref/copp.solver.copp3_socp.html">copp.solver.copp3_socp
+          <tocitem target="ref/copp.solver.copp3_socp.ClarabelDirectSolveMethod.html">copp.solver.copp3_socp.ClarabelDirectSolveMethod</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.ClarabelOptions.html">copp.solver.copp3_socp.ClarabelOptions</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.ClarabelSettings.html">copp.solver.copp3_socp.ClarabelSettings</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.Options.html">copp.solver.copp3_socp.Options</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.Problem.html">copp.solver.copp3_socp.Problem</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.Profile3rd.html">copp.solver.copp3_socp.Profile3rd</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.Result.html">copp.solver.copp3_socp.Result</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.s_to_t.html">copp.solver.copp3_socp.s_to_t</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.solve.html">copp.solver.copp3_socp.solve</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.solve_expert.html">copp.solver.copp3_socp.solve_expert</tocitem>
+          <tocitem target="ref/copp.solver.copp3_socp.t_to_s.html">copp.solver.copp3_socp.t_to_s</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.solver.topp3.html">copp.solver.topp3
+          <tocitem target="ref/copp.solver.topp3.Problem.html">copp.solver.topp3.Problem</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.solver.topp3_lp.html">copp.solver.topp3_lp
+          <tocitem target="ref/copp.solver.topp3_lp.ClarabelDirectSolveMethod.html">copp.solver.topp3_lp.ClarabelDirectSolveMethod</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.ClarabelOptions.html">copp.solver.topp3_lp.ClarabelOptions</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.ClarabelSettings.html">copp.solver.topp3_lp.ClarabelSettings</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.Options.html">copp.solver.topp3_lp.Options</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.Problem.html">copp.solver.topp3_lp.Problem</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.Profile3rd.html">copp.solver.topp3_lp.Profile3rd</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.Result.html">copp.solver.topp3_lp.Result</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.s_to_t.html">copp.solver.topp3_lp.s_to_t</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.solve.html">copp.solver.topp3_lp.solve</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.solve_expert.html">copp.solver.topp3_lp.solve_expert</tocitem>
+          <tocitem target="ref/copp.solver.topp3_lp.t_to_s.html">copp.solver.topp3_lp.t_to_s</tocitem>
+        </tocitem>
+        <tocitem target="ref/copp.solver.topp3_socp.html">copp.solver.topp3_socp
+          <tocitem target="ref/copp.solver.topp3_socp.ClarabelDirectSolveMethod.html">copp.solver.topp3_socp.ClarabelDirectSolveMethod</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.ClarabelOptions.html">copp.solver.topp3_socp.ClarabelOptions</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.ClarabelSettings.html">copp.solver.topp3_socp.ClarabelSettings</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.Options.html">copp.solver.topp3_socp.Options</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.Problem.html">copp.solver.topp3_socp.Problem</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.Profile3rd.html">copp.solver.topp3_socp.Profile3rd</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.Result.html">copp.solver.topp3_socp.Result</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.s_to_t.html">copp.solver.topp3_socp.s_to_t</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.solve.html">copp.solver.topp3_socp.solve</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.solve_expert.html">copp.solver.topp3_socp.solve_expert</tocitem>
+          <tocitem target="ref/copp.solver.topp3_socp.t_to_s.html">copp.solver.topp3_socp.t_to_s</tocitem>
+        </tocitem>
+      </tocitem>
+      <tocitem target="api_reference.html#8">Interpolation
+      </tocitem>
+    </tocitem>
+  </tocitem>
+</toc>

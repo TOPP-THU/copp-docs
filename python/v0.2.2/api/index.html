@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API Reference &#8212; copp-py Python v0.2.2</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=fbb87d90"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Core" href="core.html" />
+    <link rel="prev" title="Errors and Diagnostics" href="../how_to/diagnostics.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#module-copp_py">Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#errors">Errors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#enums">Enums</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="interpolation.html">Interpolation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#second-order">Second Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html#third-order">Third Order</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="path.html">Path</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="path.html#copp_py.path.SplineConfig"><code class="docutils literal notranslate"><span class="pre">SplineConfig</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html#copp_py.path.PathDerivatives"><code class="docutils literal notranslate"><span class="pre">PathDerivatives</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html#copp_py.path.Path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="robot.html">Robot And Constraints</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="robot.html#copp_py.robot.Robot"><code class="docutils literal notranslate"><span class="pre">Robot</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="robot.html#copp_py.constraints.Constraints"><code class="docutils literal notranslate"><span class="pre">Constraints</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objective.html">Objectives</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="objective.html#copp_py.objective.Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html#copp_py.objective.ThermalEnergy"><code class="docutils literal notranslate"><span class="pre">ThermalEnergy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html#copp_py.objective.Time"><code class="docutils literal notranslate"><span class="pre">Time</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html#copp_py.objective.TotalVariationTorque"><code class="docutils literal notranslate"><span class="pre">TotalVariationTorque</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clarabel.html">Clarabel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html#copp_py.clarabel.Options"><code class="docutils literal notranslate"><span class="pre">Options</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html#copp_py.clarabel.Settings"><code class="docutils literal notranslate"><span class="pre">Settings</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html#copp_py.clarabel.SolverStatus"><code class="docutils literal notranslate"><span class="pre">SolverStatus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html#copp_py.clarabel.DirectSolveMethod"><code class="docutils literal notranslate"><span class="pre">DirectSolveMethod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html#copp_py.clarabel.LinearSolverInfo"><code class="docutils literal notranslate"><span class="pre">LinearSolverInfo</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html#copp_py.clarabel.Copp2Result"><code class="docutils literal notranslate"><span class="pre">Copp2Result</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html#copp_py.clarabel.Copp3Result"><code class="docutils literal notranslate"><span class="pre">Copp3Result</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topp2.html">TOPP2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topp2.html#module-copp_py.solver.reach_set2">Reach Set</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp2.html#module-copp_py.solver.topp2_ra">Reachability Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copp2.html">COPP2</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="copp2.html#module-copp_py.solver.copp2_socp">SOCP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topp3.html">TOPP3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topp3.html#module-copp_py.solver.topp3_lp">LP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp3.html#module-copp_py.solver.topp3_socp">SOCP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="copp3.html">COPP3</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="copp3.html#module-copp_py.solver.copp3_socp">SOCP</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robot.html">Robot And Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html">Clarabel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp2.html">TOPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp2.html">COPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp3.html">TOPP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp3.html">COPP3</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../how_to/diagnostics.html" title="previous chapter">Errors and Diagnostics</a></li>
+      <li>Next: <a href="core.html" title="next chapter">Core</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

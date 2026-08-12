@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Path &#8212; copp-py Python v0.2.2</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=fbb87d90"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Robot And Constraints" href="robot.html" />
+    <link rel="prev" title="Interpolation" href="interpolation.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="path">
+<h1>Path<a class="headerlink" href="#path" title="Link to this heading">¶</a></h1>
+<p>Path objects own the geometric path <code class="docutils literal notranslate"><span class="pre">q(s)</span></code> used by every solver family.
+Python defaults to sample-major matrices, where rows are station samples or
+waypoints and columns are dimensions. Pass <code class="docutils literal notranslate"><span class="pre">layout=&quot;dim_major&quot;</span></code> only when
+sharing arrays with an external dim-major pipeline.</p>
+<p>All path evaluation methods return <code class="docutils literal notranslate"><span class="pre">PathDerivatives</span></code>. <code class="docutils literal notranslate"><span class="pre">evaluate_q</span></code> is the
+position-only form and fills only <code class="docutils literal notranslate"><span class="pre">out.q</span></code>; <code class="docutils literal notranslate"><span class="pre">evaluate_up_to_2nd</span></code> and
+<code class="docutils literal notranslate"><span class="pre">evaluate_up_to_3rd</span></code> fill <code class="docutils literal notranslate"><span class="pre">out.q</span></code> plus the requested derivative fields.
+Use the fields explicitly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">evaluate_q</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">q</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">evaluate_up_to_2nd</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">q</span><span class="p">,</span> <span class="n">dq</span><span class="p">,</span> <span class="n">ddq</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">q</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">dq</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">ddq</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.path.SplineConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.path.</span></span><span class="sig-name descname"><span class="pre">SplineConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_of_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametrization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.SplineConfig" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python-owned waypoint spline configuration backed by [<cite>RustSplineConfig</cite>].</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.SplineConfig.end_state">
+<span class="sig-name descname"><span class="pre">end_state</span></span><a class="headerlink" href="#copp_py.path.SplineConfig.end_state" title="Link to this definition">¶</a></dt>
+<dd><p>Return a copy of the end boundary derivative matrix, if present.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.SplineConfig.order">
+<span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#copp_py.path.SplineConfig.order" title="Link to this definition">¶</a></dt>
+<dd><p>Return the spline order stored in this Python config object.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.SplineConfig.out_of_range">
+<span class="sig-name descname"><span class="pre">out_of_range</span></span><a class="headerlink" href="#copp_py.path.SplineConfig.out_of_range" title="Link to this definition">¶</a></dt>
+<dd><p>Return the out-of-range evaluation policy.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.SplineConfig.parametrization">
+<span class="sig-name descname"><span class="pre">parametrization</span></span><a class="headerlink" href="#copp_py.path.SplineConfig.parametrization" title="Link to this definition">¶</a></dt>
+<dd><p>Return the waypoint parametrization policy.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.SplineConfig.s_max">
+<span class="sig-name descname"><span class="pre">s_max</span></span><a class="headerlink" href="#copp_py.path.SplineConfig.s_max" title="Link to this definition">¶</a></dt>
+<dd><p>Return the upper endpoint of the path parameter range.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.SplineConfig.s_min">
+<span class="sig-name descname"><span class="pre">s_min</span></span><a class="headerlink" href="#copp_py.path.SplineConfig.s_min" title="Link to this definition">¶</a></dt>
+<dd><p>Return the lower endpoint of the path parameter range.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.SplineConfig.start_state">
+<span class="sig-name descname"><span class="pre">start_state</span></span><a class="headerlink" href="#copp_py.path.SplineConfig.start_state" title="Link to this definition">¶</a></dt>
+<dd><p>Return a copy of the start boundary derivative matrix, if present.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.path.PathDerivatives">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.path.</span></span><span class="sig-name descname"><span class="pre">PathDerivatives</span></span><a class="headerlink" href="#copp_py.path.PathDerivatives" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python-visible path evaluation result container.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.PathDerivatives.dddq">
+<span class="sig-name descname"><span class="pre">dddq</span></span><a class="headerlink" href="#copp_py.path.PathDerivatives.dddq" title="Link to this definition">¶</a></dt>
+<dd><p>Third derivative samples, or <cite>None</cite> when not requested.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.PathDerivatives.ddq">
+<span class="sig-name descname"><span class="pre">ddq</span></span><a class="headerlink" href="#copp_py.path.PathDerivatives.ddq" title="Link to this definition">¶</a></dt>
+<dd><p>Second derivative samples, or <cite>None</cite> when not requested.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.PathDerivatives.dq">
+<span class="sig-name descname"><span class="pre">dq</span></span><a class="headerlink" href="#copp_py.path.PathDerivatives.dq" title="Link to this definition">¶</a></dt>
+<dd><p>First derivative samples, or <cite>None</cite> when not requested.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.PathDerivatives.q">
+<span class="sig-name descname"><span class="pre">q</span></span><a class="headerlink" href="#copp_py.path.PathDerivatives.q" title="Link to this definition">¶</a></dt>
+<dd><p>Position samples as a [<cite>PyArray2</cite>] in the path’s selected output layout.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="copp_py.path.Path">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">copp_py.path.</span></span><span class="sig-name descname"><span class="pre">Path</span></span><a class="headerlink" href="#copp_py.path.Path" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Python-owned wrapper around the Rust [<cite>RustPath</cite>] object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.Path.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><a class="headerlink" href="#copp_py.path.Path.dim" title="Link to this definition">¶</a></dt>
+<dd><p>Return the number of path dimensions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.evaluate_q">
+<span class="sig-name descname"><span class="pre">evaluate_q</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.evaluate_q" title="Link to this definition">¶</a></dt>
+<dd><p>Evaluate position <code class="docutils literal notranslate"><span class="pre">q</span></code> only at the query path parameters.</p>
+<p>Returns a <code class="docutils literal notranslate"><span class="pre">PathDerivatives</span></code> object whose <code class="docutils literal notranslate"><span class="pre">q</span></code> field is populated and
+whose derivative fields are <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.evaluate_up_to_2nd">
+<span class="sig-name descname"><span class="pre">evaluate_up_to_2nd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.evaluate_up_to_2nd" title="Link to this definition">¶</a></dt>
+<dd><p>Evaluate position, first derivative, and second derivative.</p>
+<p>Returns a <code class="docutils literal notranslate"><span class="pre">PathDerivatives</span></code> object with <code class="docutils literal notranslate"><span class="pre">q</span></code>, <code class="docutils literal notranslate"><span class="pre">dq</span></code>, and <code class="docutils literal notranslate"><span class="pre">ddq</span></code>
+populated. <code class="docutils literal notranslate"><span class="pre">dddq</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.evaluate_up_to_3rd">
+<span class="sig-name descname"><span class="pre">evaluate_up_to_3rd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.evaluate_up_to_3rd" title="Link to this definition">¶</a></dt>
+<dd><p>Evaluate position and derivatives up to third order.</p>
+<p>Returns a <code class="docutils literal notranslate"><span class="pre">PathDerivatives</span></code> object with <code class="docutils literal notranslate"><span class="pre">q</span></code>, <code class="docutils literal notranslate"><span class="pre">dq</span></code>, <code class="docutils literal notranslate"><span class="pre">ddq</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">dddq</span></code> populated.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.from_autograd">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_autograd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.from_autograd" title="Link to this definition">¶</a></dt>
+<dd><p>Build a path from a scalar-parametric Python callable using Autograd.</p>
+<p>This is the lightweight Python AD alternative to [<cite>Self::from_jax</cite>].
+The Autograd dependency is imported lazily only when this constructor is
+called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>q_fn</strong> (<em>callable</em>) – Scalar-parametric function <cite>q_fn(s)</cite> returning one path vector.
+The function should use <cite>autograd.numpy</cite> operations so Autograd can
+trace it.</p></li>
+<li><p><strong>s_min</strong> (<em>float</em>) – Valid path-parameter range. Autograd-backed paths currently match
+the Rust evaluator API and reject out-of-range queries.</p></li>
+<li><p><strong>s_max</strong> (<em>float</em>) – Valid path-parameter range. Autograd-backed paths currently match
+the Rust evaluator API and reject out-of-range queries.</p></li>
+<li><p><strong>layout</strong> (<a class="reference internal" href="core.html#copp_py.MatrixLayout" title="copp_py.MatrixLayout"><em>MatrixLayout</em></a><em> | </em><em>str</em><em>, </em><em>default=MatrixLayout.SAMPLE_MAJOR</em>) – Matrix layout used for returned derivative arrays.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ImportError</strong> – If Autograd is not installed.</p></li>
+<li><p><strong>ValueError</strong> – If the callback output is invalid.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.from_casadi">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_casadi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q_expr</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.from_casadi" title="Link to this definition">¶</a></dt>
+<dd><p>Build a path from a scalar-parameter CasADi expression.</p>
+<p>The expression is converted to a Python evaluator by
+<cite>copp_py._parametric</cite> and then delegated to [<cite>Self::from_evaluator_3rd</cite>].
+This keeps CasADi optional and outside the Rust dependency graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>q_expr</strong> (<em>casadi.SX</em><em> | </em><em>casadi.MX</em><em> | </em><em>sequence</em>) – Vector expression for the path position.</p></li>
+<li><p><strong>symbol</strong> (<em>casadi.SX</em><em> | </em><em>casadi.MX</em>) – Scalar path parameter used to differentiate <cite>q_expr</cite>.</p></li>
+<li><p><strong>s_min</strong> (<em>float</em><em>, </em><em>default=0.0</em><em>, </em><em>1.0</em>) – Valid path-parameter range.</p></li>
+<li><p><strong>s_max</strong> (<em>float</em><em>, </em><em>default=0.0</em><em>, </em><em>1.0</em>) – Valid path-parameter range.</p></li>
+<li><p><strong>layout</strong> (<a class="reference internal" href="core.html#copp_py.MatrixLayout" title="copp_py.MatrixLayout"><em>MatrixLayout</em></a><em> | </em><em>str</em><em>, </em><em>default=MatrixLayout.SAMPLE_MAJOR</em>) – Matrix layout used for returned derivative arrays.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.from_evaluator">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_evaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evaluator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.from_evaluator" title="Link to this definition">¶</a></dt>
+<dd><p>Compatibility alias for <code class="docutils literal notranslate"><span class="pre">Path.from_evaluator_3rd</span></code>.</p>
+<p>New Python code should prefer <code class="docutils literal notranslate"><span class="pre">from_evaluator_2nd</span></code> or
+<code class="docutils literal notranslate"><span class="pre">from_evaluator_3rd</span></code> so the supported derivative order is explicit.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.from_evaluator_2nd">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_evaluator_2nd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evaluator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.from_evaluator_2nd" title="Link to this definition">¶</a></dt>
+<dd><p>Build a path from a Python evaluator object with derivatives up to second order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>evaluator</strong> (<em>object</em>) – Python object implementing the evaluator protocol. It must provide
+<code class="docutils literal notranslate"><span class="pre">dim</span></code> as an integer attribute or zero-argument method, and
+<code class="docutils literal notranslate"><span class="pre">evaluate_up_to_2nd(s)</span> <span class="pre">-&gt;</span> <span class="pre">(q,</span> <span class="pre">dq,</span> <span class="pre">ddq)</span></code>. <code class="docutils literal notranslate"><span class="pre">evaluate_q(s)</span> <span class="pre">-&gt;</span> <span class="pre">q</span></code>
+is optional and is used when available.</p></li>
+<li><p><strong>s_min</strong> (<em>float</em>) – Valid path-parameter range. Evaluator-backed paths currently match
+the Rust API and reject out-of-range queries.</p></li>
+<li><p><strong>s_max</strong> (<em>float</em>) – Valid path-parameter range. Evaluator-backed paths currently match
+the Rust API and reject out-of-range queries.</p></li>
+<li><p><strong>layout</strong> (<a class="reference internal" href="core.html#copp_py.MatrixLayout" title="copp_py.MatrixLayout"><em>MatrixLayout</em></a><em> | </em><em>str</em><em>, </em><em>default=MatrixLayout.SAMPLE_MAJOR</em>) – Matrix layout expected from callback return arrays and used for
+returned derivative arrays.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the evaluator protocol or callback return arrays are invalid.</p></li>
+<li><p><a class="reference internal" href="core.html#copp_py.CoppError" title="copp_py.CoppError"><strong>CoppError</strong></a> – If the Rust COPP core rejects the path range or evaluator dimension.</p></li>
+<li><p><strong>Exception</strong> – Any exception raised by the Python evaluator callback is propagated
+    unchanged.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.from_evaluator_3rd">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_evaluator_3rd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evaluator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.from_evaluator_3rd" title="Link to this definition">¶</a></dt>
+<dd><p>Build a path from a Python evaluator object with derivatives up to third order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>evaluator</strong> (<em>object</em>) – Python object implementing the evaluator protocol. It must provide
+<code class="docutils literal notranslate"><span class="pre">dim</span></code> as an integer attribute or zero-argument method, and
+<code class="docutils literal notranslate"><span class="pre">evaluate_up_to_3rd(s)</span> <span class="pre">-&gt;</span> <span class="pre">(q,</span> <span class="pre">dq,</span> <span class="pre">ddq,</span> <span class="pre">dddq)</span></code>. <code class="docutils literal notranslate"><span class="pre">evaluate_q</span></code> and
+<code class="docutils literal notranslate"><span class="pre">evaluate_up_to_2nd</span></code> are optional. If <code class="docutils literal notranslate"><span class="pre">evaluate_up_to_2nd</span></code> is
+omitted, second-order evaluation calls <code class="docutils literal notranslate"><span class="pre">evaluate_up_to_3rd</span></code> and
+discards <code class="docutils literal notranslate"><span class="pre">dddq</span></code>; this is supported for convenience but not
+recommended for performance-sensitive code.</p></li>
+<li><p><strong>s_min</strong> (<em>float</em>) – Valid path-parameter range. Evaluator-backed paths currently match
+the Rust API and reject out-of-range queries.</p></li>
+<li><p><strong>s_max</strong> (<em>float</em>) – Valid path-parameter range. Evaluator-backed paths currently match
+the Rust API and reject out-of-range queries.</p></li>
+<li><p><strong>layout</strong> (<a class="reference internal" href="core.html#copp_py.MatrixLayout" title="copp_py.MatrixLayout"><em>MatrixLayout</em></a><em> | </em><em>str</em><em>, </em><em>default=MatrixLayout.SAMPLE_MAJOR</em>) – Matrix layout expected from callback return arrays and used for
+returned derivative arrays.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the evaluator protocol or callback return arrays are invalid.</p></li>
+<li><p><a class="reference internal" href="core.html#copp_py.CoppError" title="copp_py.CoppError"><strong>CoppError</strong></a> – If the Rust COPP core rejects the path range or evaluator dimension.</p></li>
+<li><p><strong>Exception</strong> – Any exception raised by the Python evaluator callback is propagated
+    unchanged.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.from_jax">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_jax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_x64</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.from_jax" title="Link to this definition">¶</a></dt>
+<dd><p>Build a path from a scalar-parametric Python callable using JAX.</p>
+<p>This convenience constructor lives in the Python facade layer. It lazily
+imports <cite>copp_py._parametric</cite>, builds a JAX-backed Python evaluator
+object, and delegates to [<cite>Self::from_evaluator_3rd</cite>]. The Rust core
+still receives the same [<cite>PathEvaluator3rd</cite>] protocol as explicit
+evaluator-backed paths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>q_fn</strong> (<em>callable</em>) – Scalar-parametric function <cite>q_fn(s)</cite> returning one path vector.
+The function should use <cite>jax.numpy</cite> operations so JAX can trace it.</p></li>
+<li><p><strong>s_min</strong> (<em>float</em>) – Valid path-parameter range. Parametric paths currently match the
+Rust evaluator API and reject out-of-range queries.</p></li>
+<li><p><strong>s_max</strong> (<em>float</em>) – Valid path-parameter range. Parametric paths currently match the
+Rust evaluator API and reject out-of-range queries.</p></li>
+<li><p><strong>layout</strong> (<a class="reference internal" href="core.html#copp_py.MatrixLayout" title="copp_py.MatrixLayout"><em>MatrixLayout</em></a><em> | </em><em>str</em><em>, </em><em>default=MatrixLayout.SAMPLE_MAJOR</em>) – Matrix layout used for returned derivative arrays.</p></li>
+<li><p><strong>jit</strong> (<em>bool</em><em>, </em><em>default=True</em>) – JIT-compile the JAX batched evaluator.</p></li>
+<li><p><strong>require_x64</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Require JAX 64-bit mode before constructing the path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ImportError</strong> – If the selected optional dependency is not installed.</p></li>
+<li><p><strong>ValueError</strong> – If the callback output or JAX configuration is invalid.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.from_sympy">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_sympy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q_exprs</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.from_sympy" title="Link to this definition">¶</a></dt>
+<dd><p>Build a path from scalar-parameter SymPy expressions.</p>
+<p>The SymPy expressions are differentiated in Python and wrapped as a
+[<cite>PathEvaluator3rd</cite>] object before entering the Rust core.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>q_exprs</strong> (<em>sympy.Expr</em><em> | </em><em>sequence</em><em> | </em><em>sympy.Matrix</em>) – Position expression or vector of position expressions.</p></li>
+<li><p><strong>symbol</strong> (<em>sympy.Symbol</em>) – Scalar path parameter used to differentiate <cite>q_exprs</cite>.</p></li>
+<li><p><strong>s_min</strong> (<em>float</em><em>, </em><em>default=0.0</em><em>, </em><em>1.0</em>) – Valid path-parameter range.</p></li>
+<li><p><strong>s_max</strong> (<em>float</em><em>, </em><em>default=0.0</em><em>, </em><em>1.0</em>) – Valid path-parameter range.</p></li>
+<li><p><strong>layout</strong> (<a class="reference internal" href="core.html#copp_py.MatrixLayout" title="copp_py.MatrixLayout"><em>MatrixLayout</em></a><em> | </em><em>str</em><em>, </em><em>default=MatrixLayout.SAMPLE_MAJOR</em>) – Matrix layout used for returned derivative arrays.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="copp_py.path.Path.from_waypoints">
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_waypoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">waypoints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_of_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parametrization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sample_major'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#copp_py.path.Path.from_waypoints" title="Link to this definition">¶</a></dt>
+<dd><p>Build a waypoint spline path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>waypoints</strong> (<em>ArrayLike</em>) – Waypoint matrix convertible to float64. With the default
+<code class="docutils literal notranslate"><span class="pre">MatrixLayout.SAMPLE_MAJOR</span></code>, shape is <code class="docutils literal notranslate"><span class="pre">(n_points,</span> <span class="pre">dim)</span></code> and
+each row is one waypoint. With <code class="docutils literal notranslate"><span class="pre">MatrixLayout.DIM_MAJOR</span></code>, shape is
+<code class="docutils literal notranslate"><span class="pre">(dim,</span> <span class="pre">n_points)</span></code> and each column is one waypoint.</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="#copp_py.path.SplineConfig" title="copp_py.path.SplineConfig"><em>SplineConfig</em></a><em> | </em><em>None</em><em>, </em><em>default=None</em>) – Spline construction options. When omitted, keyword arguments build
+an equivalent temporary <code class="docutils literal notranslate"><span class="pre">SplineConfig</span></code>.</p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>default=5</em>) – Odd spline order used only when <code class="docutils literal notranslate"><span class="pre">config</span></code> is omitted.</p></li>
+<li><p><strong>s_min</strong> (<em>float</em><em>, </em><em>default=0.0</em><em>, </em><em>1.0</em>) – Path-parameter range used only when <code class="docutils literal notranslate"><span class="pre">config</span></code> is omitted.</p></li>
+<li><p><strong>s_max</strong> (<em>float</em><em>, </em><em>default=0.0</em><em>, </em><em>1.0</em>) – Path-parameter range used only when <code class="docutils literal notranslate"><span class="pre">config</span></code> is omitted.</p></li>
+<li><p><strong>out_of_range</strong> (<a class="reference internal" href="core.html#copp_py.OutOfRangeMode" title="copp_py.OutOfRangeMode"><em>OutOfRangeMode</em></a><em> | </em><em>str</em><em>, </em><em>default=OutOfRangeMode.ERROR</em>) – Out-of-range policy used only when <code class="docutils literal notranslate"><span class="pre">config</span></code> is omitted.</p></li>
+<li><p><strong>parametrization</strong> (<a class="reference internal" href="core.html#copp_py.Parametrization" title="copp_py.Parametrization"><em>Parametrization</em></a><em> | </em><em>str</em><em>, </em><em>default=Parametrization.UNIFORM</em>) – Waypoint parameter assignment used only when <code class="docutils literal notranslate"><span class="pre">config</span></code> is omitted.</p></li>
+<li><p><strong>start_state</strong> (<em>ArrayLike</em><em> | </em><em>None</em>) – Boundary derivative matrices used only when <code class="docutils literal notranslate"><span class="pre">config</span></code> is omitted.</p></li>
+<li><p><strong>end_state</strong> (<em>ArrayLike</em><em> | </em><em>None</em>) – Boundary derivative matrices used only when <code class="docutils literal notranslate"><span class="pre">config</span></code> is omitted.</p></li>
+<li><p><strong>layout</strong> (<a class="reference internal" href="core.html#copp_py.MatrixLayout" title="copp_py.MatrixLayout"><em>MatrixLayout</em></a><em> | </em><em>str</em><em>, </em><em>default=MatrixLayout.SAMPLE_MAJOR</em>) – Matrix layout for both input waypoints and returned derivative
+arrays. Strings <code class="docutils literal notranslate"><span class="pre">&quot;sample_major&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;dim_major&quot;</span></code> are
+accepted for convenience.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Python-owned wrapper around the Rust path object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#copp_py.path.Path" title="copp_py.path.Path">Path</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – If array layout, dtype, wrapper-level options, or mixed
+    <code class="docutils literal notranslate"><span class="pre">config</span></code>/keyword options are invalid.</p></li>
+<li><p><a class="reference internal" href="core.html#copp_py.CoppError" title="copp_py.CoppError"><strong>CoppError</strong></a> – If the Rust COPP core rejects the path data or spline options.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="copp_py.path.Path.s_range">
+<span class="sig-name descname"><span class="pre">s_range</span></span><a class="headerlink" href="#copp_py.path.Path.s_range" title="Link to this definition">¶</a></dt>
+<dd><p>Return the inclusive valid path parameter range.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation.html">Interpolation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="robot.html">Robot And Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objective.html">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clarabel.html">Clarabel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp2.html">TOPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp2.html">COPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topp3.html">TOPP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copp3.html">COPP3</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">API Reference</a><ul>
+      <li>Previous: <a href="interpolation.html" title="previous chapter">Interpolation</a></li>
+      <li>Next: <a href="robot.html" title="next chapter">Robot And Constraints</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/path.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['idx_5fs_5ffinal_0',['idx_s_final',['../structcopp_1_1_index_interval.html#a8d7a1e686dab22f89dd414e28dab0136',1,'copp::IndexInterval::idx_s_final'],['../classcopp_1_1solver_1_1copp3__socp_1_1_problem.html#a7b748c507668315dd1d3c489a9a61094',1,'copp::solver::copp3_socp::Problem::idx_s_final()'],['../classcopp_1_1solver_1_1topp3_1_1_problem.html#ac81de0c1c2c10ffb1b92033aed54ba95',1,'copp::solver::topp3::Problem::idx_s_final()']]],
+  ['idx_5fs_5finterval_1',['idx_s_interval',['../classcopp_1_1solver_1_1copp2__socp_1_1_problem.html#a3e5fcad63872eddb3719fa8b867d8a16',1,'copp::solver::copp2_socp::Problem::idx_s_interval()'],['../classcopp_1_1solver_1_1topp2__ra_1_1_problem.html#a0e48f9a737856a8c5ecac9167cf1dab4',1,'copp::solver::topp2_ra::Problem::idx_s_interval()']]],
+  ['idx_5fs_5frange_2',['idx_s_range',['../classcopp_1_1_constraints_ref.html#a6d469bdff8c38bdd7b83d1a31996e90a',1,'copp::ConstraintsRef::idx_s_range()'],['../classcopp_1_1_constraints.html#a8057b92477e90921f92e7a76507d7b28',1,'copp::Constraints::idx_s_range()'],['../classcopp_1_1_robot.html#a8f5da3235c7a9961c006a831288a665b',1,'copp::Robot::idx_s_range()']]],
+  ['idx_5fs_5fstart_3',['idx_s_start',['../structcopp_1_1_index_interval.html#acd62fdd2cfd082e17c3b7f01bfd8889b',1,'copp::IndexInterval::idx_s_start'],['../classcopp_1_1solver_1_1copp3__socp_1_1_problem.html#a31a46d6f0be23f35146c4320c6f84422',1,'copp::solver::copp3_socp::Problem::idx_s_start()'],['../classcopp_1_1solver_1_1topp3_1_1_problem.html#a49989e0247edcb62712639c7c0d8a49d',1,'copp::solver::topp3::Problem::idx_s_start()']]],
+  ['include_4',['Include',['../cpp_core_types.html#autotoc_md0',1,'Include'],['../cpp_interpolation.html#autotoc_md7',1,'Include'],['../cpp_objectives_clarabel.html#autotoc_md17',1,'Include'],['../cpp_path.html#autotoc_md23',1,'Include'],['../cpp_robot_constraints.html#autotoc_md29',1,'Include']]],
+  ['include_5ffinal_5',['include_final',['../structcopp_1_1interpolation_1_1_time_grid_options.html#aee6a2a209051ec22b7fb8d4f08395c1b',1,'copp::interpolation::TimeGridOptions']]],
+  ['indexinterval_6',['IndexInterval',['../structcopp_1_1_index_interval.html',1,'copp']]],
+  ['inertia_7',['inertia',['../struct_toy_arm_dynamics.html#a9cb2c396756c9178d959c9477a87f65e',1,'ToyArmDynamics']]],
+  ['initializer_20helpers_8',['Initializer Helpers',['../cpp_core_types.html#autotoc_md3',1,'']]],
+  ['input_5fsparse_5fdropzeros_9',['input_sparse_dropzeros',['../structcopp_1_1clarabel_1_1_settings.html#a4d4a802bd5c94c03f5f2dfc9b97638c7',1,'copp::clarabel::Settings']]],
+  ['insufficientprogress_10',['InsufficientProgress',['../namespacecopp_1_1clarabel.html#a7a4d8252cf442facd437d78961214d1caa3354be8bb2737b5f31e15e55ebe5bd2',1,'copp::clarabel']]],
+  ['interpolation_11',['Interpolation',['../cpp_solvers.html#autotoc_md37',1,'']]],
+  ['interpolation_20and_20time_20profiles_12',['Interpolation And Time Profiles',['../cpp_interpolation.html',1,'']]],
+  ['interpolation_2ehpp_13',['interpolation.hpp',['../interpolation_8hpp.html',1,'']]],
+  ['interpolation_2emd_14',['interpolation.md',['../interpolation_8md.html',1,'']]],
+  ['invalid_5finput_15',['invalid_input',['../namespacecopp.html#a2e440d42f762b0690879866e399d9637a1080ed39e08a161dc545804658700e33',1,'copp']]],
+  ['inverse_20dynamics_16',['Inverse Dynamics',['../cpp_robot_constraints.html#autotoc_md32',1,'']]],
+  ['inversedynamics_17',['InverseDynamics',['../namespacecopp.html#a8abfb0bb5430f16f23efd56e49207b33',1,'copp']]],
+  ['is_5fempty_18',['is_empty',['../classcopp_1_1_constraints_ref.html#ab59847949955eb039043f5a9ab9b37f1',1,'copp::ConstraintsRef::is_empty()'],['../classcopp_1_1_constraints.html#a93809c343f328276f2bc1991a0149f24',1,'copp::Constraints::is_empty()'],['../classcopp_1_1_robot.html#ad55342bd7c9467e67b62add71378a91e',1,'copp::Robot::is_empty()']]],
+  ['iterations_19',['iterations',['../structcopp_1_1solver_1_1copp2__socp_1_1_result.html#af3d40ef84b91fad8b8384c953671e585',1,'copp::solver::copp2_socp::Result::iterations'],['../structcopp_1_1solver_1_1topp3_1_1_result.html#a3c41c05de15f6174fccf295338ceda8d',1,'copp::solver::topp3::Result::iterations']]],
+  ['iterative_5frefinement_5fabstol_20',['iterative_refinement_abstol',['../structcopp_1_1clarabel_1_1_settings.html#a4f4f641d34cdee1b4cd315bbea65a9e4',1,'copp::clarabel::Settings']]],
+  ['iterative_5frefinement_5fenable_21',['iterative_refinement_enable',['../structcopp_1_1clarabel_1_1_settings.html#a7cd4a9a0e765a212da21a20cfc9dbf65',1,'copp::clarabel::Settings']]],
+  ['iterative_5frefinement_5fmax_5fiter_22',['iterative_refinement_max_iter',['../structcopp_1_1clarabel_1_1_settings.html#a80b08b94ae2bc4e899ba44817f214e3b',1,'copp::clarabel::Settings']]],
+  ['iterative_5frefinement_5freltol_23',['iterative_refinement_reltol',['../structcopp_1_1clarabel_1_1_settings.html#a66c282b07f2ce0cceeb73b08f37ae365',1,'copp::clarabel::Settings']]],
+  ['iterative_5frefinement_5fstop_5fratio_24',['iterative_refinement_stop_ratio',['../structcopp_1_1clarabel_1_1_settings.html#a5b29f4244f376cd5c48e158fdf8c8c74',1,'copp::clarabel::Settings']]]
+];

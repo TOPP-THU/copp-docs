@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>copp.Path - COPP MATLAB Reference</title>
+<style>
+
+/* COPP MATLAB reference theme. Designed for MATLAB publish HTML from R2024b. */
+:root { --mw-bg:#ffffff; --mw-page-bg:#f7f7f7; --mw-text:#333333; --mw-muted:#666666; --mw-border:#d6d6d6; --mw-border-light:#e5e5e5; --mw-link:#0076a8; --mw-link-hover:#005f87; --mw-code-bg:#f5f5f5; --mw-code-border:#dcdcdc; --mw-table-head:#f3f3f3; --mw-accent:#c45400; }
+html { min-height:100%; background:var(--mw-page-bg); }
+html body.mw-doc-body, html body { margin:0; background:var(--mw-page-bg); color:var(--mw-text); font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:1.55; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+body, body * { box-sizing:border-box; }
+.skip-link { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+.skip-link:focus { left:16px; top:12px; width:auto; height:auto; z-index:1000; padding:7px 10px; background:#fff; border:1px solid var(--mw-border); color:var(--mw-link); }
+.mw-site-header { background:#f2f2f2; border-top:4px solid var(--mw-accent); border-bottom:1px solid #cfcfcf; color:#333; }
+.mw-site-header-inner { max-width:1180px; min-height:54px; margin:0 auto; padding:0 32px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.mw-brand-block { display:flex; align-items:baseline; gap:12px; min-width:0; }
+.mw-brand-title { color:#222; font-size:18px; font-weight:400; white-space:nowrap; }
+.mw-brand-subtitle { color:#666; font-size:13px; white-space:nowrap; }
+.mw-search-box { width:268px; min-height:31px; padding:6px 34px 6px 11px; border:1px solid #bdbdbd; border-radius:2px; background:#fff; color:#777; font-size:13px; line-height:17px; text-align:left; }
+.content { max-width:1180px; min-height:calc(100vh - 59px); margin:0 auto; padding:28px 34px 52px; background:var(--mw-bg); border-left:1px solid #eeeeee; border-right:1px solid #eeeeee; }
+.mw-page-head { max-width:860px; outline:none; }
+.breadcrumb { display:flex; flex-wrap:wrap; align-items:center; gap:0; margin:0 0 19px; color:#6f6f6f; font-size:12px; line-height:1.35; }
+.breadcrumb span { display:inline-block; }
+.breadcrumb-separator { margin:0 7px; color:#a0a0a0; }
+.breadcrumb-current { color:#555; }
+h1 { margin:0 0 4px; padding:0; color:#333; font-size:32px; font-weight:400; line-height:1.15; letter-spacing:-0.01em; }
+.function-label { max-width:850px; margin:0 0 23px; color:#555; font-size:15px; line-height:1.45; }
+h2 { clear:left; max-width:850px; margin:31px 0 14px; padding:23px 0 7px; border-bottom:1px solid var(--mw-border); color:#333; font-size:24px; font-weight:400; line-height:1.25; }
+h2.ref-section-syntax { margin-top:24px; }
+h3 { max-width:850px; margin:22px 0 8px; padding:0; color:#333; font-size:17px; font-weight:600; line-height:1.35; }
+h4 { max-width:850px; margin:18px 0 7px; padding:0; color:#333; font-size:14px; font-weight:600; line-height:1.35; }
+p { max-width:850px; margin:0 0 14px; color:#333; font-size:14px; line-height:1.55; }
+a { color:var(--mw-link); text-decoration:none; }
+a:hover, a:focus { color:var(--mw-link-hover); text-decoration:underline; }
+a:visited { color:#005f87; }
+ul, ol { max-width:850px; margin:0 0 18px 23px; padding:0; }
+ul { list-style:square; }
+ol { list-style:decimal; }
+li { margin:4px 0 6px; padding:0; line-height:1.5; }
+li ul, li ol { margin-top:6px; margin-bottom:7px; }
+tt, code, pre { font-family:Consolas, 'Courier New', Courier, monospace; }
+tt, code { color:#222; font-size:.95em; background:var(--mw-code-bg); border:1px solid var(--mw-code-border); border-radius:3px; padding:1px 4px; }
+pre code, pre tt, .ref-syntax code, .syntax-list code { background:transparent; border:0; border-radius:0; padding:0; }
+.ref-syntax { max-width:850px; margin:0 0 19px; }
+.ref-syntax pre.language-matlab { margin:0; padding:0; border:0; background:#fff; color:#111; font-size:14px; line-height:1.8; white-space:pre-wrap; overflow:visible; }
+pre.language-matlab { max-width:850px; margin:8px 0 18px; padding:10px 12px; border:1px solid var(--mw-code-border); background:var(--mw-code-bg); color:#222; font-size:13px; line-height:1.45; overflow:auto; }
+.code-example, .code-output { max-width:850px; margin:10px 0 18px; border:1px solid var(--mw-code-border); background:var(--mw-code-bg); }
+.code-output { margin-top:-10px; background:#fff; }
+.code-toolbar { min-height:28px; padding:5px 10px 4px; border-bottom:1px solid var(--mw-code-border); background:#eeeeee; color:#666; font-size:11px; line-height:18px; text-transform:uppercase; letter-spacing:.03em; }
+.code-output-toolbar { background:#fafafa; color:#777; }
+pre.codeinput, pre.codeoutput { max-width:none; margin:0; border:0; border-radius:0; font-size:13px; line-height:1.48; overflow:auto; }
+pre.codeinput { padding:11px 12px 12px; background:var(--mw-code-bg); color:#222; }
+pre.codeoutput { padding:10px 12px 12px; background:#fff; color:#4c4c4c; }
+pre.error { max-width:850px; padding:10px 12px; border:1px solid #d9534f; background:#fff4f4; color:#b00000; }
+span.keyword { color:#0000ff; }
+span.comment { color:#228b22; }
+span.string { color:#a020f0; }
+span.untermstring { color:#b20000; }
+span.syscmd { color:#b28c00; }
+span.typesection { color:#a0522d; }
+.argument-name { max-width:850px; margin:22px 0 5px; padding:0; border:0; color:#333; font-size:17px; font-weight:600; line-height:1.35; }
+.argument-name tt { font-size:1em; font-weight:600; color:#111; }
+.argument-dash { color:#777; font-weight:400; }
+.argument-summary { color:#333; font-weight:400; }
+.argument-meta, .argument-example { max-width:850px; margin:-2px 0 13px; color:#666; font-size:13px; line-height:1.45; }
+.argument-meta tt, .argument-example tt { color:#333; }
+.syntax-list { max-width:850px; margin:0 0 12px; }
+.syntax-list ul { margin:0 0 12px 19px; }
+.syntax-list code { color:var(--mw-link); }
+.api-grid { max-width:920px; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:10px; margin:8px 0 22px; }
+.api-card { min-width:0; padding:11px 13px 12px; border:1px solid var(--mw-border); background:#fff; }
+.api-card h3 { margin:0 0 5px; font-size:15px; font-weight:600; line-height:1.35; }
+.api-card p { margin:0; color:#555; font-size:13px; line-height:1.45; }
+.api-kind { margin:0 0 5px; color:#777; font-size:11px; line-height:1.2; text-transform:uppercase; letter-spacing:.03em; }
+.api-link code, a.api-link { color:var(--mw-link); }
+.api-related { max-width:850px; columns:2; column-gap:28px; }
+.api-description { max-width:850px; margin:0 0 16px; }
+.api-description p { margin:0 0 12px; }
+.api-detail { max-width:920px; margin:0 0 24px; padding:0 0 6px; border-bottom:1px solid var(--mw-border-light); }
+.api-detail h3 { margin-top:18px; }
+.argument-list { max-width:920px; display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px; margin:8px 0 22px; }
+.argument-item { min-width:0; padding:10px 12px 11px; border-left:3px solid var(--mw-border); background:#fafafa; }
+.argument-item h3 { margin:0 0 5px; font-size:15px; }
+.argument-item p { margin:0; color:#555; font-size:13px; line-height:1.45; }
+.argument-default { display:block; margin-top:5px; color:#666; }
+.on-page { float:right; position:sticky; top:16px; width:270px; margin:0 0 24px 42px; padding:13px 15px 14px; border:1px solid var(--mw-border); background:#f7f7f7; color:#333; }
+.on-page-title { margin:0 0 8px; color:#333; font-size:13px; font-weight:600; line-height:1.35; }
+.on-page-list ul { margin:0; padding:0 0 0 17px; list-style:square; }
+.on-page-list li { margin:4px 0; color:#777; font-size:13px; line-height:1.35; }
+.on-page-list a { color:var(--mw-link); }
+table { max-width:850px; width:auto; margin:10px 0 22px; border-collapse:collapse; border-spacing:0; font-size:13px; line-height:1.45; }
+table th, table td { padding:7px 9px; border:1px solid var(--mw-border); text-align:left; vertical-align:top; }
+table th { background:var(--mw-table-head); color:#333; font-weight:600; }
+table tr:nth-child(even) td { background:#fbfbfb; }
+img { max-width:100%; height:auto; border:0; }
+p img { display:inline-block; margin:2px 0 5px; vertical-align:middle; }
+.mathjax-display { display:block; max-width:850px; margin:2px 0 16px; overflow-x:auto; overflow-y:hidden; }
+.MathJax { font-size:100% !important; }
+.see-also-list { max-width:850px; margin:3px 0 20px; }
+.see-also-list p { margin:0; line-height:2.05; }
+.see-also-list tt { display:inline-block; margin:0 4px 7px 0; padding:2px 7px; border:1px solid #d7e7ef; border-radius:2px; background:#f2f8fb; color:var(--mw-link); font-size:13px; line-height:1.5; }
+.footer { clear:both; max-width:850px; margin:36px 0 0; padding:14px 0 0; border-top:1px solid var(--mw-border); color:#777; font-size:12px; font-style:normal; line-height:1.45; }
+.footer p { margin:0; color:#777; font-size:12px; }
+.footer a, .footer a:visited { color:#777; }
+@media (max-width: 1080px) { .on-page { float:none; position:static; width:auto; max-width:850px; margin:0 0 24px; } .mw-page-head, h2, h3, p, ul, ol, table, .ref-syntax, .code-example, .code-output, .see-also-list, .footer { max-width:100%; } }
+@media (max-width: 760px) { .mw-site-header-inner { min-height:auto; padding:10px 18px; align-items:flex-start; flex-direction:column; gap:8px; } .mw-brand-block { display:block; } .mw-brand-title { font-size:17px; } .mw-brand-subtitle { margin-top:1px; } .mw-search-box { display:none; } .content { padding:22px 18px 38px; border-left:0; border-right:0; } h1 { font-size:28px; } h2 { font-size:21px; margin-top:27px; } h3, .argument-name { font-size:16px; } pre.codeinput, pre.codeoutput, pre.language-matlab { font-size:12px; } }
+@media print { html body.mw-doc-body, html body { background:#fff; } .mw-site-header, .on-page, .skip-link { display:none; } .content { max-width:none; min-height:0; padding:0; border:0; } pre.codeinput, pre.codeoutput, pre.language-matlab { white-space:pre-wrap; word-wrap:break-word; overflow:visible; } a { color:#000; text-decoration:none; } }
+.helptext { max-width:920px; margin:0 0 22px; padding:0; border:0; background:#fff; color:#222; font-family:Consolas, 'Courier New', monospace; font-size:13px; line-height:1.5; white-space:pre-wrap; overflow:auto; }
+.api-links { max-width:850px; margin:0 0 22px; color:#555; font-size:13px; }
+</style>
+<script>
+window.MathJax = { tex: { displayMath: [['\\[','\\]']], inlineMath: [['\\(','\\)']], processEscapes: true }, chtml: { matchFontHeight: false } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body class="mw-doc-body">
+<a class="skip-link" href="#mw-main-content">Skip to content</a>
+<header class="mw-site-header" role="banner"><div class="mw-site-header-inner"><div class="mw-brand-block"><div class="mw-brand-title">COPP Help Center</div><div class="mw-brand-subtitle">MATLAB Reference</div></div><div class="mw-search-box" aria-hidden="true">Search Help Center</div></div></header>
+<main class="content">
+<div class="mw-page-head" id="mw-main-content" tabindex="-1">
+<nav class="breadcrumb" aria-label="Breadcrumb"><span>Documentation Home</span><span class="breadcrumb-separator">/</span><span>COPP</span><span class="breadcrumb-separator">/</span><span>MATLAB</span><span class="breadcrumb-separator">/</span><span class="breadcrumb-current">API Reference</span></nav>
+<h1>copp.Path</h1>
+<div class="function-label">Owned geometric path handle backed by the native COPP library.</div>
+</div>
+<div class="api-links"><a href="../api_reference.html">API Reference</a> | <a href="copp.html">copp</a> | <a href="../index.html">User Guide</a></div>
+
+<h2 id="description">Description</h2>
+<p>Indexing note: <a class="api-link" href="copp.Path.html">Path</a> itself does not expose station indices. <a class="api-link" href="copp.Robot.html">Robot</a> and solver APIs use 1-based MATLAB station indices at the public boundary.</p>
+
+<h2 id="properties">Properties</h2>
+<div class="api-grid">
+<article class="api-card" id="member-dim"><h3><a href="#member-dim"><code>dim</code></a></h3><p><a class="api-link" href="copp.Robot.html">Robot</a>/path dimension.</p></article>
+<article class="api-card" id="member-s-range"><h3><a href="#member-s-range"><code>s_range</code></a></h3><p>Valid scalar path-parameter range [<code>s_min</code>, <code>s_max</code>].</p></article>
+</div>
+<h2 id="methods">Methods</h2>
+<div class="api-grid">
+<article class="api-card" id="member-from-waypoints"><h3><a href="#method-from-waypoints"><code>from_waypoints</code></a></h3><p>Construct a waypoint spline path.</p></article>
+<article class="api-card" id="member-from-evaluator-2nd"><h3><a href="#method-from-evaluator-2nd"><code>from_evaluator_2nd</code></a></h3><p>Construct a callback-backed second-order path.</p></article>
+<article class="api-card" id="member-from-evaluator-3rd"><h3><a href="#method-from-evaluator-3rd"><code>from_evaluator_3rd</code></a></h3><p>Construct a callback-backed third-order path.</p></article>
+<article class="api-card" id="member-from-symbolic"><h3><a href="#method-from-symbolic"><code>from_symbolic</code></a></h3><p>Construct a third-order path from symbolic formulas.</p></article>
+<article class="api-card" id="member-from-casadi"><h3><a href="#method-from-casadi"><code>from_casadi</code></a></h3><p>Construct a third-order path from a CasADi expression.</p></article>
+<article class="api-card" id="member-from-parametric"><h3><a href="#method-from-parametric"><code>from_parametric</code></a></h3><p>Construct a third-order path from a MATLAB formula.</p></article>
+<article class="api-card" id="member-evaluate-q"><h3><a href="#method-evaluate-q"><code>evaluate_q</code></a></h3><p>Evaluate path position \(q(s)\).</p></article>
+<article class="api-card" id="member-evaluate-up-to-2nd"><h3><a href="#method-evaluate-up-to-2nd"><code>evaluate_up_to_2nd</code></a></h3><p>Evaluate \(q(s)\), dq/ds, and d2q/ds2.</p></article>
+<article class="api-card" id="member-evaluate-up-to-3rd"><h3><a href="#method-evaluate-up-to-3rd"><code>evaluate_up_to_3rd</code></a></h3><p>Evaluate \(q(s)\) and derivatives through d3q/ds3.</p></article>
+<article class="api-card" id="member-delete"><h3><a href="#method-delete"><code>delete</code></a></h3><p>Release the native path handle during MATLAB cleanup.</p></article>
+<article class="api-card" id="member-release"><h3><a href="#method-release"><code>release</code></a></h3><p>Explicitly release the native CoppPath handle.</p></article>
+<article class="api-card" id="member-is-valid"><h3><a href="#method-is-valid"><code>is_valid</code></a></h3><p>Return whether this object still owns a live native path.</p></article>
+</div>
+<h2 id="method-details">Method Details</h2>
+<section class="api-detail" id="method-from-waypoints">
+<h3><code>from_waypoints</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-from-waypoints-syntax-1"><code>OBJ = copp.Path.from_waypoints(WAYPOINTS)</code></a></li>
+</ul></div>
+<pre id="method-from-waypoints-syntax-1" class="language-matlab">OBJ = copp.Path.from_waypoints(WAYPOINTS)</pre>
+<div class="api-description"><p>Builds a quintic spline over s in [0, 1]. WAYPOINTS must be a real finite \(\mathrm{dim} \times N\) matrix with each column storing one waypoint q(:, k). At least enough waypoints for the selected native spline order must be provided.</p>
+<p>Name-value options: <code>s_range</code>: \(1 \times 2\) finite vector [<code>s_min</code>, <code>s_max</code>]. Defaults to [0, 1]. order: Odd spline order accepted by the native path module. Defaults to 5, matching Rust/Python defaults. <code>out_of_range_mode</code>: &quot;error&quot; to reject out-of-range evaluation, or &quot;clamp&quot; to clamp query values into s_range. <code>start_state</code>, <code>end_state</code>: Optional dim-by-K boundary derivative matrices. Column j stores the j-th boundary derivative. Empty arrays request zero boundary derivatives from the native default path options.</p>
+<p>The returned object owns the native path handle. release() may be called explicitly, but ordinary MATLAB object cleanup is also sufficient.</p></div>
+</section>
+<section class="api-detail" id="method-from-evaluator-2nd">
+<h3><code>from_evaluator_2nd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-from-evaluator-2nd-syntax-1"><code>OBJ = copp.Path.from_evaluator_2nd(F, dim=D, s_range=[A,B])</code></a></li>
+<li><a href="#method-from-evaluator-2nd-syntax-2"><code>[q, dq, ddq] = F(s)</code></a></li>
+<li><a href="#method-from-evaluator-2nd-syntax-3"><code>OBJ = copp.Path.from_evaluator_2nd(E, ...)</code></a></li>
+<li><a href="#method-from-evaluator-2nd-syntax-4"><code>[q, dq, ddq] = E.evaluate_up_to_2nd(s)</code></a></li>
+</ul></div>
+<pre id="method-from-evaluator-2nd-syntax-1" class="language-matlab">OBJ = copp.Path.from_evaluator_2nd(F, dim=D, s_range=[A,B])</pre>
+<pre id="method-from-evaluator-2nd-syntax-2" class="language-matlab">[q, dq, ddq] = F(s)</pre>
+<pre id="method-from-evaluator-2nd-syntax-3" class="language-matlab">OBJ = copp.Path.from_evaluator_2nd(E, ...)</pre>
+<pre id="method-from-evaluator-2nd-syntax-4" class="language-matlab">[q, dq, ddq] = E.evaluate_up_to_2nd(s)</pre>
+<div class="api-description"><p>The callback input s is always a \(1 \times N\) row vector. The three outputs must be real finite D-by-N matrices. The native path borrows the callback, so this <a class="api-link" href="copp.Path.html">Path</a> object keeps the MATLAB function handle alive until release()/delete().</p>
+<p>also accepts an object or handle object E that implements:</p>
+<p>Function handles are handy for scripts and quick demos. Objects are better when the evaluator owns parameters, caches, or helper methods that should be tested independently.</p>
+<p>Name-value options: dim: Positive integer path dimension D. <code>s_range</code>: \(1 \times 2\) finite vector [<code>s_min</code>, <code>s_max</code>]. Defaults to [0, 1].</p>
+<p>The resulting native path supports <code><a class="api-link" href="copp.Path.html#method-evaluate-q">evaluate_q</a></code>() and <code><a class="api-link" href="copp.Path.html#method-evaluate-up-to-2nd">evaluate_up_to_2nd</a></code>(). Third-order evaluation raises a path unsupported-derivative error.</p></div>
+</section>
+<section class="api-detail" id="method-from-evaluator-3rd">
+<h3><code>from_evaluator_3rd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-from-evaluator-3rd-syntax-1"><code>OBJ = copp.Path.from_evaluator_3rd(F, dim=D, s_range=[A,B])</code></a></li>
+<li><a href="#method-from-evaluator-3rd-syntax-2"><code>[q, dq, ddq, dddq] = F(s)</code></a></li>
+<li><a href="#method-from-evaluator-3rd-syntax-3"><code>OBJ = copp.Path.from_evaluator_3rd(E, ...)</code></a></li>
+<li><a href="#method-from-evaluator-3rd-syntax-4"><code>[q, dq, ddq, dddq] = E.evaluate_up_to_3rd(s)</code></a></li>
+</ul></div>
+<pre id="method-from-evaluator-3rd-syntax-1" class="language-matlab">OBJ = copp.Path.from_evaluator_3rd(F, dim=D, s_range=[A,B])</pre>
+<pre id="method-from-evaluator-3rd-syntax-2" class="language-matlab">[q, dq, ddq, dddq] = F(s)</pre>
+<pre id="method-from-evaluator-3rd-syntax-3" class="language-matlab">OBJ = copp.Path.from_evaluator_3rd(E, ...)</pre>
+<pre id="method-from-evaluator-3rd-syntax-4" class="language-matlab">[q, dq, ddq, dddq] = E.evaluate_up_to_3rd(s)</pre>
+<div class="api-description"><p>The callback input s is always a \(1 \times N\) row vector. All outputs must be real finite D-by-N matrices. If the native library only needs second-order derivatives, it may still call F and discard dddq.</p>
+<p>also accepts an object or handle object E that implements:</p>
+<p>If E also implements <code><a class="api-link" href="copp.Path.html#method-evaluate-up-to-2nd">evaluate_up_to_2nd</a></code>(s), native second-order evaluation uses that lighter callback. Otherwise it falls back to <code><a class="api-link" href="copp.Path.html#method-evaluate-up-to-3rd">evaluate_up_to_3rd</a></code>(s) and discards dddq, matching the C/Python binding semantics.</p>
+<p>Name-value options: dim: Positive integer path dimension D. <code>s_range</code>: \(1 \times 2\) finite vector [<code>s_min</code>, <code>s_max</code>]. Defaults to [0, 1].</p></div>
+</section>
+<section class="api-detail" id="method-from-symbolic">
+<h3><code>from_symbolic</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-from-symbolic-syntax-1"><code>OBJ = copp.Path.from_symbolic(Q_EXPR)</code></a></li>
+<li><a href="#method-from-symbolic-syntax-2"><code>OBJ = copp.Path.from_symbolic(Q_EXPR, symbol=S)</code></a></li>
+<li><a href="#method-from-symbolic-syntax-3"><code>q = [sin(s); cos(2*s); s + sym(1)/10*s^2];</code></a></li>
+<li><a href="#method-from-symbolic-syntax-4"><code>path = copp.Path.from_symbolic(q, symbol=s, s_range=[0, 1])</code></a></li>
+</ul></div>
+<pre id="method-from-symbolic-syntax-1" class="language-matlab">OBJ = copp.Path.from_symbolic(Q_EXPR)</pre>
+<pre id="method-from-symbolic-syntax-2" class="language-matlab">OBJ = copp.Path.from_symbolic(Q_EXPR, symbol=S)</pre>
+<pre id="method-from-symbolic-syntax-3" class="language-matlab">q = [sin(s); cos(2*s); s + sym(1)/10*s^2];</pre>
+<pre id="method-from-symbolic-syntax-4" class="language-matlab">path = copp.Path.from_symbolic(q, symbol=s, s_range=[0, 1])</pre>
+<div class="api-description"><p>differentiates a Symbolic Math Toolbox vector expression <code>Q_EXPR</code> with respect to its only symbolic variable, then wraps the generated batch evaluator with <code><a class="api-link" href="copp.Path.html#method-from-evaluator-3rd">Path.from_evaluator_3rd</a></code>().</p>
+<p>uses the scalar symbolic variable S explicitly. Passing symbol= is required when <code>Q_EXPR</code> contains zero variables or more than one variable.</p>
+<p>Name-value options: symbol: Scalar sym variable used as the path parameter. If omitted, it is inferred only when symvar(<code>Q_EXPR</code>) has exactly one variable. <code>s_range</code>: \(1 \times 2\) finite vector [<code>s_min</code>, <code>s_max</code>]. Defaults to [0, 1].</p>
+<p>must be a symbolic row or column vector. Matrix-valued expressions are rejected so the path dimension is unambiguous. The callback created by this constructor receives s as a \(1 \times N\) row vector and returns q/dq/ddq/dddq as \(\mathrm{dim} \times N\) <a class="api-link" href="copp.Jet3.html#method-double">double</a> matrices.</p>
+<p>This constructor requires MATLAB Symbolic Math Toolbox. It throws <a class="api-link" href="copp.html">copp</a>:MissingDependency when the toolbox is unavailable.</p></div>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">syms s
+q = [sin(s); cos(2*s); s + sym(1)/10*s^2];
+path = copp.Path.from_symbolic(q, symbol=s, s_range=[0, 1]);</pre></div>
+</section>
+<section class="api-detail" id="method-from-casadi">
+<h3><code>from_casadi</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-from-casadi-syntax-1"><code>OBJ = copp.Path.from_casadi(Q_EXPR, symbol=S)</code></a></li>
+<li><a href="#method-from-casadi-syntax-2"><code>s = SX.sym(&#39;s&#39;)</code></a></li>
+<li><a href="#method-from-casadi-syntax-3"><code>q = [sin(s); cos(2*s); s + 0.1*s^2];</code></a></li>
+<li><a href="#method-from-casadi-syntax-4"><code>path = copp.Path.from_casadi(q, symbol=s, s_range=[0, 1])</code></a></li>
+</ul></div>
+<pre id="method-from-casadi-syntax-1" class="language-matlab">OBJ = copp.Path.from_casadi(Q_EXPR, symbol=S)</pre>
+<pre id="method-from-casadi-syntax-2" class="language-matlab">s = SX.sym(&#39;s&#39;)</pre>
+<pre id="method-from-casadi-syntax-3" class="language-matlab">q = [sin(s); cos(2*s); s + 0.1*s^2];</pre>
+<pre id="method-from-casadi-syntax-4" class="language-matlab">path = copp.Path.from_casadi(q, symbol=s, s_range=[0, 1])</pre>
+<div class="api-description"><p>differentiates a scalar-parameter CasADi SX/MX vector expression <code>Q_EXPR</code> up to third order with respect to scalar symbol S, then wraps the generated batch evaluator with <code><a class="api-link" href="copp.Path.html#method-from-evaluator-3rd">Path.from_evaluator_3rd</a></code>().</p>
+<p>Name-value options: symbol: Required scalar CasADi SX or MX symbol used as the path parameter. <code>s_range</code>: \(1 \times 2\) finite vector [<code>s_min</code>, <code>s_max</code>]. Defaults to [0, 1].</p>
+<p>must be a CasADi row or column vector. Matrix-valued expressions are rejected so the path dimension is unambiguous. The evaluator first tries CasADi <code>Function.map</code>(N) for batch evaluation and falls back to a scalar loop if map evaluation is not supported by the installed CasADi version.</p>
+<p>This constructor requires the CasADi MATLAB package on the MATLAB path. It throws <a class="api-link" href="copp.html">copp</a>:MissingDependency when CasADi is unavailable.</p></div>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">import casadi.*
+s = SX.sym(&#39;s&#39;);
+q = [sin(s); cos(2*s); s + 0.1*s^2];
+path = copp.Path.from_casadi(q, symbol=s, s_range=[0, 1]);</pre></div>
+</section>
+<section class="api-detail" id="method-from-parametric">
+<h3><code>from_parametric</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-from-parametric-syntax-1"><code>OBJ = copp.Path.from_parametric(F, s_range=[A,B])</code></a></li>
+<li><a href="#method-from-parametric-syntax-2"><code>path = copp.Path.from_parametric( ...</code></a></li>
+</ul></div>
+<pre id="method-from-parametric-syntax-1" class="language-matlab">OBJ = copp.Path.from_parametric(F, s_range=[A,B])</pre>
+<pre id="method-from-parametric-syntax-2" class="language-matlab">path = copp.Path.from_parametric( ...</pre>
+<div class="api-description"><p>calls F with a scalar <a class="api-link" href="copp.Jet3.html">copp.Jet3</a> path parameter. F must return a numeric vector or a <a class="api-link" href="copp.Jet3.html">Jet3</a> vector. The returned value defines \(q(s)\), and <a class="api-link" href="copp.Jet3.html">Jet3</a> automatically supplies dq/ds, d2q/ds2, and d3q/ds3.</p>
+<p>Name-value options: <code>s_range</code>: \(1 \times 2\) finite vector [<code>s_min</code>, <code>s_max</code>]. Defaults to [0, 1]. dim: Optional positive integer path dimension. If omitted, the dimension is inferred by probing F at mean(<code>s_range</code>).</p>
+<p>The generated evaluator is batch-compatible with the native MEX callback path. Internally it receives s as a \(1 \times N\) row vector, evaluates the scalar <a class="api-link" href="copp.Jet3.html">Jet3</a> formula once per sample, and returns \(\mathrm{dim} \times N\) q/dq/ddq/dddq matrices.</p></div>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">path = copp.Path.from_parametric( ...
+@(s) [sin(s); cos(2*s); s + 0.1*s^2], ...
+s_range=[0, 1]);</pre></div>
+</section>
+<section class="api-detail" id="method-evaluate-q">
+<h3><code>evaluate_q</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-evaluate-q-syntax-1"><code>Q = evaluate_q(OBJ, S)</code></a></li>
+<li><a href="#method-evaluate-q-syntax-2"><code>path position at each sample in S, where N = numel(S). S may be</code></a></li>
+</ul></div>
+<pre id="method-evaluate-q-syntax-1" class="language-matlab">Q = evaluate_q(OBJ, S)</pre>
+<pre id="method-evaluate-q-syntax-2" class="language-matlab">path position at each sample in S, where N = numel(S). S may be</pre>
+<div class="api-description"><p>Returns a \(\mathrm{dim} \times N\) matrix containing the path position at each sample in S, where N = numel(S). S may be a row or column vector, but must be real and finite. The output orientation is always \(\mathrm{dim} \times N\), matching <code><a class="api-link" href="copp.Path.html#method-evaluate-up-to-2nd">evaluate_up_to_2nd</a></code>().</p></div>
+</section>
+<section class="api-detail" id="method-evaluate-up-to-2nd">
+<h3><code>evaluate_up_to_2nd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-evaluate-up-to-2nd-syntax-1"><code>OUT = evaluate_up_to_2nd(OBJ, S)</code></a></li>
+<li><a href="#method-evaluate-up-to-2nd-syntax-2"><code>[Q, DQ, DDQ] = evaluate_up_to_2nd(OBJ, S)</code></a></li>
+</ul></div>
+<pre id="method-evaluate-up-to-2nd-syntax-1" class="language-matlab">OUT = evaluate_up_to_2nd(OBJ, S)</pre>
+<pre id="method-evaluate-up-to-2nd-syntax-2" class="language-matlab">[Q, DQ, DDQ] = evaluate_up_to_2nd(OBJ, S)</pre>
+<div class="api-description"><p>Returns a struct with fields: q: \(\mathrm{dim} \times N\) path position matrix. dq: \(\mathrm{dim} \times N\) first derivative matrix. ddq: \(\mathrm{dim} \times N\) second derivative matrix.</p>
+<p>Returns the same matrices as separate outputs. S may be a \(1 \times N\) or \(N \times 1\) vector, and all outputs are always \(\mathrm{dim} \times N\).</p></div>
+</section>
+<section class="api-detail" id="method-evaluate-up-to-3rd">
+<h3><code>evaluate_up_to_3rd</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-evaluate-up-to-3rd-syntax-1"><code>OUT = evaluate_up_to_3rd(OBJ, S)</code></a></li>
+<li><a href="#method-evaluate-up-to-3rd-syntax-2"><code>[Q, DQ, DDQ, DDDQ] = evaluate_up_to_3rd(OBJ, S)</code></a></li>
+<li><a href="#method-evaluate-up-to-3rd-syntax-3"><code>dim-by-N matrices as separate outputs, where N = numel(S).</code></a></li>
+</ul></div>
+<pre id="method-evaluate-up-to-3rd-syntax-1" class="language-matlab">OUT = evaluate_up_to_3rd(OBJ, S)</pre>
+<pre id="method-evaluate-up-to-3rd-syntax-2" class="language-matlab">[Q, DQ, DDQ, DDDQ] = evaluate_up_to_3rd(OBJ, S)</pre>
+<pre id="method-evaluate-up-to-3rd-syntax-3" class="language-matlab">dim-by-N matrices as separate outputs, where N = numel(S).</pre>
+<div class="api-description"><p>Returns a struct with fields: q: \(\mathrm{dim} \times N\) path position matrix. dq: \(\mathrm{dim} \times N\) first derivative matrix. ddq: \(\mathrm{dim} \times N\) second derivative matrix. dddq: \(\mathrm{dim} \times N\) third derivative matrix.</p>
+<p>Returns the same \(\mathrm{dim} \times N\) matrices as separate outputs, where N = numel(S). Second-order-only evaluator paths raise <a class="api-link" href="copp.html">copp</a>:PathError for this method.</p></div>
+</section>
+<section class="api-detail" id="method-delete">
+<h3><code>delete</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-delete-syntax-1"><code>delete(obj)</code></a></li>
+</ul></div>
+<pre id="method-delete-syntax-1" class="language-matlab">delete(obj)</pre>
+<div class="api-description"><p>is idempotent through release(); it is safe for MATLAB to call it after the user has already called release().</p></div>
+</section>
+<section class="api-detail" id="method-release">
+<h3><code>release</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-release-syntax-1"><code>RELEASED = release(OBJ)</code></a></li>
+</ul></div>
+<pre id="method-release-syntax-1" class="language-matlab">RELEASED = release(OBJ)</pre>
+</section>
+<section class="api-detail" id="method-is-valid">
+<h3><code>is_valid</code></h3>
+<h4>Syntax</h4>
+<div class="syntax-list"><ul>
+<li><a href="#method-is-valid-syntax-1"><code>tf = is_valid(obj)</code></a></li>
+</ul></div>
+<pre id="method-is-valid-syntax-1" class="language-matlab">tf = is_valid(obj)</pre>
+<div class="api-description"><p>A false result means either release() has been called or the MEX registry no longer contains this handle id.</p></div>
+</section>
+<h2 id="examples">Examples</h2>
+<div class="code-example"><div class="code-toolbar"><span>MATLAB</span></div><pre class="codeinput">waypoints = [0 1 2; 0 0.5 0];
+path = copp.Path.from_waypoints(waypoints, s_range=[0, 1]);
+s = linspace(0, 1, 5);
+q = path.evaluate_q(s);
+disp(q)</pre></div>
+<h2 id="see-also">See Also</h2>
+<p><a href="copp.html">copp</a></p>
+<ul class="api-related">
+<li><a href="copp.Jet3.html"><code>Jet3</code></a></li>
+<li><a href="copp.Profile3rd.html"><code>Profile3rd</code></a></li>
+<li><a href="copp.Robot.html"><code>Robot</code></a></li>
+<li><a href="copp.version.html"><code>version</code></a></li>
+</ul>
+<footer class="footer"><p>Generated from MATLAB help comments.</p></footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["clarabel_to_copp3_solution","force_positive_a","s_to_t_topp3","t_to_s_topp3","topp3_lp","topp3_lp_expert","topp3_lp_expert_with_info"],"struct":["ClarabelExpertInfor3rd","ClarabelOptions","ClarabelOptionsBuilder","Topp3Problem","Topp3ProblemBuilder","Topp3Profile"],"type":["Topp3ProfileMut","Topp3ProfileRef"]};

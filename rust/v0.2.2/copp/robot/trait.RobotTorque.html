@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Robot trait with inverse-dynamics capability."><title>RobotTorque in copp::robot - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-b7b9f40b.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="copp" data-themes="" data-resource-suffix="" data-rustdoc-version="1.95.0-nightly (db3e99bba 2026-02-04)" data-channel="nightly" data-search-js="search-fb33671b.js" data-stringdex-js="stringdex-b897f86f.js" data-settings-js="settings-170eb4bf.js" ><script src="../../static.files/storage-f9617a14.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-12f88f4f.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head><body class="rustdoc trait"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">RobotTorque</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../copp/index.html">copp</a><span class="version">0.2.2</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Robot<wbr>Torque</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#example" title="Example">Example</a></li></ul><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.inverse_dynamics" title="inverse_dynamics">inverse_dynamics</a></li></ul><h3><a href="#foreign-impls">Implementations on Foreign Types</a></h3><ul class="block"><li><a href="#impl-RobotTorque-for-usize" title="usize">usize</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2><a href="index.html">In copp::<wbr>robot</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">copp</a>::<wbr><a href="index.html">robot</a></div><h1>Trait <span class="trait">Robot<wbr>Torque</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/copp/robot/robot_core.rs.html#709-747">Source</a> </span></div><pre class="rust item-decl"><code>pub trait RobotTorque: <a class="trait" href="trait.RobotBasic.html" title="trait copp::robot::RobotBasic">RobotBasic</a> {
+    // Required method
+    fn <a href="#tymethod.inverse_dynamics" class="fn">inverse_dynamics</a>(
+        &amp;self,
+        q: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+        dq: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+        ddq: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+        tau: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    ) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../diag/struct.RobotDynamicsError.html" title="struct copp::diag::RobotDynamicsError">RobotDynamicsError</a>&gt;;
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Robot trait with inverse-dynamics capability.</p>
+<p>This trait is mainly required when building COPP2/COPP3 problems with
+torque/dynamics constraints. For TOPP-only use cases, a direct
+<a href="../constraints/struct.Constraints.html" title="struct copp::constraints::Constraints"><code>Constraints</code></a> workflow is usually
+enough.</p>
+<p>A <code>usize</code> variable can serve as a trivial <a href="trait.RobotTorque.html" title="trait copp::robot::RobotTorque"><code>RobotTorque</code></a> implementation representing a point-mass model, where <code>tau = ddq</code>. For physical robots, users should implement this trait with their own inverse dynamics.</p>
+<p>For a fuller closed-form robot implementation, see the test reference model
+in <a href="demo/robot_2dof.rs">robot_2dof.rs</a>.</p>
+<h2 id="example"><a class="doc-anchor" href="#example">§</a>Example</h2>
+<p>The example below uses <code>usize</code> as the built-in point-mass model for a quick
+inverse-dynamics smoke test.</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>copp::robot::RobotTorque;
+
+<span class="kw">let </span>model = <span class="number">2usize</span>;
+<span class="kw">let </span><span class="kw-2">mut </span>tau = [<span class="number">0.0</span>; <span class="number">2</span>];
+
+model.inverse_dynamics(
+    <span class="kw-2">&amp;</span>[<span class="number">0.0</span>, <span class="number">0.0</span>],
+    <span class="kw-2">&amp;</span>[<span class="number">0.0</span>, <span class="number">0.0</span>],
+    <span class="kw-2">&amp;</span>[<span class="number">1.0</span>, -<span class="number">2.0</span>],
+    <span class="kw-2">&amp;mut </span>tau,
+)<span class="question-mark">?</span>;
+
+<span class="macro">assert_eq!</span>(tau, [<span class="number">1.0</span>, -<span class="number">2.0</span>]);</code></pre></div></div></details><h2 id="required-methods" class="section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="tymethod.inverse_dynamics" class="method"><a class="src rightside" href="../../src/copp/robot/robot_core.rs.html#740-746">Source</a><h4 class="code-header">fn <a href="#tymethod.inverse_dynamics" class="fn">inverse_dynamics</a>(
+    &amp;self,
+    q: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    dq: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    ddq: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    tau: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../diag/struct.RobotDynamicsError.html" title="struct copp::diag::RobotDynamicsError">RobotDynamicsError</a>&gt;</h4></section></summary><div class="docblock"><p>Evaluate inverse dynamics.</p>
+<p><code>tau = M(q) * ddq + C(q, dq) * dq + g(q) + f(q, sgn(dq))</code></p>
+<p>For a robot with dimension <code>dim</code>:</p>
+<ul>
+<li><code>q</code> joint positions (<code>dim</code>).</li>
+<li><code>dq</code>: joint velocities (<code>dim</code>).</li>
+<li><code>ddq</code>: joint accelerations (<code>dim</code>).</li>
+<li><code>tau</code>: output required torques/forces (<code>dim</code>).</li>
+<li><code>dq</code>, <code>ddq</code>, and <code>tau</code> are vectors in <code>R^dim</code>.</li>
+<li><code>M(q)</code> is the inertia/mass matrix in <code>R^(dim x dim)</code>.</li>
+<li><code>C(q, dq)</code> is the Coriolis/centrifugal matrix in <code>R^(dim x dim)</code>.
+It must satisfy <code>C(q, lambda * dq) = lambda * C(q, dq)</code> for any
+scalar <code>lambda</code>.</li>
+<li><code>g(q)</code> is the gravity torque/force vector in <code>R^dim</code>.</li>
+<li><code>f(q, sgn(dq))</code> is the dry-friction torque/force vector in <code>R^dim</code>,
+where <code>sgn(dq)</code> is interpreted element-wise. It is required that
+<code>f(q, sgn(dq))</code> is zero if <code>dq</code> is zero. An common dry-friction model
+is biased Coulomb friction.</li>
+</ul>
+<p><strong>Important:</strong> when implementing the sign function <code>sgn(dq)</code>,
+zero and near-zero velocities must map to <code>0</code>, not to <code>+1</code> or <code>-1</code>.
+A recommended convention is to treat <code>abs(dq[i]) &lt;= 1e-16</code> as zero.</p>
+<p>On success, write every entry of <code>tau</code> and return <code>Ok(())</code>.
+The <code>tau</code> buffer may contain old values on entry; implementations
+should overwrite it directly rather than reading or accumulating into
+existing contents. If the dynamics backend cannot evaluate this state,
+return <code>Err(RobotDynamicsError::new(message))</code> or <code>Err(message.into())</code>
+with a user-facing reason.</p>
+</div></details></div><h2 id="foreign-impls" class="section-header">Implementations on Foreign Types<a href="#foreign-impls" class="anchor">§</a></h2><details class="toggle implementors-toggle"><summary><section id="impl-RobotTorque-for-usize" class="impl"><a class="src rightside" href="../../src/copp/robot/robot_core.rs.html#1077-1092">Source</a><a href="#impl-RobotTorque-for-usize" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.RobotTorque.html" title="trait copp::robot::RobotTorque">RobotTorque</a> for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></h3></section></summary><div class="impl-items"><details class="toggle method-toggle" open><summary><section id="method.inverse_dynamics" class="method trait-impl"><a class="src rightside" href="../../src/copp/robot/robot_core.rs.html#1082-1091">Source</a><a href="#method.inverse_dynamics" class="anchor">§</a><h4 class="code-header">fn <a href="#tymethod.inverse_dynamics" class="fn">inverse_dynamics</a>(
+    &amp;self,
+    _q: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    _dq: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    ddq: &amp;[<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+    tau: &amp;mut [<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>],
+) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../diag/struct.RobotDynamicsError.html" title="struct copp::diag::RobotDynamicsError">RobotDynamicsError</a>&gt;</h4></section></summary><div class="docblock"><p>Evaluate inverse dynamics for point-mass model.</p>
+<p>Since <code>tau = ddq</code>, this function copies <code>ddq</code> directly into <code>tau</code>.</p>
+</div></details></div></details><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"></div><script src="../../trait.impl/copp/robot/robot_core/trait.RobotTorque.js" data-ignore-extern-crates="std" async></script></section></div></main></body></html>

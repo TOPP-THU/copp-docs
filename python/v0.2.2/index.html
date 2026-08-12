@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>copp-py Python Documentation &#8212; copp-py Python v0.2.2</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=fbb87d90"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processEscapes": true}, "options": {"skipHtmlTags": ["script", "noscript", "style", "textarea", "pre", "code"]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quickstart" href="quickstart.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="copp-py-python-documentation">
+<h1>copp-py Python Documentation<a class="headerlink" href="#copp-py-python-documentation" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">copp_py</span></code> is the Python interface to the COPP path-parameterization core.
+Most examples import it as <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">copp_py</span> <span class="pre">as</span> <span class="pre">copp</span></code> for a shorter local alias.
+It converts a geometric path</p>
+<div class="math notranslate nohighlight">
+\[q = q(s)\]</div>
+<p>into a time law</p>
+<div class="math notranslate nohighlight">
+\[s = s(t)\]</div>
+<p>that satisfies path, velocity, acceleration, torque, and jerk constraints while
+optimizing either traversal time or a convex objective. The Python API groups
+the solver families into namespace modules, uses NumPy arrays, and supports
+optional Python automatic-differentiation backends for path construction.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#minimal-topp2-ra-example">Minimal TOPP2-RA Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#import-style">Import Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="concepts/index.html">Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts/opp.html">Optimal Path Parameterization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts/solver_selection.html">Solver Selection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/topp2_ra.html">TOPP2-RA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/reach_set2.html">TOPP2 Reach Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/copp2_socp.html">COPP2-SOCP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/topp3_socp.html">TOPP3-SOCP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/copp3_socp.html">COPP3-SOCP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="how_to/index.html">How-To Guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_to/paths_and_constraints.html">Build Paths and Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to/interpolation.html">Convert Profiles to Time Samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_to/diagnostics.html">Errors and Diagnostics</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/core.html">Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/interpolation.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/path.html">Path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/robot.html">Robot And Constraints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/objective.html">Objectives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/clarabel.html">Clarabel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/topp2.html">TOPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/copp2.html">COPP2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/topp3.html">TOPP3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/copp3.html">COPP3</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">copp-py</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Guide:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concepts/index.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to/index.html">How-To Guides</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="quickstart.html" title="next chapter">Quickstart</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026, Yunan Wang, Suqin He, Shize Lin, and Chuxiong Hu.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
