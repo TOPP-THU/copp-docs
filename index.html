@@ -1566,8 +1566,35 @@ J_\text{lin}=\begin{cases}
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="c1">// Automatic differentiation for the C ABI is planned for v0.2.2.</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">static</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">CoppStatus</span><span class="w"> </span><span class="nf">evaluate_parametric_path</span><span class="p">(</span>
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">dim</span><span class="p">,</span>
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CoppJet3</span><span class="w"> </span><span class="n">s</span><span class="p">,</span>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CoppJet3</span><span class="w"> </span><span class="o">*</span><span class="n">q</span><span class="p">)</span>
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="p">{</span>
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">user_data</span><span class="p">;</span>
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dim</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">DIM</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">COPP_STATUS_INVALID_ARGUMENT</span><span class="p">;</span>
+<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>
+<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a><span class="w">    </span><span class="c1">// `s` arrives seeded with ds/ds = 1, and the inline Jet3 helpers in</span>
+<a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="w">    </span><span class="c1">// `copp/path.h` propagate derivatives up to third order. Only q(s)</span>
+<a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a><span class="w">    </span><span class="c1">// has to be written; dq, ddq, and dddq come out of the helpers.</span>
+<a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">CoppJet3</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copp_mul_f64</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="mf">6.28318530717958647692</span><span class="p">);</span>
+<a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a><span class="w">    </span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copp_sin</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+<a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">    </span><span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copp_cos</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+<a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">COPP_STATUS_OK</span><span class="p">;</span>
+<a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a><span class="p">}</span>
+<a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a>
+<a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppPath</span><span class="w"> </span><span class="o">*</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a><span class="c1">// On success, release `path` later with `copp_path_free(path)`.</span>
+<a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">check</span><span class="p">(</span>
+<a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a><span class="w">        </span><span class="n">copp_path_from_parametric</span><span class="p">(</span><span class="n">DIM</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="n">evaluate_parametric_path</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span>
+<a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a><span class="w">        </span><span class="s">&quot;copp_path_from_parametric&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-41-27" name="__codelineno-41-27" href="#__codelineno-41-27"></a><span class="p">}</span>
 </code></pre></div>
+<p><code>copp_path_from_parametric</code> and <code>CoppJet3</code> require v0.2.2 or newer. Besides <code>copp_sin</code>, <code>copp_cos</code>, and <code>copp_mul_f64</code>, the header provides <code>copp_add</code>, <code>copp_sub</code>, <code>copp_mul</code>, <code>copp_div</code>, <code>copp_neg</code>, <code>copp_exp</code>, <code>copp_log</code>, <code>copp_sqrt</code>, <code>copp_powi</code>, <code>copp_constant</code>, and their scalar variants. On earlier versions, supply the derivatives manually through <code>copp_path_from_evaluator_3rd</code>, as shown in Option C below.</p>
 </div>
 </div>
 </div>
@@ -2809,13 +2836,13 @@ J_\text{lin}=\begin{cases}
 <h3 id="step-by-step-summary">Step-by-Step Summary</h3>
 <p>Overall, a minimal closed loop consists of: construct the path <span class="arithmatex">\(\boldsymbol{q}(s)\)</span>; build a <code>Robot</code> and constraints on a discrete grid; select the corresponding problem builder and solver; obtain <span class="arithmatex">\(a(s)\)</span> or <span class="arithmatex">\((a(s),b(s))\)</span>; convert back to the time domain with <code>s_to_t_*</code> and <code>t_to_s_*</code>; and finally resample the original path at <span class="arithmatex">\(s(t)\)</span>. The repository also provides runnable examples for TOPP2, COPP2, TOPP3, and COPP3.</p>
 <h2 id="benchmark">Benchmark</h2>
-<p>The following results are from <code>tests/test_random_spline.rs</code>. Test conditions:</p>
+<p>The open-source rows are reproducible from <code>tests/test_random_spline.rs</code> in the repository. The PRO rows (COPP2-RDDP, TOPP3-RA, COPP3-RDDP) come from the same benchmark run on the PRO release and are therefore not part of the open-source test file. Test conditions:</p>
 <ul>
 <li><code>release, --include-ignored</code></li>
 <li>CPU: Intel(R) Core(TM) Ultra 9 285K.</li>
 <li>Dataset: 100 random 7-DOF spline paths, each discretized into 1000 intervals.</li>
 </ul>
-<p>All metrics are reported as <code>mean ± std</code>.</p>
+<p>All metrics are reported as <code>mean ± std</code>. Computation times are machine- and run-dependent, so absolute values will differ from your own runs; the relative comparison between methods is the meaningful part.</p>
 <h4 id="time-optimal">Time-Optimal</h4>
 <table>
 <thead>
@@ -2940,7 +2967,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>We recommend using the <a href="https://docs.rs/copp/latest/copp/">latest docs.rs documentation</a>. Local documentation is also available:</p>
 <ul>
-<li><a href="rust/v0.2.1/copp/">v0.2.1 (Latest)</a></li>
+<li><a href="rust/v0.2.2/copp/">v0.2.2 (Latest)</a></li>
+<li><a href="rust/v0.2.1/copp/">v0.2.1</a></li>
 <li><a href="rust/v0.2.0/copp/">v0.2.0</a></li>
 <li><a href="rust/v0.1.0/copp/">v0.1.0</a></li>
 </ul>
@@ -2952,7 +2980,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>Python documentation:</p>
 <ul>
-<li><a href="python/v0.2.1/index.html">v0.2.1 (Latest)</a></li>
+<li><a href="python/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="python/v0.2.1/index.html">v0.2.1</a></li>
 </ul>
 <p>To generate the Python documentation locally, install Sphinx and build the HTML pages from the <code>copp</code> repository root:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-135-1" name="__codelineno-135-1" href="#__codelineno-135-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>sphinx
@@ -2961,41 +2990,57 @@ J_\text{lin}=\begin{cases}
 <p>The generated entry page is <code>bindings/python/docs/build/html/index.html</code>.</p>
 </div>
 <div class="tabbed-block">
-<p>MATLAB documentation can be generated locally through <code>publish</code>:</p>
+<p>MATLAB documentation:</p>
+<ul>
+<li><a href="matlab/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+</ul>
+<p>It can also be generated locally through <code>publish</code>. Run these commands in the <strong>MATLAB Command Window</strong>, not in a system shell:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-136-1" name="__codelineno-136-1" href="#__codelineno-136-1"></a><span class="nb">cd</span><span class="w"> </span><span class="n">bindings</span><span class="o">/</span><span class="n">matlab</span><span class="o">/</span><span class="n">docs</span>
 <a id="__codelineno-136-2" name="__codelineno-136-2" href="#__codelineno-136-2"></a><span class="n">build_docs</span><span class="p">()</span>
+</code></pre></div>
+<p><code>build_docs</code> adds <code>bindings/matlab</code> to the MATLAB path itself, so no manual <code>addpath</code> is needed. It does, however, execute the code in the documentation pages (<code>EvalCode</code> defaults to <code>true</code>), and those pages call the COPP API, so the MEX gateway must already be built. Check it first:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-137-1" name="__codelineno-137-1" href="#__codelineno-137-1"></a><span class="n">copp</span><span class="p">.</span><span class="n">version</span><span class="p">()</span>
+</code></pre></div>
+<p>If that errors, build the MEX before generating the documentation, as described in the <a href="#installation">installation</a> section.</p>
+<p>To generate the documentation without leaving a system shell, use MATLAB batch mode:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-138-1" name="__codelineno-138-1" href="#__codelineno-138-1"></a><span class="n">matlab</span> <span class="n">-batch</span> <span class="s2">&quot;cd(&#39;bindings/matlab/docs&#39;); build_docs()&quot;</span>
 </code></pre></div>
 <p>The generated entry page is <code>bindings/matlab/docs/html/index.html</code>.</p>
 </div>
 <div class="tabbed-block">
-<p>The C++ API documentation is generated with Doxygen from <code>bindings/cpp/include/copp/*.hpp</code>, <code>bindings/cpp/docs/*.md</code>, and the example code. Released documentation will be published together with the SDK; to inspect the C++ interface on the development branch, generate it locally from the <code>copp</code> repository root:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-137-1" name="__codelineno-137-1" href="#__codelineno-137-1"></a>doxygen<span class="w"> </span>bindings/cpp/Doxyfile
+<p>C++ documentation:</p>
+<ul>
+<li><a href="cpp/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+</ul>
+<p>The C++ API documentation is generated with Doxygen from <code>bindings/cpp/include/copp/*.hpp</code>, <code>bindings/cpp/docs/*.md</code>, and the example code. To inspect the C++ interface on the development branch, generate it locally from the <code>copp</code> repository root:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-139-1" name="__codelineno-139-1" href="#__codelineno-139-1"></a>doxygen<span class="w"> </span>bindings/cpp/Doxyfile
 </code></pre></div>
 <p>The generated entry page is <code>bindings/cpp/docs/html/index.html</code>. Rendering include graphs and call graphs additionally requires Graphviz; if formulas do not display correctly, check the Doxygen MathJax configuration first.</p>
 </div>
 <div class="tabbed-block">
 <p>C documentation:</p>
 <ul>
-<li><a href="c/v0.2.1/index.html">v0.2.1 (Latest)</a></li>
+<li><a href="c/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="c/v0.2.1/index.html">v0.2.1</a></li>
 <li><a href="c/v0.2.0/index.html">v0.2.0</a></li>
 </ul>
 <p>To generate the C documentation locally, install Doxygen, Graphviz, and PowerShell 7 (<code>pwsh</code>, used to regenerate headers), then run the corresponding command from the <code>copp</code> repository root:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="29:3"><input checked="checked" id="linux_5" name="__tabbed_29" type="radio" /><input id="windows_5" name="__tabbed_29" type="radio" /><input id="macos_5" name="__tabbed_29" type="radio" /><div class="tabbed-labels"><label for="linux_5">Linux</label><label for="windows_5">Windows</label><label for="macos_5">macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-138-1" name="__codelineno-138-1" href="#__codelineno-138-1"></a><span class="c1"># Debian/Ubuntu example. Install PowerShell 7 separately so that `pwsh` is available.</span>
-<a id="__codelineno-138-2" name="__codelineno-138-2" href="#__codelineno-138-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>graphviz
-<a id="__codelineno-138-3" name="__codelineno-138-3" href="#__codelineno-138-3"></a>sh<span class="w"> </span>bindings/c/scripts/generate_docs.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-140-1" name="__codelineno-140-1" href="#__codelineno-140-1"></a><span class="c1"># Debian/Ubuntu example. Install PowerShell 7 separately so that `pwsh` is available.</span>
+<a id="__codelineno-140-2" name="__codelineno-140-2" href="#__codelineno-140-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>graphviz
+<a id="__codelineno-140-3" name="__codelineno-140-3" href="#__codelineno-140-3"></a>sh<span class="w"> </span>bindings/c/scripts/generate_docs.sh
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-139-1" name="__codelineno-139-1" href="#__codelineno-139-1"></a><span class="n">winget</span> <span class="n">install</span> <span class="n">Doxygen</span><span class="p">.</span><span class="n">Doxygen</span> <span class="n">Graphviz</span><span class="p">.</span><span class="n">Graphviz</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">PowerShell</span>
-<a id="__codelineno-139-2" name="__codelineno-139-2" href="#__codelineno-139-2"></a><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-File</span> <span class="n">bindings</span><span class="p">/</span><span class="n">c</span><span class="p">/</span><span class="n">scripts</span><span class="p">/</span><span class="n">generate_docs</span><span class="p">.</span><span class="n">ps1</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a><span class="n">winget</span> <span class="n">install</span> <span class="n">Doxygen</span><span class="p">.</span><span class="n">Doxygen</span> <span class="n">Graphviz</span><span class="p">.</span><span class="n">Graphviz</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">PowerShell</span>
+<a id="__codelineno-141-2" name="__codelineno-141-2" href="#__codelineno-141-2"></a><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-File</span> <span class="n">bindings</span><span class="p">/</span><span class="n">c</span><span class="p">/</span><span class="n">scripts</span><span class="p">/</span><span class="n">generate_docs</span><span class="p">.</span><span class="n">ps1</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-140-1" name="__codelineno-140-1" href="#__codelineno-140-1"></a>brew<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>graphviz<span class="w"> </span>powershell
-<a id="__codelineno-140-2" name="__codelineno-140-2" href="#__codelineno-140-2"></a>sh<span class="w"> </span>bindings/c/scripts/generate_docs.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-142-1" name="__codelineno-142-1" href="#__codelineno-142-1"></a>brew<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>graphviz<span class="w"> </span>powershell
+<a id="__codelineno-142-2" name="__codelineno-142-2" href="#__codelineno-142-2"></a>sh<span class="w"> </span>bindings/c/scripts/generate_docs.sh
 </code></pre></div>
 </div>
 </div>
@@ -3231,31 +3276,31 @@ J_\text{lin}=\begin{cases}
 </div>
 <h2 id="citing">Citing</h2>
 <p>If your work uses the open-source TOPP3/COPP3 functionality, please cite <a href="https://doi.org/10.1016/j.ijmachtools.2025.104355">the following paper</a>, as even the basic interval-wise profile template uses contributions from this work:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a>@article<span class="nb">{</span>wang2026online,
-<a id="__codelineno-141-2" name="__codelineno-141-2" href="#__codelineno-141-2"></a>  title=<span class="nb">{</span>Online time-optimal trajectory planning along parametric toolpaths with strict constraint satisfaction and certifiable feasibility guarantee<span class="nb">}</span>,
-<a id="__codelineno-141-3" name="__codelineno-141-3" href="#__codelineno-141-3"></a>  author=<span class="nb">{</span>Wang, Yunan and Hu, Chuxiong and Li, Yuanshenglong and Yu, Jichuan and Yan, Jizhou and Liang, Yixuan and Jin, Zhao<span class="nb">}</span>,
-<a id="__codelineno-141-4" name="__codelineno-141-4" href="#__codelineno-141-4"></a>  journal=<span class="nb">{</span>International Journal of Machine Tools and Manufacture<span class="nb">}</span>,
-<a id="__codelineno-141-5" name="__codelineno-141-5" href="#__codelineno-141-5"></a>  volume=<span class="nb">{</span>215<span class="nb">}</span>,
-<a id="__codelineno-141-6" name="__codelineno-141-6" href="#__codelineno-141-6"></a>  pages=<span class="nb">{</span>104355<span class="nb">}</span>,
-<a id="__codelineno-141-7" name="__codelineno-141-7" href="#__codelineno-141-7"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
-<a id="__codelineno-141-8" name="__codelineno-141-8" href="#__codelineno-141-8"></a><span class="nb">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-143-1" name="__codelineno-143-1" href="#__codelineno-143-1"></a>@article<span class="nb">{</span>wang2026online,
+<a id="__codelineno-143-2" name="__codelineno-143-2" href="#__codelineno-143-2"></a>  title=<span class="nb">{</span>Online time-optimal trajectory planning along parametric toolpaths with strict constraint satisfaction and certifiable feasibility guarantee<span class="nb">}</span>,
+<a id="__codelineno-143-3" name="__codelineno-143-3" href="#__codelineno-143-3"></a>  author=<span class="nb">{</span>Wang, Yunan and Hu, Chuxiong and Li, Yuanshenglong and Yu, Jichuan and Yan, Jizhou and Liang, Yixuan and Jin, Zhao<span class="nb">}</span>,
+<a id="__codelineno-143-4" name="__codelineno-143-4" href="#__codelineno-143-4"></a>  journal=<span class="nb">{</span>International Journal of Machine Tools and Manufacture<span class="nb">}</span>,
+<a id="__codelineno-143-5" name="__codelineno-143-5" href="#__codelineno-143-5"></a>  volume=<span class="nb">{</span>215<span class="nb">}</span>,
+<a id="__codelineno-143-6" name="__codelineno-143-6" href="#__codelineno-143-6"></a>  pages=<span class="nb">{</span>104355<span class="nb">}</span>,
+<a id="__codelineno-143-7" name="__codelineno-143-7" href="#__codelineno-143-7"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
+<a id="__codelineno-143-8" name="__codelineno-143-8" href="#__codelineno-143-8"></a><span class="nb">}</span>
 </code></pre></div>
 <p>If your work uses the TOPP3-RA, COPP2-RDDP, or COPP3-RDDP methods from the PRO release, please cite <a href="https://arxiv.org/abs/2605.19089">the following paper</a>. TOPP3-RA is also improved based on this work:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-142-1" name="__codelineno-142-1" href="#__codelineno-142-1"></a>@article<span class="nb">{</span>wang2026reachability,
-<a id="__codelineno-142-2" name="__codelineno-142-2" href="#__codelineno-142-2"></a>  title=<span class="nb">{</span>Reachability-augmented dual dynamic programming for optimal path parameterization<span class="nb">}</span>,
-<a id="__codelineno-142-3" name="__codelineno-142-3" href="#__codelineno-142-3"></a>  author=<span class="nb">{</span>Yunan Wang and Jizhou Yan and Chuxiong Hu and Zeyang Li<span class="nb">}</span>,
-<a id="__codelineno-142-4" name="__codelineno-142-4" href="#__codelineno-142-4"></a>  journal=<span class="nb">{</span>arXiv preprint arXiv:2605.19089<span class="nb">}</span>,
-<a id="__codelineno-142-5" name="__codelineno-142-5" href="#__codelineno-142-5"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
-<a id="__codelineno-142-6" name="__codelineno-142-6" href="#__codelineno-142-6"></a><span class="nb">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-144-1" name="__codelineno-144-1" href="#__codelineno-144-1"></a>@article<span class="nb">{</span>wang2026reachability,
+<a id="__codelineno-144-2" name="__codelineno-144-2" href="#__codelineno-144-2"></a>  title=<span class="nb">{</span>Reachability-augmented dual dynamic programming for optimal path parameterization<span class="nb">}</span>,
+<a id="__codelineno-144-3" name="__codelineno-144-3" href="#__codelineno-144-3"></a>  author=<span class="nb">{</span>Yunan Wang and Jizhou Yan and Chuxiong Hu and Zeyang Li<span class="nb">}</span>,
+<a id="__codelineno-144-4" name="__codelineno-144-4" href="#__codelineno-144-4"></a>  journal=<span class="nb">{</span>arXiv preprint arXiv:2605.19089<span class="nb">}</span>,
+<a id="__codelineno-144-5" name="__codelineno-144-5" href="#__codelineno-144-5"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
+<a id="__codelineno-144-6" name="__codelineno-144-6" href="#__codelineno-144-6"></a><span class="nb">}</span>
 </code></pre></div>
 <p>For other use cases, please cite the <a href="https://github.com/TOPP-THU/copp"><code>COPP</code> library</a> or the corresponding paper:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-143-1" name="__codelineno-143-1" href="#__codelineno-143-1"></a>@misc<span class="nb">{</span>thu2026copp,
-<a id="__codelineno-143-2" name="__codelineno-143-2" href="#__codelineno-143-2"></a>  title = <span class="nb">{</span>COPP: Convex-Objective Path Parameterization<span class="nb">}</span>,
-<a id="__codelineno-143-3" name="__codelineno-143-3" href="#__codelineno-143-3"></a>  author = <span class="nb">{</span>Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong<span class="nb">}</span>,
-<a id="__codelineno-143-4" name="__codelineno-143-4" href="#__codelineno-143-4"></a>  year = <span class="nb">{</span>2026<span class="nb">}</span>,
-<a id="__codelineno-143-5" name="__codelineno-143-5" href="#__codelineno-143-5"></a>  publisher = <span class="nb">{</span>GitHub<span class="nb">}</span>,
-<a id="__codelineno-143-6" name="__codelineno-143-6" href="#__codelineno-143-6"></a>  howpublished = <span class="nb">{</span><span class="k">\url</span><span class="nb">{</span>https://github.com/TOPP-THU/copp<span class="nb">}}</span>
-<a id="__codelineno-143-7" name="__codelineno-143-7" href="#__codelineno-143-7"></a><span class="nb">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-145-1" name="__codelineno-145-1" href="#__codelineno-145-1"></a>@misc<span class="nb">{</span>thu2026copp,
+<a id="__codelineno-145-2" name="__codelineno-145-2" href="#__codelineno-145-2"></a>  title = <span class="nb">{</span>COPP: Convex-Objective Path Parameterization<span class="nb">}</span>,
+<a id="__codelineno-145-3" name="__codelineno-145-3" href="#__codelineno-145-3"></a>  author = <span class="nb">{</span>Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong<span class="nb">}</span>,
+<a id="__codelineno-145-4" name="__codelineno-145-4" href="#__codelineno-145-4"></a>  year = <span class="nb">{</span>2026<span class="nb">}</span>,
+<a id="__codelineno-145-5" name="__codelineno-145-5" href="#__codelineno-145-5"></a>  publisher = <span class="nb">{</span>GitHub<span class="nb">}</span>,
+<a id="__codelineno-145-6" name="__codelineno-145-6" href="#__codelineno-145-6"></a>  howpublished = <span class="nb">{</span><span class="k">\url</span><span class="nb">{</span>https://github.com/TOPP-THU/copp<span class="nb">}}</span>
+<a id="__codelineno-145-7" name="__codelineno-145-7" href="#__codelineno-145-7"></a><span class="nb">}</span>
 </code></pre></div>
 <h2 id="contact">Contact</h2>
 <p>For COPP PRO licensing, commercial collaboration, technical consulting, or general inquiries, please contact <a href="mailto:hello@copp.pro">hello@copp.pro</a>.</p>

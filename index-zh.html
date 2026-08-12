@@ -380,7 +380,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
       
         安装
@@ -391,7 +391,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         算法选择
@@ -530,7 +530,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         资源释放
@@ -608,7 +608,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         文档
@@ -619,7 +619,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         项目架构
@@ -635,7 +635,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         引用
@@ -646,7 +646,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         联系
@@ -730,7 +730,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
       
         安装
@@ -741,7 +741,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       
         算法选择
@@ -880,7 +880,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
         资源释放
@@ -958,7 +958,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
         文档
@@ -969,7 +969,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
       
         项目架构
@@ -985,7 +985,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
         引用
@@ -996,7 +996,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         联系
@@ -1111,7 +1111,7 @@ J_\text{lin}=\begin{cases}
 </tr>
 </tbody>
 </table>
-<h2 id="_2">安装</h2>
+<h2 id="installation">安装</h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="rust" name="__tabbed_1" type="radio" /><input id="python" name="__tabbed_1" type="radio" /><input id="matlab" name="__tabbed_1" type="radio" /><input id="c" name="__tabbed_1" type="radio" /><input id="c_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="rust">Rust</label><label for="python">Python</label><label for="matlab">Matlab</label><label for="c">C++</label><label for="c_1">C</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1332,7 +1332,7 @@ J_\text{lin}=\begin{cases}
 </div>
 </div>
 </div>
-<h2 id="_3">算法选择</h2>
+<h2 id="_2">算法选择</h2>
 <p><code>copp</code> 中算法的选择主要取决于三个因素：问题是二阶还是三阶、目标是时间最优还是一般凸目标、以及是否需要 PRO 版本提供的更高性能。</p>
 <table>
 <thead>
@@ -1566,63 +1566,34 @@ J_\text{lin}=\begin{cases}
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="c1">// C ABI uses a callback-backed path for analytic formulas.</span>
-<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="c1">// The callback below provides q, dq/ds, d2q/ds2, and d3q/ds3 for</span>
-<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="c1">// q(s) = [sin(2*pi*s), cos(2*pi*s)].</span>
-<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="k">static</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">CoppStatus</span><span class="w"> </span><span class="nf">evaluate_parametric_path_3rd</span><span class="p">(</span>
-<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span>
-<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">dim</span><span class="p">,</span>
-<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">n</span><span class="p">,</span>
-<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="o">*</span><span class="n">s</span><span class="p">,</span>
-<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="o">*</span><span class="n">q</span><span class="p">,</span>
-<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="o">*</span><span class="n">dq</span><span class="p">,</span>
-<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="o">*</span><span class="n">ddq</span><span class="p">,</span>
-<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="o">*</span><span class="n">dddq</span><span class="p">)</span>
-<a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="p">{</span>
-<a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">user_data</span><span class="p">;</span>
-<a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dim</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">DIM</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">COPP_STATUS_INVALID_ARGUMENT</span><span class="p">;</span>
-<a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dq</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">ddq</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">dddq</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">COPP_STATUS_NULL_POINTER</span><span class="p">;</span>
-<a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a>
-<a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">pi2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">6.28318530717958647692</span><span class="p">;</span>
-<a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">pi2_sq</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi2</span><span class="p">;</span>
-<a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">pi2_cu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi2_sq</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pi2</span><span class="p">;</span>
-<a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a>
-<a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">size_t</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">col</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-41-27" name="__codelineno-41-27" href="#__codelineno-41-27"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">sin_v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">pi2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="n">col</span><span class="p">]);</span>
-<a id="__codelineno-41-28" name="__codelineno-41-28" href="#__codelineno-41-28"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">cos_v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">pi2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">[</span><span class="n">col</span><span class="p">]);</span>
-<a id="__codelineno-41-29" name="__codelineno-41-29" href="#__codelineno-41-29"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">size_t</span><span class="w"> </span><span class="n">row0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dim</span><span class="p">;</span>
-<a id="__codelineno-41-30" name="__codelineno-41-30" href="#__codelineno-41-30"></a>
-<a id="__codelineno-41-31" name="__codelineno-41-31" href="#__codelineno-41-31"></a><span class="w">        </span><span class="n">q</span><span class="p">[</span><span class="n">row0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sin_v</span><span class="p">;</span>
-<a id="__codelineno-41-32" name="__codelineno-41-32" href="#__codelineno-41-32"></a><span class="w">        </span><span class="n">q</span><span class="p">[</span><span class="n">row0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cos_v</span><span class="p">;</span>
-<a id="__codelineno-41-33" name="__codelineno-41-33" href="#__codelineno-41-33"></a><span class="w">        </span><span class="n">dq</span><span class="p">[</span><span class="n">row0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cos_v</span><span class="p">;</span>
-<a id="__codelineno-41-34" name="__codelineno-41-34" href="#__codelineno-41-34"></a><span class="w">        </span><span class="n">dq</span><span class="p">[</span><span class="n">row0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">pi2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin_v</span><span class="p">;</span>
-<a id="__codelineno-41-35" name="__codelineno-41-35" href="#__codelineno-41-35"></a><span class="w">        </span><span class="n">ddq</span><span class="p">[</span><span class="n">row0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">pi2_sq</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin_v</span><span class="p">;</span>
-<a id="__codelineno-41-36" name="__codelineno-41-36" href="#__codelineno-41-36"></a><span class="w">        </span><span class="n">ddq</span><span class="p">[</span><span class="n">row0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">pi2_sq</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cos_v</span><span class="p">;</span>
-<a id="__codelineno-41-37" name="__codelineno-41-37" href="#__codelineno-41-37"></a><span class="w">        </span><span class="n">dddq</span><span class="p">[</span><span class="n">row0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="n">pi2_cu</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">cos_v</span><span class="p">;</span>
-<a id="__codelineno-41-38" name="__codelineno-41-38" href="#__codelineno-41-38"></a><span class="w">        </span><span class="n">dddq</span><span class="p">[</span><span class="n">row0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pi2_cu</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">sin_v</span><span class="p">;</span>
-<a id="__codelineno-41-39" name="__codelineno-41-39" href="#__codelineno-41-39"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-41-40" name="__codelineno-41-40" href="#__codelineno-41-40"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">COPP_STATUS_OK</span><span class="p">;</span>
-<a id="__codelineno-41-41" name="__codelineno-41-41" href="#__codelineno-41-41"></a><span class="p">}</span>
-<a id="__codelineno-41-42" name="__codelineno-41-42" href="#__codelineno-41-42"></a>
-<a id="__codelineno-41-43" name="__codelineno-41-43" href="#__codelineno-41-43"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppPath</span><span class="w"> </span><span class="o">*</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
-<a id="__codelineno-41-44" name="__codelineno-41-44" href="#__codelineno-41-44"></a><span class="c1">// On success, release `path` later with `copp_path_free(path)`.</span>
-<a id="__codelineno-41-45" name="__codelineno-41-45" href="#__codelineno-41-45"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">check</span><span class="p">(</span>
-<a id="__codelineno-41-46" name="__codelineno-41-46" href="#__codelineno-41-46"></a><span class="w">        </span><span class="n">copp_path_from_evaluator_3rd</span><span class="p">(</span>
-<a id="__codelineno-41-47" name="__codelineno-41-47" href="#__codelineno-41-47"></a><span class="w">            </span><span class="n">DIM</span><span class="p">,</span>
-<a id="__codelineno-41-48" name="__codelineno-41-48" href="#__codelineno-41-48"></a><span class="w">            </span><span class="mf">0.0</span><span class="p">,</span>
-<a id="__codelineno-41-49" name="__codelineno-41-49" href="#__codelineno-41-49"></a><span class="w">            </span><span class="mf">1.0</span><span class="p">,</span>
-<a id="__codelineno-41-50" name="__codelineno-41-50" href="#__codelineno-41-50"></a><span class="w">            </span><span class="nb">NULL</span><span class="p">,</span>
-<a id="__codelineno-41-51" name="__codelineno-41-51" href="#__codelineno-41-51"></a><span class="w">            </span><span class="n">evaluate_parametric_path_3rd</span><span class="p">,</span>
-<a id="__codelineno-41-52" name="__codelineno-41-52" href="#__codelineno-41-52"></a><span class="w">            </span><span class="nb">NULL</span><span class="p">,</span>
-<a id="__codelineno-41-53" name="__codelineno-41-53" href="#__codelineno-41-53"></a><span class="w">            </span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span>
-<a id="__codelineno-41-54" name="__codelineno-41-54" href="#__codelineno-41-54"></a><span class="w">        </span><span class="s">&quot;copp_path_from_evaluator_3rd&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-41-55" name="__codelineno-41-55" href="#__codelineno-41-55"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<a id="__codelineno-41-56" name="__codelineno-41-56" href="#__codelineno-41-56"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">static</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">CoppStatus</span><span class="w"> </span><span class="nf">evaluate_parametric_path</span><span class="p">(</span>
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">user_data</span><span class="p">,</span>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">dim</span><span class="p">,</span>
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CoppJet3</span><span class="w"> </span><span class="n">s</span><span class="p">,</span>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CoppJet3</span><span class="w"> </span><span class="o">*</span><span class="n">q</span><span class="p">)</span>
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="p">{</span>
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">    </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">user_data</span><span class="p">;</span>
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">dim</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">DIM</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">COPP_STATUS_INVALID_ARGUMENT</span><span class="p">;</span>
+<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>
+<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a><span class="w">    </span><span class="c1">// `s` 传入时已经播种了 ds/ds = 1，`copp/path.h` 中的内联 Jet3 helper</span>
+<a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="w">    </span><span class="c1">// 会自动传播到三阶导数。这里只需要写出 q(s)，dq、ddq、dddq 由 helper 得到。</span>
+<a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">CoppJet3</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copp_mul_f64</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="mf">6.28318530717958647692</span><span class="p">);</span>
+<a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a><span class="w">    </span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copp_sin</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+<a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a><span class="w">    </span><span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">copp_cos</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+<a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">COPP_STATUS_OK</span><span class="p">;</span>
+<a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="p">}</span>
+<a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a>
+<a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CoppPath</span><span class="w"> </span><span class="o">*</span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a><span class="c1">// On success, release `path` later with `copp_path_free(path)`.</span>
+<a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">check</span><span class="p">(</span>
+<a id="__codelineno-41-23" name="__codelineno-41-23" href="#__codelineno-41-23"></a><span class="w">        </span><span class="n">copp_path_from_parametric</span><span class="p">(</span><span class="n">DIM</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="n">evaluate_parametric_path</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">path</span><span class="p">),</span>
+<a id="__codelineno-41-24" name="__codelineno-41-24" href="#__codelineno-41-24"></a><span class="w">        </span><span class="s">&quot;copp_path_from_parametric&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-41-25" name="__codelineno-41-25" href="#__codelineno-41-25"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-41-26" name="__codelineno-41-26" href="#__codelineno-41-26"></a><span class="p">}</span>
 </code></pre></div>
+<p><code>copp_path_from_parametric</code> 和 <code>CoppJet3</code> 需要 v0.2.2 或更新版本。除了 <code>copp_sin</code>、<code>copp_cos</code>、<code>copp_mul_f64</code>，头文件还提供 <code>copp_add</code>、<code>copp_sub</code>、<code>copp_mul</code>、<code>copp_div</code>、<code>copp_neg</code>、<code>copp_exp</code>、<code>copp_log</code>、<code>copp_sqrt</code>、<code>copp_powi</code>、<code>copp_constant</code> 及它们的标量变体。更早的版本请按下面 Option C 的方式，通过 <code>copp_path_from_evaluator_3rd</code> 手动提供导数。</p>
 </div>
 </div>
 </div>
@@ -2828,7 +2799,7 @@ J_\text{lin}=\begin{cases}
 </div>
 </div>
 <p>由此完成了三阶轨迹的完整求解。</p>
-<h3 id="_4">资源释放</h3>
+<h3 id="_3">资源释放</h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="27:5"><input checked="checked" id="rust_21" name="__tabbed_27" type="radio" /><input id="python_21" name="__tabbed_27" type="radio" /><input id="matlab_21" name="__tabbed_27" type="radio" /><input id="c_42" name="__tabbed_27" type="radio" /><input id="c_43" name="__tabbed_27" type="radio" /><div class="tabbed-labels"><label for="rust_21">Rust</label><label for="python_21">Python</label><label for="matlab_21">Matlab</label><label for="c_42">C++</label><label for="c_43">C</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -2873,13 +2844,13 @@ J_\text{lin}=\begin{cases}
 <h3 id="step-by-step_1">Step-by-Step 小结</h3>
 <p>总的来说，一个最小闭环包括：构造路径 <span class="arithmatex">\(\boldsymbol{q}(s)\)</span>，在离散网格上构造 <code>Robot</code> 和约束，选择对应的 problem builder 和 solver，得到 <span class="arithmatex">\(a(s)\)</span> 或 <span class="arithmatex">\((a(s),b(s))\)</span>，再通过 <code>s_to_t_*</code> 和 <code>t_to_s_*</code> 转回时间域，最终在 <span class="arithmatex">\(s(t)\)</span> 上重新采样原始路径。仓库中也提供了 TOPP2、COPP2、TOPP3、COPP3 等可运行例程。</p>
 <h2 id="benchmark">Benchmark 性能测试</h2>
-<p>以下测试来自仓库中的 <code>tests/test_random_spline.rs</code>。测试条件为：</p>
+<p>其中开源算法的各行可以用仓库中的 <code>tests/test_random_spline.rs</code> 复现；PRO 算法的各行（COPP2-RDDP、TOPP3-RA、COPP3-RDDP）来自 PRO 版本上同条件的测试，因此不包含在开源测试文件中。测试条件为：</p>
 <ul>
 <li><code>release, --include-ignored</code></li>
 <li>CPU: Intel(R) Core(TM) Ultra 9 285K.</li>
 <li>数据集：100 条随机 7-DOF 样条路径，每条路径离散为 1000 个区间。</li>
 </ul>
-<p>所有指标均以 <code>mean ± std</code> 的形式列出。</p>
+<p>所有指标均以 <code>mean ± std</code> 的形式列出。计算时间与机器和运行状态相关，绝对数值会与你自己的运行结果有出入，方法之间的相对比较才是有意义的部分。</p>
 <h4 id="time-optimal">时间最优 (Time-Optimal)</h4>
 <table>
 <thead>
@@ -2998,13 +2969,14 @@ J_\text{lin}=\begin{cases}
 </tbody>
 </table>
 <h2 id="docs-architecture">文档与架构</h2>
-<h3 id="_5">文档</h3>
+<h3 id="_4">文档</h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="28:5"><input checked="checked" id="rust_22" name="__tabbed_28" type="radio" /><input id="python_22" name="__tabbed_28" type="radio" /><input id="matlab_22" name="__tabbed_28" type="radio" /><input id="c_44" name="__tabbed_28" type="radio" /><input id="c_45" name="__tabbed_28" type="radio" /><div class="tabbed-labels"><label for="rust_22">Rust</label><label for="python_22">Python</label><label for="matlab_22">Matlab</label><label for="c_44">C++</label><label for="c_45">C</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>我们推荐使用 <a href="https://docs.rs/copp/latest/copp/">docs.rs 最新文档</a>，也支持本地文档：</p>
 <ul>
-<li><a href="rust/v0.2.1/copp/">v0.2.1 (Latest)</a></li>
+<li><a href="rust/v0.2.2/copp/">v0.2.2 (Latest)</a></li>
+<li><a href="rust/v0.2.1/copp/">v0.2.1</a></li>
 <li><a href="rust/v0.2.0/copp/">v0.2.0</a></li>
 <li><a href="rust/v0.1.0/copp/">v0.1.0</a></li>
 </ul>
@@ -3016,7 +2988,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>Python 文档如下：</p>
 <ul>
-<li><a href="python/v0.2.1/index.html">v0.2.1 (Latest)</a></li>
+<li><a href="python/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="python/v0.2.1/index.html">v0.2.1</a></li>
 </ul>
 <p>如果需要本地生成 Python 文档，先安装 Sphinx，然后在 <code>copp</code> 仓库根目录运行：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-135-1" name="__codelineno-135-1" href="#__codelineno-135-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>sphinx
@@ -3025,41 +2998,57 @@ J_\text{lin}=\begin{cases}
 <p>生成的入口页面是 <code>bindings/python/docs/build/html/index.html</code>。</p>
 </div>
 <div class="tabbed-block">
-<p>MATLAB 文档可在本地通过 <code>publish</code> 生成：</p>
+<p>MATLAB 文档如下：</p>
+<ul>
+<li><a href="matlab/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+</ul>
+<p>也可以在本地通过 <code>publish</code> 生成。下列命令需要在 <strong>MATLAB 命令行窗口</strong>中运行，而不是系统终端：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-136-1" name="__codelineno-136-1" href="#__codelineno-136-1"></a><span class="nb">cd</span><span class="w"> </span><span class="n">bindings</span><span class="o">/</span><span class="n">matlab</span><span class="o">/</span><span class="n">docs</span>
 <a id="__codelineno-136-2" name="__codelineno-136-2" href="#__codelineno-136-2"></a><span class="n">build_docs</span><span class="p">()</span>
+</code></pre></div>
+<p><code>build_docs</code> 会自行把 <code>bindings/matlab</code> 加入 MATLAB 路径，不需要手动 <code>addpath</code>。但它会执行文档页面中的代码（<code>EvalCode</code> 默认为 <code>true</code>），而这些页面会调用 COPP 接口，因此 MEX 网关必须事先编译好。可以先检查：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-137-1" name="__codelineno-137-1" href="#__codelineno-137-1"></a><span class="n">copp</span><span class="p">.</span><span class="n">version</span><span class="p">()</span>
+</code></pre></div>
+<p>如果这一步报错，请先按<a href="#installation">安装</a>章节的说明构建 MEX，再生成文档。</p>
+<p>如果不希望离开系统终端，可以使用 MATLAB 的 batch 模式：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-138-1" name="__codelineno-138-1" href="#__codelineno-138-1"></a><span class="n">matlab</span> <span class="n">-batch</span> <span class="s2">&quot;cd(&#39;bindings/matlab/docs&#39;); build_docs()&quot;</span>
 </code></pre></div>
 <p>生成的入口页面位于 <code>bindings/matlab/docs/html/index.html</code>。</p>
 </div>
 <div class="tabbed-block">
-<p>C++ API 文档使用 Doxygen 生成，内容来自 <code>bindings/cpp/include/copp/*.hpp</code>、<code>bindings/cpp/docs/*.md</code> 和示例代码。发布版文档后续会随 SDK 一起整理；如果需要查看开发分支上的 C++ 接口，可以在 <code>copp</code> 仓库根目录本地生成：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-137-1" name="__codelineno-137-1" href="#__codelineno-137-1"></a>doxygen<span class="w"> </span>bindings/cpp/Doxyfile
+<p>C++ 文档如下：</p>
+<ul>
+<li><a href="cpp/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+</ul>
+<p>C++ API 文档使用 Doxygen 生成，内容来自 <code>bindings/cpp/include/copp/*.hpp</code>、<code>bindings/cpp/docs/*.md</code> 和示例代码。如果需要查看开发分支上的 C++ 接口，可以在 <code>copp</code> 仓库根目录本地生成：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-139-1" name="__codelineno-139-1" href="#__codelineno-139-1"></a>doxygen<span class="w"> </span>bindings/cpp/Doxyfile
 </code></pre></div>
 <p>生成的入口页面是 <code>bindings/cpp/docs/html/index.html</code>。若希望渲染 include 关系图和调用图，需要额外安装 Graphviz；若公式显示异常，优先检查 Doxygen 的 MathJax 配置。</p>
 </div>
 <div class="tabbed-block">
 <p>C 文档如下：</p>
 <ul>
-<li><a href="c/v0.2.1/index.html">v0.2.1 (Latest)</a></li>
+<li><a href="c/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="c/v0.2.1/index.html">v0.2.1</a></li>
 <li><a href="c/v0.2.0/index.html">v0.2.0</a></li>
 </ul>
 <p>如果需要本地生成 C 文档，先安装 Doxygen、Graphviz 和 PowerShell 7（即 <code>pwsh</code>，脚本会用它重新生成头文件），然后在 <code>copp</code> 仓库根目录运行对应命令：</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="29:3"><input checked="checked" id="linux_5" name="__tabbed_29" type="radio" /><input id="windows_5" name="__tabbed_29" type="radio" /><input id="macos_5" name="__tabbed_29" type="radio" /><div class="tabbed-labels"><label for="linux_5">Linux</label><label for="windows_5">Windows</label><label for="macos_5">macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-138-1" name="__codelineno-138-1" href="#__codelineno-138-1"></a><span class="c1"># Debian/Ubuntu 示例；还需要单独安装 PowerShell 7，确保 `pwsh` 在 PATH 中。</span>
-<a id="__codelineno-138-2" name="__codelineno-138-2" href="#__codelineno-138-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>graphviz
-<a id="__codelineno-138-3" name="__codelineno-138-3" href="#__codelineno-138-3"></a>sh<span class="w"> </span>bindings/c/scripts/generate_docs.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-140-1" name="__codelineno-140-1" href="#__codelineno-140-1"></a><span class="c1"># Debian/Ubuntu 示例；还需要单独安装 PowerShell 7，确保 `pwsh` 在 PATH 中。</span>
+<a id="__codelineno-140-2" name="__codelineno-140-2" href="#__codelineno-140-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>graphviz
+<a id="__codelineno-140-3" name="__codelineno-140-3" href="#__codelineno-140-3"></a>sh<span class="w"> </span>bindings/c/scripts/generate_docs.sh
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-139-1" name="__codelineno-139-1" href="#__codelineno-139-1"></a><span class="n">winget</span> <span class="n">install</span> <span class="n">Doxygen</span><span class="p">.</span><span class="n">Doxygen</span> <span class="n">Graphviz</span><span class="p">.</span><span class="n">Graphviz</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">PowerShell</span>
-<a id="__codelineno-139-2" name="__codelineno-139-2" href="#__codelineno-139-2"></a><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-File</span> <span class="n">bindings</span><span class="p">/</span><span class="n">c</span><span class="p">/</span><span class="n">scripts</span><span class="p">/</span><span class="n">generate_docs</span><span class="p">.</span><span class="n">ps1</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a><span class="n">winget</span> <span class="n">install</span> <span class="n">Doxygen</span><span class="p">.</span><span class="n">Doxygen</span> <span class="n">Graphviz</span><span class="p">.</span><span class="n">Graphviz</span> <span class="n">Microsoft</span><span class="p">.</span><span class="n">PowerShell</span>
+<a id="__codelineno-141-2" name="__codelineno-141-2" href="#__codelineno-141-2"></a><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-File</span> <span class="n">bindings</span><span class="p">/</span><span class="n">c</span><span class="p">/</span><span class="n">scripts</span><span class="p">/</span><span class="n">generate_docs</span><span class="p">.</span><span class="n">ps1</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><a id="__codelineno-140-1" name="__codelineno-140-1" href="#__codelineno-140-1"></a>brew<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>graphviz<span class="w"> </span>powershell
-<a id="__codelineno-140-2" name="__codelineno-140-2" href="#__codelineno-140-2"></a>sh<span class="w"> </span>bindings/c/scripts/generate_docs.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-142-1" name="__codelineno-142-1" href="#__codelineno-142-1"></a>brew<span class="w"> </span>install<span class="w"> </span>doxygen<span class="w"> </span>graphviz<span class="w"> </span>powershell
+<a id="__codelineno-142-2" name="__codelineno-142-2" href="#__codelineno-142-2"></a>sh<span class="w"> </span>bindings/c/scripts/generate_docs.sh
 </code></pre></div>
 </div>
 </div>
@@ -3068,7 +3057,7 @@ J_\text{lin}=\begin{cases}
 </div>
 </div>
 </div>
-<h3 id="_6">项目架构</h3>
+<h3 id="_5">项目架构</h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="30:5"><input checked="checked" id="rust_23" name="__tabbed_30" type="radio" /><input id="python_23" name="__tabbed_30" type="radio" /><input id="matlab_23" name="__tabbed_30" type="radio" /><input id="c_46" name="__tabbed_30" type="radio" /><input id="c_47" name="__tabbed_30" type="radio" /><div class="tabbed-labels"><label for="rust_23">Rust</label><label for="python_23">Python</label><label for="matlab_23">Matlab</label><label for="c_46">C++</label><label for="c_47">C</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -3293,35 +3282,35 @@ J_\text{lin}=\begin{cases}
 </div>
 </div>
 </div>
-<h2 id="_7">引用</h2>
+<h2 id="_6">引用</h2>
 <p>如果你的工作使用了开源 TOPP3/COPP3 功能，建议引用<a href="https://doi.org/10.1016/j.ijmachtools.2025.104355">如下论文</a>：（即便是最基本的离散区间内 profile 模板也用到了该文章的贡献）</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-141-1" name="__codelineno-141-1" href="#__codelineno-141-1"></a>@article<span class="nb">{</span>wang2026online,
-<a id="__codelineno-141-2" name="__codelineno-141-2" href="#__codelineno-141-2"></a>  title=<span class="nb">{</span>Online time-optimal trajectory planning along parametric toolpaths with strict constraint satisfaction and certifiable feasibility guarantee<span class="nb">}</span>,
-<a id="__codelineno-141-3" name="__codelineno-141-3" href="#__codelineno-141-3"></a>  author=<span class="nb">{</span>Wang, Yunan and Hu, Chuxiong and Li, Yuanshenglong and Yu, Jichuan and Yan, Jizhou and Liang, Yixuan and Jin, Zhao<span class="nb">}</span>,
-<a id="__codelineno-141-4" name="__codelineno-141-4" href="#__codelineno-141-4"></a>  journal=<span class="nb">{</span>International Journal of Machine Tools and Manufacture<span class="nb">}</span>,
-<a id="__codelineno-141-5" name="__codelineno-141-5" href="#__codelineno-141-5"></a>  volume=<span class="nb">{</span>215<span class="nb">}</span>,
-<a id="__codelineno-141-6" name="__codelineno-141-6" href="#__codelineno-141-6"></a>  pages=<span class="nb">{</span>104355<span class="nb">}</span>,
-<a id="__codelineno-141-7" name="__codelineno-141-7" href="#__codelineno-141-7"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
-<a id="__codelineno-141-8" name="__codelineno-141-8" href="#__codelineno-141-8"></a><span class="nb">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-143-1" name="__codelineno-143-1" href="#__codelineno-143-1"></a>@article<span class="nb">{</span>wang2026online,
+<a id="__codelineno-143-2" name="__codelineno-143-2" href="#__codelineno-143-2"></a>  title=<span class="nb">{</span>Online time-optimal trajectory planning along parametric toolpaths with strict constraint satisfaction and certifiable feasibility guarantee<span class="nb">}</span>,
+<a id="__codelineno-143-3" name="__codelineno-143-3" href="#__codelineno-143-3"></a>  author=<span class="nb">{</span>Wang, Yunan and Hu, Chuxiong and Li, Yuanshenglong and Yu, Jichuan and Yan, Jizhou and Liang, Yixuan and Jin, Zhao<span class="nb">}</span>,
+<a id="__codelineno-143-4" name="__codelineno-143-4" href="#__codelineno-143-4"></a>  journal=<span class="nb">{</span>International Journal of Machine Tools and Manufacture<span class="nb">}</span>,
+<a id="__codelineno-143-5" name="__codelineno-143-5" href="#__codelineno-143-5"></a>  volume=<span class="nb">{</span>215<span class="nb">}</span>,
+<a id="__codelineno-143-6" name="__codelineno-143-6" href="#__codelineno-143-6"></a>  pages=<span class="nb">{</span>104355<span class="nb">}</span>,
+<a id="__codelineno-143-7" name="__codelineno-143-7" href="#__codelineno-143-7"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
+<a id="__codelineno-143-8" name="__codelineno-143-8" href="#__codelineno-143-8"></a><span class="nb">}</span>
 </code></pre></div>
 <p>如果你的工作使用了 PRO 版本中的 TOPP3-RA, COPP2-RDDP, COPP3-RDDP 方法，建议引用<a href="https://arxiv.org/abs/2605.19089">如下论文</a>：（其中 TOPP3-RA 基于该论文进行改进）</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-142-1" name="__codelineno-142-1" href="#__codelineno-142-1"></a>@article<span class="nb">{</span>wang2026reachability,
-<a id="__codelineno-142-2" name="__codelineno-142-2" href="#__codelineno-142-2"></a>  title=<span class="nb">{</span>Reachability-augmented dual dynamic programming for optimal path parameterization<span class="nb">}</span>,
-<a id="__codelineno-142-3" name="__codelineno-142-3" href="#__codelineno-142-3"></a>  author=<span class="nb">{</span>Yunan Wang and Jizhou Yan and Chuxiong Hu and Zeyang Li<span class="nb">}</span>,
-<a id="__codelineno-142-4" name="__codelineno-142-4" href="#__codelineno-142-4"></a>  journal=<span class="nb">{</span>arXiv preprint arXiv:2605.19089<span class="nb">}</span>,
-<a id="__codelineno-142-5" name="__codelineno-142-5" href="#__codelineno-142-5"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
-<a id="__codelineno-142-6" name="__codelineno-142-6" href="#__codelineno-142-6"></a><span class="nb">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-144-1" name="__codelineno-144-1" href="#__codelineno-144-1"></a>@article<span class="nb">{</span>wang2026reachability,
+<a id="__codelineno-144-2" name="__codelineno-144-2" href="#__codelineno-144-2"></a>  title=<span class="nb">{</span>Reachability-augmented dual dynamic programming for optimal path parameterization<span class="nb">}</span>,
+<a id="__codelineno-144-3" name="__codelineno-144-3" href="#__codelineno-144-3"></a>  author=<span class="nb">{</span>Yunan Wang and Jizhou Yan and Chuxiong Hu and Zeyang Li<span class="nb">}</span>,
+<a id="__codelineno-144-4" name="__codelineno-144-4" href="#__codelineno-144-4"></a>  journal=<span class="nb">{</span>arXiv preprint arXiv:2605.19089<span class="nb">}</span>,
+<a id="__codelineno-144-5" name="__codelineno-144-5" href="#__codelineno-144-5"></a>  year=<span class="nb">{</span>2026<span class="nb">}</span>
+<a id="__codelineno-144-6" name="__codelineno-144-6" href="#__codelineno-144-6"></a><span class="nb">}</span>
 </code></pre></div>
 <p>其他情况下可引用 <a href="https://github.com/TOPP-THU/copp"><code>COPP</code> 库</a>，或对应论文：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-143-1" name="__codelineno-143-1" href="#__codelineno-143-1"></a>@misc<span class="nb">{</span>thu2026copp,
-<a id="__codelineno-143-2" name="__codelineno-143-2" href="#__codelineno-143-2"></a>  title = <span class="nb">{</span>COPP: Convex-Objective Path Parameterization<span class="nb">}</span>,
-<a id="__codelineno-143-3" name="__codelineno-143-3" href="#__codelineno-143-3"></a>  author = <span class="nb">{</span>Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong<span class="nb">}</span>,
-<a id="__codelineno-143-4" name="__codelineno-143-4" href="#__codelineno-143-4"></a>  year = <span class="nb">{</span>2026<span class="nb">}</span>,
-<a id="__codelineno-143-5" name="__codelineno-143-5" href="#__codelineno-143-5"></a>  publisher = <span class="nb">{</span>GitHub<span class="nb">}</span>,
-<a id="__codelineno-143-6" name="__codelineno-143-6" href="#__codelineno-143-6"></a>  howpublished = <span class="nb">{</span><span class="k">\url</span><span class="nb">{</span>https://github.com/TOPP-THU/copp<span class="nb">}}</span>
-<a id="__codelineno-143-7" name="__codelineno-143-7" href="#__codelineno-143-7"></a><span class="nb">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-145-1" name="__codelineno-145-1" href="#__codelineno-145-1"></a>@misc<span class="nb">{</span>thu2026copp,
+<a id="__codelineno-145-2" name="__codelineno-145-2" href="#__codelineno-145-2"></a>  title = <span class="nb">{</span>COPP: Convex-Objective Path Parameterization<span class="nb">}</span>,
+<a id="__codelineno-145-3" name="__codelineno-145-3" href="#__codelineno-145-3"></a>  author = <span class="nb">{</span>Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong<span class="nb">}</span>,
+<a id="__codelineno-145-4" name="__codelineno-145-4" href="#__codelineno-145-4"></a>  year = <span class="nb">{</span>2026<span class="nb">}</span>,
+<a id="__codelineno-145-5" name="__codelineno-145-5" href="#__codelineno-145-5"></a>  publisher = <span class="nb">{</span>GitHub<span class="nb">}</span>,
+<a id="__codelineno-145-6" name="__codelineno-145-6" href="#__codelineno-145-6"></a>  howpublished = <span class="nb">{</span><span class="k">\url</span><span class="nb">{</span>https://github.com/TOPP-THU/copp<span class="nb">}}</span>
+<a id="__codelineno-145-7" name="__codelineno-145-7" href="#__codelineno-145-7"></a><span class="nb">}</span>
 </code></pre></div>
-<h2 id="_8">联系</h2>
+<h2 id="_7">联系</h2>
 <p>如果需要 COPP PRO 授权、商业合作、技术咨询或一般问题，可以联系 <a href="mailto:hello@copp.pro">hello@copp.pro</a>。</p>
 
 
