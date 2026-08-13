@@ -1,14 +1,14 @@
-# COPP 文档
+# COPP 文档 { #copp-documentation }
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/TOPP-THU/copp/blob/main/LICENSE) [![Website](https://img.shields.io/badge/website-copp.pro-2ff0d8)](https://copp.pro/) [![Docs](https://img.shields.io/badge/docs-docs.copp.pro-1f6feb)](https://docs.copp.pro/) [![Crates.io](https://img.shields.io/crates/v/copp.svg?color=b7410e)](https://crates.io/crates/copp) [![PyPI](https://img.shields.io/pypi/v/copp-py.svg)](https://pypi.org/project/copp-py/)
 
 [![Rust](https://img.shields.io/badge/Rust-native-b7410e)](https://docs.rs/copp/latest/copp/) [![C](https://img.shields.io/badge/C-ABI-a8b9cc)](https://github.com/TOPP-THU/copp/tree/main/bindings/c) [![Python](https://img.shields.io/badge/Python-bindings-ffd43b)](https://github.com/TOPP-THU/copp/tree/main/bindings/python) [![C++](https://img.shields.io/badge/C%2B%2B-bindings-00599c)](https://github.com/TOPP-THU/copp/tree/main/bindings/cpp) [![MATLAB](https://img.shields.io/badge/MATLAB-bindings-e16737)](https://github.com/TOPP-THU/copp/tree/main/bindings/matlab)
 
-## 核心问题
+## 核心问题 { #core-problem }
 
 COPP 专注于解决给定几何路径 (path) 生成时间参数化的轨迹 (trajectory)，并满足用户指定的约束、优化给定的目标。特别地，COPP 规划的轨迹一般是二阶光滑（加速度有界）或三阶光滑（加加速度有界）。
 
-### 路径参数化 (Path Parameterization)
+### 路径参数化 (Path Parameterization) { #path-parameterization }
 
 给定一个 $n$ 维机器人系统和一条足够光滑的几何路径：
 
@@ -44,7 +44,7 @@ $$
 
 在二阶问题中，状态量为 $a(s)$，控制量为 $b(s)$；在三阶问题中，状态量为 $(a(s),b(s))$，控制量为 $c(s)$。
 
-### 最优路径参数化 (Optimal Path Parameterization)
+### 最优路径参数化 (Optimal Path Parameterization) { #optimal-path-parameterization }
 
 相比一般的路径参数化，最优路径参数化进一步引入了约束条件 (constraint) 和优化目标 (objective)。
 
@@ -112,10 +112,10 @@ $$
 
     ```toml
     [dependencies]
-    copp = "0.2.1"
+    copp = "0.2.2"
     ```
 
-    `copp` v0.2.1 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。
+    `copp` v0.2.2 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。
 
 === "Python"
 
@@ -382,7 +382,7 @@ $$
         pwsh -NoProfile -File bindings/c/scripts/generate_headers.ps1
         ```
 
-## 算法选择
+## 算法选择 { #algorithm-selection }
 
 `copp` 中算法的选择主要取决于三个因素：问题是二阶还是三阶、目标是时间最优还是一般凸目标、以及是否需要 PRO 版本提供的更高性能。
 
@@ -409,7 +409,7 @@ $$
 | 三阶时间最优，jerk 边界较宽松且要求极低计算时间 | TOPP3-RA                | PRO      | 计算开销很低。                                                  | jerk 约束较紧时可能次优。        | COPP3-RDDP 或 TOPP3-SOCP。          |
 | 三阶高质量、高稳定性，特别是困难长路径规划      | COPP3-RDDP              | PRO      | 实际最优性强、计算速度高，并且通常在长时域问题上更稳定。        | 需要 PRO 授权。                  | COPP3-SOCP。                        |
 
-## Step-by-Step 工作流
+## Step-by-Step 工作流 { #step-by-step-workflow }
 
 我们以二维路径的时间最优参数化为例给出一个简单的例程，完整例程可以在每种语言的 `examples` 目录下看到，高级接口详见[文档章节](#docs-architecture)。
 
@@ -468,11 +468,11 @@ $$
     }
     ```
 
-### Step 1. 构造几何路径
+### Step 1. 构造几何路径 { #step-1-construct-the-geometric-path }
 
 严格地说，几何路径 $\boldsymbol{q}=\boldsymbol{q}(s)$ 是用户端给 `copp` 的输入，而 `copp` 库提供了路径相关模块作为辅助。
 
-#### Option A. 解析式自动微分
+#### Option A. 解析式自动微分 { #option-a-analytic-expression-with-automatic-differentiation }
 
 最简单的方式是通过解析式构造路径，例如用如下方式可以构造 $\boldsymbol{q}(s)=[sin(2\pi s), cos(2\pi s)]\in\mathbb{R}^2$的解析路径：
 
@@ -563,7 +563,7 @@ $$
 
     `copp_path_from_parametric` 和 `CoppJet3` 需要 v0.2.2 或更新版本。除了 `copp_sin`、`copp_cos`、`copp_mul_f64`，头文件还提供 `copp_add`、`copp_sub`、`copp_mul`、`copp_div`、`copp_neg`、`copp_exp`、`copp_log`、`copp_sqrt`、`copp_powi`、`copp_constant` 及它们的标量变体。更早的版本请按下面 Option C 的方式，通过 `copp_path_from_evaluator_3rd` 手动提供导数。
 
-#### Option B. 路径点生成样条
+#### Option B. 路径点生成样条 { #option-b-build-a-spline-from-waypoints }
 
 如果提供路径点，可以通过如下方式构建样条路径，例如：
 
@@ -657,7 +657,7 @@ $$
     }
     ```
 
-#### Option C. 用户手动微分
+#### Option C. 用户手动微分 { #option-c-user-provided-derivatives }
 
 最一般的情况下，用户可以自行求导，在 TOPP2/COPP2 应在给定 $s$ 下提供 $\boldsymbol{q}(s),\boldsymbol{q}'(s),\boldsymbol{q}''(s)$，例如：
 
@@ -921,7 +921,7 @@ $$
     }
     ```
 
-### Step 2. 离散化路径信息
+### Step 2. 离散化路径信息 { #step-2-discretize-path-data }
 
 路径参数化问题需要在给定的 $s$ 离散网格上进行，例如：
 
@@ -1058,7 +1058,7 @@ $$
 
 在更灵活的情况下，路径可以在线加入、删除等，机器人可以包含逆运动学信息，这些高级接口详见[文档章节](#docs-architecture)。
 
-### Step 3. 约束构造
+### Step 3. 约束构造 { #step-3-construct-constraints }
 
 通常情况下，我们推荐用户使用具备物理含义的高级接口，例如：
 
@@ -1203,7 +1203,7 @@ $$
 
 更底层、灵活的约束构造接口详见[文档章节](#docs-architecture)。
 
-### Step 4. 调用求解器
+### Step 4. 调用求解器 { #step-4-call-the-solver }
 
 我们以求解 TOPP2 问题、调用 `topp2_ra` 为例。首先定义问题，例如：
 
@@ -1315,7 +1315,7 @@ $$
 
 据此，我们得到了 $a=a(s)$。
 
-### Step 5. 二阶轨迹后处理（仅二阶需要）
+### Step 5. 二阶轨迹后处理（仅二阶需要） { #step-5-post-process-the-second-order-trajectory-second-order-only }
 
 我们接下来希望得到真实的轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解 $t=t(s)$，例如：
 
@@ -1498,7 +1498,7 @@ $$
 
 由此完成了二阶轨迹的完整求解。如果是求解三阶轨迹，那么二阶轨迹后处理步骤可以跳过，并继续如下流程。
 
-### Step 6. 构造并求解三阶问题（仅三阶需要）
+### Step 6. 构造并求解三阶问题（仅三阶需要） { #step-6-construct-and-solve-the-third-order-problem-third-order-only }
 
 构造三阶问题如下，其中非凸的三阶约束用前面求解的二阶轨迹 `a_ra` 进行线性化：
 
@@ -1714,7 +1714,7 @@ $$
 
 在计算资源允许的情况下，可以重复进行上述过程，也就是用 $a_k(s)$ 线性化三阶非凸问题并求解得到 $a_{k+1}(s),b_{k+1}(s)$，在非退化情况下最终能够收敛到 KKT 解。从在线进行的实用角度，我们推荐完成 1 到 2 次线性化即足够。
 
-### Step 7. 三阶轨迹后处理（仅三阶需要）
+### Step 7. 三阶轨迹后处理（仅三阶需要） { #step-7-post-process-the-third-order-trajectory-third-order-only }
 
 我们接下来希望得到真实的轨迹 $\boldsymbol{q}=\boldsymbol{q}(t)$，特别地，应该得到插补轨迹以便于底层伺服驱动器跟踪。首先应求解 $t=t(s)$，例如：
 
@@ -1911,7 +1911,7 @@ $$
 
 由此完成了三阶轨迹的完整求解。
 
-### 资源释放
+### 资源释放 { #resource-management }
 
 === "Rust"
 
@@ -1960,11 +1960,11 @@ $$
 
     如果只求解二阶轨迹，则没有 `profile`、`dddq_t` 等三阶对象；如果保留多次三阶迭代结果，例如 `profile_qp1` 和 `profile_qp2`，则每个未被移动走所有权的 `CoppProfile3rd` 都需要各自调用一次 `copp_profile_3rd_free`。仓库中的 C 例程也采用了这种集中释放方式。
 
-### Step-by-Step 小结
+### Step-by-Step 小结 { #step-by-step-summary }
 
 总的来说，一个最小闭环包括：构造路径 $\boldsymbol{q}(s)$，在离散网格上构造 `Robot` 和约束，选择对应的 problem builder 和 solver，得到 $a(s)$ 或 $(a(s),b(s))$，再通过 `s_to_t_*` 和 `t_to_s_*` 转回时间域，最终在 $s(t)$ 上重新采样原始路径。仓库中也提供了 TOPP2、COPP2、TOPP3、COPP3 等可运行例程。
 
-## Benchmark 性能测试
+## Benchmark 性能测试 { #benchmark }
 
 其中开源算法的各行可以用仓库中的 `tests/test_random_spline.rs` 复现；PRO 算法的各行（COPP2-RDDP、TOPP3-RA、COPP3-RDDP）来自 PRO 版本上同条件的测试，因此不包含在开源测试文件中。测试条件为：
 
@@ -1974,7 +1974,7 @@ $$
 
 所有指标均以 `mean ± std` 的形式列出。计算时间与机器和运行状态相关，绝对数值会与你自己的运行结果有出入，方法之间的相对比较才是有意义的部分。
 
-#### 时间最优 (Time-Optimal)
+#### 时间最优 (Time-Optimal) { #time-optimal }
 
 | 方法                   | 可用版本 |          计算时间 (ms) |         终端时间 (s) |
 | ---------------------- | -------- | ---------------------: | -------------------: |
@@ -1987,7 +1987,7 @@ $$
 | TOPP3-RA (Iteration 1) | PRO      |   10.571045 ± 0.857653 | 41.499200 ± 1.385735 |
 | TOPP3-RA (Iteration 2) | PRO      |   20.300932 ± 1.237908 | 41.399867 ± 1.386791 |
 
-#### 凸目标 (Convex-Objective)
+#### 凸目标 (Convex-Objective) { #convex-objective }
 
 在该测试中，TOPP 方法仍以终端时间为优化目标。
 
@@ -2003,7 +2003,7 @@ $$
 
 ## 文档与架构 { #docs-architecture }
 
-### 文档
+### 文档 { #documentation }
 
 === "Rust"
 
@@ -2115,7 +2115,7 @@ $$
 
     生成的入口页面是 `bindings/c/docs/html/index.html`。
 
-### 项目架构
+### 项目架构 { #project-architecture }
 
 === "Rust"
 
@@ -2182,7 +2182,7 @@ $$
     | `copp/topp3.h`         | TOPP3-LP 和 TOPP3-SOCP 接口。                          |
     | `copp/copp3.h`         | COPP3-SOCP 接口。                                      |
 
-## 引用
+## 引用 { #citing }
 
 如果你的工作使用了开源 TOPP3/COPP3 功能，建议引用[如下论文](https://doi.org/10.1016/j.ijmachtools.2025.104355)：（即便是最基本的离散区间内 profile 模板也用到了该文章的贡献）
 
@@ -2220,6 +2220,6 @@ $$
 }
 ```
 
-## 联系
+## 联系 { #contact }
 
 如果需要 COPP PRO 授权、商业合作、技术咨询或一般问题，可以联系 [hello@copp.pro](mailto:hello@copp.pro)。

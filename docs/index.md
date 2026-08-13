@@ -112,10 +112,10 @@ In summary, the problem classes supported by `copp` are:
 
     ```toml
     [dependencies]
-    copp = "0.2.1"
+    copp = "0.2.2"
     ```
 
-    `copp` v0.2.1 requires Rust 1.88 or newer. We strongly recommend building in Release mode for substantially better computational performance.
+    `copp` v0.2.2 requires Rust 1.88 or newer. We strongly recommend building in Release mode for substantially better computational performance.
 
 === "Python"
 
