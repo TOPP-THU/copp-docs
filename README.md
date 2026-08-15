@@ -20,7 +20,7 @@ powershell -ExecutionPolicy Bypass -File tools\build-mkdocs.ps1 -Strict
 
 The script uses `site/` as a temporary staging directory, then publishes the generated static files back to the repository root. This keeps the public `index.html` at the repository root for GitHub Pages, while avoiding the risk of asking MkDocs to clean and write directly into the root directory.
 
-The Rust, C, and Python API reference folders (`rust/`, `c/`, and `python/`) are copied into the staging build so that links such as `/rust/v0.2.1/copp/`, `/c/v0.2.0/`, and `/python/v0.2.1/` continue to work. Pagefind then indexes the complete staged site and publishes its static search bundle under `pagefind/`.
+The Rust, C, C++, Python, and MATLAB API reference folders are copied into the staging build so that versioned reference links continue to work. Pagefind then builds an English full-site index under `pagefind/` and a Chinese index under `pagefind-zh/`; the browser search merges both indexes. Redirect stubs and the 404 page are omitted from search, and Doxygen titles are normalized in a disposable indexing tree without modifying the published API pages.
 
 ## Preview
 

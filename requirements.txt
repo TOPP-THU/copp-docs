@@ -1,2 +1,2 @@
 mkdocs-material==9.7.6
-pagefind[extended]
+pagefind[extended]==1.5.2

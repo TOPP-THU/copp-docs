@@ -6,6 +6,8 @@ $ErrorActionPreference = "Stop"
 
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 $SiteDir = Join-Path $RepoRoot "site"
+$PagefindSiteDir = Join-Path $RepoRoot "site-pagefind"
+$PagefindZhSiteDir = Join-Path $RepoRoot "site-pagefind-zh"
 
 function Copy-DirectoryContents {
     param(
@@ -52,6 +54,9 @@ try {
     }
 
     & python -m mkdocs @mkdocsArgs
+    if ($LASTEXITCODE -ne 0) {
+        throw "Building the MkDocs site failed with exit code $LASTEXITCODE"
+    }
 
     foreach ($name in @("rust", "c", "cpp", "python", "matlab")) {
         $src = Join-Path $RepoRoot $name
@@ -73,13 +78,45 @@ try {
     $nojekyll = Join-Path $SiteDir ".nojekyll"
     New-Item -ItemType File -Path $nojekyll -Force | Out-Null
 
-    & python -m pagefind `
+    Remove-GeneratedPath -Path $PagefindSiteDir
+    & python (Join-Path $PSScriptRoot "prepare_pagefind_site.py") `
         --site $SiteDir `
-        --output-subdir pagefind `
-        --root-selector body `
+        --output $PagefindSiteDir `
+        --exclude-path index-zh.html
+    if ($LASTEXITCODE -ne 0) {
+        throw "Preparing the Pagefind staging site failed with exit code $LASTEXITCODE"
+    }
+
+    & python -m pagefind `
+        --site $PagefindSiteDir `
+        --output-path (Join-Path $SiteDir "pagefind") `
+        --root-selector html `
         --force-language en `
         --include-characters "_:." `
         --exclude-selectors "nav, header, footer, .md-sidebar, .md-header, .md-footer, .sidebar"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Building the Pagefind index failed with exit code $LASTEXITCODE"
+    }
+
+    Remove-GeneratedPath -Path $PagefindZhSiteDir
+    & python (Join-Path $PSScriptRoot "prepare_pagefind_site.py") `
+        --site $SiteDir `
+        --output $PagefindZhSiteDir `
+        --include-path index-zh.html
+    if ($LASTEXITCODE -ne 0) {
+        throw "Preparing the Chinese Pagefind staging site failed with exit code $LASTEXITCODE"
+    }
+
+    & python -m pagefind `
+        --site $PagefindZhSiteDir `
+        --output-path (Join-Path $SiteDir "pagefind-zh") `
+        --root-selector html `
+        --force-language zh `
+        --include-characters "_:." `
+        --exclude-selectors "nav, header, footer, .md-sidebar, .md-header, .md-footer, .sidebar"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Building the Chinese Pagefind index failed with exit code $LASTEXITCODE"
+    }
 
     $searchIndexJson = Join-Path $SiteDir "search\search_index.json"
     if (Test-Path -LiteralPath $searchIndexJson) {
@@ -99,7 +136,7 @@ try {
         Remove-GeneratedPath -Path (Join-Path $RepoRoot $dir)
     }
 
-    foreach ($dir in @("javascripts", "stylesheets", "search", "pagefind")) {
+    foreach ($dir in @("javascripts", "stylesheets", "search", "pagefind", "pagefind-zh")) {
         $src = Join-Path $SiteDir $dir
         $dst = Join-Path $RepoRoot $dir
         if (-not (Test-Path -LiteralPath $src)) {
@@ -114,5 +151,7 @@ try {
         -Destination (Join-Path $RepoRoot "assets")
 }
 finally {
+    Remove-GeneratedPath -Path $PagefindSiteDir
+    Remove-GeneratedPath -Path $PagefindZhSiteDir
     Pop-Location
 }

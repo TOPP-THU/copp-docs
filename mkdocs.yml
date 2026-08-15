@@ -7,6 +7,7 @@ site_dir: site
 use_directory_urls: false
 hooks:
   - tools/mkdocs_ignore_static_api_links.py
+  - tools/mkdocs_page_language.py
 
 theme:
   name: material
@@ -36,6 +37,7 @@ extra:
       lang: zh
 
 markdown_extensions:
+  - meta
   - tables
   - attr_list
   - md_in_html
