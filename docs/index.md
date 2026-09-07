@@ -2139,28 +2139,28 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
 === "Matlab"
 
-    | Module               | Responsibility                                                        |
-    | -------------------- | --------------------------------------------------------------------- |
-    | `copp`               | Top-level package providing `version`, `Path`, `Robot`, `Profile3rd`. |
-    | `copp.Path`          | Waypoint, evaluator, parametric, symbolic, and CasADi paths.          |
+    | Module               | Responsibility                                                         |
+    | -------------------- | ---------------------------------------------------------------------- |
+    | `copp`               | Top-level package providing `version`, `Path`, `Robot`, `Profile3rd`.  |
+    | `copp.Path`          | Waypoint, evaluator, parametric, symbolic, and CasADi paths.           |
     | `copp.Robot`         | Station grid, path sampling, velocity/acceleration/jerk/torque limits. |
     | `copp.objective`     | COPP objectives: time, linear, thermal energy, torque total variation. |
-    | `copp.solver`        | `topp2_ra`, `reach_set2`, `copp2_socp`, `topp3_*`, `copp3_*`.         |
-    | `copp.interpolation` | Second/third-order `s_to_t_*`, `t_to_s_*`, and `a_to_b_topp2`.        |
-    | `copp.clarabel`      | Clarabel solver options, settings, and direct solve method.           |
-    | `copp.diag`          | MATLAB exception facade, verbosity, and MEX last-error snapshots.     |
+    | `copp.solver`        | `topp2_ra`, `reach_set2`, `copp2_socp`, `topp3_*`, `copp3_*`.          |
+    | `copp.interpolation` | Second/third-order `s_to_t_*`, `t_to_s_*`, and `a_to_b_topp2`.         |
+    | `copp.clarabel`      | Clarabel solver options, settings, and direct solve method.            |
+    | `copp.diag`          | MATLAB exception facade, verbosity, and MEX last-error snapshots.      |
 
 === "C++"
 
-    | Header / Namespace        | Responsibility                                                   |
-    | ------------------------- | ---------------------------------------------------------------- |
-    | `copp/copp.hpp`           | Umbrella header containing the C++ public facade.                |
-    | `copp/core.hpp`           | Core types such as `Matrix`, `Span`, `Error`, and `Expected`.    |
-    | `copp/path.hpp`           | Waypoint / parametric / evaluator path construction and derivatives. |
-    | `copp/robot.hpp`          | `Robot`, `Constraints`, inverse-dynamics callbacks, and physical constraints. |
-    | `copp/interpolation.hpp`  | TOPP2 / TOPP3 profiles and time interpolation.                   |
-    | `copp/solver/*.hpp`       | TOPP/COPP solver namespaces with problem/options/result types.   |
-    | `copp/eigen.hpp`          | Optional Eigen adapter; the core headers do not depend on Eigen. |
+    | Header / Namespace        | Responsibility                                                                              |
+    | ------------------------- | ------------------------------------------------------------------------------------------- |
+    | `copp/copp.hpp`           | Umbrella header containing the C++ public facade.                                           |
+    | `copp/core.hpp`           | Core types such as `Matrix`, `Span`, `Error`, and `Expected`.                               |
+    | `copp/path.hpp`           | Waypoint / parametric / evaluator path construction and derivatives.                        |
+    | `copp/robot.hpp`          | `Robot`, `Constraints`, inverse-dynamics callbacks, and physical constraints.               |
+    | `copp/interpolation.hpp`  | TOPP2 / TOPP3 profiles and time interpolation.                                              |
+    | `copp/solver/*.hpp`       | TOPP/COPP solver namespaces with problem/options/result types.                              |
+    | `copp/eigen.hpp`          | Optional Eigen adapter; the core headers do not depend on Eigen.                            |
     | CMake target `copp::copp` | Link entry point for downstream C++ projects; the C ABI is also available as `copp::c_abi`. |
 
 === "C"
@@ -2204,15 +2204,16 @@ If your work uses the TOPP3-RA, COPP2-RDDP, or COPP3-RDDP methods from the PRO r
 }
 ```
 
-For other use cases, please cite the [`COPP` library](https://github.com/TOPP-THU/copp) or the corresponding paper:
+For other use cases, please cite the [conference abstract](https://ieeexplore.ieee.org/document/11616490) of `COPP` library:
 
 ```tex
-@misc{thu2026copp,
-  title = {COPP: Convex-Objective Path Parameterization},
-  author = {Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong},
-  year = {2026},
-  publisher = {GitHub},
-  howpublished = {\url{https://github.com/TOPP-THU/copp}}
+@inproceedings{wang2026copp,
+  title={{COPP}: An Open-Source Ultra-Fast Library for Convex-Objective Path Parameterization},
+  author={Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong},
+  booktitle={American Control Conference},
+  pages={2335},
+  year={2026},
+  organization={IEEE}
 }
 ```
 

@@ -2147,29 +2147,29 @@ $$
 
 === "Matlab"
 
-    | 模块                                | 负责内容                                                       |
-    | ----------------------------------- | -------------------------------------------------------------- |
-    | `copp`                          | 顶层包，提供 `version`、`Path`、`Robot`、`Profile3rd` 等常用类型。 |
-    | `copp.Path`                     | waypoint、evaluator、parametric、symbolic、CasADi 路径。       |
-    | `copp.Robot`                    | 站点网格、路径采样、速度/加速度/jerk/力矩约束。                |
-    | `copp.objective`                | 时间、线性、热能耗散、力矩全变分等 COPP 目标描述。             |
-    | `copp.solver`                   | `topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_*`、`copp3_*`。 |
-    | `copp.interpolation`            | 二阶/三阶 `s_to_t_*`、`t_to_s_*` 和 `a_to_b_topp2`。           |
-    | `copp.clarabel`                 | Clarabel 求解器选项、设置和 direct solve method。              |
-    | `copp.diag`                     | MATLAB exception facade、verbosity 和 MEX last-error 快照。     |
+    | 模块                 | 负责内容                                                           |
+    | -------------------- | ------------------------------------------------------------------ |
+    | `copp`               | 顶层包，提供 `version`、`Path`、`Robot`、`Profile3rd` 等常用类型。 |
+    | `copp.Path`          | waypoint、evaluator、parametric、symbolic、CasADi 路径。           |
+    | `copp.Robot`         | 站点网格、路径采样、速度/加速度/jerk/力矩约束。                    |
+    | `copp.objective`     | 时间、线性、热能耗散、力矩全变分等 COPP 目标描述。                 |
+    | `copp.solver`        | `topp2_ra`、`reach_set2`、`copp2_socp`、`topp3_*`、`copp3_*`。     |
+    | `copp.interpolation` | 二阶/三阶 `s_to_t_*`、`t_to_s_*` 和 `a_to_b_topp2`。               |
+    | `copp.clarabel`      | Clarabel 求解器选项、设置和 direct solve method。                  |
+    | `copp.diag`          | MATLAB exception facade、verbosity 和 MEX last-error 快照。        |
 
 === "C++"
 
-    | Header / Namespace                 | 负责内容                                               |
-    | ---------------------------------- | ------------------------------------------------------ |
-    | `copp/copp.hpp`                    | Umbrella header，包含 C++ public facade。              |
-    | `copp/core.hpp`                    | `Matrix`、`Span`、`Error`、`Expected` 等核心类型。      |
-    | `copp/path.hpp`                    | Waypoint / parametric / evaluator path 构造与求导。     |
-    | `copp/robot.hpp`                   | `Robot`、`Constraints`、逆动力学 callback 和物理约束。 |
-    | `copp/interpolation.hpp`           | TOPP2 / TOPP3 profile 与时间插值。                     |
-    | `copp/solver/*.hpp`                | TOPP/COPP 求解器 namespace 和 problem/options/result。 |
-    | `copp/eigen.hpp`                   | 可选 Eigen adapter；核心头不直接依赖 Eigen。           |
-    | CMake target `copp::copp`          | 下游 C++ 工程链接入口；C ABI 另有 `copp::c_abi`。      |
+    | Header / Namespace        | 负责内容                                               |
+    | ------------------------- | ------------------------------------------------------ |
+    | `copp/copp.hpp`           | Umbrella header，包含 C++ public facade。              |
+    | `copp/core.hpp`           | `Matrix`、`Span`、`Error`、`Expected` 等核心类型。     |
+    | `copp/path.hpp`           | Waypoint / parametric / evaluator path 构造与求导。    |
+    | `copp/robot.hpp`          | `Robot`、`Constraints`、逆动力学 callback 和物理约束。 |
+    | `copp/interpolation.hpp`  | TOPP2 / TOPP3 profile 与时间插值。                     |
+    | `copp/solver/*.hpp`       | TOPP/COPP 求解器 namespace 和 problem/options/result。 |
+    | `copp/eigen.hpp`          | 可选 Eigen adapter；核心头不直接依赖 Eigen。           |
+    | CMake target `copp::copp` | 下游 C++ 工程链接入口；C ABI 另有 `copp::c_abi`。      |
 
 === "C"
 
@@ -2212,15 +2212,16 @@ $$
 }
 ```
 
-其他情况下可引用 [`COPP` 库](https://github.com/TOPP-THU/copp)，或对应论文：
+其他情况下可引用 `COPP` 库的[会议摘要](https://ieeexplore.ieee.org/document/11616490)：
 
 ```tex
-@misc{thu2026copp,
-  title = {COPP: Convex-Objective Path Parameterization},
-  author = {Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong},
-  year = {2026},
-  publisher = {GitHub},
-  howpublished = {\url{https://github.com/TOPP-THU/copp}}
+@inproceedings{wang2026copp,
+  title={{COPP}: An Open-Source Ultra-Fast Library for Convex-Objective Path Parameterization},
+  author={Wang, Yunan and He, Suqin and Lin, Shize and Hu, Chuxiong},
+  booktitle={American Control Conference},
+  pages={2335},
+  year={2026},
+  organization={IEEE}
 }
 ```
 
