@@ -1117,9 +1117,9 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>The <code>copp</code> crate is published on <a href="https://crates.io/crates/copp">crates.io</a>. Add the following dependency to the root <code>Cargo.toml</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[dependencies]</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">copp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.2.2&quot;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">copp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.2.3&quot;</span>
 </code></pre></div>
-<p><code>copp</code> v0.2.2 requires Rust 1.88 or newer. We strongly recommend building in Release mode for substantially better computational performance.</p>
+<p><code>copp</code> v0.2.3 requires Rust 1.89 or newer. We strongly recommend building in Release mode for substantially better computational performance.</p>
 </div>
 <div class="tabbed-block">
 <p>The Python package is published on <a href="https://pypi.org/project/copp-py/">PyPI: copp-py</a>. Install it with:</p>
@@ -1140,44 +1140,16 @@ J_\text{lin}=\begin{cases}
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<p>Prebuilt MATLAB toolboxes are published with every release on the <a href="https://github.com/TOPP-THU/copp/releases">COPP GitHub Releases page</a>. Each release ships one <code>.mltbx</code> per platform, named <code>copp-matlab-&lt;version&gt;-&lt;platform&gt;.mltbx</code>, where <code>&lt;platform&gt;</code> is one of <code>windows-x86_64</code>, <code>linux-x86_64</code>, <code>macos-aarch64</code>, or <code>macos-x86_64</code>. Each <code>.mltbx</code> is accompanied by a <code>.sha256</code> checksum file. MATLAB R2024b or newer is required.</p>
-<p>Download the asset matching your platform. If you are unsure which one that is, run <code>computer("arch")</code> in MATLAB and use the table below:</p>
-<table>
-<thead>
-<tr>
-<th><code>computer("arch")</code></th>
-<th>Release asset platform</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>win64</code></td>
-<td><code>windows-x86_64</code></td>
-</tr>
-<tr>
-<td><code>glnxa64</code></td>
-<td><code>linux-x86_64</code></td>
-</tr>
-<tr>
-<td><code>maca64</code></td>
-<td><code>macos-aarch64</code></td>
-</tr>
-<tr>
-<td><code>maci64</code></td>
-<td><code>macos-x86_64</code></td>
-</tr>
-</tbody>
-</table>
-<p>Pick the macOS asset carefully. MATLAB toolboxes only distinguish Windows, macOS, and Linux, so both macOS packages declare plain macOS support and MATLAB will not stop you from installing the Apple-silicon package on an Intel Mac; the mismatch would only surface later, when the MEX gateway fails to load.</p>
-<p>Install the downloaded toolbox by double-clicking it in MATLAB, or from the Command Window:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">matlab.addons.toolbox.installToolbox</span><span class="p">(</span><span class="s">&quot;copp-matlab-&lt;version&gt;-&lt;platform&gt;.mltbx&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
+<p>A prebuilt MATLAB toolbox is published with every release on <a href="https://www.mathworks.com/matlabcentral/fileexchange/184715-copp-convex-objective-path-parameterization">MATLAB File Exchange</a> and on the <a href="https://github.com/TOPP-THU/copp/releases">COPP GitHub Releases page</a>. Starting with v0.2.3, a single universal <code>.mltbx</code> covers every supported platform (Windows x86-64, Linux x86-64, macOS arm64, and macOS x86-64): it ships the MEX gateway for each of them and MATLAB loads the one matching the machine it runs on, so there is no per-platform download to choose between. MATLAB R2024b or newer is required.</p>
+<p>The shortest route is MATLAB's own Add-On Explorer: open the <a href="https://www.mathworks.com/matlabcentral/fileexchange/184715-copp-convex-objective-path-parameterization">File Exchange page</a> and install from there.</p>
+<p>To install from a GitHub Release instead, download <code>copp-matlab.mltbx</code>. Every release attaches the toolbox under two names, each with a <code>.sha256</code> checksum file: <code>copp-matlab.mltbx</code> always points at the newest release, and <code>copp-matlab-&lt;tag&gt;.mltbx</code> is the immutable copy for that tag. Install the downloaded toolbox by double-clicking it in MATLAB, or from the Command Window:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">matlab.addons.toolbox.installToolbox</span><span class="p">(</span><span class="s">&quot;copp-matlab.mltbx&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">copp</span><span class="p">.</span><span class="n">version</span><span class="p">()</span>
 </code></pre></div>
 <p><code>copp.version()</code> reads the version out of the linked native library through the MEX gateway, so a successful call also confirms that the toolbox loaded correctly. Do not unpack <code>.mltbx</code> files manually: they are MATLAB toolbox installers, and installing them manages the MATLAB path for you.</p>
-<p>If you have the repository checked out, <code>bindings/matlab/install_copp.m</code> automates the same steps. It detects the platform, downloads the matching release asset, and installs it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span><span class="n">bindings</span><span class="o">/</span><span class="n">matlab</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">install_copp</span><span class="p">()</span><span class="w">                    </span><span class="c">% latest release</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">install_copp</span><span class="p">(</span><span class="n">Version</span><span class="p">=</span><span class="s">&quot;v0.2.2&quot;</span><span class="p">)</span><span class="w">    </span><span class="c">% a specific release</span>
+<p><a href="https://raw.githubusercontent.com/TOPP-THU/copp/main/bindings/matlab/install_copp.m"><code>install_copp.m</code></a> automates the same steps and resolves the newest release on its own. It is not part of the installed toolbox: download that single file, <code>cd</code> in MATLAB to the folder you saved it in, and run it there. That folder must not itself contain a <code>+copp</code> package (so not <code>bindings/matlab</code> of a source clone), because the post-install check would otherwise pick up the local package instead of the installed toolbox:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">install_copp</span><span class="p">()</span><span class="w">                    </span><span class="c">% latest release</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">install_copp</span><span class="p">(</span><span class="n">Version</span><span class="p">=</span><span class="s">&quot;v0.2.3&quot;</span><span class="p">)</span><span class="w">    </span><span class="c">% a specific release</span>
 </code></pre></div>
 <p>To build from source instead, you additionally need Rust/Cargo and a MATLAB-supported C++ compiler. Start with the repository:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/TOPP-THU/copp.git
@@ -2967,7 +2939,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>We recommend using the <a href="https://docs.rs/copp/latest/copp/">latest docs.rs documentation</a>. Local documentation is also available:</p>
 <ul>
-<li><a href="rust/v0.2.2/copp/">v0.2.2 (Latest)</a></li>
+<li><a href="rust/v0.2.3/copp/">v0.2.3 (Latest)</a></li>
+<li><a href="rust/v0.2.2/copp/">v0.2.2</a></li>
 <li><a href="rust/v0.2.1/copp/">v0.2.1</a></li>
 <li><a href="rust/v0.2.0/copp/">v0.2.0</a></li>
 <li><a href="rust/v0.1.0/copp/">v0.1.0</a></li>
@@ -2980,7 +2953,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>Python documentation:</p>
 <ul>
-<li><a href="python/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="python/v0.2.3/index.html">v0.2.3 (Latest)</a></li>
+<li><a href="python/v0.2.2/index.html">v0.2.2</a></li>
 <li><a href="python/v0.2.1/index.html">v0.2.1</a></li>
 </ul>
 <p>To generate the Python documentation locally, install Sphinx and build the HTML pages from the <code>copp</code> repository root:</p>
@@ -2992,7 +2966,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>MATLAB documentation:</p>
 <ul>
-<li><a href="matlab/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="matlab/v0.2.3/index.html">v0.2.3 (Latest)</a></li>
+<li><a href="matlab/v0.2.2/index.html">v0.2.2</a></li>
 </ul>
 <p>It can also be generated locally through <code>publish</code>. Run these commands in the <strong>MATLAB Command Window</strong>, not in a system shell:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-136-1" name="__codelineno-136-1" href="#__codelineno-136-1"></a><span class="nb">cd</span><span class="w"> </span><span class="n">bindings</span><span class="o">/</span><span class="n">matlab</span><span class="o">/</span><span class="n">docs</span>
@@ -3010,7 +2985,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>C++ documentation:</p>
 <ul>
-<li><a href="cpp/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="cpp/v0.2.3/index.html">v0.2.3 (Latest)</a></li>
+<li><a href="cpp/v0.2.2/index.html">v0.2.2</a></li>
 </ul>
 <p>The C++ API documentation is generated with Doxygen from <code>bindings/cpp/include/copp/*.hpp</code>, <code>bindings/cpp/docs/*.md</code>, and the example code. To inspect the C++ interface on the development branch, generate it locally from the <code>copp</code> repository root:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-139-1" name="__codelineno-139-1" href="#__codelineno-139-1"></a>doxygen<span class="w"> </span>bindings/cpp/Doxyfile
@@ -3020,7 +2996,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>C documentation:</p>
 <ul>
-<li><a href="c/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="c/v0.2.3/index.html">v0.2.3 (Latest)</a></li>
+<li><a href="c/v0.2.2/index.html">v0.2.2</a></li>
 <li><a href="c/v0.2.1/index.html">v0.2.1</a></li>
 <li><a href="c/v0.2.0/index.html">v0.2.0</a></li>
 </ul>

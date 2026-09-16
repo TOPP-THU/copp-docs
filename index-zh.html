@@ -1117,9 +1117,9 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p><code>copp</code> 库已经发布到 <a href="https://crates.io/crates/copp">crates.io</a>，只需在根目录 <code>Cargo.toml</code> 加入</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">[dependencies]</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">copp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.2.2&quot;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">copp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.2.3&quot;</span>
 </code></pre></div>
-<p><code>copp</code> v0.2.2 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。</p>
+<p><code>copp</code> v0.2.3 需要 Rust 1.89 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。</p>
 </div>
 <div class="tabbed-block">
 <p>Python 包发布在 <a href="https://pypi.org/project/copp-py/">PyPI: copp-py</a>，安装命令是：</p>
@@ -1140,44 +1140,16 @@ J_\text{lin}=\begin{cases}
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<p>每个发布版本都会在 <a href="https://github.com/TOPP-THU/copp/releases">COPP GitHub Releases 页面</a>提供预编译的 MATLAB toolbox。每个版本按平台各提供一个 <code>.mltbx</code>，命名为 <code>copp-matlab-&lt;version&gt;-&lt;platform&gt;.mltbx</code>，其中 <code>&lt;platform&gt;</code> 为 <code>windows-x86_64</code>、<code>linux-x86_64</code>、<code>macos-aarch64</code> 或 <code>macos-x86_64</code>，每个 <code>.mltbx</code> 都附带一个 <code>.sha256</code> 校验文件。需要 MATLAB R2024b 或更新版本。</p>
-<p>请下载与自己平台匹配的文件。如果不确定是哪一个，可以在 MATLAB 中运行 <code>computer("arch")</code>，再对照下表：</p>
-<table>
-<thead>
-<tr>
-<th><code>computer("arch")</code></th>
-<th>对应的发布包平台</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>win64</code></td>
-<td><code>windows-x86_64</code></td>
-</tr>
-<tr>
-<td><code>glnxa64</code></td>
-<td><code>linux-x86_64</code></td>
-</tr>
-<tr>
-<td><code>maca64</code></td>
-<td><code>macos-aarch64</code></td>
-</tr>
-<tr>
-<td><code>maci64</code></td>
-<td><code>macos-x86_64</code></td>
-</tr>
-</tbody>
-</table>
-<p>macOS 用户需要特别留意：MATLAB toolbox 只区分 Windows、macOS 和 Linux 三类平台，因此两个 macOS 包都只声明 macOS 支持，MATLAB 不会阻止你在 Intel Mac 上安装 Apple silicon 的包；这种不匹配只会在之后 MEX 网关加载失败时才暴露出来。</p>
-<p>下载后在 MATLAB 中双击安装，或在命令行窗口执行：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">matlab.addons.toolbox.installToolbox</span><span class="p">(</span><span class="s">&quot;copp-matlab-&lt;version&gt;-&lt;platform&gt;.mltbx&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
+<p>每个发布版本都会在 <a href="https://www.mathworks.com/matlabcentral/fileexchange/184715-copp-convex-objective-path-parameterization">MATLAB File Exchange</a> 和 <a href="https://github.com/TOPP-THU/copp/releases">COPP GitHub Releases 页面</a>提供预编译的 MATLAB toolbox。从 v0.2.3 起，所有支持的平台（Windows x86-64、Linux x86-64、macOS arm64 和 macOS x86-64）共用同一个通用 <code>.mltbx</code>：其中包含每个平台的 MEX 网关，MATLAB 会自动加载与当前机器匹配的那一个，因此无需再按平台挑选下载文件。需要 MATLAB R2024b 或更新版本。</p>
+<p>最简单的方式是使用 MATLAB 自带的附加功能资源管理器（Add-On Explorer）：打开 <a href="https://www.mathworks.com/matlabcentral/fileexchange/184715-copp-convex-objective-path-parameterization">File Exchange 页面</a>直接安装。</p>
+<p>如果想从 GitHub Release 安装，请下载 <code>copp-matlab.mltbx</code>。每个发布版本都会以两个文件名附上该 toolbox，并各自附带一个 <code>.sha256</code> 校验文件：<code>copp-matlab.mltbx</code> 始终指向最新发布版本，<code>copp-matlab-&lt;tag&gt;.mltbx</code> 则是该版本号对应的固定副本。下载后在 MATLAB 中双击安装，或在命令行窗口执行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">matlab.addons.toolbox.installToolbox</span><span class="p">(</span><span class="s">&quot;copp-matlab.mltbx&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">copp</span><span class="p">.</span><span class="n">version</span><span class="p">()</span>
 </code></pre></div>
 <p><code>copp.version()</code> 通过 MEX 网关读取所链接的 native library 的版本号，因此调用成功也就同时验证了 toolbox 已正确加载。请不要手动解压 <code>.mltbx</code>：它是 MATLAB 的 toolbox 安装包，安装过程会自动管理 MATLAB 路径。</p>
-<p>如果本地已有仓库，<code>bindings/matlab/install_copp.m</code> 可以自动完成上述步骤——识别平台、下载对应的发布包并安装：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span><span class="n">bindings</span><span class="o">/</span><span class="n">matlab</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">install_copp</span><span class="p">()</span><span class="w">                    </span><span class="c">% 最新发布版本</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">install_copp</span><span class="p">(</span><span class="n">Version</span><span class="p">=</span><span class="s">&quot;v0.2.2&quot;</span><span class="p">)</span><span class="w">    </span><span class="c">% 指定发布版本</span>
+<p><a href="https://raw.githubusercontent.com/TOPP-THU/copp/main/bindings/matlab/install_copp.m"><code>install_copp.m</code></a> 可以自动完成上述步骤，并自动找到最新发布版本。它不包含在安装后的 toolbox 中：请单独下载这一个文件，在 MATLAB 中 <code>cd</code> 到保存它的文件夹后运行。该文件夹本身不能包含 <code>+copp</code> 包（因此不能是源码仓库中的 <code>bindings/matlab</code>），否则安装后的校验会先找到本地的包，而不是已安装的 toolbox：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">install_copp</span><span class="p">()</span><span class="w">                    </span><span class="c">% 最新发布版本</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">install_copp</span><span class="p">(</span><span class="n">Version</span><span class="p">=</span><span class="s">&quot;v0.2.3&quot;</span><span class="p">)</span><span class="w">    </span><span class="c">% 指定发布版本</span>
 </code></pre></div>
 <p>如果需要从源码构建，还需要准备 Rust/Cargo 和 MATLAB 支持的 C++ 编译器。可以从本地库开始：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/TOPP-THU/copp.git
@@ -2975,7 +2947,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>我们推荐使用 <a href="https://docs.rs/copp/latest/copp/">docs.rs 最新文档</a>，也支持本地文档：</p>
 <ul>
-<li><a href="rust/v0.2.2/copp/">v0.2.2 (Latest)</a></li>
+<li><a href="rust/v0.2.3/copp/">v0.2.3 (Latest)</a></li>
+<li><a href="rust/v0.2.2/copp/">v0.2.2</a></li>
 <li><a href="rust/v0.2.1/copp/">v0.2.1</a></li>
 <li><a href="rust/v0.2.0/copp/">v0.2.0</a></li>
 <li><a href="rust/v0.1.0/copp/">v0.1.0</a></li>
@@ -2988,7 +2961,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>Python 文档如下：</p>
 <ul>
-<li><a href="python/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="python/v0.2.3/index.html">v0.2.3 (Latest)</a></li>
+<li><a href="python/v0.2.2/index.html">v0.2.2</a></li>
 <li><a href="python/v0.2.1/index.html">v0.2.1</a></li>
 </ul>
 <p>如果需要本地生成 Python 文档，先安装 Sphinx，然后在 <code>copp</code> 仓库根目录运行：</p>
@@ -3000,7 +2974,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>MATLAB 文档如下：</p>
 <ul>
-<li><a href="matlab/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="matlab/v0.2.3/index.html">v0.2.3 (Latest)</a></li>
+<li><a href="matlab/v0.2.2/index.html">v0.2.2</a></li>
 </ul>
 <p>也可以在本地通过 <code>publish</code> 生成。下列命令需要在 <strong>MATLAB 命令行窗口</strong>中运行，而不是系统终端：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-136-1" name="__codelineno-136-1" href="#__codelineno-136-1"></a><span class="nb">cd</span><span class="w"> </span><span class="n">bindings</span><span class="o">/</span><span class="n">matlab</span><span class="o">/</span><span class="n">docs</span>
@@ -3018,7 +2993,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>C++ 文档如下：</p>
 <ul>
-<li><a href="cpp/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="cpp/v0.2.3/index.html">v0.2.3 (Latest)</a></li>
+<li><a href="cpp/v0.2.2/index.html">v0.2.2</a></li>
 </ul>
 <p>C++ API 文档使用 Doxygen 生成，内容来自 <code>bindings/cpp/include/copp/*.hpp</code>、<code>bindings/cpp/docs/*.md</code> 和示例代码。如果需要查看开发分支上的 C++ 接口，可以在 <code>copp</code> 仓库根目录本地生成：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-139-1" name="__codelineno-139-1" href="#__codelineno-139-1"></a>doxygen<span class="w"> </span>bindings/cpp/Doxyfile
@@ -3028,7 +3004,8 @@ J_\text{lin}=\begin{cases}
 <div class="tabbed-block">
 <p>C 文档如下：</p>
 <ul>
-<li><a href="c/v0.2.2/index.html">v0.2.2 (Latest)</a></li>
+<li><a href="c/v0.2.3/index.html">v0.2.3 (Latest)</a></li>
+<li><a href="c/v0.2.2/index.html">v0.2.2</a></li>
 <li><a href="c/v0.2.1/index.html">v0.2.1</a></li>
 <li><a href="c/v0.2.0/index.html">v0.2.0</a></li>
 </ul>
