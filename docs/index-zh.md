@@ -116,10 +116,10 @@ $$
 
     ```toml
     [dependencies]
-    copp = "0.2.2"
+    copp = "0.2.3"
     ```
 
-    `copp` v0.2.2 需要 Rust 1.88 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。
+    `copp` v0.2.3 需要 Rust 1.89 或更新版本。此外，我们强烈建议开启 Release 模式，以显著提高计算效率。
 
 === "Python"
 
@@ -153,34 +153,24 @@ $$
 
 === "Matlab"
 
-    每个发布版本都会在 [COPP GitHub Releases 页面](https://github.com/TOPP-THU/copp/releases)提供预编译的 MATLAB toolbox。每个版本按平台各提供一个 `.mltbx`，命名为 `copp-matlab-<version>-<platform>.mltbx`，其中 `<platform>` 为 `windows-x86_64`、`linux-x86_64`、`macos-aarch64` 或 `macos-x86_64`，每个 `.mltbx` 都附带一个 `.sha256` 校验文件。需要 MATLAB R2024b 或更新版本。
+    每个发布版本都会在 [MATLAB File Exchange](https://www.mathworks.com/matlabcentral/fileexchange/184715-copp-convex-objective-path-parameterization) 和 [COPP GitHub Releases 页面](https://github.com/TOPP-THU/copp/releases)提供预编译的 MATLAB toolbox。从 v0.2.3 起，所有支持的平台（Windows x86-64、Linux x86-64、macOS arm64 和 macOS x86-64）共用同一个通用 `.mltbx`：其中包含每个平台的 MEX 网关，MATLAB 会自动加载与当前机器匹配的那一个，因此无需再按平台挑选下载文件。需要 MATLAB R2024b 或更新版本。
 
-    请下载与自己平台匹配的文件。如果不确定是哪一个，可以在 MATLAB 中运行 `computer("arch")`，再对照下表：
+    最简单的方式是使用 MATLAB 自带的附加功能资源管理器（Add-On Explorer）：打开 [File Exchange 页面](https://www.mathworks.com/matlabcentral/fileexchange/184715-copp-convex-objective-path-parameterization)直接安装。
 
-    | `computer("arch")` | 对应的发布包平台 |
-    | ------------------ | ---------------- |
-    | `win64`            | `windows-x86_64` |
-    | `glnxa64`          | `linux-x86_64`   |
-    | `maca64`           | `macos-aarch64`  |
-    | `maci64`           | `macos-x86_64`   |
-
-    macOS 用户需要特别留意：MATLAB toolbox 只区分 Windows、macOS 和 Linux 三类平台，因此两个 macOS 包都只声明 macOS 支持，MATLAB 不会阻止你在 Intel Mac 上安装 Apple silicon 的包；这种不匹配只会在之后 MEX 网关加载失败时才暴露出来。
-
-    下载后在 MATLAB 中双击安装，或在命令行窗口执行：
+    如果想从 GitHub Release 安装，请下载 `copp-matlab.mltbx`。每个发布版本都会以两个文件名附上该 toolbox，并各自附带一个 `.sha256` 校验文件：`copp-matlab.mltbx` 始终指向最新发布版本，`copp-matlab-<tag>.mltbx` 则是该版本号对应的固定副本。下载后在 MATLAB 中双击安装，或在命令行窗口执行：
 
     ```matlab
-    matlab.addons.toolbox.installToolbox("copp-matlab-<version>-<platform>.mltbx", true)
+    matlab.addons.toolbox.installToolbox("copp-matlab.mltbx", true)
     copp.version()
     ```
 
     `copp.version()` 通过 MEX 网关读取所链接的 native library 的版本号，因此调用成功也就同时验证了 toolbox 已正确加载。请不要手动解压 `.mltbx`：它是 MATLAB 的 toolbox 安装包，安装过程会自动管理 MATLAB 路径。
 
-    如果本地已有仓库，`bindings/matlab/install_copp.m` 可以自动完成上述步骤——识别平台、下载对应的发布包并安装：
+    [`install_copp.m`](https://raw.githubusercontent.com/TOPP-THU/copp/main/bindings/matlab/install_copp.m) 可以自动完成上述步骤，并自动找到最新发布版本。它不包含在安装后的 toolbox 中：请单独下载这一个文件，在 MATLAB 中 `cd` 到保存它的文件夹后运行。该文件夹本身不能包含 `+copp` 包（因此不能是源码仓库中的 `bindings/matlab`），否则安装后的校验会先找到本地的包，而不是已安装的 toolbox：
 
     ```matlab
-    cd bindings/matlab
     install_copp()                    % 最新发布版本
-    install_copp(Version="v0.2.2")    % 指定发布版本
+    install_copp(Version="v0.2.3")    % 指定发布版本
     ```
 
     如果需要从源码构建，还需要准备 Rust/Cargo 和 MATLAB 支持的 C++ 编译器。可以从本地库开始：
@@ -2013,7 +2003,8 @@ $$
 
     我们推荐使用 [docs.rs 最新文档](https://docs.rs/copp/latest/copp/)，也支持本地文档：
 
-    - [v0.2.2 (Latest)](rust/v0.2.2/copp/)
+    - [v0.2.3 (Latest)](rust/v0.2.3/copp/)
+    - [v0.2.2](rust/v0.2.2/copp/)
     - [v0.2.1](rust/v0.2.1/copp/)
     - [v0.2.0](rust/v0.2.0/copp/)
     - [v0.1.0](rust/v0.1.0/copp/)
@@ -2030,7 +2021,8 @@ $$
 
     Python 文档如下：
 
-    - [v0.2.2 (Latest)](python/v0.2.2/index.html)
+    - [v0.2.3 (Latest)](python/v0.2.3/index.html)
+    - [v0.2.2](python/v0.2.2/index.html)
     - [v0.2.1](python/v0.2.1/index.html)
 
     如果需要本地生成 Python 文档，先安装 Sphinx，然后在 `copp` 仓库根目录运行：
@@ -2046,7 +2038,8 @@ $$
 
     MATLAB 文档如下：
 
-    - [v0.2.2 (Latest)](matlab/v0.2.2/index.html)
+    - [v0.2.3 (Latest)](matlab/v0.2.3/index.html)
+    - [v0.2.2](matlab/v0.2.2/index.html)
 
     也可以在本地通过 `publish` 生成。下列命令需要在 **MATLAB 命令行窗口**中运行，而不是系统终端：
 
@@ -2075,7 +2068,8 @@ $$
 
     C++ 文档如下：
 
-    - [v0.2.2 (Latest)](cpp/v0.2.2/index.html)
+    - [v0.2.3 (Latest)](cpp/v0.2.3/index.html)
+    - [v0.2.2](cpp/v0.2.2/index.html)
 
     C++ API 文档使用 Doxygen 生成，内容来自 `bindings/cpp/include/copp/*.hpp`、`bindings/cpp/docs/*.md` 和示例代码。如果需要查看开发分支上的 C++ 接口，可以在 `copp` 仓库根目录本地生成：
 
@@ -2089,7 +2083,8 @@ $$
 
     C 文档如下：
 
-    - [v0.2.2 (Latest)](c/v0.2.2/index.html)
+    - [v0.2.3 (Latest)](c/v0.2.3/index.html)
+    - [v0.2.2](c/v0.2.2/index.html)
     - [v0.2.1](c/v0.2.1/index.html)
     - [v0.2.0](c/v0.2.0/index.html)
 

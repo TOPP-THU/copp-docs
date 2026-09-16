@@ -116,10 +116,10 @@ In summary, the problem classes supported by `copp` are:
 
     ```toml
     [dependencies]
-    copp = "0.2.2"
+    copp = "0.2.3"
     ```
 
-    `copp` v0.2.2 requires Rust 1.88 or newer. We strongly recommend building in Release mode for substantially better computational performance.
+    `copp` v0.2.3 requires Rust 1.89 or newer. We strongly recommend building in Release mode for substantially better computational performance.
 
 === "Python"
 
@@ -153,34 +153,24 @@ In summary, the problem classes supported by `copp` are:
 
 === "Matlab"
 
-    Prebuilt MATLAB toolboxes are published with every release on the [COPP GitHub Releases page](https://github.com/TOPP-THU/copp/releases). Each release ships one `.mltbx` per platform, named `copp-matlab-<version>-<platform>.mltbx`, where `<platform>` is one of `windows-x86_64`, `linux-x86_64`, `macos-aarch64`, or `macos-x86_64`. Each `.mltbx` is accompanied by a `.sha256` checksum file. MATLAB R2024b or newer is required.
+    A prebuilt MATLAB toolbox is published with every release on [MATLAB File Exchange](https://www.mathworks.com/matlabcentral/fileexchange/184715-copp-convex-objective-path-parameterization) and on the [COPP GitHub Releases page](https://github.com/TOPP-THU/copp/releases). Starting with v0.2.3, a single universal `.mltbx` covers every supported platform (Windows x86-64, Linux x86-64, macOS arm64, and macOS x86-64): it ships the MEX gateway for each of them and MATLAB loads the one matching the machine it runs on, so there is no per-platform download to choose between. MATLAB R2024b or newer is required.
 
-    Download the asset matching your platform. If you are unsure which one that is, run `computer("arch")` in MATLAB and use the table below:
+    The shortest route is MATLAB's own Add-On Explorer: open the [File Exchange page](https://www.mathworks.com/matlabcentral/fileexchange/184715-copp-convex-objective-path-parameterization) and install from there.
 
-    | `computer("arch")` | Release asset platform |
-    | ------------------ | ---------------------- |
-    | `win64`            | `windows-x86_64`       |
-    | `glnxa64`          | `linux-x86_64`         |
-    | `maca64`           | `macos-aarch64`        |
-    | `maci64`           | `macos-x86_64`         |
-
-    Pick the macOS asset carefully. MATLAB toolboxes only distinguish Windows, macOS, and Linux, so both macOS packages declare plain macOS support and MATLAB will not stop you from installing the Apple-silicon package on an Intel Mac; the mismatch would only surface later, when the MEX gateway fails to load.
-
-    Install the downloaded toolbox by double-clicking it in MATLAB, or from the Command Window:
+    To install from a GitHub Release instead, download `copp-matlab.mltbx`. Every release attaches the toolbox under two names, each with a `.sha256` checksum file: `copp-matlab.mltbx` always points at the newest release, and `copp-matlab-<tag>.mltbx` is the immutable copy for that tag. Install the downloaded toolbox by double-clicking it in MATLAB, or from the Command Window:
 
     ```matlab
-    matlab.addons.toolbox.installToolbox("copp-matlab-<version>-<platform>.mltbx", true)
+    matlab.addons.toolbox.installToolbox("copp-matlab.mltbx", true)
     copp.version()
     ```
 
     `copp.version()` reads the version out of the linked native library through the MEX gateway, so a successful call also confirms that the toolbox loaded correctly. Do not unpack `.mltbx` files manually: they are MATLAB toolbox installers, and installing them manages the MATLAB path for you.
 
-    If you have the repository checked out, `bindings/matlab/install_copp.m` automates the same steps. It detects the platform, downloads the matching release asset, and installs it:
+    [`install_copp.m`](https://raw.githubusercontent.com/TOPP-THU/copp/main/bindings/matlab/install_copp.m) automates the same steps and resolves the newest release on its own. It is not part of the installed toolbox: download that single file, `cd` in MATLAB to the folder you saved it in, and run it there. That folder must not itself contain a `+copp` package (so not `bindings/matlab` of a source clone), because the post-install check would otherwise pick up the local package instead of the installed toolbox:
 
     ```matlab
-    cd bindings/matlab
     install_copp()                    % latest release
-    install_copp(Version="v0.2.2")    % a specific release
+    install_copp(Version="v0.2.3")    % a specific release
     ```
 
     To build from source instead, you additionally need Rust/Cargo and a MATLAB-supported C++ compiler. Start with the repository:
@@ -2005,7 +1995,8 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     We recommend using the [latest docs.rs documentation](https://docs.rs/copp/latest/copp/). Local documentation is also available:
 
-    - [v0.2.2 (Latest)](rust/v0.2.2/copp/)
+    - [v0.2.3 (Latest)](rust/v0.2.3/copp/)
+    - [v0.2.2](rust/v0.2.2/copp/)
     - [v0.2.1](rust/v0.2.1/copp/)
     - [v0.2.0](rust/v0.2.0/copp/)
     - [v0.1.0](rust/v0.1.0/copp/)
@@ -2022,7 +2013,8 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     Python documentation:
 
-    - [v0.2.2 (Latest)](python/v0.2.2/index.html)
+    - [v0.2.3 (Latest)](python/v0.2.3/index.html)
+    - [v0.2.2](python/v0.2.2/index.html)
     - [v0.2.1](python/v0.2.1/index.html)
 
     To generate the Python documentation locally, install Sphinx and build the HTML pages from the `copp` repository root:
@@ -2038,7 +2030,8 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     MATLAB documentation:
 
-    - [v0.2.2 (Latest)](matlab/v0.2.2/index.html)
+    - [v0.2.3 (Latest)](matlab/v0.2.3/index.html)
+    - [v0.2.2](matlab/v0.2.2/index.html)
 
     It can also be generated locally through `publish`. Run these commands in the **MATLAB Command Window**, not in a system shell:
 
@@ -2067,7 +2060,8 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     C++ documentation:
 
-    - [v0.2.2 (Latest)](cpp/v0.2.2/index.html)
+    - [v0.2.3 (Latest)](cpp/v0.2.3/index.html)
+    - [v0.2.2](cpp/v0.2.2/index.html)
 
     The C++ API documentation is generated with Doxygen from `bindings/cpp/include/copp/*.hpp`, `bindings/cpp/docs/*.md`, and the example code. To inspect the C++ interface on the development branch, generate it locally from the `copp` repository root:
 
@@ -2081,7 +2075,8 @@ In this test, TOPP methods still use traversal time as the optimization objectiv
 
     C documentation:
 
-    - [v0.2.2 (Latest)](c/v0.2.2/index.html)
+    - [v0.2.3 (Latest)](c/v0.2.3/index.html)
+    - [v0.2.2](c/v0.2.2/index.html)
     - [v0.2.1](c/v0.2.1/index.html)
     - [v0.2.0](c/v0.2.0/index.html)
 
